@@ -56,3 +56,18 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
+
+  lighthouse:
+    name: Lighthouse (Performance, Barrierefreiheit, Best Practices, SEO)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: pruefen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Lighthouse CI gegen den Build
+        run: npm run lighthouse
