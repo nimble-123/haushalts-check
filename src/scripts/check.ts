@@ -739,10 +739,10 @@ function chart2027() {
     max = Math.max(0, d3.max(data, (d) => d.d) ?? 0);
   let x: d3.ScaleLinear<number, number>;
   if (narrow) {
-    // Handy: Null fest bei 42 % der ganzen Breite, damit sich nicht alles in der linken Hälfte drängt
-    // und links Platz für die Minus-Werte samt Beschriftung bleibt; rechts Rand für „+27,0 Mrd“
-    const null0 = W * 0.42,
-      rechts = W - 78;
+    // Handy: Null bei knapp zwei Dritteln der Breite; die Werte stehen auf der anderen Seite der
+    // Nulllinie (siehe unten), deshalb laufen die Balken bis an den Rand
+    const null0 = W * 0.64,
+      rechts = W - 4;
     const proPixel = max / Math.max(1, rechts - null0);
     const links = Math.min(min * 1.15, -(null0 - 4) * proPixel);
     x = d3.scaleLinear().domain([links, max]).range([4, rechts]);
@@ -798,13 +798,24 @@ function chart2027() {
       .style('stroke', css('--surface'))
       .style('stroke-width', 5)
       .style('stroke-linejoin', 'round');
-  g.append('text')
+  // Desktop: Wert hinter dem Balkenende. Handy: Wert auf der anderen Seite der Nulllinie, in der freien Fläche
+  const wertX = (d: (typeof data)[0]) =>
+    narrow ? (d.d >= 0 ? x(0) - 6 : x(0) + 6) : d.d >= 0 ? x(d.d) + 6 : x(d.d) - 6;
+  const wertAnker = (d: (typeof data)[0]) => (d.d >= 0 !== narrow ? 'start' : 'end');
+  const werte = g
+    .append('text')
     .attr('class', 'val')
     .attr('y', by + bh / 2)
     .attr('dy', '.35em')
-    .attr('x', (d) => (d.d >= 0 ? x(d.d) + 6 : x(d.d) - 6))
-    .attr('text-anchor', (d) => (d.d >= 0 ? 'start' : 'end'))
+    .attr('x', wertX)
+    .attr('text-anchor', wertAnker)
     .text((d) => fmtMrdDelta(d.d).replace(/\u00a0€$/, ''));
+  if (narrow)
+    werte
+      .style('paint-order', 'stroke')
+      .style('stroke', css('--surface'))
+      .style('stroke-width', 5)
+      .style('stroke-linejoin', 'round');
 }
 function chartEntwicklung() {
   const { svg, W, H, schmal } = rahmen('entwicklung', () => 296);
