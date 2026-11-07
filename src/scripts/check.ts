@@ -731,33 +731,52 @@ function chartTreemap() {
 function chart2027() {
   const data = veraenderung2027();
   const zeile = (schmal: boolean) => (schmal ? 36 : 28);
-  const { svg, W, H, schmal: narrow } = rahmen('entwurf-2027', (_, s) => data.length * zeile(s) + 24);
+  // Handy: ohne Achse (jeder Balken trägt seinen Wert), deshalb weniger Höhe
+  const { svg, W, H, schmal: narrow } = rahmen('entwurf-2027', (_, s) => data.length * zeile(s) + (s ? 4 : 24));
   const mass = balkenMasse(narrow, 240, 6);
   const { by, bh, labW } = mass;
   const ext = d3.max(data, (d) => Math.abs(d.d)) ?? 1;
-  const x = d3
-    .scaleLinear()
-    .domain([-ext * (narrow ? 0.85 : 0.6), ext * (narrow ? 1.6 : 1.3)])
-    .range([labW, W - 4]);
-  svg
-    .append('line')
-    .attr('x1', x(0))
-    .attr('x2', x(0))
-    .attr('y1', 0)
-    .attr('y2', H - 20)
-    .attr('stroke', css('--ink-3'));
-  svg
-    .append('g')
-    .attr('class', 'axis')
-    .attr('transform', `translate(0,${H - 20})`)
-    .call(
-      d3
-        .axisBottom(x)
-        .ticks(narrow ? 4 : 6)
-        .tickFormat((v) => `${(+v > 0 ? '+' : '') + v} Mrd`)
-        .tickSizeOuter(0),
-    );
+  const min = Math.min(0, d3.min(data, (d) => d.d) ?? 0),
+    max = Math.max(0, d3.max(data, (d) => d.d) ?? 0);
+  // Handy: Skala genau über die Werte, Rand nur für die Wertebeschriftungen links und rechts
+  const x = narrow
+    ? d3
+        .scaleLinear()
+        .domain([min, max])
+        .range([min < 0 ? 72 : 4, W - 80])
+    : d3
+        .scaleLinear()
+        .domain([-ext * 0.6, ext * 1.3])
+        .range([labW, W - 4]);
+  if (!narrow) {
+    svg
+      .append('line')
+      .attr('x1', x(0))
+      .attr('x2', x(0))
+      .attr('y1', 0)
+      .attr('y2', H - 20)
+      .attr('stroke', css('--ink-3'));
+    svg
+      .append('g')
+      .attr('class', 'axis')
+      .attr('transform', `translate(0,${H - 20})`)
+      .call(
+        d3
+          .axisBottom(x)
+          .ticks(6)
+          .tickFormat((v) => `${(+v > 0 ? '+' : '') + v} Mrd`)
+          .tickSizeOuter(0),
+      );
+  }
   const { g, beschriften } = balkenZeilen(svg, data, mass, { zeile: zeile(narrow), oben: 0, klasse: 'r' });
+  // Handy: Nulllinie nur auf Höhe der Balken, damit sie nicht durch die Namen darüber läuft
+  if (narrow)
+    g.append('line')
+      .attr('x1', x(0))
+      .attr('x2', x(0))
+      .attr('y1', by - 3)
+      .attr('y2', by + bh + 3)
+      .attr('stroke', css('--ink-3'));
   g.append('rect')
     .attr('x', (d) => x(Math.min(0, d.d)))
     .attr('width', (d) => Math.max(2, Math.abs(x(d.d) - x(0))))
