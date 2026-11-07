@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 
 const formular = () => {
@@ -15,6 +15,9 @@ describe('Eingaben merken', () => {
   beforeEach(() => {
     localStorage.clear();
     formular();
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('speichert Text, Zahl, Kontrollkästchen und lädt sie in ein frisches Formular', () => {
@@ -69,11 +72,14 @@ describe('Eingaben merken', () => {
   });
 
   it('funktioniert ohne Speicher (z. B. privates Fenster) ohne Fehler', () => {
-    const orig = Storage.prototype.setItem;
-    Storage.prototype.setItem = () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
       throw new Error('QuotaExceeded');
-    };
+    });
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('SecurityError');
+    });
     expect(() => speichereEingaben(['brutto'])).not.toThrow();
-    Storage.prototype.setItem = orig;
+    expect(() => ladeEingaben(['brutto'])).not.toThrow();
+    expect(gespeicherteStadt()).toBeNull();
   });
 });

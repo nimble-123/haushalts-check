@@ -24,9 +24,15 @@ test('zugeklappte Grafiken haben eine Zusammenfassung und zeichnen beim Aufklapp
   await expect(toepfe).not.toHaveAttribute('open', '');
   await expect(toepfe.locator('summary')).toContainText('größter Topf');
   await toepfe.locator('summary').click();
-  const breite = Number(await page.locator('#s3').getAttribute('width'));
-  const panel = await page.locator('#s3').evaluate((s) => (s.closest('.rs-panel') as HTMLElement).clientWidth);
-  expect(breite).toBeGreaterThan(panel * 0.8);
+  // Neuzeichnen läuft nach dem toggle-Ereignis: warten, bis die Breite stimmt
+  await expect
+    .poll(() =>
+      page.locator('#s3').evaluate((s) => {
+        const panel = (s.closest('.rs-panel') as HTMLElement).clientWidth;
+        return Number(s.getAttribute('width')) / panel;
+      }),
+    )
+    .toBeGreaterThan(0.8);
 });
 
 test('echte Ausgabearten der Stadt mit Durchschnitt', async ({ page }) => {

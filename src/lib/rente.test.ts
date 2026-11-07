@@ -52,12 +52,12 @@ describe('renteVsEtf – gleiche Ergebnisse wie der Prototyp', () => {
     ],
   ])('%#', (ov, EP, gross, cumPaid, depot, renteN, etfM) => {
     const m = renteVsEtf({ ...basis, ...ov });
-    expect(m.EP).toBeCloseTo(EP, 5);
-    expect(m.gross).toBeCloseTo(gross, 1);
-    expect(m.cumPaid).toBeCloseTo(cumPaid, 1);
+    expect(m.entgeltpunkte).toBeCloseTo(EP, 5);
+    expect(m.beitragBrutto).toBeCloseTo(gross, 1);
+    expect(m.beitragNetto).toBeCloseTo(cumPaid, 1);
     expect(m.depotReal).toBeCloseTo(depot, 1);
-    expect(m.renteN).toBeCloseTo(renteN, 1);
-    expect(m.etfM).toBeCloseTo(etfM, 1);
-    expect(m.cross).toBeNull();
+    expect(m.renteNetto).toBeCloseTo(renteN, 1);
+    expect(m.etfMonat).toBeCloseTo(etfM, 1);
+    expect(m.einholAlter).toBeNull();
   });
 });

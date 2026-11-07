@@ -60,7 +60,6 @@ export const ENTWURF_2027: Record<string, number> = {
   '20': 0.2189,
   '03': 0.041,
 };
-export const ENTWURF_2027_GESAMT = 555.4;
 /** Schlussabstimmung im Bundestag über den Haushalt 2027 */
 export const ABSTIMMUNG_2027 = new Date('2026-11-27T12:00:00+01:00');
 /** Solange true, sind ENTWURF_2027 und ENTWICKLUNG[2027] Regierungsentwurf; nach Beschluss aktualisieren und auf false setzen */
@@ -83,6 +82,8 @@ export const ENTWICKLUNG: { jahr: number; v: number; status: 'Soll' | 'Entwurf' 
   { jahr: 2029, v: 597.8, status: 'Finanzplan' },
   { jahr: 2030, v: 635.4, status: 'Finanzplan' },
 ];
+/** Kernhaushalt 2027 laut Entwurf, aus der Entwicklungsreihe */
+export const ENTWURF_2027_GESAMT = ENTWICKLUNG.find((j) => j.jahr === 2027)!.v;
 
 export const BUND_QUELLEN = [
   { label: 'Haushaltsgesetz 2026, Anlage', url: 'https://www.gesetze-im-internet.de/hg_2026/anlage.html' },
