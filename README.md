@@ -32,14 +32,14 @@
 
 ## Daten und Quellen
 
-| Ebene | Quelle | Stand |
-| --- | --- | --- |
-| Bund | Haushaltsgesetz 2026, Einzelpläne (Soll) | 2026 |
-| Länder | Destatis, Rechnungsergebnisse des Öffentlichen Gesamthaushalts, Tabelle 71711-12 | 2022 |
-| Städte, Zweck | Durchschnitt der Gemeinden und Kreise je Land (gekennzeichnete Schätzung) | 2022 |
-| Städte, Art | Regionaldatenbank, Rechnungsergebnisse der kommunalen Kernhaushalte, 71717-Z-05 | 2025, vorläufig |
-| Städte, Lage | Destatis, Gemeindeverzeichnis | 31.12.2025 |
-| Vorbelegung | Destatis, Median Bruttojahresverdienst Vollzeit; Durchschnittsalter | 2025 |
+| Ebene         | Quelle                                                                           | Stand           |
+| ------------- | -------------------------------------------------------------------------------- | --------------- |
+| Bund          | Haushaltsgesetz 2026, Einzelpläne (Soll)                                         | 2026            |
+| Länder        | Destatis, Rechnungsergebnisse des Öffentlichen Gesamthaushalts, Tabelle 71711-12 | 2022            |
+| Städte, Zweck | Durchschnitt der Gemeinden und Kreise je Land (gekennzeichnete Schätzung)        | 2022            |
+| Städte, Art   | Regionaldatenbank, Rechnungsergebnisse der kommunalen Kernhaushalte, 71717-Z-05  | 2025, vorläufig |
+| Städte, Lage  | Destatis, Gemeindeverzeichnis                                                    | 31.12.2025      |
+| Vorbelegung   | Destatis, Median Bruttojahresverdienst Vollzeit; Durchschnittsalter              | 2025            |
 
 Wie genau gerechnet wird, steht auf der Seite [So ist gerechnet](https://haushalts-check.vercel.app/methodik/). Für einzelne Städte gibt es amtlich keine Aufteilung nach Zweck; die Seite kennzeichnet diese Werte mit ≈.
 
@@ -51,14 +51,14 @@ npm ci
 npm run dev  # http://localhost:4321
 ```
 
-| Befehl | Zweck |
-| --- | --- |
-| `npm run check` | Lint, Typen, Unit- und Integrationstests |
+| Befehl             | Zweck                                                                |
+| ------------------ | -------------------------------------------------------------------- |
+| `npm run check`    | Lint, Typen, Unit- und Integrationstests                             |
 | `npm run test:e2e` | Playwright gegen den Produktions-Build, Desktop und Handy, inkl. axe |
-| `npm run format` | Formatieren und Importe sortieren (Biome) |
-| `npm run build` | Statischer Build nach `dist/` |
-| `npm run tokens` | `src/styles/tokens.css` aus dem Design-System erzeugen |
-| `npm run daten:*` | Daten neu laden: `laender`, `staedte`, `ausgabearten` |
+| `npm run format`   | Formatieren und Importe sortieren (Biome)                            |
+| `npm run build`    | Statischer Build nach `dist/`                                        |
+| `npm run tokens`   | `src/styles/tokens.css` aus dem Design-System erzeugen               |
+| `npm run daten:*`  | Daten neu laden: `laender`, `staedte`, `ausgabearten`                |
 
 ## Technik
 
