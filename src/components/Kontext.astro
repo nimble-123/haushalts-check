@@ -1,0 +1,13 @@
+---
+// Einordnung aus einer Studie unter einer Grafik: Satz, Vorbehalt, Quelle (Design-System: Kontext)
+import type { Studie } from '../data/studien';
+
+interface Props {
+  studie: Studie;
+}
+const { studie } = Astro.props;
+---
+<p class="rs-kontext">
+  {studie.text}{studie.vorbehalt && ` ${studie.vorbehalt}`}
+  <cite><a href={studie.quelle.url}>{studie.quelle.label}</a></cite>
+</p>

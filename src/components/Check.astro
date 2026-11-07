@@ -2,12 +2,14 @@
 import { ausgabeVergleich, gemeindeEbene, LAENDER, STAEDTE } from '../data';
 import { abstimmungSatz, BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTWURF_2027_GESAMT } from '../data/bund';
 import { MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
+import { STUDIEN } from '../data/studien';
 import type { Land, Stadt } from '../data/types';
 import { KONSUM } from '../lib/konsum';
 import { ergebnisSatz } from '../lib/satz';
 import type { SeitenDaten } from '../lib/seite';
 import { ANTEIL, berechne } from '../lib/steuer';
 import { pct, satzText } from '../lib/text';
+import Kontext from './Kontext.astro';
 
 interface Props {
   stadt: Stadt;
@@ -104,6 +106,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
       <ul class="rs-anteil-legende" id="anteil-lg" style="list-style:none;padding:0"></ul>
     </div>
     <div class="rs-kennzahlen figure" id="pk"></div>
+    <Kontext studie={STUDIEN.reform2027} />
 
     <details class="rs-aufklapper figure" data-neu-zeichnen>
       <summary><b>Dein Abgaben-Kalender</b><span id="cal-sum"></span></summary>
@@ -116,6 +119,8 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
       <p class="sub">Anteil vom Brutto bei gleichen Angaben. Gestrichelt: Beitragsbemessungsgrenzen, ab denen die Sozialabgaben nicht mehr steigen.</p>
       <div class="rs-panel"><svg id="quote" role="img" aria-label="Liniendiagramm: Abgabenquote gesamt, Steuern und Sozialabgaben in Prozent des Bruttos von 15.000 bis 160.000 Euro, mit Markierung deines Einkommens."></svg>
       <ul class="rs-legende" id="lg-quote"></ul></div>
+      <p class="sub" id="quote-grenze"></p>
+      <Kontext studie={STUDIEN.grenzbelastung} />
     </details>
   </section>
 
@@ -156,6 +161,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
         <h3>Was {stadt.name} tatsächlich ausgibt</h3>
         <p class="sub">Auszahlungen {arten.jahr}{arten.vorlaeufig ? ' (vorläufig)' : ''} nach Art, in € je Einwohner. Der Strich zeigt den Durchschnitt aller {arten.anzahl} kreisfreien Städte. Rechts dein Gemeindeanteil, nach denselben Anteilen verteilt.</p>
         <div class="rs-panel" id="arten"></div>
+        <Kontext studie={STUDIEN.kommunen} />
       </div>
     )}
 
@@ -199,6 +205,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
         </div>
         <ul class="rs-legende" id="lg-bund"></ul>
       </div>
+      <Kontext studie={STUDIEN.renteZuschuss} />
     </div>
 
     <div class="figure">
@@ -211,6 +218,8 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
       <h3>Entwicklung der Bundesausgaben</h3>
       <p class="sub">Kernhaushalt in Mrd €: 2025 und 2026 beschlossen, 2027 Entwurf, ab 2028 Finanzplan.</p>
       <div class="rs-panel"><svg id="entwicklung" role="img" aria-label={labelEntwicklung}></svg></div>
+      <Kontext studie={STUDIEN.zinsen2030} />
+      <Kontext studie={STUDIEN.sondervermoegen} />
     </div>
 
     <details class="rs-aufklapper figure">

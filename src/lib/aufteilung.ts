@@ -125,3 +125,12 @@ export function veraenderung2027() {
   });
   return zeilen.filter((z) => Math.abs(z.d) >= 0.05).sort((a, b) => b.d - a.d);
 }
+
+/** Grenzbelastung: Anteil von `schritt` € mehr Brutto, der an Lohnsteuer, Soli, Kirche und Sozialversicherung geht */
+export function grenzbelastung(e: Eingabe, schritt = 100) {
+  const abgaben = (brutto: number) => {
+    const c = berechne({ ...e, brutto });
+    return c.lohnsteuer + c.soli + c.kirche + summeSV(c);
+  };
+  return (abgaben(e.brutto + schritt) - abgaben(e.brutto)) / schritt;
+}
