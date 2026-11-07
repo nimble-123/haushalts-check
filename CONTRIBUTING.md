@@ -20,16 +20,16 @@ npx playwright install chromium
 
 ## Aufbau
 
-| Pfad                         | Inhalt                                                                                                            |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `src/pages/`                 | Seiten: Startseite, eine Seite je Stadt (`stadt/[slug].astro`), Rente, Städte, Methodik, Impressum, Datenschutz   |
-| `src/components/Check.astro` | Einstieg und die drei Kapitel der Hauptseite                                                                      |
-| `src/scripts/`               | Browser-Code: Diagramme (`check.ts`, `rente-seite.ts`, `viz.ts`), Speichern der Eingaben (`speicher.ts`)          |
-| `src/lib/`                   | Reine Rechenlogik ohne DOM: Lohnsteuer und Sozialabgaben, Rente vs. ETF, nächste Stadt                            |
-| `src/data/`                  | Haushaltsdaten als JSON und TypeScript; **erzeugt** von der Pipeline, nicht von Hand ändern                       |
-| `design-system/`             | Design-System „Raster“: `tokens.json` (einzige Quelle aller Farben und Maße), Komponenten-CSS, Doku je Komponente |
-| `pipeline/`                  | Skripte, die die amtlichen Daten laden und nach `src/data/` schreiben                                             |
-| `tests/`                     | Integrationstests (`integration/`) und E2E-Tests (`e2e/`); Unit-Tests liegen neben dem Code                       |
+| Pfad                         | Inhalt                                                                                                                              |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `src/pages/`                 | Seiten: Startseite, eine Seite je Stadt (`stadt/[slug].astro`), Rente, Städte, Methodik, Impressum, Datenschutz                     |
+| `src/components/Check.astro` | Einstieg und die drei Kapitel der Hauptseite                                                                                        |
+| `src/scripts/`               | Browser-Code: Diagramme (`check.ts`, `rente-seite.ts`, `viz.ts`), Übergänge (`bewegung.ts`), Speichern der Eingaben (`speicher.ts`) |
+| `src/lib/`                   | Reine Rechenlogik ohne DOM: Lohnsteuer und Sozialabgaben, Rente vs. ETF, nächste Stadt                                              |
+| `src/data/`                  | Haushaltsdaten als JSON und TypeScript; **erzeugt** von der Pipeline, nicht von Hand ändern                                         |
+| `design-system/`             | Design-System „Raster“: `tokens.json` (einzige Quelle aller Farben und Maße), Komponenten-CSS, Doku je Komponente                   |
+| `pipeline/`                  | Skripte, die die amtlichen Daten laden und nach `src/data/` schreiben                                                               |
+| `tests/`                     | Integrationstests (`integration/`) und E2E-Tests (`e2e/`); Unit-Tests liegen neben dem Code                                         |
 
 ## Arbeitsablauf
 

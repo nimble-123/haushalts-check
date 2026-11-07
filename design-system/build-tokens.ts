@@ -26,6 +26,7 @@ export interface Tokens {
   spacing?: { tokens: Token[] };
   radius?: { tokens: Token[] };
   size?: { tokens: Token[] };
+  motion?: { tokens: Token[] };
   type: { families: Record<string, string>; groups: { family: string; styles: Stil[] }[] };
 }
 /** Erzeugt tokens.css aus tokens.json (reine Funktion, damit sie testbar ist) */
@@ -39,7 +40,7 @@ export function tokensCss(t: Tokens) {
   };
   const colorBlock = (theme: string) =>
     [...t.color.tokens, ...(t.shadow?.tokens ?? [])].map((x) => `  --${x.name}: ${val(x.value, theme)};`).join('\n');
-  const plain = (['spacing', 'radius', 'size'] as const)
+  const plain = (['spacing', 'radius', 'size', 'motion'] as const)
     .flatMap((k) => t[k]?.tokens ?? [])
     .map((x) => `  --${x.name}: ${x.value};`);
   const fams = Object.entries(t.type.families).map(([k, v]) => `  --font-${k}: ${v};`);

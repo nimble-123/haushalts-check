@@ -69,7 +69,8 @@ test('Konsumsteuern: Checkbox senkt das Netto, verteilt auf die Ebenen und wird 
   await page.locator('#konsum').check();
   await expect(page.locator('#anteil-lg')).toContainText('Konsumsteuern ≈');
   await expect(netto).toContainText('nach Konsumsteuern');
-  expect(await netto.locator('b').textContent()).not.toBe(ohne);
+  // Die Kennzahl zählt zum neuen Betrag hoch: auf den Endstand warten
+  await expect(netto.locator('b')).not.toHaveText(ohne ?? '');
   await expect(ergebnis(page)).toContainText('Konsumsteuern');
   await expect(page.locator('#k2-konsum')).toBeVisible();
   const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
@@ -79,4 +80,29 @@ test('Konsumsteuern: Checkbox senkt das Netto, verteilt auf die Ebenen und wird 
   await expect(page.locator('#konsum')).toBeChecked();
   await expect(page.locator('#anteil-lg')).toContainText('Konsumsteuern ≈');
   f.pruefe();
+});
+
+test('Bewegung: Zeitraffer der Bundesausgaben startet erst im Bild', async ({ page }) => {
+  const f = fehlerSammeln(page);
+  await page.goto('/');
+  const svg = page.locator('#entwicklung');
+  await expect(svg.locator('.wachsen').first()).toBeAttached();
+  await expect(svg).not.toHaveClass(/rs-zeitraffer/);
+  await svg.scrollIntoViewIfNeeded();
+  await expect(svg).toHaveClass(/rs-zeitraffer/);
+  f.pruefe();
+});
+
+test.describe('Bewegung bei „weniger Bewegung“', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('kein Zeitraffer, neue Bänder stehen sofort', async ({ page }) => {
+    const f = fehlerSammeln(page);
+    await page.goto('/');
+    await expect(page.locator('#entwicklung rect').first()).toBeAttached();
+    await expect(page.locator('#entwicklung .wachsen')).toHaveCount(0);
+    await page.locator('#ag').check();
+    await expect(page.locator('#dein-fluss [data-k="n:ag"]')).toBeAttached();
+    await expect(page.locator('#dein-fluss [style*="opacity"]')).toHaveCount(0);
+    f.pruefe();
+  });
 });
