@@ -41,7 +41,7 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
       showTip(ev, `<b>Alter ${x0 + i}</b>` + series.map((s) => `${s.name}: ${fmtEur(s.data[i] ?? 0)}`).join('<br>'));
     })
     .on('mouseleave', () => { ch.style('opacity', 0); hideTip(); });
-  $('#' + legend).innerHTML = series.map((s) => `<li><span class="sw" style="background:${s.c}"></span>${s.name}</li>`).join('');
+  $('#' + legend).innerHTML = series.map((s) => `<li><span class="rs-farbe" style="background:${s.c}"></span>${s.name}</li>`).join('');
 }
 
 function gehaltskurve(m: RenteErgebnis) {
@@ -58,7 +58,7 @@ function gehaltskurve(m: RenteErgebnis) {
   svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - mg.b})`).call(d3.axisBottom(x).ticks(W < 420 ? 4 : 8).tickSizeOuter(0));
   const line = d3.line<[number, number | null]>().defined((d) => d[1] != null).x((d) => x(d[0])).y((d) => y(d[1]!));
   svg.append('path').datum(ages.map((a, i) => [a, nom[i]] as [number, number | null])).attr('fill', 'none').attr('stroke', css('--ink-3')).attr('stroke-width', 2).attr('stroke-dasharray', '5 4').attr('d', line);
-  svg.append('path').datum(ages.map((a, i) => [a, real[i]] as [number, number | null])).attr('fill', 'none').attr('stroke', css('--pen')).attr('stroke-width', 2.5).attr('d', line);
+  svg.append('path').datum(ages.map((a, i) => [a, real[i]] as [number, number | null])).attr('fill', 'none').attr('stroke', css('--cat-soz')).attr('stroke-width', 2.5).attr('d', line);
   const marks: [string, number][] = [['Einstieg', m.age]];
   if (m.useNow) marks.push(['Heute', m.ageNow]);
   marks.push(['Höhepunkt', m.ap], ['Rente', 66]);
@@ -66,11 +66,11 @@ function gehaltskurve(m: RenteErgebnis) {
   marks.forEach(([l, a]) => {
     const v = real[a - m.age]; if (v == null) return;
     const cx = x(a), cy = y(v), below = cx - prevX < 130 ? !prevBelow : false; prevX = cx; prevBelow = below;
-    svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', 5).attr('fill', css('--pen')).attr('stroke', css('--surface')).attr('stroke-width', 2);
+    svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', 5).attr('fill', css('--cat-soz')).attr('stroke', css('--surface')).attr('stroke-width', 2);
     svg.append('text').attr('x', cx).attr('y', below ? cy + 20 : cy - 11).attr('text-anchor', a === m.age ? 'start' : a >= 66 ? 'end' : 'middle')
       .text(`${l} ${a}: ${Math.round(v / 1000)} T€`).style('paint-order', 'stroke').style('stroke', css('--surface')).style('stroke-width', 4);
   });
-  $('#lg11s').innerHTML = `<li><span class="sw" style="background:${css('--pen')}"></span>Brutto in heutiger Kaufkraft</li><li><span class="sw" style="background:${css('--ink-3')}"></span>nominal, mit 2 % Inflation ab heute</li>`;
+  $('#lg11s').innerHTML = `<li><span class="rs-farbe" style="background:${css('--cat-soz')}"></span>Brutto in heutiger Kaufkraft</li><li><span class="rs-farbe" style="background:${css('--ink-3')}"></span>nominal, mit 2 % Inflation ab heute</li>`;
 }
 
 function zeichne() {
@@ -79,17 +79,17 @@ function zeichne() {
   el('preset').hidden = !life;
   el('pkvwrap').hidden = el<HTMLSelectElement>('kv').value !== 'pkv';
   const m = modell();
-  const fig = (v: string, l: string) => `<div class="fig"><span class="v">${v}</span><span class="l">${l}</span></div>`;
+  const fig = (v: string, l: string, mark = false) => `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${l}</span></div>`;
   const lastMonth = m.N ? (m.paid[m.N] - m.paid[m.N - 1]) / 12 : 0;
   $('#rk').innerHTML =
     fig(fmtEur(m.gross), `Rentenbeiträge in ${m.N} Jahren, brutto (AN und AG), ${m.EP.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Entgeltpunkte`) +
     fig(fmtEur(m.cumPaid), m.life ? `kosten dich netto, von ${fmtEur(m.firstNet)} bis ${fmtEur(lastMonth)} im Monat` : `kosten dich netto, etwa ${fmtEur(m.cumPaid / m.N / 12)} im Monat`) +
-    fig(fmtEur(m.renteN), `gesetzliche Rente ab 67, netto im Monat, lebenslang (${fmtEur(m.renteB)} brutto)`) +
+    fig(fmtEur(m.renteN), `deine gesetzliche Rente ab 67, netto im Monat, lebenslang (${fmtEur(m.renteB)} brutto)`, true) +
     fig(fmtEur(m.depotReal), 'ETF-Depot mit 67, Kaufkraft heute, nach Kosten und Steuern') +
-    fig(fmtEur(m.etfM), `ETF-Entnahme bis ${m.until}, netto im Monat, ${m.etfM > m.renteN ? 'mehr' : 'weniger'} als die Rente${m.cross ? `; die Rente holt mit ${m.cross} auf` : ''}`);
+    fig(fmtEur(m.etfM), `deine ETF-Entnahme bis ${m.until}, netto im Monat, ${m.etfM > m.renteN ? 'mehr' : 'weniger'} als die Rente${m.cross ? `; die Rente holt mit ${m.cross} auf` : ''}`, true);
   if (m.life) gehaltskurve(m);
-  linien('s11a', m.age, 67, [{ name: 'ETF-Depot (real)', data: m.acc, c: css('--pen'), w: 2.5 }, { name: 'Nettokosten der Beiträge', data: m.paid, c: css('--ink-3'), dash: '5 4' }], 'lg11a');
-  linien('s11b', 67, 100, [{ name: 'Gesetzliche Rente', data: m.cumR, c: css('--ink'), w: 2.5 }, { name: `ETF-Entnahmen bis ${m.until}`, data: m.cumE, c: css('--pen'), w: 2.5 }],
+  linien('s11a', m.age, 67, [{ name: 'ETF-Depot (real)', data: m.acc, c: css('--cat-soz'), w: 2.5 }, { name: 'Nettokosten der Beiträge', data: m.paid, c: css('--ink-3'), dash: '5 4' }], 'lg11a');
+  linien('s11b', 67, 100, [{ name: 'Gesetzliche Rente', data: m.cumR, c: css('--ink'), w: 2.5 }, { name: `ETF-Entnahmen bis ${m.until}`, data: m.cumE, c: css('--cat-soz'), w: 2.5 }],
     'lg11b', [84, 'Ø Lebenserwartung ≈ 83 (M) / 86 (F)']);
 }
 

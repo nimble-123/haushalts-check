@@ -22,6 +22,6 @@ export function ladeEingaben(ids: string[]) {
       const v = String(data[id]);
       const match = [...el.options].find((o) => o.value === v) ?? (id === 'kist' && v !== '0' ? el.options[1] : undefined);
       if (match) el.value = match.value;
-    } else el.value = String(data[id]);
+    } else el.value = el.type === 'number' ? String(data[id]).replace(/\./g, '') : String(data[id]);
   });
 }

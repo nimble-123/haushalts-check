@@ -14,12 +14,12 @@
     "check": "astro check && vitest run",
     "daten:laender": "pipeline/.venv/bin/python -I pipeline/laender.py",
     "daten:staedte": "pipeline/.venv/bin/python -I pipeline/staedte.py",
-    "daten:ausgabearten": "node --env-file=.env.local pipeline/ausgabearten.mjs"
+    "daten:ausgabearten": "node --env-file=.env.local pipeline/ausgabearten.mjs",
+    "tokens": "node design-system/build-tokens.mjs"
   },
   "dependencies": {
-    "@fontsource-variable/source-serif-4": "^5.3.1",
-    "@fontsource/barlow": "^5.3.0",
-    "@fontsource/barlow-semi-condensed": "^5.3.0",
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/hanken-grotesk": "^5.3.0",
     "astro": "^7.4.7",
     "d3": "^7.9.0",
     "d3-sankey": "^0.12.3"

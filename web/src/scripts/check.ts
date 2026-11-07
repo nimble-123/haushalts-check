@@ -10,7 +10,8 @@ interface P { name: string; v: number; g: Gruppe; rest?: boolean }
 let stadt: Stadt, land: Land, gem: GemeindeEbene, LAND_T = 0, GEM_T = 0;
 let unit: 'y' | 'm' = 'y';
 
-const gcol = (g: Gruppe) => css('--g-' + g);
+const gcol = (g: Gruppe) => css('--cat-' + g);
+const KIRCHE = () => css('--line');
 const sum = (a: { v: number }[]) => a.reduce((s, x) => s + x.v, 0);
 function topOf(arr: P[], n: number): P[] {
   const s = [...arr].sort((a, b) => b.v - a.v);
@@ -19,15 +20,17 @@ function topOf(arr: P[], n: number): P[] {
 }
 const epl = (n: number) => topOf(EINZELPLAENE.map((e) => ({ name: `EP ${e.n} ${e.name}`, v: e.v, g: e.g })), n);
 const legendGruppen = () =>
-  Object.entries(GRUPPEN).map(([k, l]) => `<li><span class="sw" style="background:${gcol(k as Gruppe)}"></span>${l}</li>`).join('');
-const legendSV = `<li><span class="sw hatch"></span>Sozialversicherung</li>`;
-const legendSchaetzung = () => (gem.schaetzung ? `<li>≈ geschätzt aus dem Durchschnitt der Gemeinden in ${land.name}</li>` : '');
+  Object.entries(GRUPPEN).map(([k, l]) => `<li><span class="rs-farbe" style="background:${gcol(k as Gruppe)}"></span>${l}</li>`).join('');
+const legendSV = `<li><span class="rs-farbe rs-hatch"></span>Sozialversicherung</li>`;
+const legendSchaetzung = () => (gem.schaetzung ? `<li>≈ Stadt geschätzt aus dem Durchschnitt der Gemeinden in ${land.name}</li>` : '');
 
 // ---------- Eingaben ----------
+const leseBetrag = (s: string) => Math.min(9_999_999, parseInt(s.replace(/\D/g, ''), 10) || 0);
+const schreibeBetrag = (v: number) => (v ? v.toLocaleString('de-DE') : '');
 const el = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
 function eingabe(bruttoOverride?: number): Eingabe {
   return {
-    brutto: bruttoOverride ?? (parseInt(el('brutto').value.replace(/\D/g, ''), 10) || 0),
+    brutto: bruttoOverride ?? leseBetrag(el('brutto').value),
     pkv: el<HTMLSelectElement>('kv').value === 'pkv',
     pkvMonat: +el('pkv').value || 0,
     kinderlos: el('kinderlos').checked,
@@ -38,7 +41,7 @@ function eingabe(bruttoOverride?: number): Eingabe {
 // ---------- Ergebnis-Satz und Kennzahlen ----------
 function satz(r: Ergebnis) {
   const e = aufEbenen(r);
-  const f = (v: number) => `<b>${fmtEur(v)}</b>`;
+  const f = (v: number) => `<b class="rs-mark">${fmtEur(v)}</b>`;
   const out = $('#result');
   if (!r.brutto) { out.innerHTML = 'Trag oben dein Jahresbrutto ein.'; return; }
   if (!r.lohnsteuer) { out.innerHTML = `Bei ${f(r.brutto)} Brutto fällt keine Lohnsteuer an. Deine Abgaben gehen nur an die Sozialversicherung: ${f(summeSV(r))} im Jahr.`; return; }
@@ -51,12 +54,20 @@ function satz(r: Ergebnis) {
 
 function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
   const abg = summeAbgaben(r);
-  const fig = (v: string, l: string) => `<div class="fig"><span class="v">${v}</span><span class="l">${l}</span></div>`;
+  const fig = (v: string, l: string, mark = false) => `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${l}</span></div>`;
   $('#pk').innerHTML =
-    fig(fmt(abg), `Abgaben, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`) +
+    fig(fmt(abg), `deine Abgaben, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`) +
     fig(fmt(r.lohnsteuer + r.soli), 'Lohnsteuer und Soli') +
     fig(fmt(summeSV(r)), 'Sozialabgaben, dein Anteil') +
-    fig(fmt(r.netto), r.pkv ? 'Netto nach PKV-Beitrag' : 'Netto (Näherung)');
+    fig(fmt(r.netto), r.pkv ? 'dein Netto nach PKV-Beitrag' : 'dein Netto (Näherung)', true);
+  // Anteilsbalken: Steuern, Sozialversicherung, PKV, Netto
+  const teile = ([['Steuern', r.lohnsteuer + r.soli + r.kirche, `background:${css('--ink')}`, ''], ['Sozialversicherung', summeSV(r), '', 'rs-hatch'],
+    ['PKV-Beitrag', r.pkvBeitrag, `background:${css('--line')}`, ''], ['Netto', r.netto, `background:${css('--marker')}`, '']] as const).filter((t) => t[1] > 0);
+  const a = $('#anteil');
+  a.setAttribute('aria-label', `${fmtEur(r.brutto)} Brutto: ` + teile.map(([n, v]) => `${n} ${fmtEur(v)}`).join(', '));
+  a.innerHTML = teile.map(([, v, st, cl]) => `<i class="${cl}" style="flex:${v};${st}"></i>`).join('');
+  $('#anteil-lg').innerHTML = teile.map(([n, v, st, cl]) =>
+    `<li><span class="rs-farbe ${cl}" style="${st}"></span>${n} <b${n === 'Netto' ? ' class="rs-mark"' : ''}>${fmt(v)}</b> <span style="color:var(--ink-3)">${r.brutto ? pct(v / r.brutto) : ''}</span></li>`).join('');
 }
 
 // ---------- Sankey deiner Abgaben ----------
@@ -70,7 +81,7 @@ function chartFluss(r: Ergebnis) {
   const add = (id: string, label: string, color: string, extra = {}) => nodes.push({ id, label, color, ...extra });
   add('brutto', showN ? 'Dein Brutto' : 'Deine Abgaben', css('--ink'), { bold: true, col: 0 });
   const agSum = withAG ? r.ag.rv + r.ag.alv + r.ag.kv + r.ag.pv : 0;
-  if (agSum > 0) add('ag', 'Arbeitgeberanteil', css('--g-kirche'), { col: 0 });
+  if (agSum > 0) add('ag', 'Arbeitgeberanteil', css('--line'), { col: 0 });
   if (r.lohnsteuer > 0) {
     add('lst', 'Lohnsteuer', css('--ink'), { col: 1 });
     links.push({ source: 'brutto', target: 'lst', value: r.lohnsteuer });
@@ -82,7 +93,7 @@ function chartFluss(r: Ergebnis) {
     links.push({ source: 'lst', target: 'gem', value: r.lohnsteuer * 0.15 });
   }
   if (r.soli > 0) { add('soli', 'Soli', css('--ink'), { col: 1 }); links.push({ source: 'brutto', target: 'soli', value: r.soli }, { source: 'soli', target: 'bund', value: r.soli }); }
-  if (r.kirche > 0) { add('ki', 'Kirchensteuer', css('--g-kirche'), { col: 1 }); links.push({ source: 'brutto', target: 'ki', value: r.kirche }); }
+  if (r.kirche > 0) { add('ki', 'Kirchensteuer', KIRCHE(), { col: 1 }); links.push({ source: 'brutto', target: 'ki', value: r.kirche }); }
   const ebene = (key: string, items: P[], total: number, betrag: number, prefix: string) =>
     items.forEach((p) => { const id = key + p.name; add(id, prefix + p.name, gcol(p.g), { col: 3 }); links.push({ source: key, target: id, value: (betrag * p.v) / total }); });
   if (e.bund > 0 && (show === 'all' || show === 'bund')) ebene('bund', epl(show === 'all' ? 7 : 13), BUND_GESAMT, e.bund, '');
@@ -92,12 +103,12 @@ function chartFluss(r: Ergebnis) {
     .forEach(([k, l, v, a]) => {
       if (v <= 0) return;
       add('sv_' + k, l, sv, { col: 1 });
-      links.push({ source: 'brutto', target: 'sv_' + k, value: v, color: css('--g-soz') });
-      if (agSum > 0) links.push({ source: 'ag', target: 'sv_' + k, value: a, color: css('--g-kirche') });
+      links.push({ source: 'brutto', target: 'sv_' + k, value: v, color: css('--cat-sv') });
+      if (agSum > 0) links.push({ source: 'ag', target: 'sv_' + k, value: a, color: css('--line') });
     });
   if (showN) {
-    if (r.pkvBeitrag > 0) { add('pkvb', 'PKV-Beitrag', css('--netto'), { col: 1 }); links.push({ source: 'brutto', target: 'pkvb', value: r.pkvBeitrag }); }
-    if (r.netto > 0) { add('netto', 'Netto', css('--netto'), { col: 1 }); links.push({ source: 'brutto', target: 'netto', value: r.netto }); }
+    if (r.pkvBeitrag > 0) { add('pkvb', 'PKV-Beitrag', css('--line'), { col: 1 }); links.push({ source: 'brutto', target: 'pkvb', value: r.pkvBeitrag }); }
+    if (r.netto > 0) { add('netto', 'Netto', css('--marker'), { col: 1 }); links.push({ source: 'brutto', target: 'netto', value: r.netto }); }
   }
   if (!links.length) { svg.selectAll('*').remove(); return; }
   drawSankey(svg, nodes, links, { h: show === 'all' ? 820 : 640, align: (d: any) => d.col, fmt, mr: 300, pad: 9,
@@ -112,7 +123,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   const items: { name: string; v: number; c: string }[] = [];
   ([['Rentenversicherung', r.rv], ['Krankenversicherung', r.kv], ['Pflegeversicherung', r.pv], ['Arbeitslosenversicherung', r.alv]] as const)
     .forEach(([n, v]) => v > 0 && items.push({ name: n, v, c: sv }));
-  if (r.kirche > 0) items.push({ name: 'Kirchensteuer', v: r.kirche, c: css('--g-kirche') });
+  if (r.kirche > 0) items.push({ name: 'Kirchensteuer', v: r.kirche, c: KIRCHE() });
   epl(10).forEach((p) => items.push({ name: 'Bund · ' + p.name.replace(/^EP \d+ /, ''), v: (e.bund * p.v) / BUND_GESAMT, c: gcol(p.g) }));
   topOf(land.posten, 7).forEach((p) => items.push({ name: 'Land · ' + p.name, v: (e.land * p.v) / LAND_T, c: gcol(p.g) }));
   topOf(gem.posten, 5).forEach((p) => items.push({ name: (gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ') + p.name, v: (e.gemeinde * p.v) / GEM_T, c: gcol(p.g) }));
@@ -154,18 +165,19 @@ function chartWasserfall(r: Ergebnis, fmt: (v: number) => string) {
   const x = d3.scaleLinear().domain([0, r.brutto || 1]).range([labW, W - 8]);
   svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - 20})`)
     .call(d3.axisBottom(x).ticks(narrow ? 3 : 6).tickFormat((v) => (+v / 1000).toLocaleString('de-DE') + ' T€').tickSizeOuter(0));
-  const col = { total: css('--pen'), tax: css('--ink'), sv, pkv: css('--netto') };
+  const col = { total: css('--ink'), tax: css('--ink'), sv, pkv: css('--line') };
+  const fuell = (d: S) => (d.name === 'Netto' ? css('--marker') : col[d.type]);
   const g = svg.selectAll('g.st').data(steps).join('g').attr('class', 'st').attr('transform', (_, i) => `translate(0,${i * rowH})`);
   g.append('rect').attr('width', W).attr('height', rowH).attr('fill', 'transparent')
     .on('mousemove', (ev, d) => showTip(ev, `<b>${d.name}</b>${d.type === 'total' ? '' : '− '}${fmt(d.v)}${r.brutto ? ' · ' + pct(d.v / r.brutto) : ''}`)).on('mouseleave', hideTip);
   g.append('text').attr('x', labW - 10).attr('y', rowH / 2).attr('dy', '.35em').attr('text-anchor', 'end')
     .text((d) => (d.type === 'total' ? '' : '− ') + ((narrow && KURZ[d.name]) || d.name)).style('font-weight', (d) => (d.type === 'total' ? 600 : 400)).style('pointer-events', 'none');
   g.append('rect').attr('x', (d) => x(d.start)).attr('width', (d) => Math.max(2, x(d.end) - x(d.start)))
-    .attr('y', 6).attr('height', rowH - 12).attr('rx', 4).attr('fill', (d) => col[d.type]).style('pointer-events', 'none');
+    .attr('y', 6).attr('height', rowH - 12).attr('rx', 2).attr('fill', fuell).style('pointer-events', 'none');
   const wide = (d: S) => x(d.end) - x(d.start) > 78 && (d.type === 'total' || d.type === 'tax');
   g.append('text').attr('class', 'val').attr('y', rowH / 2).attr('dy', '.35em')
     .attr('x', (d) => (wide(d) ? x(d.start) + 7 : x(d.start) - 7)).attr('text-anchor', (d) => (wide(d) ? 'start' : 'end'))
-    .style('fill', (d) => (wide(d) ? css('--surface') : null)).style('font-weight', (d) => (wide(d) ? 600 : null))
+    .style('fill', (d) => (wide(d) ? (d.name === 'Netto' ? css('--on-marker') : css('--paper')) : null)).style('font-weight', (d) => (wide(d) ? 650 : null))
     .text((d) => fmt(d.v)).style('pointer-events', 'none');
 }
 
@@ -188,7 +200,7 @@ function chartQuote(r: Ergebnis) {
     svg.append('line').attr('x1', x(v)).attr('x2', x(v)).attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--ink-3')).attr('stroke-dasharray', '3 3');
     svg.append('text').attr('class', 'muted').attr('x', x(v) + 4).attr('y', H - m.b - 8 - (narrow ? i * 14 : 0)).text(narrow ? l.replace('BBG ', '') : l);
   });
-  const series: [keyof (typeof data)[0], string, string, number][] = [['tot', 'Gesamt', css('--ink'), 2.5], ['t', 'Steuern', css('--ink-3'), 2], ['sv', 'Sozialabgaben', css('--g-soz'), 2]];
+  const series: [keyof (typeof data)[0], string, string, number][] = [['tot', 'Gesamt', css('--ink'), 2.5], ['t', 'Steuern', css('--ink-3'), 2], ['sv', 'Sozialabgaben', css('--cat-soz'), 2]];
   if (base.pkv) series.splice(2, 1);
   series.forEach(([k, l, c, w]) => {
     svg.append('path').datum(data).attr('fill', 'none').attr('stroke', c).attr('stroke-width', w).attr('d', d3.line<(typeof data)[0]>().x((d) => x(d.B)).y((d) => y(d[k] as number)));
@@ -196,9 +208,9 @@ function chartQuote(r: Ergebnis) {
   });
   if (r.brutto >= 15000 && r.brutto <= 160000) {
     const me = summeAbgaben(r) / r.brutto;
-    svg.append('circle').attr('cx', x(r.brutto)).attr('cy', y(me)).attr('r', 6).attr('fill', css('--pen')).attr('stroke', css('--surface')).attr('stroke-width', 2);
+    svg.append('circle').attr('cx', x(r.brutto)).attr('cy', y(me)).attr('r', 6).attr('fill', css('--marker')).attr('stroke', css('--ink')).attr('stroke-width', 2);
     svg.append('text').attr('x', x(r.brutto)).attr('y', y(me) - 13).attr('text-anchor', 'middle').text('Du: ' + pct(me))
-      .style('font-weight', 600).style('fill', css('--pen')).style('paint-order', 'stroke').style('stroke', css('--surface')).style('stroke-width', 4);
+      .style('font-weight', 650).style('fill', css('--ink')).style('paint-order', 'stroke').style('stroke', css('--surface')).style('stroke-width', 4);
   }
   const ch = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--ink-2')).style('opacity', 0);
   svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
@@ -208,8 +220,8 @@ function chartQuote(r: Ergebnis) {
       showTip(ev, `<b>${fmtEur(d.B)} Brutto</b>Gesamt ${pct(d.tot)}<br>Steuern ${pct(d.t)}${base.pkv ? '' : '<br>Sozialabgaben ' + pct(d.sv)}`);
     })
     .on('mouseleave', () => { ch.style('opacity', 0); hideTip(); });
-  $('#lg5').innerHTML = series.map(([, l, c]) => `<li><span class="sw" style="background:${c}"></span>${l}</li>`).join('') +
-    `<li><span class="sw" style="background:${css('--pen')};border-radius:50%"></span>dein Einkommen</li>`;
+  $('#lg5').innerHTML = series.map(([, l, c]) => `<li><span class="rs-farbe" style="background:${c}"></span>${l}</li>`).join('') +
+    `<li><span class="rs-farbe" style="background:${css('--marker')};border-radius:50%;box-shadow:inset 0 0 0 1.5px ${css('--ink')}"></span>dein Einkommen</li>`;
 }
 
 // ---------- Zweck-Aufteilung, Waffel ----------
@@ -222,18 +234,26 @@ function nachZweck(r: Ergebnis) {
   gem.posten.forEach((p) => (acc[p.g] += (e.gemeinde * p.v) / GEM_T));
   const lab: Record<string, string> = { sv: 'Sozialversicherung', kirche: 'Kirchensteuer', ...GRUPPEN };
   return ['sv', 'soz', 'sich', 'for', 'inf', 'zins', 'verw', 'kirche']
-    .map((k) => ({ k, name: lab[k], v: acc[k], style: k === 'sv' ? '' : `background:${k === 'kirche' ? css('--g-kirche') : gcol(k as Gruppe)}` }))
+    .map((k) => ({ k, name: lab[k], v: acc[k], style: k === 'sv' ? '' : k === 'kirche' ? '' : `background:${gcol(k as Gruppe)}`, cls: k === 'sv' ? 'rs-hatch' : k === 'kirche' ? 'rs-hohl' : '' }))
     .filter((d) => d.v > 0);
 }
-function chartWaffel(r: Ergebnis, fmt: (v: number) => string) {
-  const cats = nachZweck(r).map((d) => ({ ...d, raw: 0, n: 0 })), tot = sum(cats), box = $('#waffle');
-  if (!tot) { box.innerHTML = ''; return; }
+function chartRaster(r: Ergebnis, fmt: (v: number) => string) {
+  const cats = nachZweck(r).map((d) => ({ ...d, raw: 0, n: 0 })), tot = sum(cats);
+  const raster = $('#raster'), liste = $('#zweck');
+  if (!tot) { raster.innerHTML = '<i></i>'.repeat(100); liste.innerHTML = ''; return; }
   cats.forEach((d) => { d.raw = (d.v / tot) * 100; d.n = Math.floor(d.raw); });
   const rest = 100 - cats.reduce((s, d) => s + d.n, 0);
   [...cats].sort((a, b) => b.raw - b.n - (a.raw - a.n)).slice(0, rest).forEach((d) => d.n++);
-  const cls = (d: (typeof cats)[0]) => (d.k === 'sv' ? ' class="hatch-bg"' : '');
-  box.innerHTML = `<div class="waffle-row"><div class="waffle" role="img" aria-label="${cats.map((d) => `${d.name} ${d.n} €`).join(', ')}">${cats.flatMap((d) => Array(d.n).fill(`<i${cls(d)} style="${d.style}"></i>`)).join('')}</div>
-    <ul class="wlist">${cats.map((d) => `<li><span><span class="sw${d.k === 'sv' ? ' hatch' : ''}" style="${d.style}"></span>${d.name}</span><span class="num"><b>${d.n} €</b> · ${fmt(d.v)}</span></li>`).join('')}</ul></div>`;
+  raster.setAttribute('aria-label', 'Von 100 € deiner Abgaben: ' + cats.map((d) => `${d.n} € ${d.name}`).join(', '));
+  // Kästchen behalten, nur umfärben: so blendet der Übergang (0,3 s) bei jeder Eingabe
+  if (raster.children.length !== 100) raster.innerHTML = '<i></i>'.repeat(100);
+  const zellen = cats.flatMap((d) => Array(d.n).fill(d));
+  [...raster.children].forEach((c, i) => {
+    const d = zellen[i];
+    (c as HTMLElement).className = d?.cls === 'rs-hohl' ? '' : (d?.cls ?? '');
+    (c as HTMLElement).style.cssText = d?.k === 'kirche' ? `box-shadow:inset 0 0 0 1.5px ${css('--ink-3')};background:transparent` : (d?.style ?? '');
+  });
+  liste.innerHTML = cats.map((d) => `<li><span class="rs-farbe ${d.cls}" style="${d.style}"></span><span>${d.name}</span><span><b>${d.n} €</b><small>${fmt(d.v)}</small></span></li>`).join('');
 }
 
 // ---------- Kalender ----------
@@ -242,18 +262,18 @@ function chartKalender(r: Ergebnis) {
   const e = aufEbenen(r);
   const rows = ([['Rentenversicherung', r.rv, 'sv'], ['Kranken- und Pflegevers.', r.kv + r.pv, 'sv'], ['Arbeitslosenvers.', r.alv, 'sv'],
     ['Bund (Lohnsteuer-Anteil und Soli)', e.bund, 'tax'], [`Land ${land.name}`, e.land, 'tax'], [stadt.name, e.gemeinde, 'tax'],
-    ['Kirche', r.kirche, 'kirche'], ['PKV-Beitrag', r.pkvBeitrag, 'netto'], ['Für dich (Netto)', r.netto, 'pen']] as const).filter((d) => d[1] > 0);
+    ['Kirche', r.kirche, 'kirche'], ['PKV-Beitrag', r.pkvBeitrag, 'pkv'], ['Für dich (Netto)', r.netto, 'netto']] as const).filter((d) => d[1] > 0);
   const Y = new Date(2026, 0, 1), dayMs = 864e5, days = 365;
   const fd = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' });
-  const bg = { sv: '', tax: `background:${css('--ink')}`, kirche: `background:${css('--g-kirche')}`, netto: `background:${css('--netto')}`, pen: `background:${css('--pen')}` };
+  const bg = { sv: '', tax: `background:${css('--ink')}`, kirche: `box-shadow:inset 0 0 0 1.5px ${css('--ink-3')}`, pkv: `background:${css('--line')}`, netto: `background:${css('--marker')}` };
   let acc = 0;
   const html = rows.map(([n, v, c]) => {
     const s = (acc / r.brutto) * days, en = ((acc + v) / r.brutto) * days; acc += v;
     const ds = new Date(Y.getTime() + Math.floor(s) * dayMs), de = new Date(Y.getTime() + Math.max(Math.floor(s), Math.ceil(en) - 1) * dayMs);
-    return `<div class="cal-row"><span>${n}</span><span class="cal-bar"><i${c === 'sv' ? ' class="hatch-bg"' : ''} style="left:${(s / days) * 100}%;width:${Math.max(0.4, ((en - s) / days) * 100)}%;${bg[c]}"></i></span><span class="cal-d num">${fd(ds)} – ${fd(de)}</span></div>`;
+    return `<div class="cal-row"><span>${n}</span><span class="cal-bar"><i${c === 'sv' ? ' class="rs-hatch"' : ''} style="left:${(s / days) * 100}%;width:${Math.max(0.4, ((en - s) / days) * 100)}%;${bg[c]}"></i></span><span class="cal-d num">${fd(ds)} – ${fd(de)}</span></div>`;
   }).join('');
   const frei = new Date(Y.getTime() + Math.floor(((r.brutto - r.netto) / r.brutto) * days) * dayMs);
-  box.innerHTML = `<p class="cal-lead">Ab dem <b class="pen">${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</b> arbeitest du rechnerisch für dich selbst.</p>${html}`;
+  box.innerHTML = `<p class="cal-lead">Ab dem <b class="rs-mark">${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</b> arbeitest du rechnerisch für dich selbst.</p>${html}`;
 }
 
 // ---------- Tabelle ----------
@@ -262,7 +282,7 @@ function tabelle(r: Ergebnis) {
   const money = (v: number) => (v * f).toLocaleString('de-DE', { maximumFractionDigits: unit === 'm' ? 2 : 0, minimumFractionDigits: unit === 'm' ? 2 : 0 }) + ' €';
   const head = (t: string) => `<tr><th colspan="3" scope="colgroup" style="text-align:left;padding-top:18px;color:var(--ink);font-size:15px;font-weight:600">${t}</th></tr>`;
   const rows = (arr: P[], tot: number, amt: number) => [...arr].sort((a, b) => b.v - a.v)
-    .map((p) => `<tr><td><span class="sw" style="background:${gcol(p.g)};margin-right:8px"></span>${p.name}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`).join('') +
+    .map((p) => `<tr><td><span class="rs-farbe" style="background:${gcol(p.g)};margin-right:8px"></span>${p.name}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`).join('') +
     `<tr><td><b>Summe</b></td><td>100 %</td><td><b>${money(amt)}</b></td></tr>`;
   $('#tsub').textContent = `Lohnsteuer und Soli je Ebene anteilig auf deren Ausgaben umgelegt, ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}.`;
   $('#tcount').textContent = `${EINZELPLAENE.length + land.posten.length + gem.posten.length} Posten von Bund, ${land.name} und ${stadt.name}`;
@@ -275,14 +295,14 @@ function tabelle(r: Ergebnis) {
 
 // ---------- Bundeshaushalt (unabhängig von deinen Eingaben) ----------
 function bundKennzahlen() {
-  const fig = (v: string, l: string) => `<div class="fig"><span class="v ink">${v}</span><span class="l">${l}</span></div>`;
+  const fig = (v: string, l: string) => `<div class="rs-kennzahl"><b>${v}</b><span>${l}</span></div>`;
   $('#bk').innerHTML = fig(fmtMrd(BUND_GESAMT), 'Ausgaben 2026') + fig(fmtMrd(EINNAHMEN[0].v), `Steuereinnahmen, ${pct(EINNAHMEN[0].v / BUND_GESAMT)} der Ausgaben`) +
     fig(fmtMrd(EINNAHMEN[1].v), `neue Kredite, ${pct(EINNAHMEN[1].v / BUND_GESAMT)} der Ausgaben`);
 }
 function chartBund() {
   const svg = d3.select<SVGSVGElement, unknown>('#s1');
   const nodes: any[] = [], links: any[] = [];
-  const shade = { steuer: css('--ink-2'), kredit: css('--ink-3'), sonst: css('--g-verw') };
+  const shade = { steuer: css('--ink-2'), kredit: css('--ink-3'), sonst: css('--cat-verw') };
   EINNAHMEN.forEach((i) => nodes.push({ id: 'in_' + i.k, label: i.name, color: shade[i.k] }));
   nodes.push({ id: 'hub', label: 'Bundeshaushalt', color: css('--ink'), bold: true });
   EINNAHMEN.forEach((i) => links.push({ source: 'in_' + i.k, target: 'hub', value: i.v, color: shade[i.k] }));
@@ -347,12 +367,19 @@ function chartEntwicklung() {
   svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', css('--rule'));
 }
 
+/** Zeile im zugeklappten „Weitere Angaben“: was gerade eingestellt ist */
+function zusammenfassung() {
+  const kv = el<HTMLSelectElement>('kv').value === 'pkv' ? 'privat versichert' : 'gesetzlich versichert';
+  const ki = +el<HTMLSelectElement>('kist').value ? 'mit Kirchensteuer' : 'keine Kirchensteuer';
+  $('#mehr-sum').textContent = `${kv}, ${ki}, ${el('kinderlos').checked ? 'kinderlos' : 'mit Kindern'}`;
+}
+
 // ---------- Ablauf ----------
 function persoenlich() {
   const r = berechne(eingabe());
   const fmt = (v: number) => fmtEur(v * (unit === 'm' ? 1 / 12 : 1));
   satz(r); kennzahlen(r, fmt); chartWasserfall(r, fmt); chartKalender(r); chartQuote(r);
-  chartFluss(r); chartToepfe(r, fmt); chartWaffel(r, fmt); tabelle(r);
+  chartFluss(r); chartToepfe(r, fmt); chartRaster(r, fmt); tabelle(r); zusammenfassung();
 }
 function alles() { persoenlich(); bundKennzahlen(); chartBund(); chartTreemap(); chart2027(); chartEntwicklung(); }
 
@@ -367,10 +394,13 @@ export function start() {
   syncPkv();
 
   const brutto = el('brutto');
+  // Während des Tippens nur Ziffern und Punkte zulassen; beim Verlassen mit Tausenderpunkten formatieren
+  brutto.value = schreibeBetrag(leseBetrag(brutto.value));
   brutto.addEventListener('input', () => {
-    const clean = brutto.value.replace(/\D/g, '').slice(0, 7);
+    const clean = brutto.value.replace(/[^\d.]/g, '');
     if (clean !== brutto.value) brutto.value = clean;
   });
+  brutto.addEventListener('change', () => { brutto.value = schreibeBetrag(leseBetrag(brutto.value)); });
   ids.forEach((id) => el(id).addEventListener('input', () => { syncPkv(); speichereEingaben(ids); persoenlich(); }));
   el<HTMLSelectElement>('stadt').addEventListener('change', (ev) => {
     speichereEingaben(ids);

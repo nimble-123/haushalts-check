@@ -1,7 +1,7 @@
 """Stammliste aller kreisfreien Städte → src/data/staedte/<slug>.json
 
 Quelle: Destatis Gemeindeverzeichnis (GV-ISys), Kreisfreie Städte und Landkreise, Stand 31.12.2024.
-Ausgabearten je Stadt ergänzt pipeline/ausgabearten.py (braucht Zugang zu regionalstatistik.de).
+Ausgabearten je Stadt ergänzt pipeline/ausgabearten.mjs (braucht Zugang zu regionalstatistik.de).
 
 Aufruf (aus web/):  pipeline/.venv/bin/python -I pipeline/staedte.py
 """
@@ -55,7 +55,12 @@ def main():
     assert len({s['slug'] for s in staedte}) == len(staedte), 'Slugs nicht eindeutig'
 
     ZIEL.mkdir(parents=True, exist_ok=True)
+    # Bereits abgerufene Ausgabearten (pipeline/ausgabearten.mjs) nach AGS merken, damit sie erhalten bleiben
+    alt = {}
     for f in ZIEL.glob('*.json'):
+        d = json.loads(f.read_text())
+        if 'ausgabearten' in d:
+            alt[d['ags']] = d['ausgabearten']
         f.unlink()
     for s in staedte:
         datei = ZIEL / f"{s['slug']}.json"
@@ -63,6 +68,8 @@ def main():
             'slug': s['slug'], 'ags': s['ags'], 'land': s['land'], 'name': s['name'], 'amtlich': s['amtlich'],
             'einwohner': s['einwohner'], 'stadtstaat': s['land'] in STADTSTAATEN,
         }
+        if s['ags'] in alt:
+            stadt['ausgabearten'] = alt[s['ags']]
         datei.write_text(json.dumps(stadt, ensure_ascii=False, indent=2) + '\n')
     print(len(staedte), 'kreisfreie Städte geschrieben;',
           sum(1 for s in staedte if s['land'] in STADTSTAATEN), 'davon in Stadtstaaten.')

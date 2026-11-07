@@ -1,0 +1,160 @@
+/* Raster – Komponenten. Liest nur Tokens (tokens.css); keine eigenen Farbwerte. */
+
+/* ---------- Grundlagen ---------- */
+.rs-root, .rs-root * , .rs-root *::before, .rs-root *::after { box-sizing: border-box; }
+.rs-root {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--font-text); font-size: 17px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: tabular-nums;
+}
+.rs-root :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.rs-hatch {
+  background-image: repeating-linear-gradient(45deg, var(--cat-sv) 0 2px, transparent 2px 5px);
+  box-shadow: inset 0 0 0 1px var(--cat-sv);
+}
+
+/* ---------- Raster: 100 Kästchen = 100 € ---------- */
+.rs-raster {
+  display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px;
+  width: 100%; max-width: 360px; aspect-ratio: 1;
+}
+.rs-raster > i {
+  border-radius: var(--radius-cell); background-color: var(--surface);
+  transition: background-color 0.3s ease-out;
+}
+.rs-raster > i.rs-hatch { background-color: var(--paper); }
+@media (prefers-reduced-motion: reduce) { .rs-raster > i { transition: none; } }
+
+/* ---------- Markierung: deine Beträge ---------- */
+.rs-mark {
+  background: var(--marker); color: var(--on-marker);
+  padding: 0.04em 0.22em; margin: 0 -0.06em; border-radius: var(--radius-cell);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  font-weight: 650; white-space: nowrap;
+}
+
+/* ---------- Eingaben im Satz ---------- */
+.rs-satz { font-size: 21px; line-height: 2.2; margin: 0; max-width: 32em; text-wrap: pretty; }
+.rs-betrag, .rs-auswahl {
+  font: inherit; font-weight: 650; color: var(--ink); line-height: 1.3;
+  background: var(--surface); border: 0; border-bottom: 2px solid var(--ink);
+  border-radius: var(--radius-control) var(--radius-control) 0 0;
+  min-height: var(--hit); padding: 0 0.35em; vertical-align: baseline;
+  transition: background-color 0.12s ease-out;
+}
+.rs-betrag { width: 5.6em; text-align: right; font-variant-numeric: tabular-nums; }
+.rs-auswahl {
+  appearance: none; -webkit-appearance: none; max-width: 100%;
+  padding-right: 1.4em; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: calc(100% - 0.75em) 55%, calc(100% - 0.45em) 55%;
+  background-size: 0.3em 0.3em; background-repeat: no-repeat;
+}
+.rs-betrag:hover, .rs-auswahl:hover { background-color: var(--rule); }
+
+/* ---------- Felder (Formular) ---------- */
+.rs-felder { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); }
+.rs-feld { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.rs-feld > span { font-size: 13.5px; font-weight: 550; color: var(--ink-2); }
+.rs-feld select, .rs-feld input {
+  font: 500 16px/1.2 var(--font-text); color: var(--ink);
+  min-height: var(--hit); padding: 0 var(--space-3);
+  background: var(--paper); border: 0; border-radius: var(--radius-control);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.rs-schalter { display: inline-flex; align-items: center; gap: var(--space-3); min-height: var(--hit); cursor: pointer; font-size: 16px; }
+.rs-schalter input {
+  appearance: none; -webkit-appearance: none; margin: 0; flex: none;
+  width: 22px; height: 22px; border-radius: 6px; background: var(--paper);
+  box-shadow: inset 0 0 0 1.5px var(--line); display: grid; place-items: center; cursor: pointer;
+  transition: background-color 0.12s ease-out, box-shadow 0.12s ease-out;
+}
+.rs-schalter input::after {
+  content: ''; width: 6px; height: 11px; margin-top: -2px;
+  border-right: 2.5px solid var(--paper); border-bottom: 2.5px solid var(--paper);
+  rotate: 45deg; scale: 0.25; opacity: 0; transition: scale 0.15s cubic-bezier(0.2, 0, 0, 1), opacity 0.15s ease-out;
+}
+.rs-schalter input:checked { background: var(--ink); box-shadow: none; }
+.rs-schalter input:checked::after { scale: 1; opacity: 1; }
+
+/* ---------- Segment ---------- */
+.rs-segment { display: inline-flex; padding: 4px; gap: 2px; border-radius: 12px; background: var(--surface); }
+.rs-segment button {
+  font: 550 15px var(--font-text); color: var(--ink-2); background: transparent; border: 0;
+  min-height: 40px; padding: 0 var(--space-4); border-radius: var(--radius-control); cursor: pointer;
+  transition-property: background-color, color, scale; transition-duration: 0.12s; transition-timing-function: ease-out;
+}
+.rs-segment button[aria-pressed='true'] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(20, 22, 31, 0.12); }
+.rs-segment button:active { scale: 0.96; }
+
+/* ---------- Kennzahl ---------- */
+.rs-kennzahlen { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--space-6) var(--space-8); }
+.rs-kennzahl { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.rs-kennzahl b {
+  font: 600 30px/1.1 var(--font-display); font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+}
+.rs-kennzahl b.rs-mark { align-self: flex-start; font-weight: 650; }
+.rs-kennzahl span { font-size: 15px; line-height: 1.4; color: var(--ink-2); }
+
+/* ---------- Anteilsbalken ---------- */
+.rs-anteil { display: flex; gap: 2px; height: 28px; width: 100%; }
+.rs-anteil > i { min-width: 2px; border-radius: var(--radius-cell); }
+.rs-anteil-legende { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin-top: var(--space-3); font-size: 15px; }
+.rs-anteil-legende li { display: flex; align-items: baseline; gap: var(--space-2); }
+
+/* ---------- Panel ---------- */
+.rs-panel { background: var(--surface); border-radius: var(--radius-panel); padding: var(--space-6); min-width: 0; }
+.rs-panel > .rs-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* ---------- Legende ---------- */
+.rs-legende { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); list-style: none; margin: var(--space-4) 0 0; padding: 0; font-size: 13.5px; font-weight: 550; color: var(--ink-2); }
+.rs-legende li { display: inline-flex; align-items: center; gap: var(--space-2); }
+.rs-farbe { width: 12px; height: 12px; border-radius: var(--radius-cell); flex: none; display: inline-block; }
+.rs-farbe.rs-hohl { box-shadow: inset 0 0 0 1.5px var(--ink-3); }
+
+/* ---------- Schätzung ---------- */
+.rs-schaetzung {
+  display: inline-flex; align-items: center; gap: 6px; vertical-align: 0.1em;
+  font: 600 12.5px/1 var(--font-text); color: var(--ink-2);
+  padding: 5px 10px; border-radius: var(--radius-pill); box-shadow: inset 0 0 0 1px var(--line);
+}
+
+/* ---------- Aufklapper ---------- */
+.rs-aufklapper > summary {
+  list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px var(--space-4);
+  min-height: var(--hit); padding: var(--space-3) 0 var(--space-3) 30px; position: relative;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.rs-aufklapper > summary::-webkit-details-marker { display: none; }
+.rs-aufklapper > summary::before {
+  content: ''; position: absolute; left: 6px; top: 50%; width: 8px; height: 8px; margin-top: -6px;
+  border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); rotate: -45deg;
+  transition: rotate 0.15s ease-out;
+}
+.rs-aufklapper[open] > summary::before { rotate: 45deg; }
+.rs-aufklapper > summary b { font: 650 19px/1.35 var(--font-text); }
+.rs-aufklapper > summary span { color: var(--ink-3); font-size: 15px; }
+.rs-aufklapper[open] > summary { margin-bottom: var(--space-4); }
+
+/* ---------- Kapitel ---------- */
+.rs-kapitel { display: grid; gap: var(--space-2); padding-top: var(--space-4); border-top: 3px solid var(--ink); margin-bottom: var(--space-8); }
+.rs-kapitel h2 { font: 650 32px/1.1 var(--font-display); letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+.rs-kapitel p { margin: 0; color: var(--ink-2); max-width: var(--measure); }
+
+/* ---------- Tooltip ---------- */
+.rs-tip {
+  position: fixed; z-index: 20; pointer-events: none; max-width: 280px;
+  background: var(--paper); color: var(--ink); box-shadow: var(--shadow-pop);
+  border-radius: var(--radius-control); padding: var(--space-2) var(--space-3);
+  font-size: 14px; line-height: 1.4; font-variant-numeric: tabular-nums;
+  opacity: 0; transition: opacity 0.1s ease-out;
+}
+.rs-tip b { display: block; font-weight: 650; }
+
+/* ---------- Tabelle ---------- */
+.rs-tabelle { width: 100%; max-width: 820px; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+.rs-tabelle th, .rs-tabelle td { padding: var(--space-2) 6px; border-bottom: 1px solid var(--rule); text-align: right; }
+.rs-tabelle th:first-child, .rs-tabelle td:first-child { text-align: left; }
+.rs-tabelle td:not(:first-child) { white-space: nowrap; }
+.rs-tabelle thead th { font-size: 13.5px; font-weight: 550; color: var(--ink-2); }

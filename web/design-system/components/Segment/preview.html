@@ -1,0 +1,7 @@
+<!-- @dsCard group="Eingabe" height=110 -->
+<div class="rs-root" style="padding:24px">
+  <div class="rs-segment" role="group" aria-label="Zeitraum"><button type="button" aria-pressed="true">pro Jahr</button><button type="button" aria-pressed="false">pro Monat</button></div>
+</div>
+<script>
+  document.querySelectorAll('.rs-segment button').forEach((b, _, all) => b.onclick = () => all.forEach((x) => x.setAttribute('aria-pressed', String(x === b))));
+</script>

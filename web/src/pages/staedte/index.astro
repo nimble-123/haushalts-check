@@ -7,7 +7,7 @@ const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.
 <Base title="Alle kreisfreien Städte | Haushalts-Check" description={`Haushalts-Check für alle ${STAEDTE.length} kreisfreien Städte in Deutschland: wie viel deiner Lohnsteuer an deine Stadt, dein Land und den Bund geht.`}>
   <div class="page">
     <h1>Alle {STAEDTE.length} kreisfreien Städte</h1>
-    <p class="prose lead">Wähl deine Stadt. Für Landkreise und kreisangehörige Gemeinden gibt es noch keine eigene Seite; dort passt die Stadt deines Landes als Näherung.</p>
+    <p class="prose intro">Wähl deine Stadt. Für Landkreise und kreisangehörige Gemeinden gibt es noch keine eigene Seite; dort passt die Stadt deines Landes als Näherung.</p>
     <div class="cols">
       {gruppen.map((g) => (
         <section>
@@ -21,12 +21,12 @@ const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.
   </div>
 </Base>
 <style>
-  h1 { font-size: clamp(34px, 6vw, 56px); margin: 40px 0 12px; }
-  .lead { color: var(--ink-2); margin-bottom: 40px; }
+  h1 { font: 700 clamp(38px, 6vw, 52px)/1.02 var(--font-display); letter-spacing: -0.025em; margin: 48px 0 12px; }
+  .intro { color: var(--ink-2); margin-bottom: 40px; font-size: 19px; }
   .cols { columns: 260px; column-gap: 40px; }
   section { break-inside: avoid; margin-bottom: 28px; }
-  h2 { font-size: 20px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); margin-bottom: 4px; }
+  h2 { font: 650 20px/1.2 var(--font-display); padding-bottom: 8px; border-bottom: 3px solid var(--ink); margin-bottom: 4px; }
   ul { list-style: none; margin: 0; padding: 0; }
   a { display: flex; align-items: center; min-height: 40px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
-  a:hover { color: var(--pen); }
+  a:hover { background: var(--surface); }
 </style>

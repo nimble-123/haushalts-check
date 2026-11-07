@@ -1,0 +1,11 @@
+<!-- @dsCard group="Grundlagen" height=400 -->
+<div class="rs-root" style="padding:24px;display:flex;gap:32px;flex-wrap:wrap;align-items:center">
+  <div class="rs-raster" id="r" role="img" aria-label="Von 100 € Abgaben: 50 € Sozialversicherung, 14 € Soziales, 6 € Sicherheit, 8 € Bildung, 5 € Infrastruktur, 2 € Zinsen, 15 € Verwaltung" style="width:300px"></div>
+  <ul class="rs-legende" style="flex-direction:column;margin:0" id="l"></ul>
+</div>
+<script>
+  const teile = [['Sozialversicherung',50,'sv'],['Soziales, Jugend, Gesundheit',14,'soz'],['Sicherheit und Außen',6,'sich'],['Bildung und Forschung',8,'for'],['Infrastruktur',5,'inf'],['Zinsen',2,'zins'],['Verwaltung und Übriges',15,'verw']];
+  const r = document.getElementById('r');
+  r.innerHTML = teile.flatMap(([, n, k]) => Array(n).fill(k === 'sv' ? '<i class="rs-hatch"></i>' : '<i style="background:var(--cat-' + k + ')"></i>')).join('');
+  document.getElementById('l').innerHTML = teile.map(([t, n, k]) => '<li><span class="rs-farbe ' + (k === 'sv' ? 'rs-hatch' : '') + '" style="' + (k === 'sv' ? '' : 'background:var(--cat-' + k + ')') + '"></span>' + n + ' € ' + t + '</li>').join('');
+</script>
