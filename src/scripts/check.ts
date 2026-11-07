@@ -59,7 +59,10 @@ const epl = (n: number) =>
   );
 const legendGruppen = () =>
   Object.entries(GRUPPEN)
-    .map(([k, l]) => `<li><span class="rs-farbe" style="background:${gcol(k as Gruppe)}"></span>${l}</li>`)
+    .map(
+      ([k, l]) =>
+        `<li><span class="rs-farbe" style="background:${gcol(k as Gruppe)}${k === 'verw' ? ';box-shadow:inset 0 0 0 1px var(--line)' : ''}"></span>${l}</li>`,
+    )
     .join('');
 const legendSV = `<li><span class="rs-farbe rs-hatch"></span>Sozialversicherung</li>`;
 const legendSchaetzung = () =>

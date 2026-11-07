@@ -107,6 +107,11 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
   const links_ = g.links as SVerbindung[];
   const knoten_ = g.nodes as Gelegt[];
   const surface = css('--surface');
+  // Bänder deckender im Dunkeln, weil dunkle Farben auf dunklem Grund sonst verschwinden
+  const dunkel = getComputedStyle(document.documentElement).colorScheme === 'dark';
+  const deckkraft = dunkel ? 0.55 : 0.45;
+  const verw = css('--cat-verw'),
+    linie = css('--line');
 
   svg
     .append('g')
@@ -116,16 +121,16 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
     .join('path')
     .attr('d', sankeyLinkHorizontal())
     .attr('stroke', (d) => d.color || d.target.color)
-    .attr('stroke-opacity', 0.32)
+    .attr('stroke-opacity', deckkraft)
     .attr('stroke-width', (d) => Math.max(1, d.width ?? 1))
     .on('mousemove', (e: MouseEvent, d) =>
       showTip(e, `<b>${d.source.label} → ${d.target.label}</b>${opt.fmt(d.value)}`),
     )
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke-opacity', 0.6);
+      d3.select(this).attr('stroke-opacity', 0.75);
     })
     .on('mouseleave', function () {
-      d3.select(this).attr('stroke-opacity', 0.32);
+      d3.select(this).attr('stroke-opacity', deckkraft);
       hideTip();
     });
 
@@ -137,6 +142,9 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
     .attr('height', (d: Gelegt) => Math.max(1.5, d.y1 - d.y0))
     .attr('rx', 2)
     .attr('fill', (d: Gelegt) => d.color)
+    // Verwaltungsgrau hebt sich kaum von der Fläche ab: feine Kontur als zweites Merkmal
+    .attr('stroke', (d: Gelegt) => (d.color === verw ? linie : null))
+    .attr('stroke-width', 1)
     .on('mousemove', (e: MouseEvent, d: Gelegt) =>
       showTip(e, `<b>${d.label}</b>${opt.fmt(d.value)}${opt.share ? `<br>${opt.share(d)}` : ''}`),
     )

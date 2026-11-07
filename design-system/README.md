@@ -20,7 +20,8 @@ Raster ist das Design-System des Haushalts-Checks: einer Seite, die zeigt, wohin
 - `marker` nur für persönliche Beträge und das Netto. Nie für Überschriften, Flächen oder Links.
 - Zweck-Farben nur in Diagrammen und ihren Legenden, immer in dieser Zuordnung:
   `cat-soz` Soziales, Jugend und Gesundheit · `cat-sich` Sicherheit und Außen · `cat-for` Bildung, Forschung und Kultur · `cat-inf` Infrastruktur und Wirtschaft · `cat-zins` Zinsen · `cat-verw` Verwaltung, Pensionen und Übriges.
-  Die sechs sind für alle Paare auf Farbfehlsichtigkeit geprüft (hell: ΔE ≥ 11,0 bzw. 16,0 normal; dunkel: ≥ 10,6 bzw. 15,5). Drei sind Farbtöne, drei sind Graustufen, die sich in der Helligkeit klar unterscheiden.
+  Die sechs sind für alle Paare auf Farbfehlsichtigkeit geprüft (hell: ΔE ≥ 8,0 bzw. 15,2 normal; dunkel: ≥ 10,6 bzw. 15,5). Drei sind Farbtöne, drei sind Graustufen, die sich in der Helligkeit klar unterscheiden.
+- `cat-verw` hat nur wenig Abstand zur Fläche (1,4:1 hell, 2:1 dunkel): Diagramme zeichnen solche Flächen mit 1px-Kontur in `line`. Flussbänder im Sankey sind 45 % (hell) bzw. 55 % (dunkel) deckend, beim Überfahren 75 %.
 - Sozialversicherung ist keine Haushaltsebene: Sie erscheint als 45°-Schraffur in `cat-sv` (Klasse `rs-hatch`), nie als Vollfläche.
 - Kirchensteuer als hohles Kästchen (`rs-farbe rs-hohl`), weil sie keinem Staatszweck dient.
 - Jedes Diagramm beschriftet seine Elemente direkt und hat eine Legende; Farbe ist nie das einzige Merkmal.
