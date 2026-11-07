@@ -13,6 +13,37 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # E2E und Lighthouse nur, wenn ein PR die ausgelieferte Seite oder ihre Tests betrifft.
+  # Auf main laufen immer alle Prüfungen.
+  bereiche:
+    name: Betroffene Bereiche
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      seite: ${{ steps.pruefen.outputs.seite }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: pruefen
+        name: Betrifft die Änderung die Seite?
+        env:
+          EREIGNIS: ${{ github.event_name }}
+        run: |
+          if [ "$EREIGNIS" != "pull_request" ]; then
+            echo "seite=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # HEAD ist der Merge-Commit des PR, HEAD^1 der aktuelle Stand des Ziel-Branches
+          git diff --name-only HEAD^1 HEAD | tee geaendert.txt
+          SEITE='^(src/|public/|design-system/(tokens\.json|components/bundle\.css)|tests/e2e/|astro\.config\.ts|playwright\.config\.ts|lighthouserc\.json|package(-lock)?\.json|tsconfig\.json|\.nvmrc|\.github/workflows/ci\.yml)'
+          if grep -v '\.test\.ts$' geaendert.txt | grep -qE "$SEITE"; then
+            echo "seite=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "seite=false" >> "$GITHUB_OUTPUT"
+            echo "Keine Änderung an der Seite: E2E und Lighthouse entfallen." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
   pruefen:
     name: Lint, Typen, Tests, Build
     runs-on: ubuntu-latest
@@ -42,7 +73,8 @@ jobs:
     name: E2E (Playwright, Desktop und Mobil)
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: pruefen
+    needs: [pruefen, bereiche]
+    if: needs.bereiche.outputs.seite == 'true'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -50,8 +82,21 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Playwright-Version
+        id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Chromium aus dem Cache
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
       - name: Chromium für Playwright
+        if: steps.pw-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
+      - name: Systempakete für Chromium
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
       - name: E2E-Tests
         run: npm run test:e2e
       - name: Bericht bei Fehlern
@@ -66,7 +111,8 @@ jobs:
     name: Lighthouse (Performance, Barrierefreiheit, Best Practices, SEO)
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: pruefen
+    needs: [pruefen, bereiche]
+    if: needs.bereiche.outputs.seite == 'true'
     permissions:
       contents: read
       statuses: write # Lighthouse CI setzt je Seite einen Commit-Status mit Link zum Bericht
