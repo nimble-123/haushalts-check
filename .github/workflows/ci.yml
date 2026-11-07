@@ -19,11 +19,16 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Commit-Nachrichten (Conventional Commits)
+        if: github.event_name == 'pull_request'
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
       - name: Lint und Format (Biome)
         run: npm run lint
       - name: Typen (astro check + tsc)
@@ -62,6 +67,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: pruefen
+    permissions:
+      contents: read
+      statuses: write # Lighthouse CI setzt je Seite einen Commit-Status mit Link zum Bericht
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -71,3 +79,5 @@ jobs:
       - run: npm ci
       - name: Lighthouse CI gegen den Build
         run: npm run lighthouse
+        env:
+          LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

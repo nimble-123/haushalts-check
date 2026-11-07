@@ -27,13 +27,18 @@ updates:
       # Typen passend zur Laufzeit: Node 24 (.nvmrc, Vercel, CI); Major nur zusammen mit der Node-Version
       - dependency-name: "@types/node"
         update-types: [version-update:semver-major]
+    # Conventional Commits: „build(deps): …“ und „build(deps-dev): …“
     commit-message:
-      prefix: deps
+      prefix: build
+      prefix-development: build
+      include: scope
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
       day: monday
+    # Conventional Commits: „ci(deps): …“
     commit-message:
       prefix: ci
+      include: scope

@@ -44,7 +44,15 @@ npx playwright install chromium
    ```
 4. Pull Request mit ausgefüllter Vorlage. Die CI führt dieselben Prüfungen aus.
 
-Commit-Nachrichten auf Deutsch, erste Zeile als kurzer Satz im Präsens oder als Stichwort („Sankey: besserer Kontrast für Grautöne“), darunter bei Bedarf eine Liste der Änderungen.
+Commit-Nachrichten folgen [Conventional Commits](https://www.conventionalcommits.org/de/v1.0.0/): Typ auf Englisch, optional ein Bereich, Beschreibung auf Deutsch, darunter bei Bedarf eine Liste der Änderungen.
+
+```text
+feat(stadt): Ausgabearten je Einwohner im Vergleich
+fix(sankey): besserer Kontrast für Grautöne
+docs: Datenquellen in der README ergänzt
+```
+
+Typen: `feat`, `fix`, `refactor`, `perf`, `test`, `docs`, `style`, `build`, `ci`, `chore`, `revert`. `npm install` richtet über [lefthook](https://lefthook.dev) zwei Git-Hooks ein: `commit-msg` prüft die Nachricht mit commitlint, `pre-commit` formatiert die gestagten Dateien mit Biome. Die CI prüft die Commits eines Pull Requests noch einmal. Gemergt wird per Squash oder Rebase, der PR-Titel folgt daher demselben Format.
 
 ## Daten aktualisieren
 

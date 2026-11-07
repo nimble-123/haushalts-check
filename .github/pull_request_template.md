@@ -1,5 +1,6 @@
 ## Worum geht es?
 
+<!-- PR-Titel als Conventional Commit, z. B. „feat(stadt): Ausgabearten im Vergleich“ – er wird zur Commit-Nachricht. -->
 <!-- Was ändert sich für Nutzer:innen oder an den Daten? Ein, zwei Sätze. -->
 
 ## Art der Änderung
