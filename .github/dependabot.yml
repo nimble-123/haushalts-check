@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: weekly
       day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
     open-pull-requests-limit: 5
     groups:
       # Kleinere Updates bündeln, Major-Versionen einzeln prüfen
@@ -38,6 +40,8 @@ updates:
     schedule:
       interval: weekly
       day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
     # Conventional Commits: „ci(deps): …“
     commit-message:
       prefix: ci
