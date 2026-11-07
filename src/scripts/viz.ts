@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { type SankeyLink, type SankeyNode, sankey, sankeyJustify, sankeyLinkHorizontal } from 'd3-sankey';
+import { type SankeyLink, type SankeyNode, sankey, sankeyJustify } from 'd3-sankey';
 
 /** Ein SVG, unabhängig davon, wie es ausgewählt wurde */
 export type Svg = d3.Selection<SVGSVGElement, unknown, d3.BaseType, unknown>;
@@ -98,6 +98,21 @@ interface SankeyOpt {
   pad?: number;
 }
 
+/**
+ * Band als Fläche mit oberer und unterer Kante. Eine einzige dicke Linie (stroke-width = Bandbreite)
+ * verformt sich zu Beulen, sobald das Band stärker gekrümmt ist als es breit ist, etwa beim großen
+ * Netto-Band neben dem Arbeitgeberanteil.
+ */
+function band(d: SVerbindung) {
+  const h = Math.max(1, d.width ?? 1) / 2;
+  const x0 = (d.source as Gelegt).x1,
+    x1 = (d.target as Gelegt).x0,
+    xm = (x0 + x1) / 2;
+  const y0 = d.y0 ?? 0,
+    y1 = d.y1 ?? 0;
+  return `M${x0},${y0 - h}C${xm},${y0 - h} ${xm},${y1 - h} ${x1},${y1 - h}L${x1},${y1 + h}C${xm},${y1 + h} ${xm},${y0 + h} ${x0},${y0 + h}Z`;
+}
+
 export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: SankeyOpt) {
   clear(svg);
   const box = svg.node()!.parentElement!.clientWidth;
@@ -116,6 +131,14 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
       [W - (opt.mr ?? 190), H - 6],
     ]);
   const g = sk({ nodes: nodes.map((d) => ({ ...d })), links: links.map((d) => ({ ...d })) });
+  // Bänder an jedem Knoten nach der endgültigen Lage ordnen: d3-sankey sortiert nur während der
+  // Durchläufe; rücken Knoten danach noch zusammen, kreuzen Bänder unnötig (etwa zur Rentenversicherung
+  // quer über das Netto). Danach Bandpositionen neu berechnen.
+  for (const n of g.nodes) {
+    n.sourceLinks?.sort((a, b) => ((a.target as SKnoten).y0 ?? 0) - ((b.target as SKnoten).y0 ?? 0));
+    n.targetLinks?.sort((a, b) => ((a.source as SKnoten).y0 ?? 0) - ((b.source as SKnoten).y0 ?? 0));
+  }
+  sk.update(g);
   const links_ = g.links as SVerbindung[];
   const knoten_ = g.nodes as Gelegt[];
   const surface = css('--surface');
@@ -127,22 +150,20 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
 
   svg
     .append('g')
-    .attr('fill', 'none')
     .selectAll('path')
     .data(links_)
     .join('path')
-    .attr('d', sankeyLinkHorizontal())
-    .attr('stroke', (d) => d.color || d.target.color)
-    .attr('stroke-opacity', deckkraft)
-    .attr('stroke-width', (d) => Math.max(1, d.width ?? 1))
+    .attr('d', band)
+    .attr('fill', (d) => d.color || d.target.color)
+    .attr('fill-opacity', deckkraft)
     .on('mousemove', (e: MouseEvent, d) =>
       showTip(e, `<b>${esc(d.source.label)} → ${esc(d.target.label)}</b>${opt.fmt(d.value)}`),
     )
     .on('mouseenter', function () {
-      d3.select(this).attr('stroke-opacity', 0.75);
+      d3.select(this).attr('fill-opacity', 0.75);
     })
     .on('mouseleave', function () {
-      d3.select(this).attr('stroke-opacity', deckkraft);
+      d3.select(this).attr('fill-opacity', deckkraft);
       hideTip();
     });
 
