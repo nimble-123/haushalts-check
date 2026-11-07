@@ -31,7 +31,8 @@
     "daten:konsum": "node pipeline/konsum.ts",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "lighthouse": "npm run build && npx -y @lhci/cli@0.16.0 autorun",
+    "lighthouse": "npm run build && npm run lhci",
+    "lhci": "npx -y @lhci/cli@0.16.0 autorun",
     "prepare": "git rev-parse --git-dir > /dev/null 2>&1 || exit 0; lefthook install"
   },
   "dependencies": {

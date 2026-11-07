@@ -19,8 +19,9 @@ export default defineConfig({
   ],
   // Gegen den echten Produktions-Build testen
   webServer: {
-    // --ignore-lock: unabhängig von einem lokal schon laufenden Vorschau-Server
-    command: `npm run build && npx astro preview --port ${PORT} --host 127.0.0.1 --ignore-lock`,
+    // --ignore-lock: unabhängig von einem lokal schon laufenden Vorschau-Server.
+    // In der CI liegt dist/ schon aus dem Build-Job bereit (E2E_OHNE_BUILD).
+    command: `${process.env.E2E_OHNE_BUILD ? '' : 'npm run build && '}npx astro preview --port ${PORT} --host 127.0.0.1 --ignore-lock`,
     url: `http://127.0.0.1:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

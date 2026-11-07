@@ -7,6 +7,6 @@ commit-msg:
 pre-commit:
   commands:
     biome:
-      glob: "*.{ts,js,json,astro,css,md}"
+      glob: "*.{ts,js,json,astro,css,md,yml,yaml}"
       run: npx --no -- biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
