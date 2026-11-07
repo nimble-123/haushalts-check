@@ -25,7 +25,7 @@ import {
   summeAbgaben,
   summeSV,
 } from '../lib/steuer';
-import { satzText } from '../lib/text';
+import { fmtMrdDelta, satzText, zeitraum } from '../lib/text';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
   $,
@@ -304,7 +304,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
     .text((d) => fmt(d.v))
     .style('pointer-events', 'none');
   $('#barsub').textContent =
-    `Alle Ziele deiner Abgaben ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}; kleine Posten je Ebene sind zusammengefasst.`;
+    `Alle Ziele deiner Abgaben ${zeitraum(unit)}; kleine Posten je Ebene sind zusammengefasst.`;
   $('#toepfe-sum').textContent = items.length ? `größter Topf: ${items[0].name} mit ${fmt(items[0].v)}` : '';
   $('#lg3').innerHTML = legendSV + legendGruppen() + legendSchaetzung();
 }
@@ -562,7 +562,7 @@ function chartArten(r: Ergebnis, fmt: (v: number) => string) {
     </div>`;
       })
       .join('') +
-    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(stadt.name)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}</li></ul>`;
+    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(stadt.name)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${zeitraum(unit)}</li></ul>`;
 }
 
 // ---------- Kalender ----------
@@ -635,8 +635,7 @@ function tabelle(r: Ergebnis) {
           `<tr><td><span class="rs-farbe" style="background:${gcol(p.g)};margin-right:8px"></span>${esc(p.name)}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`,
       )
       .join('')}<tr><td><b>Summe</b></td><td>100 %</td><td><b>${money(amt)}</b></td></tr>`;
-  $('#tsub').textContent =
-    `Lohnsteuer und Soli je Ebene anteilig auf deren Ausgaben umgelegt, ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}.`;
+  $('#tsub').textContent = `Lohnsteuer und Soli je Ebene anteilig auf deren Ausgaben umgelegt, ${zeitraum(unit)}.`;
   $('#tcount').textContent =
     `${EINZELPLAENE.length + land.posten.length + gem.posten.length} Posten von Bund, ${land.name} und ${stadt.name}`;
   $('#tbl th.uy').textContent = unit === 'm' ? '€ / Monat' : '€ / Jahr';
@@ -727,7 +726,7 @@ function chartTreemap() {
     .text((d) => blatt(d).name)
     .style('font-weight', 600)
     .style('pointer-events', 'none')
-    .style('fill', (d) => (light(blatt(d).g) ? '#1c1f24' : '#fff'))
+    .style('fill', (d) => (light(blatt(d).g) ? css('--on-hell') : css('--on-dunkel')))
     .each(function (d) {
       const w = d.x1 - d.x0 - 12;
       let t = blatt(d).name;
@@ -744,7 +743,7 @@ function chartTreemap() {
     .text((d) => fmtMrd(blatt(d).v))
     .style('font-size', '12px')
     .style('pointer-events', 'none')
-    .style('fill', (d) => (light(blatt(d).g) ? '#1c1f24' : '#fff'));
+    .style('fill', (d) => (light(blatt(d).g) ? css('--on-hell') : css('--on-dunkel')));
 }
 function chart2027() {
   const svg = d3.select<SVGSVGElement, unknown>('#s9');
@@ -794,7 +793,7 @@ function chart2027() {
     .attr('height', bh)
     .attr('rx', 4)
     .attr('fill', (d) => gcol(d.g))
-    .on('mousemove', (ev, d) => showTip(ev, `<b>${esc(d.name)}</b>${(d.d > 0 ? '+' : '') + fmtMrd(d.d)}`))
+    .on('mousemove', (ev, d) => showTip(ev, `<b>${esc(d.name)}</b>${fmtMrdDelta(d.d)}`))
     .on('mouseleave', hideTip);
   g.append('text')
     .attr('x', narrow ? 0 : labW - 10)
@@ -808,12 +807,7 @@ function chart2027() {
     .attr('dy', '.35em')
     .attr('x', (d) => (d.d >= 0 ? x(d.d) + 6 : x(d.d) - 6))
     .attr('text-anchor', (d) => (d.d >= 0 ? 'start' : 'end'))
-    .text(
-      (d) =>
-        (d.d > 0 ? '+' : '−') +
-        Math.abs(d.d).toLocaleString('de-DE', { maximumFractionDigits: 1, minimumFractionDigits: 1 }) +
-        ' Mrd',
-    );
+    .text((d) => fmtMrdDelta(d.d).replace(/\u00a0€$/, ''));
 }
 function chartEntwicklung() {
   const svg = d3.select<SVGSVGElement, unknown>('#s10');
@@ -1035,22 +1029,22 @@ export function start() {
     location.href = `/stadt/${(ev.target as HTMLSelectElement).value}/`;
   });
   document.querySelectorAll<HTMLButtonElement>('#unit button').forEach((b) => {
-    b.onclick = () => {
+    b.addEventListener('click', () => {
       unit = b.dataset.u as 'y' | 'm';
       document.querySelectorAll('#unit button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
       persoenlich();
-    };
+    });
   });
   document.querySelectorAll<HTMLButtonElement>('#bundansicht button').forEach((b) => {
-    b.onclick = () => {
+    b.addEventListener('click', () => {
       bundAnsicht = b.dataset.ansicht as 'fluss' | 'flaeche';
       document.querySelectorAll('#bundansicht button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
       bund();
-    };
+    });
   });
   // Zugeklappte Diagramme haben keine Breite: beim Aufklappen neu zeichnen
   document.querySelectorAll<HTMLDetailsElement>('details[data-neu-zeichnen]').forEach((d) => {

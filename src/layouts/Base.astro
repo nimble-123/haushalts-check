@@ -72,6 +72,7 @@ const nav = [
     <div class="rs-tip" id="tip" role="presentation"></div>
     {analytics && <Analytics />}
     <script>
+      import { THEMA_KEY } from '../scripts/thema-start';
       const knopf = document.getElementById('thema') as HTMLButtonElement;
       const dunkel = () => document.documentElement.dataset.theme === 'dark'
         || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
@@ -83,7 +84,7 @@ const nav = [
       knopf.addEventListener('click', () => {
         const neu = dunkel() ? 'light' : 'dark';
         document.documentElement.dataset.theme = neu;
-        try { localStorage.setItem('haushalts-check-thema', neu); } catch {}
+        try { localStorage.setItem(THEMA_KEY, neu); } catch { /* privates Fenster: Wahl gilt nur bis zum Neuladen */ }
         zeige();
       });
       matchMedia('(prefers-color-scheme: dark)').addEventListener('change', zeige);

@@ -27,14 +27,9 @@ type Gelegt = SKnoten & { x0: number; x1: number; y0: number; y1: number; value:
 export const $ = (sel: string) => document.querySelector(sel) as HTMLElement;
 export const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
-import { esc, fmtEur } from '../lib/text';
+import { esc, fmtEur, fmtMrd, pct } from '../lib/text';
 
-export { esc, fmtEur };
-
-export const fmtMrd = (v: number) =>
-  `${v.toLocaleString('de-DE', { maximumFractionDigits: 1, minimumFractionDigits: 1 })} Mrd €`;
-export const pct = (v: number) =>
-  `${(v * 100).toLocaleString('de-DE', { maximumFractionDigits: 1, minimumFractionDigits: 1 })} %`;
+export { esc, fmtEur, fmtMrd, pct };
 
 /** Innenbreite des Panels, in dem das SVG steckt */
 export function width(svg: Svg) {

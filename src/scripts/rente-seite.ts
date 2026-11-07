@@ -347,7 +347,7 @@ export function startRente() {
     });
   });
   document.querySelectorAll<HTMLButtonElement>('#preset button').forEach((b) => {
-    b.onclick = () => {
+    b.addEventListener('click', () => {
       const p = VORLAGEN[b.dataset.p as keyof typeof VORLAGEN];
       el('c_a0').value = String(p.einstiegsalter);
       el('c_s0').value = String(p.einstiegsgehalt);
@@ -359,7 +359,7 @@ export function startRente() {
       document.querySelectorAll('#preset button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
-    };
+    });
   });
   // Nur bei geänderter Breite neu zeichnen (auf dem Handy ändert die Adressleiste ständig die Höhe)
   let t: number;

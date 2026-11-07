@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { EINZELPLAENE } from '../../src/data/bund';
 import { fehlerSammeln } from './helfer';
 
 test.beforeEach(async ({ page }) => {
@@ -44,5 +45,5 @@ test('Bundeshaushalt: Umschalten zwischen Fluss und Fläche', async ({ page }) =
   await page.getByRole('button', { name: 'Als Fläche' }).click();
   await expect(page.locator('#ansicht-flaeche')).toBeVisible();
   await expect(page.locator('#ansicht-fluss')).toBeHidden();
-  await expect(page.locator('#s6 rect')).toHaveCount(26);
+  await expect(page.locator('#s6 rect')).toHaveCount(EINZELPLAENE.length);
 });
