@@ -598,8 +598,7 @@ function tabelle(r: Ergebnis) {
       maximumFractionDigits: ansicht.einheit === 'm' ? 2 : 0,
       minimumFractionDigits: ansicht.einheit === 'm' ? 2 : 0,
     })} €`;
-  const head = (t: string) =>
-    `<tr><th colspan="3" scope="colgroup" style="text-align:left;padding-top:18px;color:var(--ink);font-size:15px;font-weight:600">${esc(t)}</th></tr>`;
+  const head = (t: string) => `<tr><th colspan="3" scope="colgroup" class="rs-zwischen">${esc(t)}</th></tr>`;
   const rows = (arr: P[], tot: number, amt: number) =>
     `${[...arr]
       .sort((a, b) => b.v - a.v)

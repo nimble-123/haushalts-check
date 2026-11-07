@@ -472,6 +472,14 @@
   font-weight: 550;
   color: var(--ink-2);
 }
+/* Zwischenzeile je Ebene („Bund: 4.878 € …“) */
+.rs-tabelle th.rs-zwischen {
+  text-align: left;
+  padding-top: 18px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+}
 
 /* ---------- Themenschalter ---------- */
 .rs-thema {

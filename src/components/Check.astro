@@ -223,7 +223,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
               <tr><td>EP {e.n} {e.name}</td><td>{(e.v / BUND_GESAMT * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %</td><td>{e.v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td></tr>
             ))}
             <tr><td><b>Ausgaben gesamt</b></td><td>100 %</td><td><b>{BUND_GESAMT.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b></td></tr>
-            <tr><th colspan="3" scope="colgroup" class="zwischen">Finanziert durch</th></tr>
+            <tr><th colspan="3" scope="colgroup" class="rs-zwischen">Finanziert durch</th></tr>
             {EINNAHMEN.map((e) => (
               <tr><td>{e.name}</td><td>{(e.v / BUND_GESAMT * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %</td><td>{e.v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td></tr>
             ))}
@@ -280,6 +280,5 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
   .ohne-js { color: var(--ink-2); font-size: 15px; }
   .datenstand { color: var(--ink-3); font-size: 14.5px; margin-top: var(--space-12); }
   .datenstand a { color: inherit; }
-  .zwischen { text-align: left; padding-top: 18px; color: var(--ink); font-size: 15px; font-weight: 600; }
   .weiter { font-size: 19px; font-weight: 600; }
 </style>
