@@ -66,13 +66,13 @@ npm run dev  # http://localhost:4321
 - **TypeScript** durchgängig, auch Daten-Pipeline und Konfiguration (Node 24 führt `.ts` direkt aus).
 - **Design-System „Raster“** in [`design-system/`](design-system/README.md): Tokens als einzige Quelle, Komponenten mit Dokumentation, Diagrammfarben auf Farbfehlsichtigkeit geprüft.
 - **Tests**: Vitest (Rechenlogik, Datenkonsistenz aller Länder und Städte, Tokens, Speicher) und Playwright mit axe.
-- **Keine Drittanbieter im Browser**: Schriften und Bibliotheken werden mitgebaut, kein Tracking, keine Cookies.
+- **Keine Drittanbieter im Browser**: Schriften und Bibliotheken werden mitgebaut, keine Cookies; Reichweite misst Vercel Web Analytics datensparsam über die eigene Domain.
 
 Aufbau, Arbeitsablauf und Konventionen: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Datenschutz
 
-Alle Berechnungen laufen im Browser. Eingaben, Stadt und Theme speichert nur der Browser selbst (localStorage); „Eingaben vergessen“ löscht sie. Der Standort wird nur auf Wunsch abgefragt und nur im Browser in die nächste Stadt umgerechnet. Details in der [Datenschutzerklärung](https://haushalts-check.vercel.app/datenschutz/).
+Alle Berechnungen laufen im Browser; die Reichweitenmessung (Vercel Web Analytics) kommt ohne Cookies aus und erfasst keine Eingaben. Eingaben, Stadt und Theme speichert nur der Browser selbst (localStorage); „Eingaben vergessen“ löscht sie. Der Standort wird nur auf Wunsch abgefragt und nur im Browser in die nächste Stadt umgerechnet. Details in der [Datenschutzerklärung](https://haushalts-check.vercel.app/datenschutz/).
 
 ## Lizenz
 
