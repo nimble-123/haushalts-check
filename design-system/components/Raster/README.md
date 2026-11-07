@@ -7,3 +7,5 @@ Das Raster zeigt 100 € als 10 × 10 Kästchen, gefärbt nach Zweck; es ist das
 **Aufbau:** `<div class="rs-raster" role="img" aria-label="…">` mit 100 `<i>`. Das `aria-label` nennt alle Anteile in Worten.
 
 **Nicht:** als Hintergrundmuster, mit mehr oder weniger als 100 Kästchen, mit Beschriftung in den Kästchen. Die Zahlen stehen daneben (Anteilsliste).
+
+**Bewegung:** Klasse `rs-auftritt` für den einmaligen Auftritt, `rs-schimmer` für den gelegentlichen Schimmer; je Kästchen die Variablen `--d` (Auftritt/Schimmer, 30 ms × Diagonale) und `--welle` (Umfärben, 12 ms × Diagonale). Fokus auf einen Zweck: Klasse `rs-fokus` am Raster und `rs-im-fokus` an dessen Kästchen.

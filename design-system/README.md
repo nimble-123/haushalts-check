@@ -42,8 +42,12 @@ Raster ist das Design-System des Haushalts-Checks: einer Seite, die zeigt, wohin
 
 ## Bewegung
 
-- Ein einziger orchestrierter Moment: Beim Laden und bei jeder Eingabe färben sich die Rasterkästchen in 0,3 s um (`ease-out`). Sonst nur Rückmeldung auf Handlungen: Hover-Flächen (0,12 s), Druck auf Segment-Knöpfe (`scale 0.96`), das Aufklappen.
-- `prefers-reduced-motion` schaltet alle Übergänge ab.
+- Ein orchestrierter Moment: Beim ersten Zeichnen erscheint das Raster als diagonale Welle (je Kästchen 30 ms später, 0,55 s, `cubic-bezier(0.2, 0, 0, 1)`).
+- Bei jeder Eingabe färben sich die Kästchen mit derselben Diagonale um (12 ms je Schritt, 0,35 s `ease-out`), damit sichtbar wird, was sich ändert.
+- Leben, aber leise: Etwa alle 9 s läuft ein Schimmer diagonal durch das Raster (Deckkraft kurz auf 68 %), nur wenn das Raster im Bild, der Tab sichtbar und kein Zweck im Fokus ist.
+- Überfahren eines Zwecks in der Liste stellt dessen Kästchen frei, die übrigen gehen auf 18 % Deckkraft.
+- Sonst nur Rückmeldung auf Handlungen: Hover-Flächen (0,12 s), Druck auf Knöpfe (`scale 0.96`), das Aufklappen, der Themenschalter (Drehung 0,3 s).
+- `prefers-reduced-motion` schaltet alle Übergänge und Animationen ab.
 
 ## Bedienung
 
