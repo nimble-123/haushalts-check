@@ -13,7 +13,7 @@
  */
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROOT, blatt, quelle, schreibeJson, type Zelle } from './xlsx.ts';
+import { blatt, quelle, ROOT, schreibeJson, type Zelle } from './xlsx.ts';
 
 const URL =
   'https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/' +
@@ -72,13 +72,17 @@ const KATEGORIEN: [string, Gruppe, number[]][] = [
 const GESAMT = 1001;
 const UEBRIG: [string, Gruppe] = ['Übriges, nicht einzeln ausgewiesen', 'verw'];
 
-interface Posten { name: string; v: number; g: Gruppe }
+interface Posten {
+  name: string;
+  v: number;
+  g: Gruppe;
+}
 
 const zahl = (v: Zelle) => (v === null || ['-', '.', 'x', '–'].includes(String(v)) ? 0 : Number(v));
 const runde1 = (x: number) => Math.round(x * 10) / 10;
 const summe = (ps: Posten[]) => ps.reduce((s, p) => s + p.v, 0);
 function pruefe(bedingung: boolean, ...info: unknown[]): asserts bedingung {
-  if (!bedingung) throw new Error('Prüfung fehlgeschlagen: ' + JSON.stringify(info));
+  if (!bedingung) throw new Error(`Prüfung fehlgeschlagen: ${JSON.stringify(info)}`);
 }
 
 /** Map "bereich.zeile" → 16 Länderwerte, plus Prüfung der Zeilenbeschriftungen. */
@@ -88,7 +92,10 @@ function werte(rows: Zelle[][]) {
   pruefe(kopf.map(ohneLeer).join() === LAENDER.map((l) => ohneLeer(l[1])).join(), kopf);
   const out = new Map<string, number[]>();
   for (const r of rows.slice(5)) {
-    const key = String(r[0] ?? '').split('\n').pop()!.trim();
+    const key = String(r[0] ?? '')
+      .split('\n')
+      .pop()!
+      .trim();
     const teile = key.split('.');
     if (teile.length !== 2 || !/^\d+$/.test(teile[0]) || !/^\d+$/.test(teile[1])) continue;
     const [b, z] = teile;
@@ -133,11 +140,20 @@ LAENDER.forEach(([code, name, slug, kist], i) => {
     : '„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter.';
   if (negativ.length) hinweis += ` Unterm Strich negativ und daher nicht gezeigt: ${fmtNeg(negativ)}.`;
   schreibeJson(join(ziel, `${slug}.json`), {
-    code, slug, name, jahr: JAHR, einheit: 'Mio €',
+    code,
+    slug,
+    name,
+    jahr: JAHR,
+    einheit: 'Mio €',
     art: 'Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen',
-    kirchensteuer: kist, posten: absteigend(posten), quellen: [QUELLE], hinweis,
+    kirchensteuer: kist,
+    posten: absteigend(posten),
+    quellen: [QUELLE],
+    hinweis,
   });
-  console.log(`${name.padEnd(24)} ${gesamt.toFixed(0).padStart(9)} Mio €  ${String(posten.length).padStart(2)} Posten  Abw. ${abw >= 0 ? '+' : ''}${abw.toFixed(1)}  ${fmtNeg(negativ)}`);
+  console.log(
+    `${name.padEnd(24)} ${gesamt.toFixed(0).padStart(9)} Mio €  ${String(posten.length).padStart(2)} Posten  Abw. ${abw >= 0 ? '+' : ''}${abw.toFixed(1)}  ${fmtNeg(negativ)}`,
+  );
   if (!STADTSTAATEN.has(code)) {
     const g = kategorien(w, '45', i);
     // Teilsummen der Gemeinden überschneiden sich leicht

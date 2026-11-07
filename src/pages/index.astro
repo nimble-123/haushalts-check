@@ -1,7 +1,7 @@
 ---
-import Base from '../layouts/Base.astro';
 import Check from '../components/Check.astro';
-import { STAEDTE, landVon } from '../data';
+import { landVon, STAEDTE } from '../data';
+import Base from '../layouts/Base.astro';
 
 const START = 'oldenburg';
 const stadt = STAEDTE.find((s) => s.slug === START) ?? STAEDTE[0];

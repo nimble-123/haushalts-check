@@ -7,12 +7,20 @@ export function speichereEingaben(ids: string[]) {
     const el = document.getElementById(id) as HTMLInputElement | null;
     if (el) data[id] = el.type === 'checkbox' ? el.checked : el.value;
   });
-  try { sessionStorage.setItem(KEY, JSON.stringify(data)); } catch { /* privates Fenster o. Ä. */ }
+  try {
+    sessionStorage.setItem(KEY, JSON.stringify(data));
+  } catch {
+    /* privates Fenster o. Ä. */
+  }
 }
 
 export function ladeEingaben(ids: string[]) {
   let data: Record<string, string | boolean> = {};
-  try { data = JSON.parse(sessionStorage.getItem(KEY) ?? '{}'); } catch { return; }
+  try {
+    data = JSON.parse(sessionStorage.getItem(KEY) ?? '{}');
+  } catch {
+    return;
+  }
   ids.forEach((id) => {
     const el = document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null;
     if (!el || !(id in data)) return;
@@ -20,7 +28,8 @@ export function ladeEingaben(ids: string[]) {
     else if (el instanceof HTMLSelectElement) {
       // Kirchensteuer: Satz des neuen Landes übernehmen, wenn vorher eine gewählt war
       const v = String(data[id]);
-      const match = [...el.options].find((o) => o.value === v) ?? (id === 'kist' && v !== '0' ? el.options[1] : undefined);
+      const match =
+        [...el.options].find((o) => o.value === v) ?? (id === 'kist' && v !== '0' ? el.options[1] : undefined);
       if (match) el.value = match.value;
     } else el.value = el.type === 'number' ? String(data[id]).replace(/\./g, '') : String(data[id]);
   });

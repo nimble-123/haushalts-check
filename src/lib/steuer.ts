@@ -67,7 +67,11 @@ export function berechne(e: Eingabe): Ergebnis {
   const alv = (bR * SV_2026.alv) / 2;
   const pkvBeitrag = e.pkv ? Math.max(0, e.pkvMonat || 0) * 12 : 0;
 
-  let kv = 0, pv = 0, kvAG = 0, pvAG = 0, vorsorgeKV: number;
+  let kv = 0,
+    pv = 0,
+    kvAG = 0,
+    pvAG = 0,
+    vorsorgeKV: number;
   if (!e.pkv) {
     kv = bK * (SV_2026.kv / 2 + SV_2026.kvZusatz / 2);
     pv = bK * (SV_2026.pv / 2 + (e.kinderlos ? SV_2026.pvKinderlos : 0));
@@ -86,7 +90,17 @@ export function berechne(e: Eingabe): Ergebnis {
   const netto = B - rv - alv - kv - pv - lohnsteuer - so - kirche - pkvBeitrag;
 
   return {
-    brutto: B, pkv: e.pkv, rv, alv, kv, pv, lohnsteuer, soli: so, kirche, pkvBeitrag, netto,
+    brutto: B,
+    pkv: e.pkv,
+    rv,
+    alv,
+    kv,
+    pv,
+    lohnsteuer,
+    soli: so,
+    kirche,
+    pkvBeitrag,
+    netto,
     ag: { rv, alv, kv: kvAG, pv: pvAG },
   };
 }

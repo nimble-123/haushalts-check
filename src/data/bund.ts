@@ -30,7 +30,12 @@ const EPL_TSD: [string, string, number, Gruppe][] = [
   ['60', 'Allg. Finanzverwaltung', 47_353_984, 'verw'],
 ];
 
-export interface Einzelplan { n: string; name: string; v: number; g: Gruppe }
+export interface Einzelplan {
+  n: string;
+  name: string;
+  v: number;
+  g: Gruppe;
+}
 
 /** Einzelpläne in Mrd € */
 export const EINZELPLAENE: Einzelplan[] = EPL_TSD.map(([n, name, v, g]) => ({ n, name, v: v / 1e6, g }));
@@ -45,7 +50,15 @@ export const EINNAHMEN = [
 
 /** Regierungsentwurf 2027, nur Einzelpläne mit veröffentlichten Zahlen, Mrd € */
 export const ENTWURF_2027: Record<string, number> = {
-  '11': 201.46, '14': 109.7, '32': 43.6, '12': 26.4, '15': 14.33, '17': 15.48, '60': 46.88, '20': 0.2189, '03': 0.041,
+  '11': 201.46,
+  '14': 109.7,
+  '32': 43.6,
+  '12': 26.4,
+  '15': 14.33,
+  '17': 15.48,
+  '60': 46.88,
+  '20': 0.2189,
+  '03': 0.041,
 };
 export const ENTWURF_2027_GESAMT = 555.4;
 export const ABSTIMMUNG_2027 = '27.11.2026';
@@ -62,9 +75,18 @@ export const ENTWICKLUNG: { jahr: number; v: number; status: 'Soll' | 'Entwurf' 
 
 export const BUND_QUELLEN = [
   { label: 'Haushaltsgesetz 2026, Anlage', url: 'https://www.gesetze-im-internet.de/hg_2026/anlage.html' },
-  { label: 'Bundestag: Bereinigungssitzung 2026', url: 'https://www.bundestag.de/dokumente/textarchiv/2025/kw46-pa-haushalt-bereinigung-1126856' },
-  { label: 'Bundestag: Fahrplan Haushalt 2027', url: 'https://www.bundestag.de/dokumente/textarchiv/2026/kw34-haushalt-2027-ablauf-1187766' },
+  {
+    label: 'Bundestag: Bereinigungssitzung 2026',
+    url: 'https://www.bundestag.de/dokumente/textarchiv/2025/kw46-pa-haushalt-bereinigung-1126856',
+  },
+  {
+    label: 'Bundestag: Fahrplan Haushalt 2027',
+    url: 'https://www.bundestag.de/dokumente/textarchiv/2026/kw34-haushalt-2027-ablauf-1187766',
+  },
   { label: 'hib: Entwurf 2027', url: 'https://www.bundestag.de/presse/hib/kurzmeldungen-1193844' },
-  { label: 'ES&T: Entwurf 2027', url: 'https://esut.de/2026/07/meldungen/72572/entwurf-haushalt-2027-5554-milliarden-euro-ausgaben/' },
+  {
+    label: 'ES&T: Entwurf 2027',
+    url: 'https://esut.de/2026/07/meldungen/72572/entwurf-haushalt-2027-5554-milliarden-euro-ausgaben/',
+  },
   { label: 'Finanzplan bis 2030', url: 'https://vergabeblog.de/?p=74764' },
 ];
