@@ -90,7 +90,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Build aus „Lint, Typen, Tests, Build“
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
@@ -137,7 +137,7 @@ jobs:
           node-version-file: .nvmrc
       # Lighthouse CI kommt per npx in fester Version; npm ci ist hier nicht nötig
       - name: Build aus „Lint, Typen, Tests, Build“
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
