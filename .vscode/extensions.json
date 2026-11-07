@@ -1,4 +1,10 @@
 {
-  "recommendations": ["astro-build.astro-vscode"],
-  "unwantedRecommendations": []
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "biomejs.biome",
+    "ms-playwright.playwright",
+    "vitest.explorer",
+    "editorconfig.editorconfig"
+  ],
+  "unwantedRecommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
 }

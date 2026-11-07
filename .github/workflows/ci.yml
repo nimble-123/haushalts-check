@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruefen:
+    name: Lint, Typen, Tests, Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Lint und Format (Biome)
+        run: npm run lint
+      - name: Typen (astro check + tsc)
+        run: npm run typecheck
+      - name: Unit- und Integrationstests (Vitest)
+        run: npm test
+      - name: Build
+        run: npm run build
+
+  e2e:
+    name: E2E (Playwright, Desktop und Mobil)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: pruefen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Chromium für Playwright
+        run: npx playwright install --with-deps chromium
+      - name: E2E-Tests
+        run: npm run test:e2e
+      - name: Bericht bei Fehlern
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
