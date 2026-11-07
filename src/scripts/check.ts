@@ -777,8 +777,8 @@ function chart2027() {
     .text((d) => fmtMrdDelta(d.d).replace(/\u00a0€$/, ''));
 }
 function chartEntwicklung() {
-  const { svg, W, H, schmal } = rahmen('entwicklung', () => 280);
-  const m = { l: 8, r: 8, t: 26, b: 42 };
+  const { svg, W, H, schmal } = rahmen('entwicklung', () => 296);
+  const m = { l: 8, r: 8, t: 26, b: 58 };
   const x = d3
     .scaleBand<number>()
     .domain(ENTWICKLUNG.map((d) => d.jahr))
@@ -790,15 +790,29 @@ function chartEntwicklung() {
     .range([H - m.b, m.t]);
   const op = { Soll: 1, Entwurf: 0.6, Finanzplan: 0.32 };
   const g = svg.selectAll('g.c').data(ENTWICKLUNG).join('g').attr('class', 'c');
+  // Übrige Ausgaben oben (blasser für Entwurf und Plan), Zinsen unten immer voll, dazwischen 2px Fläche
+  const tip = (ev: MouseEvent, d: (typeof ENTWICKLUNG)[0]) =>
+    showTip(
+      ev,
+      `<b>${d.jahr} (${d.status})</b>${fmtMrd(d.v)}<br>davon Zinsen ${fmtMrd(d.zinsen)} (${pct(d.zinsen / d.v)})`,
+    );
   g.append('rect')
     .attr('x', (d) => x(d.jahr)!)
     .attr('width', x.bandwidth())
     .attr('y', (d) => y(d.v))
-    .attr('height', (d) => y(0) - y(d.v))
+    .attr('height', (d) => Math.max(0, y(d.zinsen) - y(d.v) - 2))
     .attr('rx', 4)
-    .attr('fill', css('--ink-2'))
+    .attr('fill', css('--line'))
     .attr('fill-opacity', (d) => op[d.status])
-    .on('mousemove', (ev, d) => showTip(ev, `<b>${d.jahr} (${d.status})</b>${fmtMrd(d.v)}`))
+    .on('mousemove', tip)
+    .on('mouseleave', hideTip);
+  g.append('rect')
+    .attr('x', (d) => x(d.jahr)!)
+    .attr('width', x.bandwidth())
+    .attr('y', (d) => y(d.zinsen))
+    .attr('height', (d) => y(0) - y(d.zinsen))
+    .attr('fill', gcol('zins'))
+    .on('mousemove', tip)
     .on('mouseleave', hideTip);
   const cx = (d: (typeof ENTWICKLUNG)[0]) => x(d.jahr)! + x.bandwidth() / 2;
   g.append('text')
@@ -818,6 +832,17 @@ function chartEntwicklung() {
     .attr('y', H - m.b + 32)
     .attr('text-anchor', 'middle')
     .text((d) => (schmal ? { Soll: 'Soll', Entwurf: 'Entw.', Finanzplan: 'Plan' }[d.status] : d.status));
+  // Zinsanteil als Zahl unter dem Jahr: Kennzeichen nicht nur über die Farbe
+  g.append('text')
+    .attr('x', cx)
+    .attr('y', H - m.b + 50)
+    .attr('text-anchor', 'middle')
+    .text((d) => `${Math.round((d.zinsen / d.v) * 100)}\u00a0%`)
+    .style('font-weight', 600);
+  holen('lg-entwicklung').innerHTML =
+    `<li><span class="rs-farbe" style="background:${gcol('zins')}"></span>Zinsen, Anteil unter dem Jahr</li>` +
+    `<li><span class="rs-farbe" style="background:${css('--line')}"></span>übrige Ausgaben</li>` +
+    '<li>übrige Ausgaben blasser: Entwurf und Finanzplan</li>';
   svg
     .append('line')
     .attr('x1', m.l)

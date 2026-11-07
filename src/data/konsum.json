@@ -149,56 +149,67 @@
   "saetze": {
     "nahrung": {
       "mwst": 0.0869,
+      "versteckt": 0,
       "energie": 0,
       "strom": 0
     },
     "bekleidung": {
       "mwst": 0.1597,
+      "versteckt": 0,
       "energie": 0,
       "strom": 0
     },
     "wohnen": {
       "mwst": 0.0314,
+      "versteckt": 0.0723,
       "energie": 0.0044,
       "strom": 0.0045
     },
     "innen": {
       "mwst": 0.1597,
+      "versteckt": 0,
       "energie": 0,
       "strom": 0
     },
     "gesundheit": {
       "mwst": 0.0705,
+      "versteckt": 0.0279,
       "energie": 0,
       "strom": 0
     },
     "verkehr": {
       "mwst": 0.1447,
+      "versteckt": 0,
       "energie": 0.0669,
       "strom": 0
     },
     "post": {
       "mwst": 0.153,
+      "versteckt": 0.0013,
       "energie": 0,
       "strom": 0
     },
     "freizeit": {
       "mwst": 0.0781,
+      "versteckt": 0.0009,
       "energie": 0,
       "strom": 0
     },
     "bildung": {
       "mwst": 0,
+      "versteckt": 0.035,
       "energie": 0,
       "strom": 0
     },
     "gast": {
       "mwst": 0.0866,
+      "versteckt": 0,
       "energie": 0,
       "strom": 0
     },
     "andere": {
       "mwst": 0.1349,
+      "versteckt": 0.0067,
       "energie": 0,
       "strom": 0
     }
@@ -214,7 +225,16 @@
     "benzinAnteil": 0.75,
     "kraftstoffQuote": 0.275,
     "stromAnteil": 0.5,
-    "rabattMonate": 5
+    "rabattMonate": 5,
+    "versteckt": {
+      "miete": 0.09,
+      "gesundheit": 0.05,
+      "bildung": 0.035,
+      "finanz": 0.04,
+      "post": 0.03,
+      "sozial": 0.045,
+      "sport": 0.035
+    }
   },
   "quellen": [
     {
@@ -236,6 +256,14 @@
     {
       "label": "BMF: Ergebnisse der 171. Steuerschätzung, Oktober 2026",
       "url": "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerschaetzungen_und_Steuereinnahmen/Steuerschaetzung/2026-10-22-ergebnisse-171-steuerschaetzung-dl-xlsx.xlsx?__blob=publicationFile&v=3"
+    },
+    {
+      "label": "Eurostat: Input-Output-Tabelle Deutschland (naio_10_cp1700), Gütersteuern auf Vorleistungen",
+      "url": "https://ec.europa.eu/eurostat/databrowser/view/naio_10_cp1700/default/table"
+    },
+    {
+      "label": "EU-Kommission: VAT Gap, Länderbericht Deutschland (Anteil der Haushalte an der Mehrwertsteuer)",
+      "url": "https://taxation-customs.ec.europa.eu/document/download/13386f9a-4cde-4590-9738-c3d6f0668913_en?filename=GERMANY+Country+specific+VAT+gap+report+2023.pdf"
     },
     {
       "label": "Bundestag: Tankrabatt, befristete Senkung der Energiesteuer 2026",

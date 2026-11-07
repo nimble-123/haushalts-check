@@ -1,13 +1,18 @@
 ---
 import { abstimmungSatz, BUND_QUELLEN } from '../data/bund';
+import { MEDIAN_BRUTTO } from '../data/eckwerte';
 import schaetzung from '../data/gemeinden-schaetzung.json';
 import { STUDIEN } from '../data/studien';
 import Base from '../layouts/Base.astro';
-import { KONSUM } from '../lib/konsum';
-import { ANTEIL, GRUNDFREIBETRAG, PAUSCHALEN, SOLI_FREIGRENZE, SV_2026 } from '../lib/steuer';
+import { KONSUM, konsumsteuern } from '../lib/konsum';
+import { ANTEIL, berechne, GRUNDFREIBETRAG, PAUSCHALEN, SOLI_FREIGRENZE, SV_2026 } from '../lib/steuer';
 import { fmtEur, pct, satzText } from '../lib/text';
 
 const a = KONSUM.annahmen;
+// Beispiel für den Text: Median-Brutto, gesetzlich versichert, kinderlos, ohne Kirche
+const median = konsumsteuern(
+  berechne({ brutto: MEDIAN_BRUTTO, pkv: false, pkvMonat: 0, kinderlos: true, kirche: 0 }).netto,
+);
 const preis = (v: number) => `${v.toLocaleString('de-DE', { minimumFractionDigits: 2 })}\u00a0€`;
 const faktor = KONSUM.preisfaktor.toLocaleString('de-DE', { maximumFractionDigits: 2 });
 
@@ -68,6 +73,8 @@ const weitere = [
       <p>Für jede Ausgabengruppe steckt ein eigener Steueranteil im Preis. Er stammt aus dem Warenkorb der Einpersonenhaushalte 2024 und den Sätzen 2026: 19 % Mehrwertsteuer als Regelsatz, 7 % unter anderem für Lebensmittel, Bücher, Nahverkehr, Übernachtungen und seit 2026 Speisen im Restaurant. Kaltmiete, Arztbesuche, Bildung, Rundfunkbeitrag und Finanzdienste sind ohne Mehrwertsteuer. So liegt der Steueranteil fürs Wohnen bei {pct(KONSUM.saetze.wohnen.mwst)}, für Lebensmittel bei {pct(KONSUM.saetze.nahrung.mwst)}, für Kleidung bei {pct(KONSUM.saetze.bekleidung.mwst)} des Preises.</p>
       <p>Dazu kommen die Energiesteuer auf Sprit, mit dem Tankrabatt in {a.rabattMonate} Monaten 2026, angenommen {preis(a.literpreis)} je Liter und {pct(a.benzinAnteil)} Benzin, sowie auf Heizgas; die Stromsteuer, wobei Strom als {pct(a.stromAnteil)} der Energieausgaben angenommen ist; und 19 % Versicherungsteuer auf Haftpflicht, Hausrat, Kfz und Ähnliches.</p>
       <p>Die Mehrwertsteuer geht 2026 zu {pct(KONSUM.mwstVerteilung.bund)} an den Bund, zu {pct(KONSUM.mwstVerteilung.land)} an die Länder und zu {pct(KONSUM.mwstVerteilung.gemeinde)} an die Gemeinden (Steuerschätzung Oktober 2026). Energie-, Strom- und Versicherungsteuer bekommt der Bund. Die Seite verteilt sie dann wie die Lohnsteuer auf die Ausgaben der jeweiligen Ebene.</p>
+      <p>Dazu kommt versteckte Mehrwertsteuer: Wer steuerfrei vermietet, behandelt, unterrichtet oder Finanzdienste anbietet, kann die Mehrwertsteuer auf eigene Einkäufe und Investitionen nicht abziehen und gibt sie über den Preis weiter. Angesetzt sind {pct(a.versteckt.miete)} der Miete (Bau und Instandhaltung tragen 19 % ohne Abzug), {pct(a.versteckt.gesundheit)} bei Gesundheitsleistungen, {pct(a.versteckt.finanz)} bei Finanzdiensten und {pct(a.versteckt.bildung)} bei Bildung, abgeleitet aus der Input-Output-Tabelle (Steuern auf Vorleistungen und Investitionen je Produktionswert). Damit macht die Mehrwertsteuer beim Median-Brutto {pct(median.mwst / median.konsum)} der Ausgaben aus, davon {fmtEur(median.mwstVersteckt / 12)} im Monat versteckt. Zum Vergleich: Gesamtwirtschaftlich tragen die Haushalte rund 10–11 % ihres Konsums als Mehrwertsteuer (EU-Kommission, VAT Gap, mit versteckter Steuer).</p>
+      <p>Das DIW kam für 2015 auf ähnliche Größen: In der Einkommensmitte machten Mehrwert- und Versicherungsteuer 6,4–6,7 % des Haushaltsbruttos aus, Energiesteuern samt EEG-Umlage weitere 1,5–1,6 % (Haushalte statt Alleinlebende). Hier sind es beim Median-Brutto zusammen {pct(median.summe / MEDIAN_BRUTTO)}. <a href="https://www.diw.de/documents/publikationen/73/diw_01.c.549401.de/16-51-1.pdf">DIW Wochenbericht 51+52/2016, Bach, Beznoska, Steiner</a></p>
       <p>Grenzen der Schätzung: Die Verbrauchsstatistik nach Einkommen ist von 2018. Ihre Klassen enthalten auch Studierende und Rentner. Angenommen ist, dass die Steuern voll in den Preisen ankommen. Wer zur Miete wohnt, zahlt auf diesen großen Posten keine Mehrwertsteuer.</p>
 
       <h2>Kalender</h2>
