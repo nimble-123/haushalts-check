@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#f6e3e0"/>
-  <path d="M6 9h20M6 23h20" stroke="#c9524b" stroke-width="1.5"/>
-  <path d="M11 9v14M16 9v14M21 9v14" stroke="#c9524b" stroke-width="1"/>
-  <text x="8.5" y="20.5" font-family="Arial, sans-serif" font-weight="700" font-size="10" fill="#1f3a93">€</text>
+  <title>Haushalts-Check</title>
+  <rect x="3" y="3" width="12" height="12" rx="2" fill="#ffe14d"/>
+  <rect x="17" y="3" width="12" height="12" rx="2" fill="#0072b2"/>
+  <rect x="3" y="17" width="12" height="12" rx="2" fill="#a9aeb7"/>
+  <rect x="17" y="17" width="12" height="12" rx="2" fill="#a9aeb7"/>
 </svg>

@@ -1,8 +1,10 @@
 ---
-import Base from '../../layouts/Base.astro';
 import { LAENDER, STAEDTE } from '../../data';
+import Base from '../../layouts/Base.astro';
 
-const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.land === l.code) })).filter((g) => g.staedte.length);
+const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.land === l.code) })).filter(
+  (g) => g.staedte.length,
+);
 ---
 <Base title="Alle kreisfreien Städte | Haushalts-Check" description={`Haushalts-Check für alle ${STAEDTE.length} kreisfreien Städte in Deutschland: wie viel deiner Lohnsteuer an deine Stadt, dein Land und den Bund geht.`}>
   <div class="page">

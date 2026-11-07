@@ -11,11 +11,14 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",
-    "check": "astro check && vitest run",
+    "typecheck": "astro check && tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "check": "npm run lint && npm run typecheck && npm test",
+    "tokens": "node design-system/build-tokens.ts",
     "daten:laender": "node pipeline/laender.ts",
     "daten:staedte": "node pipeline/staedte.ts",
-    "daten:ausgabearten": "node --env-file=.env.local pipeline/ausgabearten.ts",
-    "tokens": "node design-system/build-tokens.ts"
+    "daten:ausgabearten": "node --env-file=.env.local pipeline/ausgabearten.ts"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
@@ -26,6 +29,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@biomejs/biome": "2.6.6",
     "@types/d3": "^7.4.3",
     "@types/d3-sankey": "^0.12.5",
     "@types/node": "^24.19.2",

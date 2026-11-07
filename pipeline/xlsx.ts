@@ -27,7 +27,8 @@ export async function blatt(pfad: string, name: string): Promise<Zelle[][]> {
   const wb = new ExcelJS.Workbook();
   await wb.xlsx.readFile(pfad);
   const ws = wb.getWorksheet(name);
-  if (!ws) throw new Error(`Blatt „${name}“ fehlt in ${pfad}; vorhanden: ${wb.worksheets.map((w) => w.name).join(', ')}`);
+  if (!ws)
+    throw new Error(`Blatt „${name}“ fehlt in ${pfad}; vorhanden: ${wb.worksheets.map((w) => w.name).join(', ')}`);
   const zeilen: Zelle[][] = [];
   ws.eachRow({ includeEmpty: true }, (row, nr) => {
     const werte: Zelle[] = [];
@@ -49,4 +50,4 @@ function einfach(v: ExcelJS.CellValue): Zelle {
 }
 
 export const schreibeJson = (pfad: string, daten: unknown) =>
-  writeFileSync(pfad, JSON.stringify(daten, null, 2) + '\n');
+  writeFileSync(pfad, `${JSON.stringify(daten, null, 2)}\n`);

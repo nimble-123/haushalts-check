@@ -6,8 +6,19 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 type Wert = string | Record<string, string>;
-interface Token { name: string; value: Wert; usage?: string }
-interface Stil { name: string; family?: string; fontSize: string; lineHeight: number | string; fontWeight: number; letterSpacing?: string }
+interface Token {
+  name: string;
+  value: Wert;
+  usage?: string;
+}
+interface Stil {
+  name: string;
+  family?: string;
+  fontSize: string;
+  lineHeight: number | string;
+  fontWeight: number;
+  letterSpacing?: string;
+}
 interface Tokens {
   name: string;
   color: { themes: { id: string }[]; tokens: Token[] };
@@ -27,13 +38,17 @@ const val = (v: Wert, theme: string) => {
 };
 const colorBlock = (theme: string) =>
   [...t.color.tokens, ...(t.shadow?.tokens ?? [])].map((x) => `  --${x.name}: ${val(x.value, theme)};`).join('\n');
-const plain = (['spacing', 'radius', 'size'] as const).flatMap((k) => t[k]?.tokens ?? []).map((x) => `  --${x.name}: ${x.value};`);
+const plain = (['spacing', 'radius', 'size'] as const)
+  .flatMap((k) => t[k]?.tokens ?? [])
+  .map((x) => `  --${x.name}: ${x.value};`);
 const fams = Object.entries(t.type.families).map(([k, v]) => `  --font-${k}: ${v};`);
 
-const styles = t.type.groups.flatMap((g) => g.styles.map((s) => {
-  const fam = s.family ?? g.family;
-  return `.t-${s.name} { font-family: var(--font-${fam}); font-size: ${s.fontSize}; line-height: ${s.lineHeight}; font-weight: ${s.fontWeight};${s.letterSpacing ? ` letter-spacing: ${s.letterSpacing};` : ''} }`;
-}));
+const styles = t.type.groups.flatMap((g) =>
+  g.styles.map((s) => {
+    const fam = s.family ?? g.family;
+    return `.t-${s.name} { font-family: var(--font-${fam}); font-size: ${s.fontSize}; line-height: ${s.lineHeight}; font-weight: ${s.fontWeight};${s.letterSpacing ? ` letter-spacing: ${s.letterSpacing};` : ''} }`;
+  }),
+);
 
 const dark = rest[0];
 const css = `/* ${t.name} — generated from tokens.json */
@@ -58,4 +73,6 @@ ${[...plain, ...fams].join('\n')}
 ${styles.join('\n')}
 `;
 writeFileSync(join(HERE, '..', 'src', 'styles', 'tokens.css'), css);
-console.log(`tokens.css: ${t.color.tokens.length} Farben × ${t.color.themes.length} Themes, ${plain.length} Maße, ${styles.length} Schriftstile`);
+console.log(
+  `tokens.css: ${t.color.tokens.length} Farben × ${t.color.themes.length} Themes, ${plain.length} Maße, ${styles.length} Schriftstile`,
+);
