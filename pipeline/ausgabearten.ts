@@ -1,6 +1,6 @@
 // Auszahlungen nach Art je kreisfreier Stadt aus der Regionaldatenbank (Tabelle 71717-Z-05,
 // Rechnungsergebnisse der kommunalen Kernhaushalte) → Schlüssel „ausgabearten“ in src/data/staedte/*.json.
-// Braucht ein kostenloses Konto bei regionalstatistik.de; Zugangsdaten in web/.env.local:
+// Braucht ein kostenloses Konto bei regionalstatistik.de; Zugangsdaten in .env.local (Vorlage: .env.example):
 //   REGIO_USER=…   REGIO_PASS=…      (oder REGIO_USER=<API-Token> und REGIO_PASS leer)
 // Aufruf:  npm run daten:ausgabearten
 //

@@ -6,7 +6,7 @@
  *   – Alle politisch selbständigen Gemeinden, Stand 31.12.2025 (geografische Mittelpunktkoordinaten)
  * Ausgabearten je Stadt ergänzt pipeline/ausgabearten.ts; sie bleiben beim Neuschreiben erhalten.
  *
- * Aufruf (aus web/):  npm run daten:staedte
+ * Aufruf:  npm run daten:staedte
  */
 import { mkdirSync, readFileSync, readdirSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';

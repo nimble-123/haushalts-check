@@ -9,7 +9,7 @@
  *   src/data/laender/<slug>.json          – Landesebene
  *   src/data/gemeinden-schaetzung.json    – Zweck-Anteile der Gemeinden je Land (Schätzbasis für Städte)
  *
- * Aufruf (aus web/):  npm run daten:laender
+ * Aufruf:  npm run daten:laender
  */
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
