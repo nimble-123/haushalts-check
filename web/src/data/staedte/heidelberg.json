@@ -6,6 +6,8 @@
   "amtlich": "Heidelberg, Stadtkreis",
   "einwohner": 155756,
   "stadtstaat": false,
+  "lat": 49.4105,
+  "lon": 8.7055,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

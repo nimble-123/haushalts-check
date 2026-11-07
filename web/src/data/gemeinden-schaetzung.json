@@ -4,1176 +4,1176 @@
     "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
   },
   "laender": {
-    "08": {
+    "10": {
       "jahr": 2022,
-      "gesamt": 50267.0,
+      "gesamt": 3045,
       "posten": [
         {
           "name": "Soziales, Familie, Jugend",
-          "v": 9518.0,
+          "v": 861,
           "g": "soz"
         },
         {
           "name": "Politische Führung und Verwaltung",
-          "v": 7856.0,
-          "g": "verw"
-        },
-        {
-          "name": "Kindertagesbetreuung",
-          "v": 6009.0,
-          "g": "soz"
-        },
-        {
-          "name": "Finanzausgleich an Kommunen",
-          "v": 5145.0,
-          "g": "verw"
-        },
-        {
-          "name": "Verkehr",
-          "v": 4162.0,
-          "g": "inf"
-        },
-        {
-          "name": "Schulen",
-          "v": 3265.0,
-          "g": "for"
-        },
-        {
-          "name": "Energie, Wasser, Wirtschaft",
-          "v": 2804.0,
-          "g": "inf"
-        },
-        {
-          "name": "Gesundheit und Sport",
-          "v": 2384.0,
-          "g": "soz"
-        },
-        {
-          "name": "Pensionen und Beihilfen",
-          "v": 2251.0,
+          "v": 382,
           "g": "verw"
         },
         {
           "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 1924.0,
+          "v": 369,
           "g": "inf"
-        },
-        {
-          "name": "Polizei, Sicherheit und Justiz",
-          "v": 1826.0,
-          "g": "sich"
-        },
-        {
-          "name": "Kultur und Religion",
-          "v": 1311.0,
-          "g": "for"
-        },
-        {
-          "name": "Vermögen und Sondervermögen",
-          "v": 990.0,
-          "g": "verw"
-        },
-        {
-          "name": "Forschung und sonstige Bildung",
-          "v": 496.0,
-          "g": "for"
-        },
-        {
-          "name": "Landwirtschaft und Forsten",
-          "v": 360.0,
-          "g": "inf"
-        },
-        {
-          "name": "Umwelt- und Naturschutz",
-          "v": 222.0,
-          "g": "inf"
-        },
-        {
-          "name": "Zinsen",
-          "v": 111.0,
-          "g": "zins"
-        }
-      ]
-    },
-    "09": {
-      "jahr": 2022,
-      "gesamt": 51201.0,
-      "posten": [
-        {
-          "name": "Soziales, Familie, Jugend",
-          "v": 10336.0,
-          "g": "soz"
         },
         {
           "name": "Kindertagesbetreuung",
-          "v": 6682.0,
+          "v": 331,
           "g": "soz"
         },
         {
-          "name": "Politische Führung und Verwaltung",
-          "v": 5879.0,
-          "g": "verw"
-        },
-        {
           "name": "Schulen",
-          "v": 5659.0,
+          "v": 260,
           "g": "for"
         },
         {
-          "name": "Energie, Wasser, Wirtschaft",
-          "v": 4453.0,
-          "g": "inf"
-        },
-        {
           "name": "Verkehr",
-          "v": 3853.0,
-          "g": "inf"
-        },
-        {
-          "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 3363.0,
+          "v": 241,
           "g": "inf"
         },
         {
           "name": "Gesundheit und Sport",
-          "v": 2914.0,
+          "v": 153,
           "g": "soz"
         },
         {
           "name": "Polizei, Sicherheit und Justiz",
-          "v": 2161.0,
+          "v": 135,
           "g": "sich"
         },
         {
-          "name": "Vermögen und Sondervermögen",
-          "v": 2021.0,
+          "name": "Pensionen und Beihilfen",
+          "v": 90,
           "g": "verw"
         },
         {
-          "name": "Pensionen und Beihilfen",
-          "v": 1500.0,
-          "g": "verw"
+          "name": "Energie, Wasser, Wirtschaft",
+          "v": 72,
+          "g": "inf"
         },
         {
           "name": "Kultur und Religion",
-          "v": 1476.0,
-          "g": "for"
-        },
-        {
-          "name": "Forschung und sonstige Bildung",
-          "v": 697.0,
+          "v": 55,
           "g": "for"
         },
         {
           "name": "Zinsen",
-          "v": 190.0,
+          "v": 48,
           "g": "zins"
         },
         {
+          "name": "Forschung und sonstige Bildung",
+          "v": 24,
+          "g": "for"
+        },
+        {
+          "name": "Vermögen und Sondervermögen",
+          "v": 20,
+          "g": "verw"
+        },
+        {
           "name": "Landwirtschaft und Forsten",
-          "v": 150.0,
+          "v": 12,
           "g": "inf"
         },
         {
           "name": "Umwelt- und Naturschutz",
-          "v": 118.0,
+          "v": 9,
           "g": "inf"
         },
         {
           "name": "Finanzausgleich an Kommunen",
-          "v": 89.0,
+          "v": 3,
           "g": "verw"
         }
       ]
     },
     "12": {
       "jahr": 2022,
-      "gesamt": 10850.0,
+      "gesamt": 10850,
       "posten": [
         {
           "name": "Soziales, Familie, Jugend",
-          "v": 2859.0,
+          "v": 2859,
           "g": "soz"
         },
         {
           "name": "Kindertagesbetreuung",
-          "v": 1700.0,
+          "v": 1700,
           "g": "soz"
         },
         {
           "name": "Politische Führung und Verwaltung",
-          "v": 1420.0,
+          "v": 1420,
           "g": "verw"
         },
         {
           "name": "Verkehr",
-          "v": 1179.0,
+          "v": 1179,
           "g": "inf"
         },
         {
           "name": "Schulen",
-          "v": 799.0,
+          "v": 799,
           "g": "for"
         },
         {
           "name": "Polizei, Sicherheit und Justiz",
-          "v": 739.0,
+          "v": 739,
           "g": "sich"
         },
         {
           "name": "Energie, Wasser, Wirtschaft",
-          "v": 538.0,
+          "v": 538,
           "g": "inf"
         },
         {
           "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 528.0,
+          "v": 528,
           "g": "inf"
         },
         {
           "name": "Gesundheit und Sport",
-          "v": 466.0,
+          "v": 466,
           "g": "soz"
         },
         {
           "name": "Kultur und Religion",
-          "v": 282.0,
+          "v": 282,
           "g": "for"
         },
         {
           "name": "Forschung und sonstige Bildung",
-          "v": 105.0,
+          "v": 105,
           "g": "for"
         },
         {
           "name": "Pensionen und Beihilfen",
-          "v": 78.0,
+          "v": 78,
           "g": "verw"
         },
         {
           "name": "Finanzausgleich an Kommunen",
-          "v": 59.0,
+          "v": 59,
           "g": "verw"
         },
         {
           "name": "Vermögen und Sondervermögen",
-          "v": 40.0,
+          "v": 40,
           "g": "verw"
         },
         {
           "name": "Umwelt- und Naturschutz",
-          "v": 32.0,
+          "v": 32,
           "g": "inf"
         },
         {
           "name": "Landwirtschaft und Forsten",
-          "v": 24.0,
+          "v": 24,
           "g": "inf"
         },
         {
           "name": "Zinsen",
-          "v": 12.0,
+          "v": 12,
           "g": "zins"
-        }
-      ]
-    },
-    "06": {
-      "jahr": 2022,
-      "gesamt": 28740.0,
-      "posten": [
-        {
-          "name": "Soziales, Familie, Jugend",
-          "v": 8707.0,
-          "g": "soz"
-        },
-        {
-          "name": "Kindertagesbetreuung",
-          "v": 3522.0,
-          "g": "soz"
-        },
-        {
-          "name": "Politische Führung und Verwaltung",
-          "v": 3308.0,
-          "g": "verw"
-        },
-        {
-          "name": "Schulen",
-          "v": 2176.0,
-          "g": "for"
-        },
-        {
-          "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 1977.0,
-          "g": "inf"
-        },
-        {
-          "name": "Verkehr",
-          "v": 1901.0,
-          "g": "inf"
-        },
-        {
-          "name": "Energie, Wasser, Wirtschaft",
-          "v": 1579.0,
-          "g": "inf"
-        },
-        {
-          "name": "Gesundheit und Sport",
-          "v": 1407.0,
-          "g": "soz"
-        },
-        {
-          "name": "Polizei, Sicherheit und Justiz",
-          "v": 1252.0,
-          "g": "sich"
-        },
-        {
-          "name": "Kultur und Religion",
-          "v": 648.0,
-          "g": "for"
-        },
-        {
-          "name": "Pensionen und Beihilfen",
-          "v": 559.0,
-          "g": "verw"
-        },
-        {
-          "name": "Forschung und sonstige Bildung",
-          "v": 554.0,
-          "g": "for"
-        },
-        {
-          "name": "Finanzausgleich an Kommunen",
-          "v": 526.0,
-          "g": "verw"
-        },
-        {
-          "name": "Zinsen",
-          "v": 252.0,
-          "g": "zins"
-        },
-        {
-          "name": "Vermögen und Sondervermögen",
-          "v": 229.0,
-          "g": "verw"
-        },
-        {
-          "name": "Landwirtschaft und Forsten",
-          "v": 136.0,
-          "g": "inf"
-        },
-        {
-          "name": "Umwelt- und Naturschutz",
-          "v": 99.0,
-          "g": "inf"
         }
       ]
     },
     "13": {
       "jahr": 2022,
-      "gesamt": 6641.0,
+      "gesamt": 6641,
       "posten": [
         {
           "name": "Soziales, Familie, Jugend",
-          "v": 1721.0,
+          "v": 1721,
           "g": "soz"
         },
         {
           "name": "Verkehr",
-          "v": 900.0,
+          "v": 900,
           "g": "inf"
         },
         {
           "name": "Kindertagesbetreuung",
-          "v": 889.0,
+          "v": 889,
           "g": "soz"
         },
         {
           "name": "Politische Führung und Verwaltung",
-          "v": 754.0,
+          "v": 754,
           "g": "verw"
         },
         {
           "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 503.0,
+          "v": 503,
           "g": "inf"
         },
         {
           "name": "Schulen",
-          "v": 462.0,
+          "v": 462,
           "g": "for"
         },
         {
           "name": "Polizei, Sicherheit und Justiz",
-          "v": 391.0,
+          "v": 391,
           "g": "sich"
         },
         {
           "name": "Energie, Wasser, Wirtschaft",
-          "v": 262.0,
+          "v": 262,
           "g": "inf"
         },
         {
           "name": "Gesundheit und Sport",
-          "v": 230.0,
+          "v": 230,
           "g": "soz"
         },
         {
           "name": "Kultur und Religion",
-          "v": 222.0,
+          "v": 222,
           "g": "for"
         },
         {
           "name": "Pensionen und Beihilfen",
-          "v": 122.0,
+          "v": 122,
           "g": "verw"
         },
         {
           "name": "Forschung und sonstige Bildung",
-          "v": 98.0,
+          "v": 98,
           "g": "for"
         },
         {
           "name": "Vermögen und Sondervermögen",
-          "v": 61.0,
+          "v": 61,
           "g": "verw"
         },
         {
           "name": "Umwelt- und Naturschutz",
-          "v": 15.0,
+          "v": 15,
           "g": "inf"
         },
         {
           "name": "Zinsen",
-          "v": 15.0,
+          "v": 15,
           "g": "zins"
         },
         {
           "name": "Landwirtschaft und Forsten",
-          "v": 10.0,
+          "v": 10,
           "g": "inf"
         },
         {
           "name": "Finanzausgleich an Kommunen",
-          "v": 8.0,
-          "g": "verw"
-        }
-      ]
-    },
-    "03": {
-      "jahr": 2022,
-      "gesamt": 32071.0,
-      "posten": [
-        {
-          "name": "Soziales, Familie, Jugend",
-          "v": 10399.0,
-          "g": "soz"
-        },
-        {
-          "name": "Politische Führung und Verwaltung",
-          "v": 4305.0,
-          "g": "verw"
-        },
-        {
-          "name": "Kindertagesbetreuung",
-          "v": 3305.0,
-          "g": "soz"
-        },
-        {
-          "name": "Schulen",
-          "v": 2499.0,
-          "g": "for"
-        },
-        {
-          "name": "Verkehr",
-          "v": 2261.0,
-          "g": "inf"
-        },
-        {
-          "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 2142.0,
-          "g": "inf"
-        },
-        {
-          "name": "Polizei, Sicherheit und Justiz",
-          "v": 1920.0,
-          "g": "sich"
-        },
-        {
-          "name": "Energie, Wasser, Wirtschaft",
-          "v": 1561.0,
-          "g": "inf"
-        },
-        {
-          "name": "Gesundheit und Sport",
-          "v": 1469.0,
-          "g": "soz"
-        },
-        {
-          "name": "Pensionen und Beihilfen",
-          "v": 743.0,
-          "g": "verw"
-        },
-        {
-          "name": "Forschung und sonstige Bildung",
-          "v": 556.0,
-          "g": "for"
-        },
-        {
-          "name": "Kultur und Religion",
-          "v": 483.0,
-          "g": "for"
-        },
-        {
-          "name": "Vermögen und Sondervermögen",
-          "v": 184.0,
-          "g": "verw"
-        },
-        {
-          "name": "Umwelt- und Naturschutz",
-          "v": 178.0,
-          "g": "inf"
-        },
-        {
-          "name": "Zinsen",
-          "v": 104.0,
-          "g": "zins"
-        },
-        {
-          "name": "Finanzausgleich an Kommunen",
-          "v": 84.0,
-          "g": "verw"
-        },
-        {
-          "name": "Landwirtschaft und Forsten",
-          "v": 47.0,
-          "g": "inf"
-        }
-      ]
-    },
-    "05": {
-      "jahr": 2022,
-      "gesamt": 85863.0,
-      "posten": [
-        {
-          "name": "Soziales, Familie, Jugend",
-          "v": 26692.0,
-          "g": "soz"
-        },
-        {
-          "name": "Politische Führung und Verwaltung",
-          "v": 17860.0,
-          "g": "verw"
-        },
-        {
-          "name": "Kindertagesbetreuung",
-          "v": 8931.0,
-          "g": "soz"
-        },
-        {
-          "name": "Schulen",
-          "v": 5135.0,
-          "g": "for"
-        },
-        {
-          "name": "Energie, Wasser, Wirtschaft",
-          "v": 4895.0,
-          "g": "inf"
-        },
-        {
-          "name": "Verkehr",
-          "v": 4366.0,
-          "g": "inf"
-        },
-        {
-          "name": "Polizei, Sicherheit und Justiz",
-          "v": 4257.0,
-          "g": "sich"
-        },
-        {
-          "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 3716.0,
-          "g": "inf"
-        },
-        {
-          "name": "Gesundheit und Sport",
-          "v": 2986.0,
-          "g": "soz"
-        },
-        {
-          "name": "Pensionen und Beihilfen",
-          "v": 2443.0,
-          "g": "verw"
-        },
-        {
-          "name": "Kultur und Religion",
-          "v": 1951.0,
-          "g": "for"
-        },
-        {
-          "name": "Forschung und sonstige Bildung",
-          "v": 1333.0,
-          "g": "for"
-        },
-        {
-          "name": "Vermögen und Sondervermögen",
-          "v": 1300.0,
-          "g": "verw"
-        },
-        {
-          "name": "Zinsen",
-          "v": 588.0,
-          "g": "zins"
-        },
-        {
-          "name": "Umwelt- und Naturschutz",
-          "v": 267.0,
-          "g": "inf"
-        },
-        {
-          "name": "Landwirtschaft und Forsten",
-          "v": 104.0,
-          "g": "inf"
-        }
-      ]
-    },
-    "07": {
-      "jahr": 2022,
-      "gesamt": 15532.0,
-      "posten": [
-        {
-          "name": "Soziales, Familie, Jugend",
-          "v": 4390.0,
-          "g": "soz"
-        },
-        {
-          "name": "Politische Führung und Verwaltung",
-          "v": 2293.0,
-          "g": "verw"
-        },
-        {
-          "name": "Kindertagesbetreuung",
-          "v": 2147.0,
-          "g": "soz"
-        },
-        {
-          "name": "Verkehr",
-          "v": 1631.0,
-          "g": "inf"
-        },
-        {
-          "name": "Schulen",
-          "v": 1035.0,
-          "g": "for"
-        },
-        {
-          "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 895.0,
-          "g": "inf"
-        },
-        {
-          "name": "Polizei, Sicherheit und Justiz",
-          "v": 716.0,
-          "g": "sich"
-        },
-        {
-          "name": "Gesundheit und Sport",
-          "v": 467.0,
-          "g": "soz"
-        },
-        {
-          "name": "Pensionen und Beihilfen",
-          "v": 436.0,
-          "g": "verw"
-        },
-        {
-          "name": "Energie, Wasser, Wirtschaft",
-          "v": 382.0,
-          "g": "inf"
-        },
-        {
-          "name": "Forschung und sonstige Bildung",
-          "v": 356.0,
-          "g": "for"
-        },
-        {
-          "name": "Kultur und Religion",
-          "v": 257.0,
-          "g": "for"
-        },
-        {
-          "name": "Zinsen",
-          "v": 183.0,
-          "g": "zins"
-        },
-        {
-          "name": "Landwirtschaft und Forsten",
-          "v": 180.0,
-          "g": "inf"
-        },
-        {
-          "name": "Vermögen und Sondervermögen",
-          "v": 113.0,
-          "g": "verw"
-        },
-        {
-          "name": "Finanzausgleich an Kommunen",
-          "v": 103.0,
-          "g": "verw"
-        },
-        {
-          "name": "Umwelt- und Naturschutz",
-          "v": 38.0,
-          "g": "inf"
-        }
-      ]
-    },
-    "10": {
-      "jahr": 2022,
-      "gesamt": 3045.0,
-      "posten": [
-        {
-          "name": "Soziales, Familie, Jugend",
-          "v": 861.0,
-          "g": "soz"
-        },
-        {
-          "name": "Politische Führung und Verwaltung",
-          "v": 382.0,
-          "g": "verw"
-        },
-        {
-          "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 369.0,
-          "g": "inf"
-        },
-        {
-          "name": "Kindertagesbetreuung",
-          "v": 331.0,
-          "g": "soz"
-        },
-        {
-          "name": "Schulen",
-          "v": 260.0,
-          "g": "for"
-        },
-        {
-          "name": "Verkehr",
-          "v": 241.0,
-          "g": "inf"
-        },
-        {
-          "name": "Gesundheit und Sport",
-          "v": 153.0,
-          "g": "soz"
-        },
-        {
-          "name": "Polizei, Sicherheit und Justiz",
-          "v": 135.0,
-          "g": "sich"
-        },
-        {
-          "name": "Pensionen und Beihilfen",
-          "v": 90.0,
-          "g": "verw"
-        },
-        {
-          "name": "Energie, Wasser, Wirtschaft",
-          "v": 72.0,
-          "g": "inf"
-        },
-        {
-          "name": "Kultur und Religion",
-          "v": 55.0,
-          "g": "for"
-        },
-        {
-          "name": "Zinsen",
-          "v": 48.0,
-          "g": "zins"
-        },
-        {
-          "name": "Forschung und sonstige Bildung",
-          "v": 24.0,
-          "g": "for"
-        },
-        {
-          "name": "Vermögen und Sondervermögen",
-          "v": 20.0,
-          "g": "verw"
-        },
-        {
-          "name": "Landwirtschaft und Forsten",
-          "v": 12.0,
-          "g": "inf"
-        },
-        {
-          "name": "Umwelt- und Naturschutz",
-          "v": 9.0,
-          "g": "inf"
-        },
-        {
-          "name": "Finanzausgleich an Kommunen",
-          "v": 3.0,
+          "v": 8,
           "g": "verw"
         }
       ]
     },
     "14": {
       "jahr": 2022,
-      "gesamt": 15827.0,
+      "gesamt": 15827,
       "posten": [
         {
           "name": "Soziales, Familie, Jugend",
-          "v": 3913.0,
+          "v": 3913,
           "g": "soz"
         },
         {
           "name": "Kindertagesbetreuung",
-          "v": 2378.0,
+          "v": 2378,
           "g": "soz"
         },
         {
           "name": "Politische Führung und Verwaltung",
-          "v": 1876.0,
+          "v": 1876,
           "g": "verw"
         },
         {
           "name": "Verkehr",
-          "v": 1638.0,
+          "v": 1638,
           "g": "inf"
         },
         {
           "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 1213.0,
+          "v": 1213,
           "g": "inf"
         },
         {
           "name": "Schulen",
-          "v": 1036.0,
+          "v": 1036,
           "g": "for"
         },
         {
           "name": "Polizei, Sicherheit und Justiz",
-          "v": 907.0,
+          "v": 907,
           "g": "sich"
         },
         {
           "name": "Kultur und Religion",
-          "v": 718.0,
+          "v": 718,
           "g": "for"
         },
         {
           "name": "Energie, Wasser, Wirtschaft",
-          "v": 646.0,
+          "v": 646,
           "g": "inf"
         },
         {
           "name": "Gesundheit und Sport",
-          "v": 571.0,
+          "v": 571,
           "g": "soz"
         },
         {
           "name": "Vermögen und Sondervermögen",
-          "v": 426.0,
+          "v": 426,
           "g": "verw"
         },
         {
           "name": "Pensionen und Beihilfen",
-          "v": 257.0,
+          "v": 257,
           "g": "verw"
         },
         {
           "name": "Forschung und sonstige Bildung",
-          "v": 213.0,
+          "v": 213,
           "g": "for"
         },
         {
           "name": "Umwelt- und Naturschutz",
-          "v": 83.0,
+          "v": 83,
           "g": "inf"
         },
         {
           "name": "Zinsen",
-          "v": 48.0,
+          "v": 48,
           "g": "zins"
         },
         {
           "name": "Landwirtschaft und Forsten",
-          "v": 33.0,
+          "v": 33,
           "g": "inf"
         }
       ]
     },
     "15": {
       "jahr": 2022,
-      "gesamt": 8305.0,
+      "gesamt": 8305,
       "posten": [
         {
           "name": "Soziales, Familie, Jugend",
-          "v": 2082.0,
+          "v": 2082,
           "g": "soz"
         },
         {
           "name": "Politische Führung und Verwaltung",
-          "v": 1419.0,
+          "v": 1419,
           "g": "verw"
         },
         {
           "name": "Kindertagesbetreuung",
-          "v": 1268.0,
+          "v": 1268,
           "g": "soz"
         },
         {
           "name": "Verkehr",
-          "v": 752.0,
+          "v": 752,
           "g": "inf"
         },
         {
           "name": "Schulen",
-          "v": 505.0,
+          "v": 505,
           "g": "for"
         },
         {
           "name": "Polizei, Sicherheit und Justiz",
-          "v": 505.0,
+          "v": 505,
           "g": "sich"
         },
         {
           "name": "Energie, Wasser, Wirtschaft",
-          "v": 374.0,
+          "v": 374,
           "g": "inf"
         },
         {
           "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 368.0,
+          "v": 368,
           "g": "inf"
         },
         {
           "name": "Gesundheit und Sport",
-          "v": 329.0,
+          "v": 329,
           "g": "soz"
         },
         {
           "name": "Kultur und Religion",
-          "v": 319.0,
+          "v": 319,
           "g": "for"
         },
         {
           "name": "Forschung und sonstige Bildung",
-          "v": 133.0,
+          "v": 133,
           "g": "for"
         },
         {
           "name": "Pensionen und Beihilfen",
-          "v": 130.0,
+          "v": 130,
           "g": "verw"
         },
         {
           "name": "Umwelt- und Naturschutz",
-          "v": 41.0,
+          "v": 41,
           "g": "inf"
         },
         {
           "name": "Finanzausgleich an Kommunen",
-          "v": 38.0,
+          "v": 38,
           "g": "verw"
         },
         {
           "name": "Vermögen und Sondervermögen",
-          "v": 23.0,
+          "v": 23,
           "g": "verw"
         },
         {
           "name": "Zinsen",
-          "v": 22.0,
+          "v": 22,
           "g": "zins"
         },
         {
           "name": "Landwirtschaft und Forsten",
-          "v": 9.0,
-          "g": "inf"
-        }
-      ]
-    },
-    "01": {
-      "jahr": 2022,
-      "gesamt": 12172.0,
-      "posten": [
-        {
-          "name": "Soziales, Familie, Jugend",
-          "v": 3542.0,
-          "g": "soz"
-        },
-        {
-          "name": "Kindertagesbetreuung",
-          "v": 1925.0,
-          "g": "soz"
-        },
-        {
-          "name": "Politische Führung und Verwaltung",
-          "v": 1444.0,
-          "g": "verw"
-        },
-        {
-          "name": "Schulen",
-          "v": 1025.0,
-          "g": "for"
-        },
-        {
-          "name": "Verkehr",
-          "v": 945.0,
-          "g": "inf"
-        },
-        {
-          "name": "Energie, Wasser, Wirtschaft",
-          "v": 675.0,
-          "g": "inf"
-        },
-        {
-          "name": "Polizei, Sicherheit und Justiz",
-          "v": 653.0,
-          "g": "sich"
-        },
-        {
-          "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 622.0,
-          "g": "inf"
-        },
-        {
-          "name": "Gesundheit und Sport",
-          "v": 486.0,
-          "g": "soz"
-        },
-        {
-          "name": "Pensionen und Beihilfen",
-          "v": 233.0,
-          "g": "verw"
-        },
-        {
-          "name": "Kultur und Religion",
-          "v": 225.0,
-          "g": "for"
-        },
-        {
-          "name": "Vermögen und Sondervermögen",
-          "v": 138.0,
-          "g": "verw"
-        },
-        {
-          "name": "Forschung und sonstige Bildung",
-          "v": 112.0,
-          "g": "for"
-        },
-        {
-          "name": "Zinsen",
-          "v": 63.0,
-          "g": "zins"
-        },
-        {
-          "name": "Finanzausgleich an Kommunen",
-          "v": 61.0,
-          "g": "verw"
-        },
-        {
-          "name": "Umwelt- und Naturschutz",
-          "v": 45.0,
-          "g": "inf"
-        },
-        {
-          "name": "Landwirtschaft und Forsten",
-          "v": 25.0,
+          "v": 9,
           "g": "inf"
         }
       ]
     },
     "16": {
       "jahr": 2022,
-      "gesamt": 7329.0,
+      "gesamt": 7329,
       "posten": [
         {
           "name": "Soziales, Familie, Jugend",
-          "v": 2088.0,
+          "v": 2088,
           "g": "soz"
         },
         {
           "name": "Kindertagesbetreuung",
-          "v": 952.0,
+          "v": 952,
           "g": "soz"
         },
         {
           "name": "Politische Führung und Verwaltung",
-          "v": 774.0,
+          "v": 774,
           "g": "verw"
         },
         {
           "name": "Verkehr",
-          "v": 683.0,
+          "v": 683,
           "g": "inf"
         },
         {
           "name": "Schulen",
-          "v": 475.0,
+          "v": 475,
           "g": "for"
         },
         {
           "name": "Wohnen, Städtebau, kommunale Dienste",
-          "v": 464.0,
+          "v": 464,
           "g": "inf"
         },
         {
           "name": "Gesundheit und Sport",
-          "v": 407.0,
+          "v": 407,
           "g": "soz"
         },
         {
           "name": "Polizei, Sicherheit und Justiz",
-          "v": 396.0,
+          "v": 396,
           "g": "sich"
         },
         {
           "name": "Kultur und Religion",
-          "v": 312.0,
+          "v": 312,
           "g": "for"
         },
         {
           "name": "Energie, Wasser, Wirtschaft",
-          "v": 272.0,
+          "v": 272,
           "g": "inf"
         },
         {
           "name": "Vermögen und Sondervermögen",
-          "v": 197.0,
+          "v": 197,
           "g": "verw"
         },
         {
           "name": "Forschung und sonstige Bildung",
-          "v": 105.0,
+          "v": 105,
           "g": "for"
         },
         {
           "name": "Pensionen und Beihilfen",
-          "v": 97.0,
+          "v": 97,
           "g": "verw"
         },
         {
           "name": "Umwelt- und Naturschutz",
-          "v": 42.0,
+          "v": 42,
           "g": "inf"
         },
         {
           "name": "Zinsen",
-          "v": 34.0,
+          "v": 34,
           "g": "zins"
         },
         {
           "name": "Landwirtschaft und Forsten",
-          "v": 28.0,
+          "v": 28,
           "g": "inf"
         },
         {
           "name": "Finanzausgleich an Kommunen",
-          "v": 18.0,
+          "v": 18,
           "g": "verw"
+        }
+      ]
+    },
+    "08": {
+      "jahr": 2022,
+      "gesamt": 50267,
+      "posten": [
+        {
+          "name": "Soziales, Familie, Jugend",
+          "v": 9518,
+          "g": "soz"
+        },
+        {
+          "name": "Politische Führung und Verwaltung",
+          "v": 7856,
+          "g": "verw"
+        },
+        {
+          "name": "Kindertagesbetreuung",
+          "v": 6009,
+          "g": "soz"
+        },
+        {
+          "name": "Finanzausgleich an Kommunen",
+          "v": 5145,
+          "g": "verw"
+        },
+        {
+          "name": "Verkehr",
+          "v": 4162,
+          "g": "inf"
+        },
+        {
+          "name": "Schulen",
+          "v": 3265,
+          "g": "for"
+        },
+        {
+          "name": "Energie, Wasser, Wirtschaft",
+          "v": 2804,
+          "g": "inf"
+        },
+        {
+          "name": "Gesundheit und Sport",
+          "v": 2384,
+          "g": "soz"
+        },
+        {
+          "name": "Pensionen und Beihilfen",
+          "v": 2251,
+          "g": "verw"
+        },
+        {
+          "name": "Wohnen, Städtebau, kommunale Dienste",
+          "v": 1924,
+          "g": "inf"
+        },
+        {
+          "name": "Polizei, Sicherheit und Justiz",
+          "v": 1826,
+          "g": "sich"
+        },
+        {
+          "name": "Kultur und Religion",
+          "v": 1311,
+          "g": "for"
+        },
+        {
+          "name": "Vermögen und Sondervermögen",
+          "v": 990,
+          "g": "verw"
+        },
+        {
+          "name": "Forschung und sonstige Bildung",
+          "v": 496,
+          "g": "for"
+        },
+        {
+          "name": "Landwirtschaft und Forsten",
+          "v": 360,
+          "g": "inf"
+        },
+        {
+          "name": "Umwelt- und Naturschutz",
+          "v": 222,
+          "g": "inf"
+        },
+        {
+          "name": "Zinsen",
+          "v": 111,
+          "g": "zins"
+        }
+      ]
+    },
+    "09": {
+      "jahr": 2022,
+      "gesamt": 51201,
+      "posten": [
+        {
+          "name": "Soziales, Familie, Jugend",
+          "v": 10336,
+          "g": "soz"
+        },
+        {
+          "name": "Kindertagesbetreuung",
+          "v": 6682,
+          "g": "soz"
+        },
+        {
+          "name": "Politische Führung und Verwaltung",
+          "v": 5879,
+          "g": "verw"
+        },
+        {
+          "name": "Schulen",
+          "v": 5659,
+          "g": "for"
+        },
+        {
+          "name": "Energie, Wasser, Wirtschaft",
+          "v": 4453,
+          "g": "inf"
+        },
+        {
+          "name": "Verkehr",
+          "v": 3853,
+          "g": "inf"
+        },
+        {
+          "name": "Wohnen, Städtebau, kommunale Dienste",
+          "v": 3363,
+          "g": "inf"
+        },
+        {
+          "name": "Gesundheit und Sport",
+          "v": 2914,
+          "g": "soz"
+        },
+        {
+          "name": "Polizei, Sicherheit und Justiz",
+          "v": 2161,
+          "g": "sich"
+        },
+        {
+          "name": "Vermögen und Sondervermögen",
+          "v": 2021,
+          "g": "verw"
+        },
+        {
+          "name": "Pensionen und Beihilfen",
+          "v": 1500,
+          "g": "verw"
+        },
+        {
+          "name": "Kultur und Religion",
+          "v": 1476,
+          "g": "for"
+        },
+        {
+          "name": "Forschung und sonstige Bildung",
+          "v": 697,
+          "g": "for"
+        },
+        {
+          "name": "Zinsen",
+          "v": 190,
+          "g": "zins"
+        },
+        {
+          "name": "Landwirtschaft und Forsten",
+          "v": 150,
+          "g": "inf"
+        },
+        {
+          "name": "Umwelt- und Naturschutz",
+          "v": 118,
+          "g": "inf"
+        },
+        {
+          "name": "Finanzausgleich an Kommunen",
+          "v": 89,
+          "g": "verw"
+        }
+      ]
+    },
+    "06": {
+      "jahr": 2022,
+      "gesamt": 28740,
+      "posten": [
+        {
+          "name": "Soziales, Familie, Jugend",
+          "v": 8707,
+          "g": "soz"
+        },
+        {
+          "name": "Kindertagesbetreuung",
+          "v": 3522,
+          "g": "soz"
+        },
+        {
+          "name": "Politische Führung und Verwaltung",
+          "v": 3308,
+          "g": "verw"
+        },
+        {
+          "name": "Schulen",
+          "v": 2176,
+          "g": "for"
+        },
+        {
+          "name": "Wohnen, Städtebau, kommunale Dienste",
+          "v": 1977,
+          "g": "inf"
+        },
+        {
+          "name": "Verkehr",
+          "v": 1901,
+          "g": "inf"
+        },
+        {
+          "name": "Energie, Wasser, Wirtschaft",
+          "v": 1579,
+          "g": "inf"
+        },
+        {
+          "name": "Gesundheit und Sport",
+          "v": 1407,
+          "g": "soz"
+        },
+        {
+          "name": "Polizei, Sicherheit und Justiz",
+          "v": 1252,
+          "g": "sich"
+        },
+        {
+          "name": "Kultur und Religion",
+          "v": 648,
+          "g": "for"
+        },
+        {
+          "name": "Pensionen und Beihilfen",
+          "v": 559,
+          "g": "verw"
+        },
+        {
+          "name": "Forschung und sonstige Bildung",
+          "v": 554,
+          "g": "for"
+        },
+        {
+          "name": "Finanzausgleich an Kommunen",
+          "v": 526,
+          "g": "verw"
+        },
+        {
+          "name": "Zinsen",
+          "v": 252,
+          "g": "zins"
+        },
+        {
+          "name": "Vermögen und Sondervermögen",
+          "v": 229,
+          "g": "verw"
+        },
+        {
+          "name": "Landwirtschaft und Forsten",
+          "v": 136,
+          "g": "inf"
+        },
+        {
+          "name": "Umwelt- und Naturschutz",
+          "v": 99,
+          "g": "inf"
+        }
+      ]
+    },
+    "03": {
+      "jahr": 2022,
+      "gesamt": 32071,
+      "posten": [
+        {
+          "name": "Soziales, Familie, Jugend",
+          "v": 10399,
+          "g": "soz"
+        },
+        {
+          "name": "Politische Führung und Verwaltung",
+          "v": 4305,
+          "g": "verw"
+        },
+        {
+          "name": "Kindertagesbetreuung",
+          "v": 3305,
+          "g": "soz"
+        },
+        {
+          "name": "Schulen",
+          "v": 2499,
+          "g": "for"
+        },
+        {
+          "name": "Verkehr",
+          "v": 2261,
+          "g": "inf"
+        },
+        {
+          "name": "Wohnen, Städtebau, kommunale Dienste",
+          "v": 2142,
+          "g": "inf"
+        },
+        {
+          "name": "Polizei, Sicherheit und Justiz",
+          "v": 1920,
+          "g": "sich"
+        },
+        {
+          "name": "Energie, Wasser, Wirtschaft",
+          "v": 1561,
+          "g": "inf"
+        },
+        {
+          "name": "Gesundheit und Sport",
+          "v": 1469,
+          "g": "soz"
+        },
+        {
+          "name": "Pensionen und Beihilfen",
+          "v": 743,
+          "g": "verw"
+        },
+        {
+          "name": "Forschung und sonstige Bildung",
+          "v": 556,
+          "g": "for"
+        },
+        {
+          "name": "Kultur und Religion",
+          "v": 483,
+          "g": "for"
+        },
+        {
+          "name": "Vermögen und Sondervermögen",
+          "v": 184,
+          "g": "verw"
+        },
+        {
+          "name": "Umwelt- und Naturschutz",
+          "v": 178,
+          "g": "inf"
+        },
+        {
+          "name": "Zinsen",
+          "v": 104,
+          "g": "zins"
+        },
+        {
+          "name": "Finanzausgleich an Kommunen",
+          "v": 84,
+          "g": "verw"
+        },
+        {
+          "name": "Landwirtschaft und Forsten",
+          "v": 47,
+          "g": "inf"
+        }
+      ]
+    },
+    "05": {
+      "jahr": 2022,
+      "gesamt": 85863,
+      "posten": [
+        {
+          "name": "Soziales, Familie, Jugend",
+          "v": 26692,
+          "g": "soz"
+        },
+        {
+          "name": "Politische Führung und Verwaltung",
+          "v": 17860,
+          "g": "verw"
+        },
+        {
+          "name": "Kindertagesbetreuung",
+          "v": 8931,
+          "g": "soz"
+        },
+        {
+          "name": "Schulen",
+          "v": 5135,
+          "g": "for"
+        },
+        {
+          "name": "Energie, Wasser, Wirtschaft",
+          "v": 4895,
+          "g": "inf"
+        },
+        {
+          "name": "Verkehr",
+          "v": 4366,
+          "g": "inf"
+        },
+        {
+          "name": "Polizei, Sicherheit und Justiz",
+          "v": 4257,
+          "g": "sich"
+        },
+        {
+          "name": "Wohnen, Städtebau, kommunale Dienste",
+          "v": 3716,
+          "g": "inf"
+        },
+        {
+          "name": "Gesundheit und Sport",
+          "v": 2986,
+          "g": "soz"
+        },
+        {
+          "name": "Pensionen und Beihilfen",
+          "v": 2443,
+          "g": "verw"
+        },
+        {
+          "name": "Kultur und Religion",
+          "v": 1951,
+          "g": "for"
+        },
+        {
+          "name": "Forschung und sonstige Bildung",
+          "v": 1333,
+          "g": "for"
+        },
+        {
+          "name": "Vermögen und Sondervermögen",
+          "v": 1300,
+          "g": "verw"
+        },
+        {
+          "name": "Zinsen",
+          "v": 588,
+          "g": "zins"
+        },
+        {
+          "name": "Umwelt- und Naturschutz",
+          "v": 267,
+          "g": "inf"
+        },
+        {
+          "name": "Landwirtschaft und Forsten",
+          "v": 104,
+          "g": "inf"
+        }
+      ]
+    },
+    "07": {
+      "jahr": 2022,
+      "gesamt": 15532,
+      "posten": [
+        {
+          "name": "Soziales, Familie, Jugend",
+          "v": 4390,
+          "g": "soz"
+        },
+        {
+          "name": "Politische Führung und Verwaltung",
+          "v": 2293,
+          "g": "verw"
+        },
+        {
+          "name": "Kindertagesbetreuung",
+          "v": 2147,
+          "g": "soz"
+        },
+        {
+          "name": "Verkehr",
+          "v": 1631,
+          "g": "inf"
+        },
+        {
+          "name": "Schulen",
+          "v": 1035,
+          "g": "for"
+        },
+        {
+          "name": "Wohnen, Städtebau, kommunale Dienste",
+          "v": 895,
+          "g": "inf"
+        },
+        {
+          "name": "Polizei, Sicherheit und Justiz",
+          "v": 716,
+          "g": "sich"
+        },
+        {
+          "name": "Gesundheit und Sport",
+          "v": 467,
+          "g": "soz"
+        },
+        {
+          "name": "Pensionen und Beihilfen",
+          "v": 436,
+          "g": "verw"
+        },
+        {
+          "name": "Energie, Wasser, Wirtschaft",
+          "v": 382,
+          "g": "inf"
+        },
+        {
+          "name": "Forschung und sonstige Bildung",
+          "v": 356,
+          "g": "for"
+        },
+        {
+          "name": "Kultur und Religion",
+          "v": 257,
+          "g": "for"
+        },
+        {
+          "name": "Zinsen",
+          "v": 183,
+          "g": "zins"
+        },
+        {
+          "name": "Landwirtschaft und Forsten",
+          "v": 180,
+          "g": "inf"
+        },
+        {
+          "name": "Vermögen und Sondervermögen",
+          "v": 113,
+          "g": "verw"
+        },
+        {
+          "name": "Finanzausgleich an Kommunen",
+          "v": 103,
+          "g": "verw"
+        },
+        {
+          "name": "Umwelt- und Naturschutz",
+          "v": 38,
+          "g": "inf"
+        }
+      ]
+    },
+    "01": {
+      "jahr": 2022,
+      "gesamt": 12172,
+      "posten": [
+        {
+          "name": "Soziales, Familie, Jugend",
+          "v": 3542,
+          "g": "soz"
+        },
+        {
+          "name": "Kindertagesbetreuung",
+          "v": 1925,
+          "g": "soz"
+        },
+        {
+          "name": "Politische Führung und Verwaltung",
+          "v": 1444,
+          "g": "verw"
+        },
+        {
+          "name": "Schulen",
+          "v": 1025,
+          "g": "for"
+        },
+        {
+          "name": "Verkehr",
+          "v": 945,
+          "g": "inf"
+        },
+        {
+          "name": "Energie, Wasser, Wirtschaft",
+          "v": 675,
+          "g": "inf"
+        },
+        {
+          "name": "Polizei, Sicherheit und Justiz",
+          "v": 653,
+          "g": "sich"
+        },
+        {
+          "name": "Wohnen, Städtebau, kommunale Dienste",
+          "v": 622,
+          "g": "inf"
+        },
+        {
+          "name": "Gesundheit und Sport",
+          "v": 486,
+          "g": "soz"
+        },
+        {
+          "name": "Pensionen und Beihilfen",
+          "v": 233,
+          "g": "verw"
+        },
+        {
+          "name": "Kultur und Religion",
+          "v": 225,
+          "g": "for"
+        },
+        {
+          "name": "Vermögen und Sondervermögen",
+          "v": 138,
+          "g": "verw"
+        },
+        {
+          "name": "Forschung und sonstige Bildung",
+          "v": 112,
+          "g": "for"
+        },
+        {
+          "name": "Zinsen",
+          "v": 63,
+          "g": "zins"
+        },
+        {
+          "name": "Finanzausgleich an Kommunen",
+          "v": 61,
+          "g": "verw"
+        },
+        {
+          "name": "Umwelt- und Naturschutz",
+          "v": 45,
+          "g": "inf"
+        },
+        {
+          "name": "Landwirtschaft und Forsten",
+          "v": 25,
+          "g": "inf"
         }
       ]
     }

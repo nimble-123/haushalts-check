@@ -6,6 +6,8 @@
   "amtlich": "Schwabach",
   "einwohner": 40835,
   "stadtstaat": false,
+  "lat": 49.3289,
+  "lon": 11.0245,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

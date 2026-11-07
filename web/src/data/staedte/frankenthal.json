@@ -6,6 +6,8 @@
   "amtlich": "Frankenthal (Pfalz), kreisfreie Stadt",
   "einwohner": 48140,
   "stadtstaat": false,
+  "lat": 49.5356,
+  "lon": 8.3543,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

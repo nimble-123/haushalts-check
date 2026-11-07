@@ -6,6 +6,8 @@
   "amtlich": "Gelsenkirchen, Stadt",
   "einwohner": 267930,
   "stadtstaat": false,
+  "lat": 51.5109,
+  "lon": 7.0961,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

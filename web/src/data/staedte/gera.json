@@ -6,6 +6,8 @@
   "amtlich": "Gera, Stadt",
   "einwohner": 95608,
   "stadtstaat": false,
+  "lat": 50.8761,
+  "lon": 12.0804,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

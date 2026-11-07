@@ -6,6 +6,8 @@
   "amtlich": "Amberg",
   "einwohner": 42553,
   "stadtstaat": false,
+  "lat": 49.4453,
+  "lon": 11.8561,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

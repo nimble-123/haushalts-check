@@ -6,6 +6,8 @@
   "amtlich": "Bayreuth",
   "einwohner": 72940,
   "stadtstaat": false,
+  "lat": 49.9438,
+  "lon": 11.5753,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

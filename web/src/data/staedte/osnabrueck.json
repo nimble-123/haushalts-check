@@ -6,6 +6,8 @@
   "amtlich": "Osnabrück, Stadt",
   "einwohner": 166057,
   "stadtstaat": false,
+  "lat": 52.2769,
+  "lon": 8.042,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

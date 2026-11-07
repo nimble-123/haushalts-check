@@ -6,6 +6,8 @@
   "amtlich": "Magdeburg, Landeshauptstadt",
   "einwohner": 244329,
   "stadtstaat": false,
+  "lat": 52.1262,
+  "lon": 11.6327,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

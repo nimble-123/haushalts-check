@@ -6,6 +6,8 @@
   "amtlich": "Bottrop, Stadt",
   "einwohner": 118535,
   "stadtstaat": false,
+  "lat": 51.5211,
+  "lon": 6.9271,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

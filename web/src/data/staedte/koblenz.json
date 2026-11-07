@@ -6,6 +6,8 @@
   "amtlich": "Koblenz, kreisfreie Stadt",
   "einwohner": 113378,
   "stadtstaat": false,
+  "lat": 50.3595,
+  "lon": 7.598,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

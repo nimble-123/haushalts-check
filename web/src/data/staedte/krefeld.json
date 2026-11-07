@@ -6,6 +6,8 @@
   "amtlich": "Krefeld, Stadt",
   "einwohner": 231406,
   "stadtstaat": false,
+  "lat": 51.3326,
+  "lon": 6.5609,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

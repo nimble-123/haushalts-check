@@ -5,5 +5,7 @@
   "name": "Hamburg",
   "amtlich": "Hamburg, Freie und Hansestadt",
   "einwohner": 1862565,
-  "stadtstaat": true
+  "stadtstaat": true,
+  "lat": 53.5507,
+  "lon": 9.997
 }

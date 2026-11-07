@@ -6,6 +6,8 @@
   "amtlich": "Zweibrücken, kreisfreie Stadt",
   "einwohner": 33323,
   "stadtstaat": false,
+  "lat": 49.2492,
+  "lon": 7.3631,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

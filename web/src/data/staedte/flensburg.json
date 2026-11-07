@@ -6,6 +6,8 @@
   "amtlich": "Flensburg, Stadt",
   "einwohner": 96326,
   "stadtstaat": false,
+  "lat": 54.7825,
+  "lon": 9.4375,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

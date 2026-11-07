@@ -6,6 +6,8 @@
   "amtlich": "Neustadt an der Weinstraße, kreisfreie Stadt",
   "einwohner": 52945,
   "stadtstaat": false,
+  "lat": 49.352,
+  "lon": 8.1408,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

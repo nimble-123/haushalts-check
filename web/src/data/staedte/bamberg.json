@@ -6,6 +6,8 @@
   "amtlich": "Bamberg",
   "einwohner": 77150,
   "stadtstaat": false,
+  "lat": 49.8934,
+  "lon": 10.8868,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -6,6 +6,8 @@
   "amtlich": "Leverkusen, Stadt",
   "einwohner": 168581,
   "stadtstaat": false,
+  "lat": 51.0324,
+  "lon": 6.9798,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

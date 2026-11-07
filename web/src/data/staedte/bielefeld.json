@@ -6,6 +6,8 @@
   "amtlich": "Bielefeld, Stadt",
   "einwohner": 331605,
   "stadtstaat": false,
+  "lat": 52.022,
+  "lon": 8.534,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

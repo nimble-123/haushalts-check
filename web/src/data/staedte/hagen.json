@@ -6,6 +6,8 @@
   "amtlich": "Hagen, Stadt der FernUniversität",
   "einwohner": 190384,
   "stadtstaat": false,
+  "lat": 51.3602,
+  "lon": 7.4674,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

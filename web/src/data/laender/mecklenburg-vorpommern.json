@@ -9,92 +9,92 @@
   "posten": [
     {
       "name": "Soziales, Familie, Jugend",
-      "v": 1758.0,
+      "v": 1758,
       "g": "soz"
     },
     {
       "name": "Finanzausgleich an Kommunen",
-      "v": 1460.0,
+      "v": 1460,
       "g": "verw"
     },
     {
       "name": "Energie, Wasser, Wirtschaft",
-      "v": 1215.0,
+      "v": 1215,
       "g": "inf"
     },
     {
       "name": "Schulen",
-      "v": 1137.0,
+      "v": 1137,
       "g": "for"
     },
     {
       "name": "Politische Führung und Verwaltung",
-      "v": 673.0,
+      "v": 673,
       "g": "verw"
     },
     {
       "name": "Verkehr",
-      "v": 519.0,
+      "v": 519,
       "g": "inf"
     },
     {
       "name": "Kindertagesbetreuung",
-      "v": 461.0,
+      "v": 461,
       "g": "soz"
     },
     {
       "name": "Gesundheit und Sport",
-      "v": 457.0,
+      "v": 457,
       "g": "soz"
     },
     {
       "name": "Landwirtschaft und Forsten",
-      "v": 426.0,
+      "v": 426,
       "g": "inf"
     },
     {
       "name": "Übriges, nicht einzeln ausgewiesen",
-      "v": 417.0,
+      "v": 417,
       "g": "verw"
     },
     {
       "name": "Polizei, Sicherheit und Justiz",
-      "v": 412.0,
+      "v": 412,
       "g": "sich"
     },
     {
       "name": "Hochschulen",
-      "v": 393.0,
+      "v": 393,
       "g": "for"
     },
     {
       "name": "Pensionen und Beihilfen",
-      "v": 343.0,
+      "v": 343,
       "g": "verw"
     },
     {
       "name": "Forschung und sonstige Bildung",
-      "v": 312.0,
+      "v": 312,
       "g": "for"
     },
     {
       "name": "Zinsen",
-      "v": 200.0,
+      "v": 200,
       "g": "zins"
     },
     {
       "name": "Wohnen, Städtebau, kommunale Dienste",
-      "v": 162.0,
+      "v": 162,
       "g": "inf"
     },
     {
       "name": "Kultur und Religion",
-      "v": 137.0,
+      "v": 137,
       "g": "for"
     },
     {
       "name": "Umwelt- und Naturschutz",
-      "v": 118.0,
+      "v": 118,
       "g": "inf"
     }
   ],

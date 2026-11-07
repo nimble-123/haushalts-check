@@ -9,97 +9,97 @@
   "posten": [
     {
       "name": "Finanzausgleich an Kommunen",
-      "v": 2192.0,
+      "v": 2192,
       "g": "verw"
     },
     {
       "name": "Schulen",
-      "v": 1800.0,
+      "v": 1800,
       "g": "for"
     },
     {
       "name": "Soziales, Familie, Jugend",
-      "v": 1239.0,
+      "v": 1239,
       "g": "soz"
     },
     {
       "name": "Hochschulen",
-      "v": 1175.0,
+      "v": 1175,
       "g": "for"
     },
     {
       "name": "Verkehr",
-      "v": 746.0,
+      "v": 746,
       "g": "inf"
     },
     {
       "name": "Polizei, Sicherheit und Justiz",
-      "v": 544.0,
+      "v": 544,
       "g": "sich"
     },
     {
       "name": "Pensionen und Beihilfen",
-      "v": 526.0,
+      "v": 526,
       "g": "verw"
     },
     {
       "name": "Übriges, nicht einzeln ausgewiesen",
-      "v": 522.0,
+      "v": 522,
       "g": "verw"
     },
     {
       "name": "Energie, Wasser, Wirtschaft",
-      "v": 491.0,
+      "v": 491,
       "g": "inf"
     },
     {
       "name": "Politische Führung und Verwaltung",
-      "v": 484.0,
+      "v": 484,
       "g": "verw"
     },
     {
       "name": "Gesundheit und Sport",
-      "v": 450.0,
+      "v": 450,
       "g": "soz"
     },
     {
       "name": "Forschung und sonstige Bildung",
-      "v": 410.0,
+      "v": 410,
       "g": "for"
     },
     {
       "name": "Kindertagesbetreuung",
-      "v": 387.0,
+      "v": 387,
       "g": "soz"
     },
     {
       "name": "Kultur und Religion",
-      "v": 308.0,
+      "v": 308,
       "g": "for"
     },
     {
       "name": "Landwirtschaft und Forsten",
-      "v": 285.0,
+      "v": 285,
       "g": "inf"
     },
     {
       "name": "Zinsen",
-      "v": 262.0,
+      "v": 262,
       "g": "zins"
     },
     {
       "name": "Wohnen, Städtebau, kommunale Dienste",
-      "v": 195.0,
+      "v": 195,
       "g": "inf"
     },
     {
       "name": "Umwelt- und Naturschutz",
-      "v": 124.0,
+      "v": 124,
       "g": "inf"
     },
     {
       "name": "Vermögen und Sondervermögen",
-      "v": 86.0,
+      "v": 86,
       "g": "verw"
     }
   ],

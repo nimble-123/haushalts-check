@@ -6,6 +6,8 @@
   "amtlich": "Trier, kreisfreie Stadt",
   "einwohner": 104342,
   "stadtstaat": false,
+  "lat": 49.7576,
+  "lon": 6.638,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

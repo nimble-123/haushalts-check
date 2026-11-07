@@ -6,6 +6,8 @@
   "amtlich": "Worms, kreisfreie Stadt",
   "einwohner": 86753,
   "stadtstaat": false,
+  "lat": 49.6298,
+  "lon": 8.3617,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

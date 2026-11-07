@@ -6,6 +6,8 @@
   "amtlich": "Neumünster, Stadt",
   "einwohner": 79809,
   "stadtstaat": false,
+  "lat": 54.0699,
+  "lon": 9.9884,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

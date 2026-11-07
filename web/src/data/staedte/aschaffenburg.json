@@ -6,6 +6,8 @@
   "amtlich": "Aschaffenburg",
   "einwohner": 73091,
   "stadtstaat": false,
+  "lat": 49.9735,
+  "lon": 9.1478,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

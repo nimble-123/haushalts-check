@@ -6,6 +6,8 @@
   "amtlich": "Erlangen",
   "einwohner": 115928,
   "stadtstaat": false,
+  "lat": 49.5951,
+  "lon": 11.0033,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

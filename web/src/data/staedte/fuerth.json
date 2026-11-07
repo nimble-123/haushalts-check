@@ -6,6 +6,8 @@
   "amtlich": "Fürth",
   "einwohner": 132036,
   "stadtstaat": false,
+  "lat": 49.4786,
+  "lon": 10.9874,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

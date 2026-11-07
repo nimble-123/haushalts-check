@@ -9,92 +9,92 @@
   "posten": [
     {
       "name": "Soziales, Familie, Jugend",
-      "v": 4265.0,
+      "v": 4265,
       "g": "soz"
     },
     {
       "name": "Schulen",
-      "v": 3195.0,
+      "v": 3195,
       "g": "for"
     },
     {
       "name": "Verkehr",
-      "v": 2682.0,
+      "v": 2682,
       "g": "inf"
     },
     {
       "name": "Pensionen und Beihilfen",
-      "v": 2051.0,
+      "v": 2051,
       "g": "verw"
     },
     {
       "name": "Energie, Wasser, Wirtschaft",
-      "v": 1655.0,
+      "v": 1655,
       "g": "inf"
     },
     {
       "name": "Kindertagesbetreuung",
-      "v": 1533.0,
+      "v": 1533,
       "g": "soz"
     },
     {
       "name": "Hochschulen",
-      "v": 1508.0,
+      "v": 1508,
       "g": "for"
     },
     {
       "name": "Polizei, Sicherheit und Justiz",
-      "v": 1321.0,
+      "v": 1321,
       "g": "sich"
     },
     {
       "name": "Politische Führung und Verwaltung",
-      "v": 1171.0,
+      "v": 1171,
       "g": "verw"
     },
     {
       "name": "Vermögen und Sondervermögen",
-      "v": 1167.0,
+      "v": 1167,
       "g": "verw"
     },
     {
       "name": "Übriges, nicht einzeln ausgewiesen",
-      "v": 716.0,
+      "v": 716,
       "g": "verw"
     },
     {
       "name": "Zinsen",
-      "v": 691.0,
+      "v": 691,
       "g": "zins"
     },
     {
       "name": "Wohnen, Städtebau, kommunale Dienste",
-      "v": 662.0,
+      "v": 662,
       "g": "inf"
     },
     {
       "name": "Gesundheit und Sport",
-      "v": 633.0,
+      "v": 633,
       "g": "soz"
     },
     {
       "name": "Kultur und Religion",
-      "v": 592.0,
+      "v": 592,
       "g": "for"
     },
     {
       "name": "Forschung und sonstige Bildung",
-      "v": 430.0,
+      "v": 430,
       "g": "for"
     },
     {
       "name": "Umwelt- und Naturschutz",
-      "v": 80.0,
+      "v": 80,
       "g": "inf"
     },
     {
       "name": "Landwirtschaft und Forsten",
-      "v": 29.0,
+      "v": 29,
       "g": "inf"
     }
   ],

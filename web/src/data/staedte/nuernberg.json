@@ -6,6 +6,8 @@
   "amtlich": "Nürnberg",
   "einwohner": 529508,
   "stadtstaat": false,
+  "lat": 49.4509,
+  "lon": 11.0753,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

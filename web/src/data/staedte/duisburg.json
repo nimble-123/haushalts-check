@@ -6,6 +6,8 @@
   "amtlich": "Duisburg, Stadt",
   "einwohner": 502270,
   "stadtstaat": false,
+  "lat": 51.4333,
+  "lon": 6.7655,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

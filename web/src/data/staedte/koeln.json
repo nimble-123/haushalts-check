@@ -6,6 +6,8 @@
   "amtlich": "Köln, Stadt",
   "einwohner": 1024621,
   "stadtstaat": false,
+  "lat": 50.9381,
+  "lon": 6.9571,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

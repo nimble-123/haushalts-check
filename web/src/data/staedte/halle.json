@@ -6,6 +6,8 @@
   "amtlich": "Halle (Saale), Stadt",
   "einwohner": 226767,
   "stadtstaat": false,
+  "lat": 51.4825,
+  "lon": 11.9707,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

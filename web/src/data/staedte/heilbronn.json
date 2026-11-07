@@ -6,6 +6,8 @@
   "amtlich": "Heilbronn, Stadtkreis",
   "einwohner": 131986,
   "stadtstaat": false,
+  "lat": 49.1404,
+  "lon": 9.218,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

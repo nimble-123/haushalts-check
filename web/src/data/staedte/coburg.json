@@ -6,6 +6,8 @@
   "amtlich": "Coburg",
   "einwohner": 41064,
   "stadtstaat": false,
+  "lat": 50.2584,
+  "lon": 10.9642,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

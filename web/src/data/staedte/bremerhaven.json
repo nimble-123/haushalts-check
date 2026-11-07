@@ -5,5 +5,7 @@
   "name": "Bremerhaven",
   "amtlich": "Bremerhaven, Stadt",
   "einwohner": 118610,
-  "stadtstaat": true
+  "stadtstaat": true,
+  "lat": 53.543,
+  "lon": 8.5781
 }

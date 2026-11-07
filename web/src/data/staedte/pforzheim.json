@@ -6,6 +6,8 @@
   "amtlich": "Pforzheim, Stadtkreis",
   "einwohner": 134912,
   "stadtstaat": false,
+  "lat": 48.8913,
+  "lon": 8.6992,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -6,6 +6,8 @@
   "amtlich": "Ulm, Stadtkreis",
   "einwohner": 129882,
   "stadtstaat": false,
+  "lat": 48.3985,
+  "lon": 9.9904,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

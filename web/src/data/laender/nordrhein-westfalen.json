@@ -9,97 +9,97 @@
   "posten": [
     {
       "name": "Soziales, Familie, Jugend",
-      "v": 19366.0,
+      "v": 19366,
       "g": "soz"
     },
     {
       "name": "Schulen",
-      "v": 15175.0,
+      "v": 15175,
       "g": "for"
     },
     {
       "name": "Finanzausgleich an Kommunen",
-      "v": 14779.0,
+      "v": 14779,
       "g": "verw"
     },
     {
       "name": "Pensionen und Beihilfen",
-      "v": 11700.0,
+      "v": 11700,
       "g": "verw"
     },
     {
       "name": "Hochschulen",
-      "v": 9930.0,
+      "v": 9930,
       "g": "for"
     },
     {
       "name": "Übriges, nicht einzeln ausgewiesen",
-      "v": 5371.0,
+      "v": 5371,
       "g": "verw"
     },
     {
       "name": "Kindertagesbetreuung",
-      "v": 4648.0,
+      "v": 4648,
       "g": "soz"
     },
     {
       "name": "Politische Führung und Verwaltung",
-      "v": 4437.0,
+      "v": 4437,
       "g": "verw"
     },
     {
       "name": "Polizei, Sicherheit und Justiz",
-      "v": 3925.0,
+      "v": 3925,
       "g": "sich"
     },
     {
       "name": "Verkehr",
-      "v": 3798.0,
+      "v": 3798,
       "g": "inf"
     },
     {
       "name": "Vermögen und Sondervermögen",
-      "v": 3443.0,
+      "v": 3443,
       "g": "verw"
     },
     {
       "name": "Gesundheit und Sport",
-      "v": 2665.0,
+      "v": 2665,
       "g": "soz"
     },
     {
       "name": "Energie, Wasser, Wirtschaft",
-      "v": 2416.0,
+      "v": 2416,
       "g": "inf"
     },
     {
       "name": "Forschung und sonstige Bildung",
-      "v": 1991.0,
+      "v": 1991,
       "g": "for"
     },
     {
       "name": "Zinsen",
-      "v": 1947.0,
+      "v": 1947,
       "g": "zins"
     },
     {
       "name": "Wohnen, Städtebau, kommunale Dienste",
-      "v": 1128.0,
+      "v": 1128,
       "g": "inf"
     },
     {
       "name": "Landwirtschaft und Forsten",
-      "v": 667.0,
+      "v": 667,
       "g": "inf"
     },
     {
       "name": "Kultur und Religion",
-      "v": 491.0,
+      "v": 491,
       "g": "for"
     },
     {
       "name": "Umwelt- und Naturschutz",
-      "v": 455.0,
+      "v": 455,
       "g": "inf"
     }
   ],

@@ -6,6 +6,8 @@
   "amtlich": "Dessau-Roßlau, Stadt",
   "einwohner": 75402,
   "stadtstaat": false,
+  "lat": 51.8347,
+  "lon": 12.2457,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

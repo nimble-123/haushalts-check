@@ -6,6 +6,8 @@
   "amtlich": "Braunschweig, Stadt",
   "einwohner": 252962,
   "stadtstaat": false,
+  "lat": 52.2625,
+  "lon": 10.5205,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

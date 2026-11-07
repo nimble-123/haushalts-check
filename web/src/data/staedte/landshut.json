@@ -6,6 +6,8 @@
   "amtlich": "Landshut",
   "einwohner": 71863,
   "stadtstaat": false,
+  "lat": 48.537,
+  "lon": 12.1521,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

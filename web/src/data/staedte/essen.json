@@ -6,6 +6,8 @@
   "amtlich": "Essen, Stadt",
   "einwohner": 574682,
   "stadtstaat": false,
+  "lat": 51.4558,
+  "lon": 7.0126,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

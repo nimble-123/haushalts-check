@@ -6,6 +6,8 @@
   "amtlich": "Mainz, kreisfreie Stadt",
   "einwohner": 224684,
   "stadtstaat": false,
+  "lat": 50.002,
+  "lon": 8.2719,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

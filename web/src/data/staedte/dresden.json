@@ -6,6 +6,8 @@
   "amtlich": "Dresden, Stadt",
   "einwohner": 564904,
   "stadtstaat": false,
+  "lat": 51.0517,
+  "lon": 13.7369,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,
