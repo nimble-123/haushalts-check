@@ -1,36 +1,65 @@
-// Eingaben nur für diesen Tab merken (z. B. beim Wechsel der Stadt). Nichts verlässt den Browser.
-const KEY = 'haushalts-check';
+// Eigene Eingaben dauerhaft in diesem Browser merken (localStorage), damit sie beim nächsten Besuch
+// wieder drinstehen. Nichts davon verlässt den Browser. Gespeichert wird erst, wenn jemand etwas ändert.
+const KEY = 'haushalts-check-eingaben';
+const STADT = 'stadt';
 
-export function speichereEingaben(ids: string[]) {
-  const data: Record<string, string | boolean> = {};
-  ids.forEach((id) => {
-    const el = document.getElementById(id) as HTMLInputElement | null;
-    if (el) data[id] = el.type === 'checkbox' ? el.checked : el.value;
-  });
+type Werte = Record<string, string | boolean>;
+
+function lies(): Werte {
   try {
-    sessionStorage.setItem(KEY, JSON.stringify(data));
+    return JSON.parse(localStorage.getItem(KEY) ?? '{}');
   } catch {
-    /* privates Fenster o. Ä. */
+    return {};
+  }
+}
+function schreibe(daten: Werte) {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(daten));
+  } catch {
+    // privates Fenster o. Ä.: dann eben ohne Merken
   }
 }
 
-export function ladeEingaben(ids: string[]) {
-  let data: Record<string, string | boolean> = {};
-  try {
-    data = JSON.parse(sessionStorage.getItem(KEY) ?? '{}');
-  } catch {
-    return;
+/** Werte der Felder mit diesen IDs speichern; andere gespeicherte Werte bleiben erhalten. */
+export function speichereEingaben(ids: string[]) {
+  const daten = lies();
+  for (const id of ids) {
+    const el = document.getElementById(id) as HTMLInputElement | null;
+    if (el) daten[id] = el.type === 'checkbox' ? el.checked : el.value;
   }
-  ids.forEach((id) => {
+  schreibe(daten);
+}
+
+/** Gespeicherte Werte in die Felder mit diesen IDs eintragen. */
+export function ladeEingaben(ids: string[]) {
+  const daten = lies();
+  for (const id of ids) {
     const el = document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null;
-    if (!el || !(id in data)) return;
-    if (el instanceof HTMLInputElement && el.type === 'checkbox') el.checked = !!data[id];
+    if (!el || !(id in daten)) continue;
+    if (el instanceof HTMLInputElement && el.type === 'checkbox') el.checked = !!daten[id];
     else if (el instanceof HTMLSelectElement) {
       // Kirchensteuer: Satz des neuen Landes übernehmen, wenn vorher eine gewählt war
-      const v = String(data[id]);
-      const match =
+      const v = String(daten[id]);
+      const treffer =
         [...el.options].find((o) => o.value === v) ?? (id === 'kist' && v !== '0' ? el.options[1] : undefined);
-      if (match) el.value = match.value;
-    } else el.value = el.type === 'number' ? String(data[id]).replace(/\./g, '') : String(data[id]);
-  });
+      if (treffer) el.value = treffer.value;
+    } else el.value = el.type === 'number' ? String(daten[id]).replace(/\./g, '') : String(daten[id]);
+  }
+}
+
+export const gespeicherteStadt = () => {
+  const s = lies()[STADT];
+  return typeof s === 'string' ? s : null;
+};
+export function speichereStadt(slug: string) {
+  schreibe({ ...lies(), [STADT]: slug });
+}
+
+/** Alle gemerkten Eingaben vergessen. */
+export function vergiss() {
+  try {
+    localStorage.removeItem(KEY);
+  } catch {
+    // nichts zu tun
+  }
 }

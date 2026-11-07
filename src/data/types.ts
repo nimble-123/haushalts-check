@@ -57,6 +57,9 @@ export interface Stadt {
   einwohner: number;
   /** Berlin, Hamburg, Bremen, Bremerhaven: Land und Kommune in einem Haushalt */
   stadtstaat: boolean;
+  /** Geografischer Mittelpunkt (Gemeindeverzeichnis) */
+  lat?: number;
+  lon?: number;
   /** Echte Auszahlungen nach Art (Regionaldatenbank 71717-Z-05), sofern abgerufen */
   ausgabearten?: { jahr: number; vorlaeufig: boolean; posten: Ausgabeart[]; quellen: Quelle[] };
 }

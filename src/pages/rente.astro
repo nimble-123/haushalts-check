@@ -1,22 +1,27 @@
 ---
+import { DURCHSCHNITTSALTER, DURCHSCHNITTSALTER_QUELLE, MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
 import Base from '../layouts/Base.astro';
+import { VORLAGEN } from '../lib/rente';
+
+const med = VORLAGEN.med;
 ---
 <Base title="Rentenbeitrag: Staat oder ETF? | Haushalts-Check" description="Was du in die gesetzliche Rentenversicherung einzahlst und was du dafür bekommst, verglichen mit einem ETF-Sparplan aus demselben Geld. Netto, in heutiger Kaufkraft.">
   <div class="page">
     <header class="intro">
       <h1>Rentenbeitrag: Staat oder ETF?</h1>
       <p class="prose">Was du über deinen Lohn in die Rentenversicherung einzahlst und was du dafür bekommst, verglichen mit einem ETF-Sparplan aus genau dem Geld, das dir ohne Rentenbeitrag nach Steuern bliebe. Alle Beträge netto, in heutiger Kaufkraft.</p>
+      <p class="prose vorbelegt">Vorbelegt mit einer typischen Person: {DURCHSCHNITTSALTER} Jahre alt (<a href={DURCHSCHNITTSALTER_QUELLE.url}>Durchschnittsalter 2025</a>), heute {MEDIAN_BRUTTO.toLocaleString('de-DE')} € brutto (<a href={MEDIAN_BRUTTO_QUELLE.url}>Median Vollzeit 2025</a>). Deine eigenen Angaben merkt sich nur dieser Browser.</p>
     </header>
 
     <div class="rs-panel">
       <div class="rs-felder">
         <label class="rs-feld"><span>Betrachtung</span><select id="mode"><option value="life" selected>Ganzes Arbeitsleben (Einstieg 2026)</option><option value="now">Ab heute, mit deinem Brutto</option></select></label>
-        <label class="rs-feld"><span>Jahresbrutto heute (€)</span><input id="brutto" type="number" inputmode="numeric" value="85000" min="0" step="1000" /></label>
-        <label class="rs-feld"><span>Dein Alter heute</span><input id="age" type="number" inputmode="numeric" value="37" min="18" max="66" step="1" /></label>
-        <label class="rs-feld lifeonly"><span>Einstiegsalter</span><input id="c_a0" type="number" inputmode="numeric" value="25" min="16" max="60" step="1" /></label>
-        <label class="rs-feld lifeonly"><span>Einstiegsgehalt (€/Jahr)</span><input id="c_s0" type="number" inputmode="numeric" value="48000" min="0" step="1000" /></label>
-        <label class="rs-feld lifeonly"><span>Gehalt auf dem Höhepunkt (€/Jahr)</span><input id="c_s1" type="number" inputmode="numeric" value="85000" min="0" step="1000" /></label>
-        <label class="rs-feld lifeonly"><span>Höhepunkt erreicht mit</span><input id="c_ap" type="number" inputmode="numeric" value="45" min="18" max="66" step="1" /></label>
+        <label class="rs-feld"><span>Jahresbrutto heute (€)</span><input id="brutto" type="number" inputmode="numeric" value={MEDIAN_BRUTTO} min="0" step="1000" /></label>
+        <label class="rs-feld"><span>Dein Alter heute</span><input id="age" type="number" inputmode="numeric" value={DURCHSCHNITTSALTER} min="18" max="66" step="1" /></label>
+        <label class="rs-feld lifeonly"><span>Einstiegsalter</span><input id="c_a0" type="number" inputmode="numeric" value={med.einstiegsalter} min="16" max="60" step="1" /></label>
+        <label class="rs-feld lifeonly"><span>Einstiegsgehalt (€/Jahr)</span><input id="c_s0" type="number" inputmode="numeric" value={med.einstiegsgehalt} min="0" step="1000" /></label>
+        <label class="rs-feld lifeonly"><span>Gehalt auf dem Höhepunkt (€/Jahr)</span><input id="c_s1" type="number" inputmode="numeric" value={med.hoehepunktGehalt} min="0" step="1000" /></label>
+        <label class="rs-feld lifeonly"><span>Höhepunkt erreicht mit</span><input id="c_ap" type="number" inputmode="numeric" value={med.hoehepunktAlter} min="18" max="66" step="1" /></label>
         <label class="rs-feld lifeonly"><span>Gehaltsdynamik nach dem Höhepunkt</span><select id="c_g"><option value="-0.01">−1 % p. a. real</option><option value="0">0 % real (+2 % nominal)</option><option value="0.005" selected>+0,5 % real (+2,5 % nominal)</option><option value="0.01">+1 % real (+3 % nominal)</option><option value="0.02">+2 % real (+4 % nominal)</option></select></label>
         <label class="rs-feld"><span>ETF-Rendite (nominal, vor Kosten)</span><select id="etfr"><option value="0.05">5 %, vorsichtig</option><option value="0.06">6 %</option><option value="0.07" selected>7 %, MSCI World langfristig</option><option value="0.08">8 %</option></select></label>
         <label class="rs-feld"><span>Rentenniveau bei Rentenbeginn</span><select id="niveau"><option value="48">48 %, heutige Haltelinie</option><option value="46.3">46,3 %, Prognose 2039</option><option value="45" selected>45 %, Fortschreibung</option><option value="43">43 %, gesetzliche Untergrenze</option></select></label>
@@ -69,6 +74,8 @@ import Base from '../layouts/Base.astro';
   .rs-kennzahlen { margin: var(--space-12) 0; }
   .rs-segment { margin-top: var(--space-4); }
   .figure > h3 { margin-bottom: var(--space-3); }
+  .vorbelegt { color: var(--ink-3); font-size: 15px; margin-top: var(--space-3); }
+  .vorbelegt a { color: inherit; }
   .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0 24px; }
   .note h2 { font: 650 24px/1.2 var(--font-display); margin: 24px 0 12px; }
   .note { color: var(--ink-2); font-size: 16px; }
