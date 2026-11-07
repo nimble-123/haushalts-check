@@ -21,8 +21,11 @@ const QUELLEN = join(ROOT, 'pipeline', 'quellen');
 const ROH = join(QUELLEN, '71717-Z-05.csv');
 const STAEDTE = join(ROOT, 'src', 'data', 'staedte');
 const API = 'https://www.regionalstatistik.de/genesisws/rest/2020/data/tablefile';
-// Ab 2022 reicht für Rückfalljahre und bleibt weit unter dem Limit von 40.000 Werten je Abruf.
+// Die Tabelle hat Gemeinde-Tiefe und ist für den direkten Abruf zu groß (Code 98), auch mit Regionalfilter.
+// Deshalb als Hintergrund-Auftrag (job=true): Auftrag anlegen, auf das Ergebnis warten, per resultfile abholen.
 const AB_JAHR = '2022';
+const REST = 'https://www.regionalstatistik.de/genesisws/rest/2020';
+const WARTEN_MS = 15_000, MAX_MS = 20 * 60_000;
 const QUELLE = {
   label: 'Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05',
   url: 'https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05',
@@ -49,31 +52,53 @@ function entpacke(buf) {
 const alsText = (buf) =>
   (buf.length >= 4 && buf.readUInt32LE(0) === 0x04034b50 ? entpacke(buf) : buf).toString('utf8').replace(/^﻿/, '');
 
-async function lade() {
-  const { REGIO_USER: user, REGIO_PASS: pass = '' } = process.env;
-  if (!user) {
-    console.error('REGIO_USER (und REGIO_PASS) fehlen. Lege web/.env.local an (siehe Kopf dieser Datei).');
-    process.exit(1);
-  }
-  const body = new URLSearchParams({
-    name: '71717-Z-05', area: 'all', startyear: AB_JAHR, format: 'ffcsv', quality: 'on', language: 'de',
-  });
-  const res = await fetch(API, {
+async function post(pfad, params, user, pass) {
+  const res = await fetch(`${REST}/${pfad}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', username: user, password: pass },
-    body,
+    body: new URLSearchParams({ language: 'de', ...params }),
   });
-  const text = alsText(Buffer.from(await res.arrayBuffer()));
-  // Fehlerantworten der GENESIS-API kommen als JSON mit Status.Code/Content (z. B. 98 = zu groß, 104 = nichts gefunden)
-  if (!res.ok || text.trimStart().startsWith('{')) {
-    let info = text.slice(0, 400);
-    try { const j = JSON.parse(text); info = `Code ${j.Status?.Code ?? j.Code}: ${j.Status?.Content ?? j.Content}`; } catch {}
-    console.error(`Abruf fehlgeschlagen (HTTP ${res.status}). ${info}`);
+  return { res, buf: Buffer.from(await res.arrayBuffer()) };
+}
+const statusVon = (text) => { try { return JSON.parse(text).Status ?? {}; } catch { return {}; } };
+
+async function lade() {
+  const { REGIO_USER: user, REGIO_PASS: pass = '' } = process.env;
+  if (!user || !pass) {
+    console.error('REGIO_USER und REGIO_PASS fehlen (Aufträge mit job=true gehen nicht mit Token). Siehe Kopf dieser Datei.');
     process.exit(1);
   }
-  mkdirSync(QUELLEN, { recursive: true });
-  writeFileSync(ROH, text);
-  console.log(`Gespeichert: ${ROH} (${text.length.toLocaleString('de-DE')} Zeichen)`);
+  // 1. Auftrag anlegen
+  const { buf } = await post('data/tablefile', {
+    name: '71717-Z-05', area: 'all', startyear: AB_JAHR, format: 'ffcsv', quality: 'on', job: 'true',
+  }, user, pass);
+  const st = statusVon(alsText(buf));
+  const ergebnis = /(71717-Z-05_\d+)/.exec(st.Content ?? '')?.[1];
+  if (!ergebnis) { console.error(`Auftrag nicht angelegt: Code ${st.Code}: ${st.Content}`); process.exit(1); }
+  console.log(`Auftrag angelegt, Ergebnis heißt ${ergebnis}. Warte …`);
+
+  // 2. Warten, bis resultfile Daten statt einer Fehlermeldung liefert
+  const start = Date.now();
+  for (;;) {
+    await new Promise((r) => setTimeout(r, WARTEN_MS));
+    const { buf: rb } = await post('data/resultfile', { name: ergebnis, area: 'Meine', format: 'ffcsv', compress: 'false' }, user, pass);
+    const text = alsText(rb);
+    if (!text.trimStart().startsWith('{')) {
+      mkdirSync(QUELLEN, { recursive: true });
+      writeFileSync(ROH, text);
+      console.log(`Gespeichert: ${ROH} (${text.length.toLocaleString('de-DE')} Zeichen) nach ${Math.round((Date.now() - start) / 1000)} s`);
+      return;
+    }
+    const { buf: jb } = await post('catalogue/jobs', { selection: ergebnis, pagelength: '5' }, user, pass);
+    let zustand = '?';
+    try { zustand = JSON.parse(alsText(jb)).List?.[0]?.State ?? '?'; } catch {}
+    if (/fehler|abgebrochen/i.test(zustand)) { console.error(`Auftrag ${ergebnis}: ${zustand}`); process.exit(1); }
+    if (Date.now() - start > MAX_MS) {
+      console.error(`Nach 20 Minuten noch kein Ergebnis (Auftrag: ${zustand}). Später erneut starten; das Ergebnis ${ergebnis} bleibt im Konto unter „Meine“.`);
+      process.exit(1);
+    }
+    console.log(`… Auftrag ${zustand} (${Math.round((Date.now() - start) / 1000)} s)`);
+  }
 }
 
 if (!existsSync(ROH)) await lade();

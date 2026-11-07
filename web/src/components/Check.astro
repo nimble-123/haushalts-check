@@ -69,24 +69,18 @@ const daten = { stadt, land, gem };
     </div>
     <div class="rs-kennzahlen figure" id="pk"></div>
 
-    <div class="figure">
-      <h3>Vom Brutto zum Netto</h3>
-      <p class="sub">Arbeitnehmeranteile, in der Reihenfolge der Gehaltsabrechnung.</p>
-      <div class="rs-panel"><svg id="s4" role="img" aria-label="Wasserfalldiagramm: Brutto abzüglich Lohnsteuer, Soli, Kirchensteuer und Sozialversicherungsbeiträgen ergibt das Netto."></svg></div>
-    </div>
-
-    <div class="figure">
-      <h3>Dein Abgaben-Kalender</h3>
+    <details class="rs-aufklapper figure" data-neu-zeichnen>
+      <summary><b>Dein Abgaben-Kalender</b><span id="cal-sum"></span></summary>
       <p class="sub">Verteilt man das Jahresbrutto der Reihe nach, arbeitest du bis zu diesen Tagen für die jeweilige Kasse.</p>
       <div class="rs-panel" id="cal"></div>
-    </div>
+    </details>
 
-    <div class="figure">
-      <h3>Abgabenquote nach Einkommen</h3>
+    <details class="rs-aufklapper figure" data-neu-zeichnen>
+      <summary><b>Abgabenquote nach Einkommen</b><span id="quote-sum"></span></summary>
       <p class="sub">Anteil vom Brutto bei gleichen Angaben. Gestrichelt: Beitragsbemessungsgrenzen, ab denen die Sozialabgaben nicht mehr steigen.</p>
       <div class="rs-panel"><svg id="s5" role="img" aria-label="Liniendiagramm: Abgabenquote gesamt, Steuern und Sozialabgaben in Prozent des Bruttos von 15.000 bis 160.000 Euro, mit Markierung deines Einkommens."></svg>
       <ul class="rs-legende" id="lg5"></ul></div>
-    </div>
+    </details>
   </section>
 
   <section class="chapter" aria-labelledby="k2">
@@ -109,8 +103,8 @@ const daten = { stadt, land, gem };
         <label class="rs-schalter"><input id="ag" type="checkbox" /> Arbeitgeberanteil mitzählen</label>
         <label class="rs-schalter"><input id="shownetto" type="checkbox" /> Netto zeigen</label>
         <div class="rs-segment" id="unit" role="group" aria-label="Zeitraum">
-          <button type="button" data-u="y" aria-pressed="true">pro Jahr</button>
-          <button type="button" data-u="m" aria-pressed="false">pro Monat</button>
+          <button type="button" data-u="m" aria-pressed="true">pro Monat</button>
+          <button type="button" data-u="y" aria-pressed="false">pro Jahr</button>
         </div>
       </div>
       <div class="rs-panel">
@@ -120,17 +114,17 @@ const daten = { stadt, land, gem };
       </div>
     </div>
 
-    <div class="figure">
-      <h3>Alle Töpfe, sortiert</h3>
+    <details class="rs-aufklapper figure" data-neu-zeichnen>
+      <summary><b>Alle Töpfe, sortiert</b><span id="toepfe-sum"></span></summary>
       <p class="sub" id="barsub"></p>
       <div class="rs-panel"><svg id="s3" role="img" aria-label="Sortiertes Balkendiagramm deiner Abgaben je Topf in Euro. Werte auch in der Tabelle unten."></svg>
       <ul class="rs-legende" id="lg3"></ul></div>
-    </div>
+    </details>
 
     <details class="rs-aufklapper figure">
       <summary><b>Alle Posten als Tabelle</b><span id="tcount"></span></summary>
       <p class="sub" id="tsub"></p>
-      <div class="rs-panel rs-scroll"><table class="rs-tabelle" id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th class="uy">€ / Jahr</th></tr></thead><tbody></tbody></table></div>
+      <div class="rs-panel rs-scroll"><table class="rs-tabelle" id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th class="uy">€ / Monat</th></tr></thead><tbody></tbody></table></div>
     </details>
   </section>
 
@@ -143,18 +137,23 @@ const daten = { stadt, land, gem };
 
     <div class="figure">
       <h3>Woher das Geld kommt, wohin es geht</h3>
-      <p class="sub">Einnahmen, Bundeshaushalt, Einzelpläne. Antippen oder Überfahren zeigt Beträge.</p>
+      <div class="steuerung">
+        <div class="rs-segment" id="bundansicht" role="group" aria-label="Darstellung">
+          <button type="button" data-ansicht="fluss" aria-pressed="true">Als Fluss</button>
+          <button type="button" data-ansicht="flaeche" aria-pressed="false">Als Fläche</button>
+        </div>
+      </div>
+      <p class="sub" id="bundsub">Einnahmen, Bundeshaushalt, Einzelpläne. Antippen oder Überfahren zeigt Beträge.</p>
       <div class="rs-panel">
-        <p class="hint">Diagramm seitlich wischen</p>
-        <div class="rs-scroll"><svg id="s1" role="img" aria-label="Sankey-Diagramm: Steuern 387,2 Mrd €, Kredite 98,0 Mrd € und Sonstiges 39,4 Mrd € fließen in den Bundeshaushalt von 524,5 Mrd € und weiter in die Einzelpläne; größter Posten Arbeit und Soziales mit 197,3 Mrd €."></svg></div>
+        <div id="ansicht-fluss">
+          <p class="hint">Diagramm seitlich wischen</p>
+          <div class="rs-scroll"><svg id="s1" role="img" aria-label="Sankey-Diagramm: Steuern 387,2 Mrd €, Kredite 98,0 Mrd € und Sonstiges 39,4 Mrd € fließen in den Bundeshaushalt von 524,5 Mrd € und weiter in die Einzelpläne; größter Posten Arbeit und Soziales mit 197,3 Mrd €."></svg></div>
+        </div>
+        <div id="ansicht-flaeche" hidden>
+          <svg id="s6" role="img" aria-label="Treemap des Bundeshaushalts 2026 nach Einzelplänen; Arbeit und Soziales belegt über ein Drittel der Fläche."></svg>
+        </div>
         <ul class="rs-legende" id="lg1"></ul>
       </div>
-    </div>
-
-    <div class="figure">
-      <h3>Der Haushalt als Fläche</h3>
-      <p class="sub">Jedes Rechteck ist ein Einzelplan, die Fläche entspricht den Ausgaben 2026.</p>
-      <div class="rs-panel"><svg id="s6" role="img" aria-label="Treemap des Bundeshaushalts 2026 nach Einzelplänen; Arbeit und Soziales belegt über ein Drittel der Fläche."></svg></div>
     </div>
 
     <div class="figure">

@@ -1,0 +1,9 @@
+<!-- @dsCard group="Eingabe" height=100 -->
+<div class="rs-root" style="padding:24px;display:flex;gap:16px;align-items:center">
+  <button class="rs-thema" type="button" aria-pressed="false" aria-label="Dunkles Design"><i aria-hidden="true"></i></button>
+  <span style="font-size:14px;color:var(--ink-2)">Antippen dreht das Zeichen</span>
+</div>
+<script>
+  const b = document.querySelector('.rs-thema');
+  b.onclick = () => { const an = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', String(an)); b.setAttribute('aria-label', an ? 'Helles Design' : 'Dunkles Design'); };
+</script>

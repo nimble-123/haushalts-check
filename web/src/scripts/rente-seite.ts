@@ -113,5 +113,6 @@ export function startRente() {
   let t: number;
   addEventListener('resize', () => { clearTimeout(t); t = window.setTimeout(zeichne, 150); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', zeichne);
+  new MutationObserver(zeichne).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   zeichne();
 }
