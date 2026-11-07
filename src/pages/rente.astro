@@ -1,5 +1,7 @@
 ---
+import Kontext from '../components/Kontext.astro';
 import { DURCHSCHNITTSALTER, DURCHSCHNITTSALTER_QUELLE, MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
+import { STUDIEN } from '../data/studien';
 import Base from '../layouts/Base.astro';
 import { DURCHSCHNITTSENTGELT, RENTENWERT, VORLAGEN } from '../lib/rente';
 
@@ -57,6 +59,7 @@ const med = VORLAGEN.med;
 
     <div class="note">
       <h2>Annahmen</h2>
+      <Kontext studie={STUDIEN.kapitalrente} />
       <p>Im Lebensmodus folgt das Gehalt der Gehaltskurve (Dynamik nach dem Höhepunkt real); „ab heute“ bleibt das Brutto real konstant (Inflation 2 %). Der Rentenbeitrag steigt laut Rentenversicherungsbericht von 18,6 % auf 21,2 %. ETF: TER 0,2 %, ab Rentenbeginn vorsichtiger angelegt (Rendite minus 2 Punkte), Abgeltungsteuer und Soli mit 30 % Teilfreistellung, Vorabpauschale (Basiszins 2,5 %), Sparerpauschbetrag 1.000 €.</p>
       <p>Rente: Entgeltpunkte × Rentenwert {RENTENWERT.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € × Rentenniveau/48 %, Besteuerungsanteil nach Rentenbeginn (100 % ab 2058), Kranken- und Pflegebeitrag der Rentner, Tarif 2026, keine weiteren Einkünfte. Ein Entgeltpunkt je {DURCHSCHNITTSENTGELT.toLocaleString('de-DE')} € Brutto bis zur Beitragsbemessungsgrenze. Bei PKV ist der Zuschuss zur PKV im Alter nicht berücksichtigt.</p>
       <p>Verglichen wird nur der Rentenbeitrag. Investiert wird, was ohne Rentenbeitrag (Arbeitnehmer- plus Arbeitgeberanteil als Lohn) nach Lohnsteuer und Soli übrig bliebe. Nicht enthalten: Erwerbsminderungs-, Hinterbliebenen- und Reha-Schutz der Rentenversicherung, Kursrisiko, Gesetzesänderungen. Vorlagen: Akademiker:in (Einstieg 48.000 €, Median laut GEHALT.de), Median-Verdiener:in (54.066 € Vollzeit 2025, Destatis). Rechenbeispiel, keine Anlageberatung.</p>

@@ -6,6 +6,7 @@ import {
   aufRaster,
   einzelplanPosten,
   freiAbTag,
+  grenzbelastung,
   groessteN,
   kalenderAbschnitte,
   nachZweck,
@@ -104,5 +105,21 @@ describe('abgabenquoten', () => {
 describe('veraenderung2027', () => {
   it('summiert sich auf die Differenz der Gesamtvolumen', () => {
     expect(summe(veraenderung2027().map((z) => ({ v: z.d })))).toBeCloseTo(ENTWURF_2027_GESAMT - BUND_GESAMT, 1);
+  });
+});
+
+describe('grenzbelastung', () => {
+  it('liegt beim Median-Brutto um 45 Cent je zusätzlichem Euro (vgl. DIW 24/2026)', () => {
+    const g = grenzbelastung({ ...basis, kirche: 0, brutto: 54_066 });
+    expect(g).toBeGreaterThan(0.4);
+    expect(g).toBeLessThan(0.52);
+  });
+  it('sinkt oberhalb der Bemessungsgrenzen, weil keine Beiträge mehr dazukommen', () => {
+    const unter = grenzbelastung({ ...basis, kirche: 0, brutto: 60_000 });
+    const ueber = grenzbelastung({ ...basis, kirche: 0, brutto: 120_000 });
+    expect(ueber).toBeLessThan(unter);
+  });
+  it('ist unter dem Grundfreibetrag nur die Sozialversicherung', () => {
+    expect(grenzbelastung({ ...basis, kirche: 0, brutto: 10_000 })).toBeCloseTo(0.21, 1);
   });
 });

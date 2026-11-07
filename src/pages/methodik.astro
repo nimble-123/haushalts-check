@@ -1,6 +1,7 @@
 ---
 import { abstimmungSatz, BUND_QUELLEN } from '../data/bund';
 import schaetzung from '../data/gemeinden-schaetzung.json';
+import { STUDIEN } from '../data/studien';
 import Base from '../layouts/Base.astro';
 import { KONSUM } from '../lib/konsum';
 import { ANTEIL, GRUNDFREIBETRAG, PAUSCHALEN, SOLI_FREIGRENZE, SV_2026 } from '../lib/steuer';
@@ -44,7 +45,7 @@ const weitere = [
     <h1>So ist gerechnet</h1>
     <div class="prose">
       <h2>Steuern und Abgaben</h2>
-      <p><strong>Lohnsteuer</strong>, Näherung für Steuerklasse I: zu versteuerndes Einkommen = Brutto − {fmtEur(PAUSCHALEN.werbungskosten)} Werbungskostenpauschale − {fmtEur(PAUSCHALEN.sonderausgaben)} Sonderausgabenpauschale − Vorsorgepauschale (Arbeitnehmeranteile Rente, Kranken mit ermäßigtem Satz, Pflege, Arbeitslosen). Tarif nach § 32a EStG 2026 (Grundfreibetrag {fmtEur(GRUNDFREIBETRAG)}), Soli mit Freigrenze {fmtEur(SOLI_FREIGRENZE)} und Milderungszone. Abweichungen von 1–3 % zur echten Abrechnung sind normal.</p>
+      <p><strong>Lohnsteuer</strong>, Näherung für Steuerklasse I: zu versteuerndes Einkommen = Brutto − {fmtEur(PAUSCHALEN.werbungskosten)} Werbungskostenpauschale − {fmtEur(PAUSCHALEN.sonderausgaben)} Sonderausgabenpauschale − Vorsorgepauschale (Arbeitnehmeranteile Rente, Kranken mit ermäßigtem Satz, Pflege, Arbeitslosen). Tarif nach § 32a EStG 2026 (Grundfreibetrag {fmtEur(GRUNDFREIBETRAG)}), Soli mit Freigrenze {fmtEur(SOLI_FREIGRENZE)} und Milderungszone. Abweichungen von 1–3 % zur echten Abrechnung sind normal. {STUDIEN.reform2027.text} {STUDIEN.reform2027.vorbehalt}</p>
       <p><strong>Sozialversicherung 2026:</strong> Rente {satzText(SV_2026.rv)}, Arbeitslosen {satzText(SV_2026.alv)} (Bemessungsgrenze {fmtEur(SV_2026.bbgRv)}), Kranken {satzText(SV_2026.kv)} plus Ø {satzText(SV_2026.kvZusatz)} Zusatzbeitrag, Pflege {satzText(SV_2026.pv)} plus {satzText(SV_2026.pvKinderlos)} für Kinderlose (Bemessungsgrenze {fmtEur(SV_2026.bbgKv)}), jeweils hälftig Arbeitgeber und Arbeitnehmer.</p>
 
       <h2>Wer bekommt was</h2>
@@ -52,7 +53,7 @@ const weitere = [
       <p>Jede Ebene verteilt deinen Anteil so, wie sie ihren ganzen Haushalt verteilt. Steuern sind nicht zweckgebunden, es ist also eine anteilige Rechnung, keine echte Zuordnung. Weil ein Teil der Ausgaben über Kredite läuft, finanzieren deine Steuern rechnerisch nur einen Teil jedes Topfs.</p>
 
       <h2>Bund</h2>
-      <p>Soll-Zahlen des Haushaltsgesetzes 2026 nach Einzelplänen. Nicht enthalten sind Sondervermögen (Infrastruktur, Bundeswehr, Klima- und Transformationsfonds) mit eigenen Wirtschaftsplänen. Der Entwurf 2027 zeigt nur Einzelpläne mit veröffentlichten Zahlen. {abstimmungSatz()}</p>
+      <p>Soll-Zahlen des Haushaltsgesetzes 2026 nach Einzelplänen. Nicht enthalten sind Sondervermögen (Infrastruktur, Bundeswehr, Klima- und Transformationsfonds) mit eigenen Wirtschaftsplänen. {STUDIEN.sondervermoegen.text} Der Entwurf 2027 zeigt nur Einzelpläne mit veröffentlichten Zahlen. {abstimmungSatz()}</p>
 
       <h2>Länder</h2>
       <p>Für alle 16 Länder dieselbe Quelle: Rechnungsergebnisse 2022 von Destatis, bereinigte Ausgaben nach Aufgabenbereichen (Tabelle 71711-12), Kern- und Extrahaushalte. Das sind tatsächlich ausgegebene Beträge, keine Planzahlen, dafür einige Jahre alt. Posten, die durch Verrechnungen unterm Strich negativ sind (etwa Zinsen in Brandenburg 2022), sind nicht gezeigt und beim jeweiligen Land genannt.</p>
@@ -77,6 +78,12 @@ const weitere = [
 
       <h2>Lizenz der Daten</h2>
       <p>Die Daten stammen vom Statistischen Bundesamt (Destatis), aus der Regionaldatenbank Deutschland (Statistische Ämter des Bundes und der Länder) und aus dem Haushaltsgesetz 2026. Sie stehen unter der <a href="https://www.govdata.de/dl-de/by-2-0">Datenlizenz Deutschland – Namensnennung – Version 2.0</a>. Alle Aufteilungen, Anteile und Beträge je Person sind eigene Berechnungen auf dieser Grundlage; die Quellen haben sie nicht geprüft.</p>
+
+      <h2>Studien zur Einordnung</h2>
+      <p>Die Hinweise unter einigen Grafiken stammen aus Studien des ifo Instituts und des DIW Berlin. Zitiert werden nur Zahlen mit Fundstelle; DIW-Wochenberichte stehen unter <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>.</p>
+      <ul class="quellen">
+        {Object.values(STUDIEN).map((s) => <li><a href={s.quelle.url}>{s.quelle.label}</a></li>)}
+      </ul>
 
       <h2>Quellen</h2>
       <ul class="quellen">

@@ -6,6 +6,7 @@ import {
   aufRaster,
   einzelplanPosten,
   freiAbTag,
+  grenzbelastung,
   groessteN,
   kalenderAbschnitte,
   nachZweck,
@@ -396,6 +397,10 @@ function chartQuote(r: Ergebnis) {
       .text(l);
   });
   holen('quote-sum').textContent = r.brutto ? `bei dir ${pct(summeAbgaben(r) / r.brutto)} vom Brutto` : '';
+  const grenze = Math.round(grenzbelastung(base) * 100);
+  holen('quote-grenze').innerHTML = r.brutto
+    ? `Von jedem zusätzlichen Euro Brutto gehen bei dir <b class="rs-mark">${grenze}\u00a0Cent</b> an Lohnsteuer, Soli${base.kirche ? ', Kirche' : ''} und Sozialversicherung.`
+    : '';
   if (r.brutto >= 15000 && r.brutto <= 160000) {
     const me = summeAbgaben(r) / r.brutto;
     svg
