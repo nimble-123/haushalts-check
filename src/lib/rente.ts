@@ -1,5 +1,6 @@
 // Rentenbeitrag vs. ETF-Sparplan – aus rvModel() des Prototyps, ohne DOM-Zugriff.
-import { est2026, SV_2026, soli } from './steuer';
+import { MEDIAN_BRUTTO } from '../data/eckwerte';
+import { berechne, est2026, PAUSCHALEN, SV_2026, soli } from './steuer';
 
 export interface RenteEingabe {
   modus: 'life' | 'now';
@@ -24,11 +25,13 @@ export interface RenteEingabe {
 
 export const VORLAGEN = {
   aka: { einstiegsalter: 25, einstiegsgehalt: 48_000, hoehepunktGehalt: 85_000, hoehepunktAlter: 45 },
-  med: { einstiegsalter: 20, einstiegsgehalt: 31_500, hoehepunktGehalt: 54_066, hoehepunktAlter: 40 },
+  med: { einstiegsalter: 20, einstiegsgehalt: 31_500, hoehepunktGehalt: MEDIAN_BRUTTO, hoehepunktAlter: 40 },
 } as const;
 
-const RENTENWERT = 42.52;
-const DURCHSCHNITTSENTGELT = 51_944;
+/** Rentenwert ab 1. Juli 2026 (DRV) */
+export const RENTENWERT = 42.52;
+/** Durchschnittsentgelt 2026: Brutto für einen Entgeltpunkt */
+export const DURCHSCHNITTSENTGELT = 51_944;
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
@@ -91,15 +94,12 @@ export function renteVsEtf(p: RenteEingabe) {
     teil = 0.7,
     spb = 1000;
 
-  function netIncome(Bx: number, rvRate: number) {
-    const rv = (Math.min(Bx, bR) * rvRate) / 2,
-      alv = Math.min(Bx, bR) * 0.013;
-    const kv = p.pkv ? 0 : Math.min(Bx, bK) * (0.073 + 0.0145);
-    const pv = p.pkv ? 0 : Math.min(Bx, bK) * (0.018 + (p.kinderlos ? 0.006 : 0));
-    const vp = p.pkv ? pkvY : Math.min(Bx, bK) * (0.07 + 0.0145) + pv;
-    const e = est2026(Bx - 1230 - 36 - rv - alv - vp);
-    return Bx - rv - alv - kv - pv - (e + soli(e) + e * p.kirche) - pkvY;
-  }
+  // Netto bei gegebenem Rentenbeitragssatz: dieselbe Rechnung wie für die Startseite
+  const netIncome = (Bx: number, rvRate: number) =>
+    berechne(
+      { brutto: Bx, pkv: p.pkv, pkvMonat: p.pkvMonat, kinderlos: p.kinderlos, kirche: p.kirche },
+      { rvSatz: rvRate },
+    ).netto;
   function netCost(rate: number, B: number) {
     const ag = (Math.min(B, bR) * rate) / 2;
     return { gross: Math.min(B, bR) * rate, net: netIncome(B + ag, 0) - netIncome(B, rate) };
@@ -164,8 +164,11 @@ export function renteVsEtf(p: RenteEingabe) {
   const renteB = (EP * RENTENWERT * p.niveau) / 48,
     startY = yearOf(67);
   const bAnteil = Math.min(1, (83.5 + 0.5 * (startY - 2025)) / 100);
-  const kvpv = p.pkv ? 0 : 0.073 + 0.0145 + 0.036 + (p.kinderlos ? 0.006 : 0);
-  const e = est2026(renteB * 12 * bAnteil - 102 - 36 - renteB * 12 * kvpv);
+  // Rentner zahlen den halben KV-Satz samt halbem Zusatzbeitrag und die volle Pflegeversicherung
+  const kvpv = p.pkv ? 0 : SV_2026.kv / 2 + SV_2026.kvZusatz / 2 + SV_2026.pv + (p.kinderlos ? SV_2026.pvKinderlos : 0);
+  const e = est2026(
+    renteB * 12 * bAnteil - PAUSCHALEN.werbungskostenRente - PAUSCHALEN.sonderausgaben - renteB * 12 * kvpv,
+  );
   const renteN = renteB - renteB * kvpv - (e + soli(e) + e * p.kirche) / 12;
 
   const cumR = [0],

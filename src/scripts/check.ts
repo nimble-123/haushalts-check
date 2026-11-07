@@ -3,7 +3,17 @@ import { BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTWURF_2027, ENTWUR
 import { type GemeindeEbene, GRUPPEN, type Gruppe, type Land, type Stadt } from '../data/types';
 import { naechsteStadt, type Ort } from '../lib/naehe';
 import { ergebnisSatz } from '../lib/satz';
-import { aufEbenen, berechne, type Eingabe, type Ergebnis, summeAbgaben, summeSV } from '../lib/steuer';
+import {
+  ANTEIL,
+  aufEbenen,
+  berechne,
+  type Eingabe,
+  type Ergebnis,
+  SV_2026,
+  summeAbgaben,
+  summeSV,
+} from '../lib/steuer';
+import { satzText } from '../lib/text';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
   $,
@@ -143,9 +153,9 @@ function chartFluss(r: Ergebnis) {
     add('bund', 'Bund', css('--ink'), { bold: true, col: 2 });
     add('land', `Land ${land.name}`, css('--ink'), { bold: true, col: 2 });
     add('gem', stadt.stadtstaat ? `${stadt.name} (Gemeindeanteil)` : stadt.name, css('--ink'), { bold: true, col: 2 });
-    links.push({ source: 'lst', target: 'bund', value: r.lohnsteuer * 0.425 });
-    links.push({ source: 'lst', target: 'land', value: r.lohnsteuer * 0.425 });
-    links.push({ source: 'lst', target: 'gem', value: r.lohnsteuer * 0.15 });
+    links.push({ source: 'lst', target: 'bund', value: r.lohnsteuer * ANTEIL.bund });
+    links.push({ source: 'lst', target: 'land', value: r.lohnsteuer * ANTEIL.land });
+    links.push({ source: 'lst', target: 'gem', value: r.lohnsteuer * ANTEIL.gemeinde });
   }
   if (r.soli > 0) {
     add('soli', 'Soli', css('--ink'), { col: 1 });
@@ -358,8 +368,8 @@ function chartQuote(r: Ergebnis) {
     );
   (
     [
-      [69750, 'BBG KV/PV', 0],
-      [101400, 'BBG RV/ALV', 1],
+      [SV_2026.bbgKv, 'BBG KV/PV', 0],
+      [SV_2026.bbgRv, 'BBG RV/ALV', 1],
     ] as const
   ).forEach(([v, l, i]) => {
     svg
@@ -663,15 +673,15 @@ function tabelle(r: Ergebnis) {
     `${EINZELPLAENE.length + land.posten.length + gem.posten.length} Posten von Bund, ${land.name} und ${stadt.name}`;
   $('#tbl th.uy').textContent = unit === 'm' ? '€ / Monat' : '€ / Jahr';
   $('#tbl tbody').innerHTML =
-    head(`Bund: ${money(e.bund)} (42,5 % Lohnsteuer und Soli), Haushalt 2026`) +
+    head(`Bund: ${money(e.bund)} (${satzText(ANTEIL.bund)} Lohnsteuer und Soli), Haushalt 2026`) +
     rows(
       EINZELPLAENE.map((p) => ({ ...p, name: `EP ${p.n} ${p.name}` })),
       BUND_GESAMT,
       e.bund,
     ) +
-    head(`Land ${land.name}: ${money(e.land)} (42,5 % Lohnsteuer), ${land.art} ${land.jahr}`) +
+    head(`Land ${land.name}: ${money(e.land)} (${satzText(ANTEIL.land)} Lohnsteuer), ${land.art} ${land.jahr}`) +
     rows(land.posten, LAND_T, e.land) +
-    head(`${stadt.name}: ${money(e.gemeinde)} (15 % Lohnsteuer), ${gem.art}, ${gem.jahr}`) +
+    head(`${stadt.name}: ${money(e.gemeinde)} (${satzText(ANTEIL.gemeinde)} Lohnsteuer), ${gem.art}, ${gem.jahr}`) +
     rows(gem.posten, GEM_T, e.gemeinde);
 }
 

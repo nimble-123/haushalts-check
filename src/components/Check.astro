@@ -4,7 +4,8 @@ import { abstimmungSatz, BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTW
 import { MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
 import type { Land, Stadt } from '../data/types';
 import { ergebnisSatz } from '../lib/satz';
-import { berechne } from '../lib/steuer';
+import { ANTEIL, berechne } from '../lib/steuer';
+import { satzText } from '../lib/text';
 
 interface Props {
   stadt: Stadt;
@@ -114,7 +115,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
   <section class="chapter" aria-labelledby="k2">
     <header class="rs-kapitel">
       <h2 id="k2"><span class="nr">2</span>Wohin es fließt</h2>
-      <p>Lohnsteuer geht zu 42,5 % an den Bund, zu 42,5 % an {land.name} und zu 15 % an {stadt.name}. Jede Ebene verteilt ihren Anteil so wie ihren ganzen Haushalt.</p>
+      <p>Lohnsteuer geht zu {satzText(ANTEIL.bund)} an den Bund, zu {satzText(ANTEIL.land)} an {land.name} und zu {satzText(ANTEIL.gemeinde)} an {stadt.name}. Jede Ebene verteilt ihren Anteil so wie ihren ganzen Haushalt.</p>
     </header>
 
     <div class="figure">

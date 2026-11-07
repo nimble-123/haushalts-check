@@ -2,6 +2,8 @@
 import { abstimmungSatz, BUND_QUELLEN } from '../data/bund';
 import schaetzung from '../data/gemeinden-schaetzung.json';
 import Base from '../layouts/Base.astro';
+import { ANTEIL, GRUNDFREIBETRAG, PAUSCHALEN, SOLI_FREIGRENZE, SV_2026 } from '../lib/steuer';
+import { fmtEur, satzText } from '../lib/text';
 
 const weitere = [
   {
@@ -37,11 +39,11 @@ const weitere = [
     <h1>So ist gerechnet</h1>
     <div class="prose">
       <h2>Steuern und Abgaben</h2>
-      <p><strong>Lohnsteuer</strong>, Näherung für Steuerklasse I: zu versteuerndes Einkommen = Brutto − 1.230 € Werbungskostenpauschale − 36 € Sonderausgabenpauschale − Vorsorgepauschale (Arbeitnehmeranteile Rente, Kranken mit ermäßigtem Satz, Pflege, Arbeitslosen). Tarif nach § 32a EStG 2026 (Grundfreibetrag 12.348 €), Soli mit Freigrenze 20.350 € und Milderungszone. Abweichungen von 1–3 % zur echten Abrechnung sind normal.</p>
-      <p><strong>Sozialversicherung 2026:</strong> Rente 18,6 %, Arbeitslosen 2,6 % (Bemessungsgrenze 101.400 €), Kranken 14,6 % plus Ø 2,9 % Zusatzbeitrag, Pflege 3,6 % plus 0,6 % für Kinderlose (Bemessungsgrenze 69.750 €), jeweils hälftig Arbeitgeber und Arbeitnehmer.</p>
+      <p><strong>Lohnsteuer</strong>, Näherung für Steuerklasse I: zu versteuerndes Einkommen = Brutto − {fmtEur(PAUSCHALEN.werbungskosten)} Werbungskostenpauschale − {fmtEur(PAUSCHALEN.sonderausgaben)} Sonderausgabenpauschale − Vorsorgepauschale (Arbeitnehmeranteile Rente, Kranken mit ermäßigtem Satz, Pflege, Arbeitslosen). Tarif nach § 32a EStG 2026 (Grundfreibetrag {fmtEur(GRUNDFREIBETRAG)}), Soli mit Freigrenze {fmtEur(SOLI_FREIGRENZE)} und Milderungszone. Abweichungen von 1–3 % zur echten Abrechnung sind normal.</p>
+      <p><strong>Sozialversicherung 2026:</strong> Rente {satzText(SV_2026.rv)}, Arbeitslosen {satzText(SV_2026.alv)} (Bemessungsgrenze {fmtEur(SV_2026.bbgRv)}), Kranken {satzText(SV_2026.kv)} plus Ø {satzText(SV_2026.kvZusatz)} Zusatzbeitrag, Pflege {satzText(SV_2026.pv)} plus {satzText(SV_2026.pvKinderlos)} für Kinderlose (Bemessungsgrenze {fmtEur(SV_2026.bbgKv)}), jeweils hälftig Arbeitgeber und Arbeitnehmer.</p>
 
       <h2>Wer bekommt was</h2>
-      <p>Die Lohnsteuer ist eine Gemeinschaftsteuer: 42,5 % Bund, 42,5 % Land, 15 % Gemeinde (Art. 106 GG). Der Soli geht ganz an den Bund, die Kirchensteuer an die Kirche. Sozialabgaben fließen nicht in einen Haushalt, sondern direkt an Renten-, Kranken-, Pflege- und Arbeitslosenversicherung. Der Gemeindeanteil wird in Wirklichkeit über einen Schlüssel nach Wohnort verteilt; 15 % ist der bundesweite Anteil.</p>
+      <p>Die Lohnsteuer ist eine Gemeinschaftsteuer: {satzText(ANTEIL.bund)} Bund, {satzText(ANTEIL.land)} Land, {satzText(ANTEIL.gemeinde)} Gemeinde (Art. 106 GG). Der Soli geht ganz an den Bund, die Kirchensteuer an die Kirche. Sozialabgaben fließen nicht in einen Haushalt, sondern direkt an Renten-, Kranken-, Pflege- und Arbeitslosenversicherung. Der Gemeindeanteil wird in Wirklichkeit über einen Schlüssel nach Wohnort verteilt; {satzText(ANTEIL.gemeinde)} ist der bundesweite Anteil.</p>
       <p>Jede Ebene verteilt deinen Anteil so, wie sie ihren ganzen Haushalt verteilt. Steuern sind nicht zweckgebunden, es ist also eine anteilige Rechnung, keine echte Zuordnung. Weil ein Teil der Ausgaben über Kredite läuft, finanzieren deine Steuern rechnerisch nur einen Teil jedes Topfs.</p>
 
       <h2>Bund</h2>
