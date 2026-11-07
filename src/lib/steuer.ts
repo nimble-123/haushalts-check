@@ -10,14 +10,31 @@ export const SV_2026 = {
   kvZusatz: 0.029,
   pv: 0.036,
   pvKinderlos: 0.006,
+  /** ermäßigter KV-Satz für die Vorsorgepauschale */
+  kvErmaessigt: 0.14,
 } as const;
+
+/** Pauschbeträge im Lohnsteuerabzug (Steuerklasse I) */
+export const PAUSCHALEN = {
+  /** Arbeitnehmer-Pauschbetrag (Werbungskosten) */
+  werbungskosten: 1230,
+  /** Werbungskosten-Pauschbetrag für Renten und Versorgungsbezüge */
+  werbungskostenRente: 102,
+  /** Sonderausgaben-Pauschbetrag */
+  sonderausgaben: 36,
+} as const;
+
+/** Grundfreibetrag 2026 (§ 32a EStG) */
+export const GRUNDFREIBETRAG = 12_348;
+/** Freigrenze des Solidaritätszuschlags (Lohnsteuer pro Jahr) */
+export const SOLI_FREIGRENZE = 20_350;
 
 /** Einkommensteuer nach § 32a EStG, Tarif 2026, Grundtabelle. */
 export function est2026(zvE: number): number {
   const x = Math.floor(Math.max(0, zvE));
-  if (x <= 12_348) return 0;
+  if (x <= GRUNDFREIBETRAG) return 0;
   if (x <= 17_799) {
-    const y = (x - 12_348) / 1e4;
+    const y = (x - GRUNDFREIBETRAG) / 1e4;
     return Math.floor((914.51 * y + 1400) * y);
   }
   if (x <= 69_878) {
@@ -30,8 +47,8 @@ export function est2026(zvE: number): number {
 
 /** Solidaritätszuschlag mit Freigrenze 20.350 € und Milderungszone. */
 export function soli(est: number): number {
-  if (est <= 20_350) return 0;
-  return Math.min(est * 0.055, (est - 20_350) * 0.119);
+  if (est <= SOLI_FREIGRENZE) return 0;
+  return Math.min(est * 0.055, (est - SOLI_FREIGRENZE) * 0.119);
 }
 
 export interface Eingabe {
@@ -59,11 +76,12 @@ export interface Ergebnis {
   ag: { rv: number; alv: number; kv: number; pv: number };
 }
 
-export function berechne(e: Eingabe): Ergebnis {
+/** Lohnsteuer, Soli, Kirche, Sozialabgaben und Netto; `rvSatz` überschreibt den Rentenbeitragssatz (Rentenmodell). */
+export function berechne(e: Eingabe, opt: { rvSatz?: number } = {}): Ergebnis {
   const B = Math.max(0, e.brutto || 0);
   const bR = Math.min(B, SV_2026.bbgRv);
   const bK = Math.min(B, SV_2026.bbgKv);
-  const rv = (bR * SV_2026.rv) / 2;
+  const rv = (bR * (opt.rvSatz ?? SV_2026.rv)) / 2;
   const alv = (bR * SV_2026.alv) / 2;
   const pkvBeitrag = e.pkv ? Math.max(0, e.pkvMonat || 0) * 12 : 0;
 
@@ -77,13 +95,13 @@ export function berechne(e: Eingabe): Ergebnis {
     pv = bK * (SV_2026.pv / 2 + (e.kinderlos ? SV_2026.pvKinderlos : 0));
     kvAG = kv;
     pvAG = bK * (SV_2026.pv / 2);
-    // Vorsorgepauschale: KV mit ermäßigtem Satz (14,0 %)
-    vorsorgeKV = bK * (0.07 + SV_2026.kvZusatz / 2) + pv;
+    // Vorsorgepauschale: KV mit ermäßigtem Satz
+    vorsorgeKV = bK * (SV_2026.kvErmaessigt / 2 + SV_2026.kvZusatz / 2) + pv;
   } else {
     vorsorgeKV = pkvBeitrag;
   }
 
-  const zvE = B - 1230 - 36 - rv - alv - vorsorgeKV;
+  const zvE = B - PAUSCHALEN.werbungskosten - PAUSCHALEN.sonderausgaben - rv - alv - vorsorgeKV;
   const lohnsteuer = est2026(zvE);
   const so = soli(lohnsteuer);
   const kirche = lohnsteuer * e.kirche;

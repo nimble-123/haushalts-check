@@ -1,9 +1,31 @@
 import * as d3 from 'd3';
-import { BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTWURF_2027, ENTWURF_2027_GESAMT } from '../data/bund';
+import { BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG } from '../data/bund';
 import { type GemeindeEbene, GRUPPEN, type Gruppe, type Land, type Stadt } from '../data/types';
+import {
+  abgabenquoten,
+  aufRaster,
+  einzelplanPosten,
+  freiAbTag,
+  groessteN,
+  kalenderAbschnitte,
+  nachZweck,
+  summe,
+  veraenderung2027,
+  type Zweck,
+} from '../lib/aufteilung';
 import { naechsteStadt, type Ort } from '../lib/naehe';
 import { ergebnisSatz } from '../lib/satz';
-import { aufEbenen, berechne, type Eingabe, type Ergebnis, summeAbgaben, summeSV } from '../lib/steuer';
+import {
+  ANTEIL,
+  aufEbenen,
+  berechne,
+  type Eingabe,
+  type Ergebnis,
+  SV_2026,
+  summeAbgaben,
+  summeSV,
+} from '../lib/steuer';
+import { fmtMrdDelta, satzText, zeitraum } from '../lib/text';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
   $,
@@ -48,18 +70,7 @@ let bundAnsicht: 'fluss' | 'flaeche' = 'fluss';
 
 const gcol = (g: Gruppe) => css(`--cat-${g}`);
 const KIRCHE = () => css('--line');
-const sum = (a: { v: number }[]) => a.reduce((s, x) => s + x.v, 0);
-function topOf(arr: P[], n: number): P[] {
-  const s = [...arr].sort((a, b) => b.v - a.v);
-  const top = s.slice(0, n),
-    rest = s.slice(n);
-  return rest.length ? [...top, { name: `Übrige (${rest.length})`, v: sum(rest), g: 'verw', rest: true }] : top;
-}
-const epl = (n: number) =>
-  topOf(
-    EINZELPLAENE.map((e) => ({ name: `EP ${e.n} ${e.name}`, v: e.v, g: e.g })),
-    n,
-  );
+const epl = (n: number) => groessteN(einzelplanPosten(), n);
 const legendGruppen = () =>
   Object.entries(GRUPPEN)
     .map(
@@ -143,9 +154,9 @@ function chartFluss(r: Ergebnis) {
     add('bund', 'Bund', css('--ink'), { bold: true, col: 2 });
     add('land', `Land ${land.name}`, css('--ink'), { bold: true, col: 2 });
     add('gem', stadt.stadtstaat ? `${stadt.name} (Gemeindeanteil)` : stadt.name, css('--ink'), { bold: true, col: 2 });
-    links.push({ source: 'lst', target: 'bund', value: r.lohnsteuer * 0.425 });
-    links.push({ source: 'lst', target: 'land', value: r.lohnsteuer * 0.425 });
-    links.push({ source: 'lst', target: 'gem', value: r.lohnsteuer * 0.15 });
+    links.push({ source: 'lst', target: 'bund', value: r.lohnsteuer * ANTEIL.bund });
+    links.push({ source: 'lst', target: 'land', value: r.lohnsteuer * ANTEIL.land });
+    links.push({ source: 'lst', target: 'gem', value: r.lohnsteuer * ANTEIL.gemeinde });
   }
   if (r.soli > 0) {
     add('soli', 'Soli', css('--ink'), { col: 1 });
@@ -164,11 +175,11 @@ function chartFluss(r: Ergebnis) {
   if (e.bund > 0 && (show === 'all' || show === 'bund'))
     ebene('bund', epl(show === 'all' ? 7 : 13), BUND_GESAMT, e.bund, '');
   if (e.land > 0 && (show === 'all' || show === 'land'))
-    ebene('land', topOf(land.posten, show === 'all' ? 6 : 13), LAND_T, e.land, 'Land · ');
+    ebene('land', groessteN(land.posten, show === 'all' ? 6 : 13), LAND_T, e.land, 'Land · ');
   if (e.gemeinde > 0 && (show === 'all' || show === 'gem'))
     ebene(
       'gem',
-      topOf(gem.posten, show === 'all' ? 5 : 12),
+      groessteN(gem.posten, show === 'all' ? 5 : 12),
       GEM_T,
       e.gemeinde,
       gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ',
@@ -230,10 +241,10 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   epl(10).forEach((p) => {
     items.push({ name: `Bund · ${p.name.replace(/^EP \d+ /, '')}`, v: (e.bund * p.v) / BUND_GESAMT, c: gcol(p.g) });
   });
-  topOf(land.posten, 7).forEach((p) => {
+  groessteN(land.posten, 7).forEach((p) => {
     items.push({ name: `Land · ${p.name}`, v: (e.land * p.v) / LAND_T, c: gcol(p.g) });
   });
-  topOf(gem.posten, 5).forEach((p) => {
+  groessteN(gem.posten, 5).forEach((p) => {
     items.push({
       name: (gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ') + p.name,
       v: (e.gemeinde * p.v) / GEM_T,
@@ -293,7 +304,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
     .text((d) => fmt(d.v))
     .style('pointer-events', 'none');
   $('#barsub').textContent =
-    `Alle Ziele deiner Abgaben ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}; kleine Posten je Ebene sind zusammengefasst.`;
+    `Alle Ziele deiner Abgaben ${zeitraum(unit)}; kleine Posten je Ebene sind zusammengefasst.`;
   $('#toepfe-sum').textContent = items.length ? `größter Topf: ${items[0].name} mit ${fmt(items[0].v)}` : '';
   $('#lg3').innerHTML = legendSV + legendGruppen() + legendSchaetzung();
 }
@@ -301,12 +312,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
 // ---------- Abgabenquote ----------
 function chartQuote(r: Ergebnis) {
   const base = eingabe();
-  const data = d3.range(15000, 160001, 500).map((B) => {
-    const c = berechne({ ...base, brutto: B }),
-      t = c.lohnsteuer + c.soli + c.kirche,
-      s = summeSV(c);
-    return { B, tot: (t + s) / B, t: t / B, sv: s / B };
-  });
+  const data = abgabenquoten(base);
   const svg = d3.select<SVGSVGElement, unknown>('#s5');
   svg.selectAll('*').remove();
   const W = width(svg),
@@ -320,7 +326,7 @@ function chartQuote(r: Ergebnis) {
     .range([m.l, W - m.r]);
   const y = d3
     .scaleLinear()
-    .domain([0, Math.ceil(((d3.max(data, (d) => d.tot) ?? 0.5) + 0.03) * 10) / 10])
+    .domain([0, Math.ceil(((d3.max(data, (d) => d.gesamt) ?? 0.5) + 0.03) * 10) / 10])
     .range([H - m.b, m.t]);
   svg
     .append('g')
@@ -358,8 +364,8 @@ function chartQuote(r: Ergebnis) {
     );
   (
     [
-      [69750, 'BBG KV/PV', 0],
-      [101400, 'BBG RV/ALV', 1],
+      [SV_2026.bbgKv, 'BBG KV/PV', 0],
+      [SV_2026.bbgRv, 'BBG RV/ALV', 1],
     ] as const
   ).forEach(([v, l, i]) => {
     svg
@@ -378,9 +384,9 @@ function chartQuote(r: Ergebnis) {
       .text(narrow ? l.replace('BBG ', '') : l);
   });
   const series: [keyof (typeof data)[0], string, string, number][] = [
-    ['tot', 'Gesamt', css('--ink'), 2.5],
-    ['t', 'Steuern', css('--ink-3'), 2],
-    ['sv', 'Sozialabgaben', css('--cat-soz'), 2],
+    ['gesamt', 'Gesamt', css('--ink'), 2.5],
+    ['steuern', 'Steuern', css('--ink-3'), 2],
+    ['sozial', 'Sozialabgaben', css('--cat-soz'), 2],
   ];
   if (base.pkv) series.splice(2, 1);
   series.forEach(([k, l, c, w]) => {
@@ -394,7 +400,7 @@ function chartQuote(r: Ergebnis) {
         'd',
         d3
           .line<(typeof data)[0]>()
-          .x((d) => x(d.B))
+          .x((d) => x(d.brutto))
           .y((d) => y(d[k] as number)),
       );
     svg
@@ -443,11 +449,11 @@ function chartQuote(r: Ergebnis) {
     .on('mousemove', (ev) => {
       const [mx] = d3.pointer(ev);
       const B = Math.round(x.invert(mx) / 500) * 500;
-      const d = data.find((q) => q.B === B) ?? data[0];
-      ch.attr('x1', x(d.B)).attr('x2', x(d.B)).style('opacity', 1);
+      const d = data.find((q) => q.brutto === B) ?? data[0];
+      ch.attr('x1', x(d.brutto)).attr('x2', x(d.brutto)).style('opacity', 1);
       showTip(
         ev,
-        `<b>${fmtEur(d.B)} Brutto</b>Gesamt ${pct(d.tot)}<br>Steuern ${pct(d.t)}${base.pkv ? '' : `<br>Sozialabgaben ${pct(d.sv)}`}`,
+        `<b>${fmtEur(d.brutto)} Brutto</b>Gesamt ${pct(d.gesamt)}<br>Steuern ${pct(d.steuern)}${base.pkv ? '' : `<br>Sozialabgaben ${pct(d.sozial)}`}`,
       );
     })
     .on('mouseleave', () => {
@@ -460,53 +466,23 @@ function chartQuote(r: Ergebnis) {
 }
 
 // ---------- Zweck-Aufteilung, Waffel ----------
-function nachZweck(r: Ergebnis) {
-  const e = aufEbenen(r);
-  const acc: Record<string, number> = { sv: summeSV(r), kirche: r.kirche };
-  (Object.keys(GRUPPEN) as Gruppe[]).forEach((k) => {
-    acc[k] = 0;
-  });
-  EINZELPLAENE.forEach((p) => {
-    acc[p.g] += (e.bund * p.v) / BUND_GESAMT;
-  });
-  land.posten.forEach((p) => {
-    acc[p.g] += (e.land * p.v) / LAND_T;
-  });
-  gem.posten.forEach((p) => {
-    acc[p.g] += (e.gemeinde * p.v) / GEM_T;
-  });
-  const lab: Record<string, string> = { sv: 'Sozialversicherung', kirche: 'Kirchensteuer', ...GRUPPEN };
-  return ['sv', 'soz', 'sich', 'for', 'inf', 'zins', 'verw', 'kirche']
-    .map((k) => ({
-      k,
-      name: lab[k],
-      v: acc[k],
-      style: k === 'sv' ? '' : k === 'kirche' ? '' : `background:${gcol(k as Gruppe)}`,
-      cls: k === 'sv' ? 'rs-hatch' : k === 'kirche' ? 'rs-hohl' : '',
-    }))
-    .filter((d) => d.v > 0);
-}
+const zweckFarbe = (k: Zweck) =>
+  k === 'sv'
+    ? { style: '', cls: 'rs-hatch' }
+    : k === 'kirche'
+      ? { style: '', cls: 'rs-hohl' }
+      : { style: `background:${gcol(k)}`, cls: '' };
 function chartRaster(r: Ergebnis, fmt: (v: number) => string) {
-  const cats = nachZweck(r).map((d) => ({ ...d, raw: 0, n: 0 })),
-    tot = sum(cats);
+  const zwecke = nachZweck(r, land, gem);
+  const kaestchen = aufRaster(zwecke.map((d) => d.v));
+  const cats = zwecke.map((d, i) => ({ ...d, ...zweckFarbe(d.k), n: kaestchen[i] }));
   const raster = $('#raster'),
     liste = $('#zweck');
-  if (!tot) {
+  if (!summe(zwecke)) {
     raster.innerHTML = '<i></i>'.repeat(100);
     liste.innerHTML = '';
     return;
   }
-  cats.forEach((d) => {
-    d.raw = (d.v / tot) * 100;
-    d.n = Math.floor(d.raw);
-  });
-  const rest = 100 - cats.reduce((s, d) => s + d.n, 0);
-  [...cats]
-    .sort((a, b) => b.raw - b.n - (a.raw - a.n))
-    .slice(0, rest)
-    .forEach((d) => {
-      d.n++;
-    });
   raster.setAttribute('aria-label', `Von 100 € deiner Abgaben: ${cats.map((d) => `${d.n} € ${d.name}`).join(', ')}`);
   // Kästchen behalten, nur umfärben: so läuft die Umfärbung als Welle über das Raster
   const neu = raster.children.length !== 100;
@@ -586,7 +562,7 @@ function chartArten(r: Ergebnis, fmt: (v: number) => string) {
     </div>`;
       })
       .join('') +
-    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(stadt.name)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}</li></ul>`;
+    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(stadt.name)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${zeitraum(unit)}</li></ul>`;
 }
 
 // ---------- Kalender ----------
@@ -621,18 +597,20 @@ function chartKalender(r: Ergebnis) {
     pkv: `background:${css('--line')}`,
     netto: `background:${css('--marker')}`,
   };
-  let acc = 0;
+  const abschnitte = kalenderAbschnitte(
+    rows.map((d) => d[1]),
+    r.brutto,
+    days,
+  );
   const html = rows
-    .map(([n, v, c]) => {
-      const s = (acc / r.brutto) * days,
-        en = ((acc + v) / r.brutto) * days;
-      acc += v;
-      const ds = new Date(Y.getTime() + Math.floor(s) * dayMs),
-        de = new Date(Y.getTime() + Math.max(Math.floor(s), Math.ceil(en) - 1) * dayMs);
-      return `<div class="cal-row"><span>${esc(n)}</span><span class="cal-bar"><i${c === 'sv' ? ' class="rs-hatch"' : ''} style="left:${(s / days) * 100}%;width:${Math.max(0.4, ((en - s) / days) * 100)}%;${bg[c]}"></i></span><span class="cal-d num">${fd(ds)} – ${fd(de)}</span></div>`;
+    .map(([n, , c], i) => {
+      const a = abschnitte[i];
+      const ds = new Date(Y.getTime() + a.von * dayMs),
+        de = new Date(Y.getTime() + a.bis * dayMs);
+      return `<div class="cal-row"><span>${esc(n)}</span><span class="cal-bar"><i${c === 'sv' ? ' class="rs-hatch"' : ''} style="left:${a.start * 100}%;width:${Math.max(0.4, (a.ende - a.start) * 100)}%;${bg[c]}"></i></span><span class="cal-d num">${fd(ds)} – ${fd(de)}</span></div>`;
     })
     .join('');
-  const frei = new Date(Y.getTime() + Math.floor(((r.brutto - r.netto) / r.brutto) * days) * dayMs);
+  const frei = new Date(Y.getTime() + freiAbTag(r, days) * dayMs);
   $('#cal-sum').textContent =
     `ab dem ${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })} arbeitest du für dich`;
   box.innerHTML = `<p class="cal-lead">Ab dem <b class="rs-mark">${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</b> arbeitest du rechnerisch für dich selbst.</p>${html}`;
@@ -657,21 +635,20 @@ function tabelle(r: Ergebnis) {
           `<tr><td><span class="rs-farbe" style="background:${gcol(p.g)};margin-right:8px"></span>${esc(p.name)}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`,
       )
       .join('')}<tr><td><b>Summe</b></td><td>100 %</td><td><b>${money(amt)}</b></td></tr>`;
-  $('#tsub').textContent =
-    `Lohnsteuer und Soli je Ebene anteilig auf deren Ausgaben umgelegt, ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}.`;
+  $('#tsub').textContent = `Lohnsteuer und Soli je Ebene anteilig auf deren Ausgaben umgelegt, ${zeitraum(unit)}.`;
   $('#tcount').textContent =
     `${EINZELPLAENE.length + land.posten.length + gem.posten.length} Posten von Bund, ${land.name} und ${stadt.name}`;
   $('#tbl th.uy').textContent = unit === 'm' ? '€ / Monat' : '€ / Jahr';
   $('#tbl tbody').innerHTML =
-    head(`Bund: ${money(e.bund)} (42,5 % Lohnsteuer und Soli), Haushalt 2026`) +
+    head(`Bund: ${money(e.bund)} (${satzText(ANTEIL.bund)} Lohnsteuer und Soli), Haushalt 2026`) +
     rows(
       EINZELPLAENE.map((p) => ({ ...p, name: `EP ${p.n} ${p.name}` })),
       BUND_GESAMT,
       e.bund,
     ) +
-    head(`Land ${land.name}: ${money(e.land)} (42,5 % Lohnsteuer), ${land.art} ${land.jahr}`) +
+    head(`Land ${land.name}: ${money(e.land)} (${satzText(ANTEIL.land)} Lohnsteuer), ${land.art} ${land.jahr}`) +
     rows(land.posten, LAND_T, e.land) +
-    head(`${stadt.name}: ${money(e.gemeinde)} (15 % Lohnsteuer), ${gem.art}, ${gem.jahr}`) +
+    head(`${stadt.name}: ${money(e.gemeinde)} (${satzText(ANTEIL.gemeinde)} Lohnsteuer), ${gem.art}, ${gem.jahr}`) +
     rows(gem.posten, GEM_T, e.gemeinde);
 }
 
@@ -749,7 +726,7 @@ function chartTreemap() {
     .text((d) => blatt(d).name)
     .style('font-weight', 600)
     .style('pointer-events', 'none')
-    .style('fill', (d) => (light(blatt(d).g) ? '#1c1f24' : '#fff'))
+    .style('fill', (d) => (light(blatt(d).g) ? css('--on-hell') : css('--on-dunkel')))
     .each(function (d) {
       const w = d.x1 - d.x0 - 12;
       let t = blatt(d).name;
@@ -766,19 +743,12 @@ function chartTreemap() {
     .text((d) => fmtMrd(blatt(d).v))
     .style('font-size', '12px')
     .style('pointer-events', 'none')
-    .style('fill', (d) => (light(blatt(d).g) ? '#1c1f24' : '#fff'));
+    .style('fill', (d) => (light(blatt(d).g) ? css('--on-hell') : css('--on-dunkel')));
 }
 function chart2027() {
   const svg = d3.select<SVGSVGElement, unknown>('#s9');
   svg.selectAll('*').remove();
-  const known = EINZELPLAENE.filter((e) => ENTWURF_2027[e.n] != null);
-  const rows = known.map((e) => ({ name: `EP ${e.n} ${e.name}`, d: ENTWURF_2027[e.n] - e.v, g: e.g }));
-  rows.push({
-    name: 'Alle übrigen Einzelpläne',
-    d: ENTWURF_2027_GESAMT - d3.sum(Object.values(ENTWURF_2027)) - (BUND_GESAMT - d3.sum(known, (e) => e.v)),
-    g: 'verw',
-  });
-  const data = rows.filter((d) => Math.abs(d.d) >= 0.05).sort((a, b) => b.d - a.d);
+  const data = veraenderung2027();
   const W = width(svg),
     narrow = W < 560,
     rowH = narrow ? 36 : 28,
@@ -823,7 +793,7 @@ function chart2027() {
     .attr('height', bh)
     .attr('rx', 4)
     .attr('fill', (d) => gcol(d.g))
-    .on('mousemove', (ev, d) => showTip(ev, `<b>${esc(d.name)}</b>${(d.d > 0 ? '+' : '') + fmtMrd(d.d)}`))
+    .on('mousemove', (ev, d) => showTip(ev, `<b>${esc(d.name)}</b>${fmtMrdDelta(d.d)}`))
     .on('mouseleave', hideTip);
   g.append('text')
     .attr('x', narrow ? 0 : labW - 10)
@@ -837,12 +807,7 @@ function chart2027() {
     .attr('dy', '.35em')
     .attr('x', (d) => (d.d >= 0 ? x(d.d) + 6 : x(d.d) - 6))
     .attr('text-anchor', (d) => (d.d >= 0 ? 'start' : 'end'))
-    .text(
-      (d) =>
-        (d.d > 0 ? '+' : '−') +
-        Math.abs(d.d).toLocaleString('de-DE', { maximumFractionDigits: 1, minimumFractionDigits: 1 }) +
-        ' Mrd',
-    );
+    .text((d) => fmtMrdDelta(d.d).replace(/\u00a0€$/, ''));
 }
 function chartEntwicklung() {
   const svg = d3.select<SVGSVGElement, unknown>('#s10');
@@ -995,8 +960,8 @@ export function start() {
   land = daten.land;
   gem = daten.gem;
   arten = daten.arten;
-  LAND_T = sum(land.posten);
-  GEM_T = sum(gem.posten);
+  LAND_T = summe(land.posten);
+  GEM_T = summe(gem.posten);
 
   const ids = ['brutto', 'kv', 'pkv', 'kist', 'kinderlos', 'ag', 'shownetto', 'split'];
   const orte: Ort[] = daten.orte;
@@ -1064,22 +1029,22 @@ export function start() {
     location.href = `/stadt/${(ev.target as HTMLSelectElement).value}/`;
   });
   document.querySelectorAll<HTMLButtonElement>('#unit button').forEach((b) => {
-    b.onclick = () => {
+    b.addEventListener('click', () => {
       unit = b.dataset.u as 'y' | 'm';
       document.querySelectorAll('#unit button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
       persoenlich();
-    };
+    });
   });
   document.querySelectorAll<HTMLButtonElement>('#bundansicht button').forEach((b) => {
-    b.onclick = () => {
+    b.addEventListener('click', () => {
       bundAnsicht = b.dataset.ansicht as 'fluss' | 'flaeche';
       document.querySelectorAll('#bundansicht button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
       bund();
-    };
+    });
   });
   // Zugeklappte Diagramme haben keine Breite: beim Aufklappen neu zeichnen
   document.querySelectorAll<HTMLDetailsElement>('details[data-neu-zeichnen]').forEach((d) => {
