@@ -112,7 +112,7 @@ jobs:
       - name: E2E-Tests
         run: npm run test:e2e
         env:
-          E2E_OHNE_BUILD: '1'
+          E2E_OHNE_BUILD: "1"
       - name: Bericht bei Fehlern
         if: failure()
         uses: actions/upload-artifact@v4
