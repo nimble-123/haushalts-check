@@ -336,7 +336,8 @@
   padding: var(--space-6);
   min-width: 0;
 }
-.rs-panel > .rs-scroll {
+/* Wischbereich für Breites (Sankey, Tabellen): unabhängig davon, wie tief er im Panel steckt */
+.rs-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }

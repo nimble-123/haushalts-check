@@ -53,3 +53,30 @@ test('Bundeshaushalt: Umschalten zwischen Fluss und Fläche', async ({ page }) =
   await expect(page.locator('#ansicht-fluss')).toBeHidden();
   await expect(page.locator('#bund-flaeche rect')).toHaveCount(EINZELPLAENE.length);
 });
+
+test('breite Diagramme und Tabellen lassen sich seitlich wischen, die Seite selbst ragt nicht über', async ({
+  page,
+}) => {
+  await page.evaluate(() => {
+    for (const d of document.querySelectorAll('details')) d.open = true;
+  });
+  await page.waitForTimeout(300);
+  // nichts darf die Seite verbreitern
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+  // jeder Wischbereich bleibt im Panel und scrollt, wenn sein Inhalt breiter ist
+  const bereiche = await page.$$eval('.rs-scroll', (es) =>
+    es
+      .filter((e) => (e as HTMLElement).offsetParent)
+      .map((e) => ({
+        name: e.getAttribute('aria-label'),
+        overflow: getComputedStyle(e).overflowX,
+        rechts: Math.round(e.getBoundingClientRect().right),
+      })),
+  );
+  expect(bereiche.length).toBeGreaterThan(0);
+  const breite = await page.evaluate(() => window.innerWidth);
+  for (const b of bereiche) {
+    expect(b.overflow, b.name ?? '').toBe('auto');
+    expect(b.rechts, b.name ?? '').toBeLessThanOrEqual(breite);
+  }
+});
