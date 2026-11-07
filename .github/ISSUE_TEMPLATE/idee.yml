@@ -1,0 +1,20 @@
+name: Idee oder Wunsch
+description: Neue Funktion, andere Darstellung, zusätzliche Daten.
+labels: [idee]
+body:
+  - type: textarea
+    id: wozu
+    attributes:
+      label: Wozu?
+      description: Welche Frage soll die Seite damit beantworten?
+    validations:
+      required: true
+  - type: textarea
+    id: vorschlag
+    attributes:
+      label: Vorschlag
+  - type: input
+    id: quelle
+    attributes:
+      label: Datenquelle (falls neue Daten nötig)
+      placeholder: z. B. Destatis-Tabelle 71717-…

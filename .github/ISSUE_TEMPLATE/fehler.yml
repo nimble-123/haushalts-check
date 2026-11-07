@@ -1,0 +1,31 @@
+name: Fehler melden
+description: Etwas wird falsch berechnet, falsch angezeigt oder funktioniert nicht.
+labels: [fehler]
+body:
+  - type: textarea
+    id: was
+    attributes:
+      label: Was ist passiert?
+      description: Was hast du erwartet, was ist stattdessen passiert?
+    validations:
+      required: true
+  - type: textarea
+    id: schritte
+    attributes:
+      label: Schritte zum Nachstellen
+      placeholder: |
+        1. Stadt „Köln“ wählen
+        2. Brutto 60.000 eintragen
+        3. …
+    validations:
+      required: true
+  - type: input
+    id: seite
+    attributes:
+      label: Seite (URL)
+      placeholder: https://haushalts-check.vercel.app/stadt/koeln/
+  - type: input
+    id: browser
+    attributes:
+      label: Browser und Gerät
+      placeholder: Safari 19, iPhone

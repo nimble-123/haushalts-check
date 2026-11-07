@@ -1,0 +1,10 @@
+{
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit"
+  },
+  "[astro]": { "editor.defaultFormatter": "astro-build.astro-vscode" },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.exclude": { "dist": true, ".astro": true, "test-results": true, "playwright-report": true }
+}

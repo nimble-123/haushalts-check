@@ -1,0 +1,32 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # Kleinere Updates bündeln, Major-Versionen einzeln prüfen
+      astro:
+        patterns: ["astro", "@astrojs/*"]
+        update-types: [minor, patch]
+      tests:
+        patterns: ["vitest", "@playwright/test", "@axe-core/*", "jsdom"]
+        update-types: [minor, patch]
+      werkzeuge:
+        patterns: ["@biomejs/*", "typescript", "@types/*", "exceljs"]
+        update-types: [minor, patch]
+      laufzeit:
+        patterns: ["d3", "d3-sankey", "@fontsource-variable/*"]
+        update-types: [minor, patch]
+    commit-message:
+      prefix: deps
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: ci
