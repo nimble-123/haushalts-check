@@ -265,6 +265,7 @@ function tabelle(r: Ergebnis) {
     .map((p) => `<tr><td><span class="sw" style="background:${gcol(p.g)};margin-right:8px"></span>${p.name}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`).join('') +
     `<tr><td><b>Summe</b></td><td>100 %</td><td><b>${money(amt)}</b></td></tr>`;
   $('#tsub').textContent = `Lohnsteuer und Soli je Ebene anteilig auf deren Ausgaben umgelegt, ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}.`;
+  $('#tcount').textContent = `${EINZELPLAENE.length + land.posten.length + gem.posten.length} Posten von Bund, ${land.name} und ${stadt.name}`;
   $('#tbl th.uy').textContent = unit === 'm' ? '€ / Monat' : '€ / Jahr';
   $('#tbl tbody').innerHTML =
     head(`Bund: ${money(e.bund)} (42,5 % Lohnsteuer und Soli), Haushalt 2026`) + rows(EINZELPLAENE.map((p) => ({ ...p, name: `EP ${p.n} ${p.name}` })), BUND_GESAMT, e.bund) +
