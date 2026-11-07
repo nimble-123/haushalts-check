@@ -158,3 +158,19 @@
 .rs-tabelle th:first-child, .rs-tabelle td:first-child { text-align: left; }
 .rs-tabelle td:not(:first-child) { white-space: nowrap; }
 .rs-tabelle thead th { font-size: 13.5px; font-weight: 550; color: var(--ink-2); }
+
+/* ---------- Themenschalter ---------- */
+.rs-thema {
+  display: inline-grid; place-items: center; flex: none;
+  width: var(--hit); height: var(--hit); padding: 0; border: 0; border-radius: var(--radius-control);
+  background: transparent; color: var(--ink); cursor: pointer;
+  transition-property: background-color, scale; transition-duration: 0.12s; transition-timing-function: ease-out;
+}
+.rs-thema:hover { background: var(--surface); }
+.rs-thema:active { scale: 0.96; }
+.rs-thema i {
+  width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 2px currentColor;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+  transition: rotate 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+.rs-thema[aria-pressed='true'] i { rotate: 180deg; }

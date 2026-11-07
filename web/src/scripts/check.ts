@@ -8,7 +8,8 @@ import { ladeEingaben, speichereEingaben } from './speicher';
 interface P { name: string; v: number; g: Gruppe; rest?: boolean }
 
 let stadt: Stadt, land: Land, gem: GemeindeEbene, LAND_T = 0, GEM_T = 0;
-let unit: 'y' | 'm' = 'y';
+let unit: 'y' | 'm' = 'm'; // nur Kapitel 2; Einstieg und Kapitel 1 rechnen jährlich
+let bundAnsicht: 'fluss' | 'flaeche' = 'fluss';
 
 const gcol = (g: Gruppe) => css('--cat-' + g);
 const KIRCHE = () => css('--line');
@@ -144,41 +145,8 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   g.append('text').attr('class', 'val').attr('x', (d) => labW + Math.max(2, x(d.v)) + 6).attr('y', by + bh / 2).attr('dy', '.35em')
     .text((d) => fmt(d.v)).style('pointer-events', 'none');
   $('#barsub').textContent = `Alle Ziele deiner Abgaben ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}; kleine Posten je Ebene sind zusammengefasst.`;
+  $('#toepfe-sum').textContent = items.length ? `größter Topf: ${items[0].name} mit ${fmt(items[0].v)}` : '';
   $('#lg3').innerHTML = legendSV + legendGruppen() + legendSchaetzung();
-}
-
-// ---------- Wasserfall ----------
-const KURZ: Record<string, string> = { Rentenversicherung: 'Rente', Krankenversicherung: 'Kranken', Pflegeversicherung: 'Pflege', 'Arbeitslosenvers.': 'Arbeitslos.', Kirchensteuer: 'Kirche' };
-function chartWasserfall(r: Ergebnis, fmt: (v: number) => string) {
-  const svg = d3.select<SVGSVGElement, unknown>('#s4');
-  const sv = hatch(svg, 's4');
-  clear(svg);
-  type S = { name: string; v: number; type: 'total' | 'tax' | 'sv' | 'pkv'; start: number; end: number };
-  const steps: S[] = [{ name: 'Brutto', v: r.brutto, type: 'total', start: 0, end: r.brutto }];
-  let run = r.brutto;
-  ([['Lohnsteuer', r.lohnsteuer, 'tax'], ['Soli', r.soli, 'tax'], ['Kirchensteuer', r.kirche, 'tax'], ['Rentenversicherung', r.rv, 'sv'],
-    ['Krankenversicherung', r.kv, 'sv'], ['Pflegeversicherung', r.pv, 'sv'], ['Arbeitslosenvers.', r.alv, 'sv'], ['PKV-Beitrag', r.pkvBeitrag, 'pkv']] as const)
-    .forEach(([n, v, t]) => { if (v > 0) { steps.push({ name: n, v, type: t, end: run, start: run - v }); run -= v; } });
-  steps.push({ name: 'Netto', v: run, type: 'total', start: 0, end: run });
-  const W = width(svg), narrow = W < 560, labW = narrow ? 104 : 160, rowH = 30, H = steps.length * rowH + 26;
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
-  const x = d3.scaleLinear().domain([0, r.brutto || 1]).range([labW, W - 8]);
-  svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - 20})`)
-    .call(d3.axisBottom(x).ticks(narrow ? 3 : 6).tickFormat((v) => (+v / 1000).toLocaleString('de-DE') + ' T€').tickSizeOuter(0));
-  const col = { total: css('--ink'), tax: css('--ink'), sv, pkv: css('--line') };
-  const fuell = (d: S) => (d.name === 'Netto' ? css('--marker') : col[d.type]);
-  const g = svg.selectAll('g.st').data(steps).join('g').attr('class', 'st').attr('transform', (_, i) => `translate(0,${i * rowH})`);
-  g.append('rect').attr('width', W).attr('height', rowH).attr('fill', 'transparent')
-    .on('mousemove', (ev, d) => showTip(ev, `<b>${d.name}</b>${d.type === 'total' ? '' : '− '}${fmt(d.v)}${r.brutto ? ' · ' + pct(d.v / r.brutto) : ''}`)).on('mouseleave', hideTip);
-  g.append('text').attr('x', labW - 10).attr('y', rowH / 2).attr('dy', '.35em').attr('text-anchor', 'end')
-    .text((d) => (d.type === 'total' ? '' : '− ') + ((narrow && KURZ[d.name]) || d.name)).style('font-weight', (d) => (d.type === 'total' ? 600 : 400)).style('pointer-events', 'none');
-  g.append('rect').attr('x', (d) => x(d.start)).attr('width', (d) => Math.max(2, x(d.end) - x(d.start)))
-    .attr('y', 6).attr('height', rowH - 12).attr('rx', 2).attr('fill', fuell).style('pointer-events', 'none');
-  const wide = (d: S) => x(d.end) - x(d.start) > 78 && (d.type === 'total' || d.type === 'tax');
-  g.append('text').attr('class', 'val').attr('y', rowH / 2).attr('dy', '.35em')
-    .attr('x', (d) => (wide(d) ? x(d.start) + 7 : x(d.start) - 7)).attr('text-anchor', (d) => (wide(d) ? 'start' : 'end'))
-    .style('fill', (d) => (wide(d) ? (d.name === 'Netto' ? css('--on-marker') : css('--paper')) : null)).style('font-weight', (d) => (wide(d) ? 650 : null))
-    .text((d) => fmt(d.v)).style('pointer-events', 'none');
 }
 
 // ---------- Abgabenquote ----------
@@ -206,6 +174,7 @@ function chartQuote(r: Ergebnis) {
     svg.append('path').datum(data).attr('fill', 'none').attr('stroke', c).attr('stroke-width', w).attr('d', d3.line<(typeof data)[0]>().x((d) => x(d.B)).y((d) => y(d[k] as number)));
     svg.append('text').attr('x', W - m.r + 6).attr('y', y(data[data.length - 1][k] as number)).attr('dy', '.35em').text(l);
   });
+  $('#quote-sum').textContent = r.brutto ? `bei dir ${pct(summeAbgaben(r) / r.brutto)} vom Brutto` : '';
   if (r.brutto >= 15000 && r.brutto <= 160000) {
     const me = summeAbgaben(r) / r.brutto;
     svg.append('circle').attr('cx', x(r.brutto)).attr('cy', y(me)).attr('r', 6).attr('fill', css('--marker')).attr('stroke', css('--ink')).attr('stroke-width', 2);
@@ -273,6 +242,7 @@ function chartKalender(r: Ergebnis) {
     return `<div class="cal-row"><span>${n}</span><span class="cal-bar"><i${c === 'sv' ? ' class="rs-hatch"' : ''} style="left:${(s / days) * 100}%;width:${Math.max(0.4, ((en - s) / days) * 100)}%;${bg[c]}"></i></span><span class="cal-d num">${fd(ds)} – ${fd(de)}</span></div>`;
   }).join('');
   const frei = new Date(Y.getTime() + Math.floor(((r.brutto - r.netto) / r.brutto) * days) * dayMs);
+  $('#cal-sum').textContent = `ab dem ${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })} arbeitest du für dich`;
   box.innerHTML = `<p class="cal-lead">Ab dem <b class="rs-mark">${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</b> arbeitest du rechnerisch für dich selbst.</p>${html}`;
 }
 
@@ -377,11 +347,19 @@ function zusammenfassung() {
 // ---------- Ablauf ----------
 function persoenlich() {
   const r = berechne(eingabe());
-  const fmt = (v: number) => fmtEur(v * (unit === 'm' ? 1 / 12 : 1));
-  satz(r); kennzahlen(r, fmt); chartWasserfall(r, fmt); chartKalender(r); chartQuote(r);
-  chartFluss(r); chartToepfe(r, fmt); chartRaster(r, fmt); tabelle(r); zusammenfassung();
+  const fmtK2 = (v: number) => fmtEur(v * (unit === 'm' ? 1 / 12 : 1)); // Kapitel 2: Monat/Jahr
+  satz(r); kennzahlen(r, fmtEur); chartKalender(r); chartQuote(r);
+  chartFluss(r); chartToepfe(r, fmtK2); chartRaster(r, fmtEur); tabelle(r); zusammenfassung();
 }
-function alles() { persoenlich(); bundKennzahlen(); chartBund(); chartTreemap(); chart2027(); chartEntwicklung(); }
+function bund() {
+  $('#ansicht-fluss').hidden = bundAnsicht !== 'fluss';
+  $('#ansicht-flaeche').hidden = bundAnsicht !== 'flaeche';
+  $('#bundsub').textContent = bundAnsicht === 'fluss'
+    ? 'Einnahmen, Bundeshaushalt, Einzelpläne. Antippen oder Überfahren zeigt Beträge.'
+    : 'Jedes Rechteck ist ein Einzelplan, die Fläche entspricht den Ausgaben 2026.';
+  if (bundAnsicht === 'fluss') chartBund(); else { chartTreemap(); $('#lg1').innerHTML = legendGruppen(); }
+}
+function alles() { persoenlich(); bundKennzahlen(); bund(); chart2027(); chartEntwicklung(); }
 
 export function start() {
   const daten = JSON.parse($('#daten').textContent!);
@@ -411,8 +389,17 @@ export function start() {
     document.querySelectorAll('#unit button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     persoenlich();
   }));
+  document.querySelectorAll<HTMLButtonElement>('#bundansicht button').forEach((b) => (b.onclick = () => {
+    bundAnsicht = b.dataset.ansicht as 'fluss' | 'flaeche';
+    document.querySelectorAll('#bundansicht button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    bund();
+  }));
+  // Zugeklappte Diagramme haben keine Breite: beim Aufklappen neu zeichnen
+  document.querySelectorAll<HTMLDetailsElement>('details[data-neu-zeichnen]').forEach((d) =>
+    d.addEventListener('toggle', () => { if (d.open) persoenlich(); }));
   let t: number;
   addEventListener('resize', () => { clearTimeout(t); t = window.setTimeout(alles, 150); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', alles);
+  new MutationObserver(alles).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   alles();
 }

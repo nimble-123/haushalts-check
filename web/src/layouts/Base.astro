@@ -33,6 +33,10 @@ const nav = [
     {canonical && <meta property="og:url" content={canonical} />}
     {ogImage && <meta property="og:image" content={ogImage} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      // Gespeicherte Theme-Wahl vor dem ersten Zeichnen setzen (kein Aufblitzen)
+      try { const t = localStorage.getItem('haushalts-check-thema'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}
+    </script>
   </head>
   <body>
     <header class="site page">
@@ -40,9 +44,12 @@ const nav = [
         <span class="kachel" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         Haushalts-Check
       </a>
-      <nav aria-label="Hauptnavigation">
-        {nav.map((n) => <a href={n.href} aria-current={pfad.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>)}
-      </nav>
+      <div class="rechts">
+        <nav aria-label="Hauptnavigation">
+          {nav.map((n) => <a href={n.href} aria-current={pfad.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>)}
+        </nav>
+        <button class="rs-thema" id="thema" type="button" aria-pressed="false" aria-label="Dunkles Design"><i aria-hidden="true"></i></button>
+      </div>
     </header>
     <main>
       <slot />
@@ -55,6 +62,24 @@ const nav = [
       </nav>
     </footer>
     <div class="rs-tip" id="tip" role="presentation"></div>
+    <script>
+      const knopf = document.getElementById('thema') as HTMLButtonElement;
+      const dunkel = () => document.documentElement.dataset.theme === 'dark'
+        || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+      const zeige = () => {
+        const d = dunkel();
+        knopf.setAttribute('aria-pressed', String(d));
+        knopf.setAttribute('aria-label', d ? 'Helles Design' : 'Dunkles Design');
+      };
+      knopf.addEventListener('click', () => {
+        const neu = dunkel() ? 'light' : 'dark';
+        document.documentElement.dataset.theme = neu;
+        try { localStorage.setItem('haushalts-check-thema', neu); } catch {}
+        zeige();
+      });
+      matchMedia('(prefers-color-scheme: dark)').addEventListener('change', zeige);
+      zeige();
+    </script>
   </body>
 </html>
 
@@ -72,6 +97,7 @@ const nav = [
   .kachel i { width: 9px; height: 9px; border-radius: var(--radius-cell); background: var(--cat-verw); }
   .kachel i:first-child { background: var(--marker); }
   .kachel i:nth-child(2) { background: var(--cat-soz); }
+  .rechts { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
   nav { display: flex; flex-wrap: wrap; gap: 2px; }
   nav a {
     color: var(--ink-2); text-decoration: none; font-size: 15.5px; font-weight: 550;
