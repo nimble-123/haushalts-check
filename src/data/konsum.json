@@ -1,0 +1,249 @@
+{
+  "preisfaktor": 1.2426,
+  "klassen": [
+    {
+      "netto": 736,
+      "konsum": 865,
+      "kategorien": {
+        "nahrung": 166,
+        "bekleidung": 28,
+        "wohnen": 409,
+        "innen": 20,
+        "gesundheit": 21,
+        "verkehr": 51,
+        "post": 36,
+        "freizeit": 61,
+        "bildung": 7,
+        "gast": 35,
+        "andere": 31
+      },
+      "versicherung": 17
+    },
+    {
+      "netto": 1091,
+      "konsum": 1117,
+      "kategorien": {
+        "nahrung": 184,
+        "bekleidung": 40,
+        "wohnen": 493,
+        "innen": 38,
+        "gesundheit": 30,
+        "verkehr": 94,
+        "post": 42,
+        "freizeit": 99,
+        "bildung": 6,
+        "gast": 49,
+        "andere": 44
+      },
+      "versicherung": 29
+    },
+    {
+      "netto": 1399,
+      "konsum": 1325,
+      "kategorien": {
+        "nahrung": 199,
+        "bekleidung": 52,
+        "wohnen": 547,
+        "innen": 52,
+        "gesundheit": 38,
+        "verkehr": 122,
+        "post": 48,
+        "freizeit": 138,
+        "bildung": 5,
+        "gast": 63,
+        "andere": 61
+      },
+      "versicherung": 43
+    },
+    {
+      "netto": 1743,
+      "konsum": 1563,
+      "kategorien": {
+        "nahrung": 214,
+        "bekleidung": 65,
+        "wohnen": 620,
+        "innen": 67,
+        "gesundheit": 52,
+        "verkehr": 168,
+        "post": 51,
+        "freizeit": 173,
+        "bildung": 7,
+        "gast": 79,
+        "andere": 67
+      },
+      "versicherung": 63
+    },
+    {
+      "netto": 2273,
+      "konsum": 1881,
+      "kategorien": {
+        "nahrung": 228,
+        "bekleidung": 79,
+        "wohnen": 719,
+        "innen": 87,
+        "gesundheit": 65,
+        "verkehr": 231,
+        "post": 55,
+        "freizeit": 214,
+        "bildung": 8,
+        "gast": 116,
+        "andere": 80
+      },
+      "versicherung": 82
+    },
+    {
+      "netto": 3032,
+      "konsum": 2315,
+      "kategorien": {
+        "nahrung": 235,
+        "bekleidung": 94,
+        "wohnen": 853,
+        "innen": 113,
+        "gesundheit": 98,
+        "verkehr": 323,
+        "post": 61,
+        "freizeit": 279,
+        "bildung": 10,
+        "gast": 145,
+        "andere": 104
+      },
+      "versicherung": 105
+    },
+    {
+      "netto": 4157,
+      "konsum": 2822,
+      "kategorien": {
+        "nahrung": 250,
+        "bekleidung": 105,
+        "wohnen": 990,
+        "innen": 139,
+        "gesundheit": 170,
+        "verkehr": 432,
+        "post": 65,
+        "freizeit": 336,
+        "bildung": 10,
+        "gast": 207,
+        "andere": 117
+      },
+      "versicherung": 142
+    },
+    {
+      "netto": 7684,
+      "konsum": 3565,
+      "kategorien": {
+        "nahrung": 266,
+        "bekleidung": 135,
+        "wohnen": 1126,
+        "innen": 187,
+        "gesundheit": 369,
+        "verkehr": 483,
+        "post": 72,
+        "freizeit": 429,
+        "bildung": 18,
+        "gast": 268,
+        "andere": 210
+      },
+      "versicherung": 226
+    }
+  ],
+  "saetze": {
+    "nahrung": {
+      "mwst": 0.0869,
+      "energie": 0,
+      "strom": 0
+    },
+    "bekleidung": {
+      "mwst": 0.1597,
+      "energie": 0,
+      "strom": 0
+    },
+    "wohnen": {
+      "mwst": 0.0314,
+      "energie": 0.0044,
+      "strom": 0.0045
+    },
+    "innen": {
+      "mwst": 0.1597,
+      "energie": 0,
+      "strom": 0
+    },
+    "gesundheit": {
+      "mwst": 0.0705,
+      "energie": 0,
+      "strom": 0
+    },
+    "verkehr": {
+      "mwst": 0.1447,
+      "energie": 0.0669,
+      "strom": 0
+    },
+    "post": {
+      "mwst": 0.153,
+      "energie": 0,
+      "strom": 0
+    },
+    "freizeit": {
+      "mwst": 0.0781,
+      "energie": 0,
+      "strom": 0
+    },
+    "bildung": {
+      "mwst": 0,
+      "energie": 0,
+      "strom": 0
+    },
+    "gast": {
+      "mwst": 0.0866,
+      "energie": 0,
+      "strom": 0
+    },
+    "andere": {
+      "mwst": 0.1349,
+      "energie": 0,
+      "strom": 0
+    }
+  },
+  "versicherungsteuer": 0.1597,
+  "mwstVerteilung": {
+    "bund": 0.4817,
+    "land": 0.4858,
+    "gemeinde": 0.0325
+  },
+  "annahmen": {
+    "literpreis": 2,
+    "benzinAnteil": 0.75,
+    "kraftstoffQuote": 0.275,
+    "stromAnteil": 0.5,
+    "rabattMonate": 5
+  },
+  "quellen": [
+    {
+      "label": "Destatis: EVS 2018, Fachserie 15 Heft 4, Tab. 6.1 Alleinlebende",
+      "url": "https://www.statistischebibliothek.de/mir/servlets/MCRFileNodeServlet/DEHeft_derivate_00057921/2152604189004_korr19112020.pdf"
+    },
+    {
+      "label": "Destatis: Laufende Wirtschaftsrechnungen 2024, Konsumausgaben nach Haushaltsgröße (63111-01)",
+      "url": "https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Konsumausgaben-Lebenshaltungskosten/_inhalt.html"
+    },
+    {
+      "label": "Destatis: Verbraucherpreisindex, Jahresdurchschnitte",
+      "url": "https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Basisdaten/vpi141a.html"
+    },
+    {
+      "label": "Destatis: Daten zur Energiepreisentwicklung (61241), Strom und Gas für Haushalte",
+      "url": "https://www.destatis.de/DE/Themen/Wirtschaft/Preise/Publikationen/Energiepreise/_inhalt.html"
+    },
+    {
+      "label": "BMF: Ergebnisse der 171. Steuerschätzung, Oktober 2026",
+      "url": "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerschaetzungen_und_Steuereinnahmen/Steuerschaetzung/2026-10-22-ergebnisse-171-steuerschaetzung-dl-xlsx.xlsx?__blob=publicationFile&v=3"
+    },
+    {
+      "label": "Bundestag: Tankrabatt, befristete Senkung der Energiesteuer 2026",
+      "url": "https://www.bundestag.de/dokumente/textarchiv/2026/kw17-de-energiesteuersenkung-1165890"
+    },
+    {
+      "label": "ADAC-Monatsauswertung Kraftstoffpreise September 2026 (Bericht)",
+      "url": "https://www.autohaus.de/nachrichten/politik/vor-dem-tankrabatt-september-war-teuerster-tankmonat-aller-zeiten-3910741"
+    }
+  ]
+}

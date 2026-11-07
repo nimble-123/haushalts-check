@@ -1,7 +1,8 @@
 // Aufteilung der Abgaben auf Zwecke, Töpfe, Kästchen und Kalendertage – ohne DOM, für alle Diagramme der Startseite.
 import { BUND_GESAMT, EINZELPLAENE, ENTWURF_2027, ENTWURF_2027_GESAMT } from '../data/bund';
 import { type Ebene, GRUPPEN, type Gruppe, type Posten } from '../data/types';
-import { aufEbenen, berechne, type Eingabe, type Ergebnis, summeSV } from './steuer';
+import { mitKonsum } from './konsum';
+import { aufEbenen, berechne, type Eingabe, type Ergebnis, summeKonsum, summeSV, verfuegbar } from './steuer';
 
 export const summe = (a: readonly { v: number }[]) => a.reduce((s, x) => s + x.v, 0);
 
@@ -81,16 +82,33 @@ export function kalenderAbschnitte(betraege: readonly number[], brutto: number, 
 }
 
 /** Tag des Jahres (0-basiert), ab dem rechnerisch für das eigene Netto gearbeitet wird */
-export const freiAbTag = (r: Ergebnis, tage = 365) => Math.floor(((r.brutto - r.netto) / r.brutto) * tage);
+export const freiAbTag = (r: Ergebnis, tage = 365) => Math.floor(((r.brutto - verfuegbar(r)) / r.brutto) * tage);
 
-/** Abgabenquote (gesamt, Steuern, Sozialabgaben) über eine Spanne von Bruttolöhnen bei sonst gleichen Angaben */
-export function abgabenquoten(basis: Omit<Eingabe, 'brutto'>, von = 15_000, bis = 160_000, schritt = 500) {
-  const reihe: { brutto: number; gesamt: number; steuern: number; sozial: number }[] = [];
+/**
+ * Abgabenquote (gesamt, Steuern, Sozialabgaben, Konsumsteuern) über eine Spanne von Bruttolöhnen bei sonst
+ * gleichen Angaben; Konsumsteuern nur, wenn `konsum` gesetzt ist.
+ */
+export function abgabenquoten(
+  basis: Omit<Eingabe, 'brutto'>,
+  konsum = false,
+  von = 15_000,
+  bis = 160_000,
+  schritt = 500,
+) {
+  const reihe: { brutto: number; gesamt: number; steuern: number; sozial: number; konsum: number }[] = [];
   for (let brutto = von; brutto <= bis; brutto += schritt) {
-    const c = berechne({ ...basis, brutto });
+    const c0 = berechne({ ...basis, brutto });
+    const c = konsum ? mitKonsum(c0) : c0;
     const steuern = c.lohnsteuer + c.soli + c.kirche;
     const sozial = summeSV(c);
-    reihe.push({ brutto, gesamt: (steuern + sozial) / brutto, steuern: steuern / brutto, sozial: sozial / brutto });
+    const k = summeKonsum(c);
+    reihe.push({
+      brutto,
+      gesamt: (steuern + sozial + k) / brutto,
+      steuern: steuern / brutto,
+      sozial: sozial / brutto,
+      konsum: k / brutto,
+    });
   }
   return reihe;
 }

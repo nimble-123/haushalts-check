@@ -23,7 +23,7 @@
 
 ## Was die Seite kann
 
-- **Persönliche Aufteilung**: Lohnsteuer und Soli (Tarif 2026, Steuerklasse I) und Sozialabgaben, verteilt auf Bund, Land und Stadt, und dort auf die Ausgabenbereiche.
+- **Persönliche Aufteilung**: Lohnsteuer und Soli (Tarif 2026, Steuerklasse I) und Sozialabgaben, verteilt auf Bund, Land und Stadt, und dort auf die Ausgabenbereiche. Auf Wunsch mit geschätzten Konsumsteuern (Mehrwert-, Energie-, Strom- und Versicherungsteuer).
 - **Alle 106 kreisfreien Städte** mit eigener Seite (`/stadt/oldenburg/`), dazu alle 16 Länder.
 - **Echte Ausgaben je Stadt**: Auszahlungen nach Art je Einwohner im Vergleich zum Schnitt aller kreisfreien Städte.
 - **Bundeshaushalt 2026** als Fluss oder Fläche, Entwurf 2027, Entwicklung bis 2030.
@@ -39,6 +39,7 @@
 | Städte, Zweck | Durchschnitt der Gemeinden und Kreise je Land (gekennzeichnete Schätzung)        | 2022            |
 | Städte, Art   | Regionaldatenbank, Rechnungsergebnisse der kommunalen Kernhaushalte, 71717-Z-05  | 2025, vorläufig |
 | Städte, Lage  | Destatis, Gemeindeverzeichnis                                                    | 31.12.2025      |
+| Konsumsteuern | Destatis, EVS 2018 (Alleinlebende) und Wirtschaftsrechnungen 2024; Steuersätze   | 2026, Schätzung |
 | Vorbelegung   | Destatis, Median Bruttojahresverdienst Vollzeit; Durchschnittsalter              | 2025            |
 
 Wie genau gerechnet wird, steht auf der Seite [So ist gerechnet](https://haushalts-check.vercel.app/methodik/). Für einzelne Städte gibt es amtlich keine Aufteilung nach Zweck; die Seite kennzeichnet diese Werte mit ≈.
@@ -58,7 +59,7 @@ npm run dev  # http://localhost:4321
 | `npm run format`   | Formatieren und Importe sortieren (Biome)                            |
 | `npm run build`    | Statischer Build nach `dist/`                                        |
 | `npm run tokens`   | `src/styles/tokens.css` aus dem Design-System erzeugen               |
-| `npm run daten:*`  | Daten neu laden: `laender`, `staedte`, `ausgabearten`                |
+| `npm run daten:*`  | Daten neu laden: `laender`, `staedte`, `ausgabearten`, `konsum`      |
 
 ## Technik
 
