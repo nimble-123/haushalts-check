@@ -18,7 +18,9 @@
     "tokens": "node design-system/build-tokens.ts",
     "daten:laender": "node pipeline/laender.ts",
     "daten:staedte": "node pipeline/staedte.ts",
-    "daten:ausgabearten": "node --env-file=.env.local pipeline/ausgabearten.ts"
+    "daten:ausgabearten": "node --env-file=.env.local pipeline/ausgabearten.ts",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
@@ -29,11 +31,14 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "4.14.0",
     "@biomejs/biome": "2.6.6",
+    "@playwright/test": "1.65.0",
     "@types/d3": "^7.4.3",
     "@types/d3-sankey": "^0.12.5",
     "@types/node": "^24.19.2",
     "exceljs": "^4.4.0",
+    "jsdom": "26.1.0",
     "typescript": "^6.0.3",
     "vitest": "^5.1.0"
   }
