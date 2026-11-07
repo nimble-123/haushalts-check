@@ -730,53 +730,57 @@ function chartTreemap() {
 }
 function chart2027() {
   const data = veraenderung2027();
-  const zeile = (schmal: boolean) => (schmal ? 36 : 28);
-  // Handy: ohne Achse (jeder Balken trägt seinen Wert), deshalb weniger Höhe
-  const { svg, W, H, schmal: narrow } = rahmen('entwurf-2027', (_, s) => data.length * zeile(s) + (s ? 4 : 24));
+  const zeile = (schmal: boolean) => (schmal ? 42 : 28);
+  const { svg, W, H, schmal: narrow } = rahmen('entwurf-2027', (_, s) => data.length * zeile(s) + 24);
   const mass = balkenMasse(narrow, 240, 6);
   const { by, bh, labW } = mass;
   const ext = d3.max(data, (d) => Math.abs(d.d)) ?? 1;
   const min = Math.min(0, d3.min(data, (d) => d.d) ?? 0),
     max = Math.max(0, d3.max(data, (d) => d.d) ?? 0);
-  // Handy: Skala genau über die Werte, Rand nur für die Wertebeschriftungen links und rechts
-  const x = narrow
-    ? d3
-        .scaleLinear()
-        .domain([min, max])
-        .range([min < 0 ? 72 : 4, W - 80])
-    : d3
-        .scaleLinear()
-        .domain([-ext * 0.6, ext * 1.3])
-        .range([labW, W - 4]);
-  if (!narrow) {
-    svg
-      .append('line')
-      .attr('x1', x(0))
-      .attr('x2', x(0))
-      .attr('y1', 0)
-      .attr('y2', H - 20)
-      .attr('stroke', css('--ink-3'));
+  let x: d3.ScaleLinear<number, number>;
+  if (narrow) {
+    // Handy: Null fest bei 42 % der ganzen Breite, damit sich nicht alles in der linken Hälfte drängt
+    // und links Platz für die Minus-Werte samt Beschriftung bleibt; rechts Rand für „+27,0 Mrd“
+    const null0 = W * 0.42,
+      rechts = W - 78;
+    const proPixel = max / Math.max(1, rechts - null0);
+    const links = Math.min(min * 1.15, -(null0 - 4) * proPixel);
+    x = d3.scaleLinear().domain([links, max]).range([4, rechts]);
+  } else {
+    x = d3
+      .scaleLinear()
+      .domain([-ext * 0.6, ext * 1.3])
+      .range([labW, W - 4]);
+  }
+  const unten = H - 20;
+  if (narrow) {
+    // Hilfslinien an den Teilstrichen, hinter allem
     svg
       .append('g')
-      .attr('class', 'axis')
-      .attr('transform', `translate(0,${H - 20})`)
-      .call(
-        d3
-          .axisBottom(x)
-          .ticks(6)
-          .tickFormat((v) => `${(+v > 0 ? '+' : '') + v} Mrd`)
-          .tickSizeOuter(0),
-      );
+      .attr('class', 'grid')
+      .selectAll('line')
+      .data(d3.range(Math.ceil(x.domain()[0] / 10) * 10, max + 1, 10).filter((t) => t !== 0))
+      .join('line')
+      .attr('x1', (t) => x(t))
+      .attr('x2', (t) => x(t))
+      .attr('y1', 0)
+      .attr('y2', unten);
   }
+  svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', 0).attr('y2', unten).attr('stroke', css('--ink-3'));
+  // Handy: Teilstriche alle 10 Mrd, nur Zahlen (die Einheit steht an jedem Balken)
+  const ticks = narrow ? d3.range(Math.ceil(x.domain()[0] / 10) * 10, max + 1, 10) : x.ticks(6);
+  svg
+    .append('g')
+    .attr('class', 'axis')
+    .attr('transform', `translate(0,${unten})`)
+    .call(
+      d3
+        .axisBottom(x)
+        .tickValues(ticks)
+        .tickFormat((v) => `${+v > 0 ? '+' : +v < 0 ? '−' : ''}${Math.abs(+v)}${narrow ? '' : ' Mrd'}`)
+        .tickSizeOuter(0),
+    );
   const { g, beschriften } = balkenZeilen(svg, data, mass, { zeile: zeile(narrow), oben: 0, klasse: 'r' });
-  // Handy: Nulllinie nur auf Höhe der Balken, damit sie nicht durch die Namen darüber läuft
-  if (narrow)
-    g.append('line')
-      .attr('x1', x(0))
-      .attr('x2', x(0))
-      .attr('y1', by - 3)
-      .attr('y2', by + bh + 3)
-      .attr('stroke', css('--ink-3'));
   g.append('rect')
     .attr('x', (d) => x(Math.min(0, d.d)))
     .attr('width', (d) => Math.max(2, Math.abs(x(d.d) - x(0))))
@@ -787,6 +791,13 @@ function chart2027() {
     .on('mousemove', (ev, d) => showTip(ev, `<b>${esc(d.name)}</b>${fmtMrdDelta(d.d)}`))
     .on('mouseleave', hideTip);
   beschriften((d) => d.name);
+  // Handy: Namen über den Linien mit einem Rand in Panelfarbe, damit Hilfs- und Nulllinie nicht stören
+  if (narrow)
+    g.selectAll('text')
+      .style('paint-order', 'stroke')
+      .style('stroke', css('--surface'))
+      .style('stroke-width', 5)
+      .style('stroke-linejoin', 'round');
   g.append('text')
     .attr('class', 'val')
     .attr('y', by + bh / 2)
