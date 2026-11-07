@@ -32,8 +32,11 @@ describe('konsumsteuern', () => {
     // DIW: Mehrwertsteuer rund 9–11 % des Haushaltsnettos in der Mitte; Alleinlebende mit hohem (steuerfreiem) Mietanteil etwas darunter
     expect(k.summe / netto).toBeGreaterThan(0.06);
     expect(k.summe / netto).toBeLessThan(0.11);
-    expect(k.mwst / k.konsum).toBeGreaterThan(0.06);
+    // mit versteckter Mehrwertsteuer: gesamtwirtschaftlich rund 10–11 % des Konsums (EU-Kommission, VAT Gap)
+    expect(k.mwst / k.konsum).toBeGreaterThan(0.095);
     expect(k.mwst / k.konsum).toBeLessThan(0.12);
+    expect(k.mwstVersteckt).toBeGreaterThan(0);
+    expect(k.mwstVersteckt).toBeLessThan(k.mwst / 2);
   });
 
   it('verteilt genau die Summe auf Bund, Land und Gemeinde', () => {
@@ -74,6 +77,8 @@ describe('Daten', () => {
       expect(s.mwst).toBeGreaterThanOrEqual(0);
       expect(s.mwst + s.energie + s.strom).toBeLessThan(0.5);
       expect(s.mwst).toBeLessThanOrEqual(19 / 119 + 1e-4);
+      expect(s.versteckt).toBeGreaterThanOrEqual(0);
+      expect(s.versteckt).toBeLessThan(0.12);
     }
     const v = KONSUM.mwstVerteilung;
     expect(v.bund + v.land + v.gemeinde).toBeCloseTo(1, 3);

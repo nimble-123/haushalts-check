@@ -9,7 +9,10 @@ export const KONSUM = roh as KonsumDaten;
 export interface Konsumsteuern {
   /** geschätzte Konsumausgaben im Jahr */
   konsum: number;
+  /** Mehrwertsteuer, direkt und versteckt */
   mwst: number;
+  /** davon versteckt in steuerfreien Leistungen (Miete, Gesundheit, Bildung, Finanzen) */
+  mwstVersteckt: number;
   energiesteuer: number;
   stromsteuer: number;
   versicherungsteuer: number;
@@ -46,11 +49,13 @@ export function konsumsteuern(nettoJahr: number, d: KonsumDaten = KONSUM): Konsu
   const kappe = bedarf > monat ? monat / bedarf : 1;
 
   let mwst = 0,
+    versteckt = 0,
     energiesteuer = 0,
     stromsteuer = 0;
   kategorien.forEach((k, i) => {
     const a = ausgaben[i] * kappe;
-    mwst += a * d.saetze[k].mwst;
+    mwst += a * (d.saetze[k].mwst + d.saetze[k].versteckt);
+    versteckt += a * d.saetze[k].versteckt;
     energiesteuer += a * d.saetze[k].energie;
     stromsteuer += a * d.saetze[k].strom;
   });
@@ -60,6 +65,7 @@ export function konsumsteuern(nettoJahr: number, d: KonsumDaten = KONSUM): Konsu
   const r = {
     konsum: jahr((bedarf - versicherung) * kappe),
     mwst: jahr(mwst),
+    mwstVersteckt: jahr(versteckt),
     energiesteuer: jahr(energiesteuer),
     stromsteuer: jahr(stromsteuer),
     versicherungsteuer: jahr(versicherungsteuer),

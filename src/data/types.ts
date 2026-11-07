@@ -97,7 +97,8 @@ export interface KonsumDaten {
     versicherung: number;
   }[];
   /** Steueranteil am Bruttopreis je Gruppe: Mehrwertsteuer, Energiesteuer, Stromsteuer */
-  saetze: Record<KonsumKategorie, { mwst: number; energie: number; strom: number }>;
+  /** versteckt: Mehrwertsteuer, die steuerfreie Anbieter (Vermieter, Ärzte, Banken) nicht abziehen können */
+  saetze: Record<KonsumKategorie, { mwst: number; versteckt: number; energie: number; strom: number }>;
   versicherungsteuer: number;
   /** Aufteilung der Umsatzsteuer auf die Ebenen */
   mwstVerteilung: { bund: number; land: number; gemeinde: number };
@@ -107,6 +108,8 @@ export interface KonsumDaten {
     kraftstoffQuote: number;
     stromAnteil: number;
     rabattMonate: number;
+    /** versteckte Mehrwertsteuer je steuerfreier Leistung, Anteil am Preis */
+    versteckt: Record<'miete' | 'gesundheit' | 'bildung' | 'finanz' | 'post' | 'sozial' | 'sport', number>;
   };
   quellen: { label: string; url: string }[];
 }

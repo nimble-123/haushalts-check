@@ -73,19 +73,26 @@ export function abstimmungSatz(heute = new Date()) {
     : `Über den Haushalt 2027 hat der Bundestag am ${datum(ABSTIMMUNG_2027)} abgestimmt; die Zahlen für 2027 sind hier noch der Regierungsentwurf.`;
 }
 
-/** Kernhaushalt in Mrd €: beschlossen, Entwurf, Finanzplan */
-export const ENTWICKLUNG: { jahr: number; v: number; status: 'Soll' | 'Entwurf' | 'Finanzplan' }[] = [
-  { jahr: 2025, v: 502.5, status: 'Soll' },
-  { jahr: 2026, v: 524.5, status: 'Soll' },
-  { jahr: 2027, v: 555.4, status: 'Entwurf' },
-  { jahr: 2028, v: 588.2, status: 'Finanzplan' },
-  { jahr: 2029, v: 597.8, status: 'Finanzplan' },
-  { jahr: 2030, v: 635.4, status: 'Finanzplan' },
+/**
+ * Kernhaushalt in Mrd €: beschlossen, Entwurf, Finanzplan; `zinsen` = Zinsausgaben nach Ausgabearten
+ * (Haushaltsplan 2026, Obergruppe 57; Finanzplan 2026–2030, Drucksache 21/7301, Tab. 9 Zeile 1.3)
+ */
+export const ENTWICKLUNG: { jahr: number; v: number; zinsen: number; status: 'Soll' | 'Entwurf' | 'Finanzplan' }[] = [
+  { jahr: 2025, v: 502.5, zinsen: 30.2, status: 'Soll' },
+  { jahr: 2026, v: 524.5, zinsen: 30.2, status: 'Soll' },
+  { jahr: 2027, v: 555.4, zinsen: 41.8, status: 'Entwurf' },
+  { jahr: 2028, v: 588.2, zinsen: 55.1, status: 'Finanzplan' },
+  { jahr: 2029, v: 597.8, zinsen: 68.0, status: 'Finanzplan' },
+  { jahr: 2030, v: 635.4, zinsen: 80.6, status: 'Finanzplan' },
 ];
 /** Kernhaushalt 2027 laut Entwurf, aus der Entwicklungsreihe */
 export const ENTWURF_2027_GESAMT = ENTWICKLUNG.find((j) => j.jahr === 2027)!.v;
 
 export const BUND_QUELLEN = [
+  {
+    label: 'Finanzplan des Bundes 2026 bis 2030, Drucksache 21/7301 (Zinsausgaben, Tab. 9)',
+    url: 'https://dserver.bundestag.de/btd/21/073/2107301.pdf',
+  },
   { label: 'Haushaltsgesetz 2026, Anlage', url: 'https://www.gesetze-im-internet.de/hg_2026/anlage.html' },
   {
     label: 'Bundestag: Bereinigungssitzung 2026',

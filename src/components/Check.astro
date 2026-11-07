@@ -38,7 +38,7 @@ const vorab = ergebnisSatz(
 const mrd = (v: number) => `${v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} Mrd €`;
 const groesster = [...EINZELPLAENE].sort((a, b) => b.v - a.v)[0];
 const labelFluss = `Sankey-Diagramm: ${EINNAHMEN.map((e) => `${e.name} ${mrd(e.v)}`).join(', ')} fließen in den Bundeshaushalt von ${mrd(BUND_GESAMT)} und weiter in die Einzelpläne; größter Posten ${groesster.name} mit ${mrd(groesster.v)}. Alle Werte in der Tabelle darunter.`;
-const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map((d) => `${d.jahr} ${mrd(d.v)} (${d.status})`).join(', ')}.`;
+const labelEntwicklung = `Säulendiagramm der Bundesausgaben mit dem Anteil der Zinsen: ${ENTWICKLUNG.map((d) => `${d.jahr} ${mrd(d.v)}, davon Zinsen ${mrd(d.zinsen)} (${d.status})`).join('; ')}.`;
 ---
 <section class="hero page" aria-labelledby="hero-h">
   <div class="eingabe">
@@ -216,8 +216,8 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
 
     <div class="figure">
       <h3>Entwicklung der Bundesausgaben</h3>
-      <p class="sub">Kernhaushalt in Mrd €: 2025 und 2026 beschlossen, 2027 Entwurf, ab 2028 Finanzplan.</p>
-      <div class="rs-panel"><svg id="entwicklung" role="img" aria-label={labelEntwicklung}></svg></div>
+      <p class="sub">Kernhaushalt in Mrd €: 2025 und 2026 beschlossen, 2027 Entwurf, ab 2028 Finanzplan. Unten im Balken die Zinsausgaben.</p>
+      <div class="rs-panel"><svg id="entwicklung" role="img" aria-label={labelEntwicklung}></svg><ul class="rs-legende" id="lg-entwicklung"></ul></div>
       <Kontext studie={STUDIEN.zinsen2030} />
       <Kontext studie={STUDIEN.sondervermoegen} />
     </div>

@@ -76,6 +76,14 @@ const QUELLEN_KONSUM = [
     url: 'https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerschaetzungen_und_Steuereinnahmen/Steuerschaetzung/2026-10-22-ergebnisse-171-steuerschaetzung-dl-xlsx.xlsx?__blob=publicationFile&v=3',
   },
   {
+    label: 'Eurostat: Input-Output-Tabelle Deutschland (naio_10_cp1700), Gütersteuern auf Vorleistungen',
+    url: 'https://ec.europa.eu/eurostat/databrowser/view/naio_10_cp1700/default/table',
+  },
+  {
+    label: 'EU-Kommission: VAT Gap, Länderbericht Deutschland (Anteil der Haushalte an der Mehrwertsteuer)',
+    url: 'https://taxation-customs.ec.europa.eu/document/download/13386f9a-4cde-4590-9738-c3d6f0668913_en?filename=GERMANY+Country+specific+VAT+gap+report+2023.pdf',
+  },
+  {
     label: 'Bundestag: Tankrabatt, befristete Senkung der Energiesteuer 2026',
     url: 'https://www.bundestag.de/dokumente/textarchiv/2026/kw17-de-energiesteuersenkung-1165890',
   },
@@ -98,14 +106,33 @@ interface Posten {
   /** Mehrwertsteuer als Anteil am Bruttopreis */
   mwst: number;
   verbrauch?: Verbrauch;
+  /** versteckte Mehrwertsteuer: nicht abziehbare Vorsteuer steuerfreier Anbieter, Anteil am Preis */
+  versteckt?: number;
 }
-const p = (inGruppe: string, zeile: string, kat: KonsumKategorie, mwst: number, verbrauch?: Verbrauch): Posten => ({
-  in: inGruppe,
-  zeile,
-  kat,
-  mwst,
-  verbrauch,
-});
+const p = (
+  inGruppe: string,
+  zeile: string,
+  kat: KonsumKategorie,
+  mwst: number,
+  extra: Pick<Posten, 'verbrauch' | 'versteckt'> = {},
+): Posten => ({ in: inGruppe, zeile, kat, mwst, ...extra });
+
+/**
+ * Versteckte Mehrwertsteuer je steuerfreier Leistung, Anteil am Preis. Steuerfreie Anbieter können die
+ * Mehrwertsteuer auf ihre Einkäufe und Investitionen nicht abziehen und geben sie über den Preis weiter.
+ * Abgeleitet aus der Input-Output-Tabelle (Eurostat naio_10_cp1700, Deutschland 2019–2022: Gütersteuern auf
+ * Vorleistungen je Produktionswert) plus Mehrwertsteuer in den Abschreibungen (nama_10_a64), Recherche 11/2026.
+ * Miete: Bau und Instandhaltung tragen 19 % ohne Abzug; Spanne 7–12 %, gewählt wird die Mitte.
+ */
+const VERSTECKT = {
+  miete: 0.09,
+  gesundheit: 0.05,
+  bildung: 0.035,
+  finanz: 0.04,
+  post: 0.03,
+  sozial: 0.045,
+  sport: 0.035,
+};
 const NAHRUNG = 'Nahrungsmittel, Getränke, Tabakwaren';
 const WOHNEN = 'Wohnen, Energie';
 const GESUND = 'Gesundheit';
@@ -122,22 +149,22 @@ const WARENKORB: Posten[] = [
   p(NAHRUNG, 'Nahrungsmittel, alkoholfreie Getränke', 'nahrung', mix(0.12)),
   p(NAHRUNG, 'alkoholische Getränke, Tabakwaren', 'nahrung', VOLL),
   p('Bekleidung und Schuhe', 'Bekleidung und Schuhe', 'bekleidung', VOLL),
-  p(WOHNEN, 'Wohnungsmieten', 'wohnen', 0),
-  p(WOHNEN, 'Energie', 'wohnen', VOLL, 'energie'),
+  p(WOHNEN, 'Wohnungsmieten', 'wohnen', 0, { versteckt: VERSTECKT.miete }),
+  p(WOHNEN, 'Energie', 'wohnen', VOLL, { verbrauch: 'energie' }),
   p(WOHNEN, 'Wohnungsinstandhaltung', 'wohnen', VOLL),
   p('Innenausstattung', 'Innenausstattung', 'innen', VOLL),
   p(GESUND, 'Hilfsmittel für die Gesundheit', 'gesundheit', VOLL),
   p(GESUND, 'Arzneimittel', 'gesundheit', VOLL),
-  p(GESUND, 'Gesundheitsdienstleistungen', 'gesundheit', 0),
+  p(GESUND, 'Gesundheitsdienstleistungen', 'gesundheit', 0, { versteckt: VERSTECKT.gesundheit }),
   p(VERKEHR, 'Personenkraftwagen', 'verkehr', VOLL),
   p(VERKEHR, 'Kraft- und Fahrräder', 'verkehr', VOLL),
   p(VERKEHR, 'Ersatzteile und Zubehör', 'verkehr', VOLL),
-  p(VERKEHR, 'Kraft- und Schmierstoffe', 'verkehr', VOLL, 'kraftstoff'),
+  p(VERKEHR, 'Kraft- und Schmierstoffe', 'verkehr', VOLL, { verbrauch: 'kraftstoff' }),
   p(VERKEHR, 'Wartung, Reparaturen', 'verkehr', VOLL),
   p(VERKEHR, 'sonstige Dienstleistungen', 'verkehr', VOLL),
   p(VERKEHR, 'Personenbeförderungsdienstleistungen', 'verkehr', ERM),
   // Briefe steuerfrei, Pakete zum Regelsatz
-  p(VERKEHR, 'Transportdienstleistungen für Waren', 'post', VOLL / 2),
+  p(VERKEHR, 'Transportdienstleistungen für Waren', 'post', VOLL / 2, { versteckt: VERSTECKT.post / 2 }),
   p(IUK, 'Telefone und andere Geräte', 'post', VOLL),
   p(IUK, 'Computer, Laptops', 'freizeit', VOLL),
   p(IUK, 'Peripheriegeräte', 'freizeit', VOLL),
@@ -159,24 +186,26 @@ const WARENKORB: Posten[] = [
   // Futter ermäßigt, Tierarzt zum Regelsatz
   p(FREIZEIT, 'Haustiere', 'freizeit', mix(0.5)),
   // Sportvereine und öffentliche Bäder teils steuerfrei
-  p(FREIZEIT, 'Freizeitdienstleistungen', 'freizeit', 0.8 * VOLL),
+  p(FREIZEIT, 'Freizeitdienstleistungen', 'freizeit', 0.8 * VOLL, { versteckt: 0.2 * VERSTECKT.sport }),
   p(FREIZEIT, 'Kulturdienstleistungen', 'freizeit', ERM),
   p(FREIZEIT, 'Bücher', 'freizeit', ERM),
   p(FREIZEIT, 'Zeitungen, Zeitschriften', 'freizeit', ERM),
   p(FREIZEIT, 'Schreibwaren', 'freizeit', VOLL),
   // Margenbesteuerung (§ 25 UStG): Steuer nur auf die Marge des Veranstalters, Annahme rund 3 % des Preises
   p(FREIZEIT, 'Pauschalreisen', 'freizeit', 0.03),
-  p('Bildungsdienstleistungen', 'Bildungsdienstleistungen', 'bildung', 0),
+  p('Bildungsdienstleistungen', 'Bildungsdienstleistungen', 'bildung', 0, { versteckt: VERSTECKT.bildung }),
   // Speisen ermäßigt (seit 2026), Annahme 30 % Getränke zum Regelsatz
   p(GAST, 'Gastronomiedienstleistungen', 'gast', mix(0.3)),
   p(GAST, 'Beherbergungsdienstleistungen', 'gast', ERM),
-  p('Versicherungs- und Finanzdienstleistungen', 'Versicherungs- und Finanzdienstleistungen', 'andere', 0),
+  p('Versicherungs- und Finanzdienstleistungen', 'Versicherungs- und Finanzdienstleistungen', 'andere', 0, {
+    versteckt: VERSTECKT.finanz,
+  }),
   p(ANDERE, 'Schmuck, Uhren', 'andere', VOLL),
   p(ANDERE, 'sonstige persönliche Gebrauchsgegenstände', 'andere', VOLL),
   p(ANDERE, 'Dienstleistungen für die Körperpflege', 'andere', VOLL),
   p(ANDERE, 'Körperpflegeartikel', 'andere', VOLL),
   // Sozialdienste und Betreuung steuerfrei, übrige zum Regelsatz
-  p(ANDERE, 'sonstige Dienstleistungen', 'andere', VOLL / 2),
+  p(ANDERE, 'sonstige Dienstleistungen', 'andere', VOLL / 2, { versteckt: VERSTECKT.sozial / 2 }),
 ];
 
 const text = (z: Zelle) =>
@@ -218,7 +247,7 @@ async function warenkorb() {
 }
 
 function saetze(korb: Map<Posten, number>) {
-  const leer = () => ({ euro: 0, mwst: 0, energie: 0, strom: 0 });
+  const leer = () => ({ euro: 0, mwst: 0, versteckt: 0, energie: 0, strom: 0 });
   const acc = Object.fromEntries(Object.keys(EVS).map((k) => [k, leer()])) as Record<
     KonsumKategorie,
     ReturnType<typeof leer>
@@ -227,6 +256,7 @@ function saetze(korb: Map<Posten, number>) {
     const a = acc[w.kat];
     a.euro += euro;
     a.mwst += euro * w.mwst;
+    a.versteckt += euro * (w.versteckt ?? 0);
     if (w.verbrauch === 'kraftstoff') a.energie += euro * KRAFTSTOFF_QUOTE;
     if (w.verbrauch === 'energie') {
       a.strom += euro * STROM_ANTEIL * (STROM.steuer / STROM.preis);
@@ -237,7 +267,12 @@ function saetze(korb: Map<Posten, number>) {
   return Object.fromEntries(
     Object.entries(acc).map(([k, a]) => [
       k,
-      { mwst: r4(a.mwst / a.euro || 0), energie: r4(a.energie / a.euro || 0), strom: r4(a.strom / a.euro || 0) },
+      {
+        mwst: r4(a.mwst / a.euro || 0),
+        versteckt: r4(a.versteckt / a.euro || 0),
+        energie: r4(a.energie / a.euro || 0),
+        strom: r4(a.strom / a.euro || 0),
+      },
     ]),
   ) as KonsumDaten['saetze'];
 }
@@ -278,6 +313,7 @@ async function main() {
       kraftstoffQuote: Math.round(KRAFTSTOFF_QUOTE * 1e4) / 1e4,
       stromAnteil: STROM_ANTEIL,
       rabattMonate: RABATT_MONATE,
+      versteckt: VERSTECKT,
     },
     quellen: QUELLEN_KONSUM,
   };
