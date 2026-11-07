@@ -7,7 +7,8 @@
 //  - Steuersätze 2026 (UStG, EnergieStG, StromStG, VersStG), Steuerschätzung Oktober 2026 für die Verteilung
 import { join } from 'node:path';
 import type { KonsumDaten, KonsumKategorie } from '../src/data/types.ts';
-import { blatt, quelle, ROOT, schreibeJson, type Zelle } from './xlsx.ts';
+import { quelle, ROOT, schreibeJson } from './helfer.ts';
+import { blatt, type Zelle } from './xlsx.ts';
 
 const VOLL = 19 / 119; // Anteil der Mehrwertsteuer am Bruttopreis, Regelsatz
 const ERM = 7 / 107; // ermäßigter Satz

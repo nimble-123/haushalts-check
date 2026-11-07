@@ -10,7 +10,8 @@
  */
 import { mkdirSync, readdirSync, readFileSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
-import { blatt, quelle, ROOT, schreibeJson } from './xlsx.ts';
+import { quelle, ROOT, STADTSTAATEN, schreibeJson, slugify } from './helfer.ts';
+import { blatt } from './xlsx.ts';
 
 const URL_KREISE =
   'https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/04-kreise.xlsx?__blob=publicationFile';
@@ -18,22 +19,6 @@ const URL_GEMEINDEN =
   'https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugJ/31122025_Auszug_GV.xlsx?__blob=publicationFile';
 const ZIEL = join(ROOT, 'src', 'data', 'staedte');
 const TYPEN = new Set(['Kreisfreie Stadt', 'Stadtkreis']);
-const STADTSTAATEN = new Set(['02', '04', '11']);
-
-const slugify = (s: string) =>
-  s
-    .replace(/ä/g, 'ae')
-    .replace(/ö/g, 'oe')
-    .replace(/ü/g, 'ue')
-    .replace(/Ä/g, 'Ae')
-    .replace(/Ö/g, 'Oe')
-    .replace(/Ü/g, 'Ue')
-    .replace(/ß/g, 'ss')
-    .normalize('NFKD')
-    .replace(/[\u0080-\uffff]/g, '') // Akzente und übrige Nicht-ASCII-Zeichen entfernen
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 /** „Kiel, Landeshauptstadt“ → „Kiel“; „Oldenburg (Oldenburg), Stadt“ → „Oldenburg (Oldenburg)“ */
 const anzeigename = (amtlich: string) => amtlich.split(',')[0].trim();
