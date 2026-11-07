@@ -6,6 +6,8 @@
   "amtlich": "Suhl, Stadt",
   "einwohner": 34685,
   "stadtstaat": false,
+  "lat": 50.6092,
+  "lon": 10.6919,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

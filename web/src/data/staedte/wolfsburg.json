@@ -6,6 +6,8 @@
   "amtlich": "Wolfsburg, Stadt",
   "einwohner": 129560,
   "stadtstaat": false,
+  "lat": 52.4219,
+  "lon": 10.785,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

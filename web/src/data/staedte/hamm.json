@@ -6,6 +6,8 @@
   "amtlich": "Hamm, Stadt",
   "einwohner": 179968,
   "stadtstaat": false,
+  "lat": 51.6783,
+  "lon": 7.8169,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

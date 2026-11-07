@@ -6,6 +6,8 @@
   "amtlich": "Erfurt, Stadt",
   "einwohner": 218793,
   "stadtstaat": false,
+  "lat": 50.9771,
+  "lon": 11.0272,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

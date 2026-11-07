@@ -9,92 +9,92 @@
   "posten": [
     {
       "name": "Pensionen und Beihilfen",
-      "v": 769.0,
+      "v": 769,
       "g": "verw"
     },
     {
       "name": "Schulen",
-      "v": 672.0,
+      "v": 672,
       "g": "for"
     },
     {
       "name": "Soziales, Familie, Jugend",
-      "v": 657.0,
+      "v": 657,
       "g": "soz"
     },
     {
       "name": "Finanzausgleich an Kommunen",
-      "v": 533.0,
+      "v": 533,
       "g": "verw"
     },
     {
       "name": "Hochschulen",
-      "v": 398.0,
+      "v": 398,
       "g": "for"
     },
     {
       "name": "Gesundheit und Sport",
-      "v": 339.0,
+      "v": 339,
       "g": "soz"
     },
     {
       "name": "Verkehr",
-      "v": 297.0,
+      "v": 297,
       "g": "inf"
     },
     {
       "name": "Zinsen",
-      "v": 280.0,
+      "v": 280,
       "g": "zins"
     },
     {
       "name": "Politische Führung und Verwaltung",
-      "v": 251.0,
+      "v": 251,
       "g": "verw"
     },
     {
       "name": "Polizei, Sicherheit und Justiz",
-      "v": 215.0,
+      "v": 215,
       "g": "sich"
     },
     {
       "name": "Übriges, nicht einzeln ausgewiesen",
-      "v": 211.0,
+      "v": 211,
       "g": "verw"
     },
     {
       "name": "Kindertagesbetreuung",
-      "v": 166.0,
+      "v": 166,
       "g": "soz"
     },
     {
       "name": "Forschung und sonstige Bildung",
-      "v": 131.0,
+      "v": 131,
       "g": "for"
     },
     {
       "name": "Energie, Wasser, Wirtschaft",
-      "v": 126.0,
+      "v": 126,
       "g": "inf"
     },
     {
       "name": "Kultur und Religion",
-      "v": 118.0,
+      "v": 118,
       "g": "for"
     },
     {
       "name": "Landwirtschaft und Forsten",
-      "v": 40.0,
+      "v": 40,
       "g": "inf"
     },
     {
       "name": "Umwelt- und Naturschutz",
-      "v": 32.0,
+      "v": 32,
       "g": "inf"
     },
     {
       "name": "Wohnen, Städtebau, kommunale Dienste",
-      "v": 19.0,
+      "v": 19,
       "g": "inf"
     }
   ],

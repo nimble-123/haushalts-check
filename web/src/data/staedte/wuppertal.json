@@ -6,6 +6,8 @@
   "amtlich": "Wuppertal, Stadt",
   "einwohner": 358193,
   "stadtstaat": false,
+  "lat": 51.2713,
+  "lon": 7.1959,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

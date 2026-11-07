@@ -6,6 +6,8 @@
   "amtlich": "Ludwigshafen am Rhein, kreisfreie Stadt",
   "einwohner": 177222,
   "stadtstaat": false,
+  "lat": 49.4832,
+  "lon": 8.4479,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

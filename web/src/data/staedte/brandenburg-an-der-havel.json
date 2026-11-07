@@ -6,6 +6,8 @@
   "amtlich": "Brandenburg an der Havel, Stadt",
   "einwohner": 74113,
   "stadtstaat": false,
+  "lat": 52.4087,
+  "lon": 12.5634,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

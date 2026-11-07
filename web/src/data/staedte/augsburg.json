@@ -6,6 +6,8 @@
   "amtlich": "Augsburg",
   "einwohner": 301105,
   "stadtstaat": false,
+  "lat": 48.3684,
+  "lon": 10.8976,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

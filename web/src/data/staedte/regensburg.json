@@ -6,6 +6,8 @@
   "amtlich": "Regensburg",
   "einwohner": 151389,
   "stadtstaat": false,
+  "lat": 49.0152,
+  "lon": 12.1017,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -6,6 +6,8 @@
   "amtlich": "Potsdam, Stadt",
   "einwohner": 184754,
   "stadtstaat": false,
+  "lat": 52.4004,
+  "lon": 13.0536,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

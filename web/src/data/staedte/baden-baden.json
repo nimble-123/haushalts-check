@@ -6,6 +6,8 @@
   "amtlich": "Baden-Baden, Stadtkreis",
   "einwohner": 56881,
   "stadtstaat": false,
+  "lat": 48.7618,
+  "lon": 8.24,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

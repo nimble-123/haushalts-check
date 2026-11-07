@@ -6,6 +6,8 @@
   "amtlich": "Mannheim, Stadtkreis",
   "einwohner": 318035,
   "stadtstaat": false,
+  "lat": 49.4878,
+  "lon": 8.4663,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

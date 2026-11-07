@@ -6,6 +6,8 @@
   "amtlich": "Landau in der Pfalz, kreisfreie Stadt",
   "einwohner": 48209,
   "stadtstaat": false,
+  "lat": 49.1966,
+  "lon": 8.1124,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

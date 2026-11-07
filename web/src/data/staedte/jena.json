@@ -6,6 +6,8 @@
   "amtlich": "Jena, Stadt",
   "einwohner": 109725,
   "stadtstaat": false,
+  "lat": 50.9301,
+  "lon": 11.5918,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

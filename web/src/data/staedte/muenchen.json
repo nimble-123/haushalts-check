@@ -6,6 +6,8 @@
   "amtlich": "München, Landeshauptstadt",
   "einwohner": 1505005,
   "stadtstaat": false,
+  "lat": 48.1377,
+  "lon": 11.576,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

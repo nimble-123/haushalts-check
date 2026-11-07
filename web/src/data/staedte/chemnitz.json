@@ -6,6 +6,8 @@
   "amtlich": "Chemnitz, Stadt",
   "einwohner": 245618,
   "stadtstaat": false,
+  "lat": 50.8336,
+  "lon": 12.9216,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

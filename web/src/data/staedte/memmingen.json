@@ -6,6 +6,8 @@
   "amtlich": "Memmingen",
   "einwohner": 44192,
   "stadtstaat": false,
+  "lat": 47.985,
+  "lon": 10.1816,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

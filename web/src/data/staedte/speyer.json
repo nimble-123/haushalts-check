@@ -6,6 +6,8 @@
   "amtlich": "Speyer, kreisfreie Stadt",
   "einwohner": 49564,
   "stadtstaat": false,
+  "lat": 49.3162,
+  "lon": 8.4366,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

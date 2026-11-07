@@ -6,6 +6,8 @@
   "amtlich": "Pirmasens, kreisfreie Stadt",
   "einwohner": 39761,
   "stadtstaat": false,
+  "lat": 49.1994,
+  "lon": 7.606,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

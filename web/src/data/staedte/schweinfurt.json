@@ -6,6 +6,8 @@
   "amtlich": "Schweinfurt",
   "einwohner": 54481,
   "stadtstaat": false,
+  "lat": 50.0455,
+  "lon": 10.2303,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

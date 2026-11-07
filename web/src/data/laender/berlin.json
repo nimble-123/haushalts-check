@@ -9,92 +9,92 @@
   "posten": [
     {
       "name": "Soziales, Familie, Jugend",
-      "v": 7483.0,
+      "v": 7483,
       "g": "soz"
     },
     {
       "name": "Schulen",
-      "v": 5677.0,
+      "v": 5677,
       "g": "for"
     },
     {
       "name": "Pensionen und Beihilfen",
-      "v": 2988.0,
+      "v": 2988,
       "g": "verw"
     },
     {
       "name": "Energie, Wasser, Wirtschaft",
-      "v": 2697.0,
+      "v": 2697,
       "g": "inf"
     },
     {
       "name": "Verkehr",
-      "v": 2685.0,
+      "v": 2685,
       "g": "inf"
     },
     {
       "name": "Polizei, Sicherheit und Justiz",
-      "v": 2600.0,
+      "v": 2600,
       "g": "sich"
     },
     {
       "name": "Kindertagesbetreuung",
-      "v": 2585.0,
+      "v": 2585,
       "g": "soz"
     },
     {
       "name": "Hochschulen",
-      "v": 2542.0,
+      "v": 2542,
       "g": "for"
     },
     {
       "name": "Politische Führung und Verwaltung",
-      "v": 2124.0,
+      "v": 2124,
       "g": "verw"
     },
     {
       "name": "Übriges, nicht einzeln ausgewiesen",
-      "v": 1599.0,
+      "v": 1599,
       "g": "verw"
     },
     {
       "name": "Gesundheit und Sport",
-      "v": 1531.0,
+      "v": 1531,
       "g": "soz"
     },
     {
       "name": "Kultur und Religion",
-      "v": 1125.0,
+      "v": 1125,
       "g": "for"
     },
     {
       "name": "Zinsen",
-      "v": 1006.0,
+      "v": 1006,
       "g": "zins"
     },
     {
       "name": "Wohnen, Städtebau, kommunale Dienste",
-      "v": 802.0,
+      "v": 802,
       "g": "inf"
     },
     {
       "name": "Forschung und sonstige Bildung",
-      "v": 783.0,
+      "v": 783,
       "g": "for"
     },
     {
       "name": "Vermögen und Sondervermögen",
-      "v": 646.0,
+      "v": 646,
       "g": "verw"
     },
     {
       "name": "Umwelt- und Naturschutz",
-      "v": 164.0,
+      "v": 164,
       "g": "inf"
     },
     {
       "name": "Landwirtschaft und Forsten",
-      "v": 28.0,
+      "v": 28,
       "g": "inf"
     }
   ],

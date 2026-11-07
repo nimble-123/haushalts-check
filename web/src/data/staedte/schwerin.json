@@ -6,6 +6,8 @@
   "amtlich": "Schwerin",
   "einwohner": 98308,
   "stadtstaat": false,
+  "lat": 53.6285,
+  "lon": 11.4144,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

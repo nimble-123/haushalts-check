@@ -6,6 +6,8 @@
   "amtlich": "Cottbus, Stadt",
   "einwohner": 95123,
   "stadtstaat": false,
+  "lat": 51.7593,
+  "lon": 14.3351,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

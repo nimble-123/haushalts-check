@@ -6,6 +6,8 @@
   "amtlich": "Straubing",
   "einwohner": 49002,
   "stadtstaat": false,
+  "lat": 48.8818,
+  "lon": 12.5695,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

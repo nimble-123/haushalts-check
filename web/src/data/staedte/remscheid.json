@@ -6,6 +6,8 @@
   "amtlich": "Remscheid, Stadt",
   "einwohner": 113828,
   "stadtstaat": false,
+  "lat": 51.1799,
+  "lon": 7.1944,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

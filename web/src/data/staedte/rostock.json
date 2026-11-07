@@ -6,6 +6,8 @@
   "amtlich": "Rostock",
   "einwohner": 205307,
   "stadtstaat": false,
+  "lat": 54.0885,
+  "lon": 12.136,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

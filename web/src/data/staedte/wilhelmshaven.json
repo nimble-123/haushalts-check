@@ -6,6 +6,8 @@
   "amtlich": "Wilhelmshaven, Stadt",
   "einwohner": 75745,
   "stadtstaat": false,
+  "lat": 53.5203,
+  "lon": 8.1112,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

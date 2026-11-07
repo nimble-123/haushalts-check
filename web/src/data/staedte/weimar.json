@@ -6,6 +6,8 @@
   "amtlich": "Weimar, Stadt",
   "einwohner": 65954,
   "stadtstaat": false,
+  "lat": 50.9808,
+  "lon": 11.3297,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

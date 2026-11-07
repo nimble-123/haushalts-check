@@ -6,6 +6,8 @@
   "amtlich": "Mülheim an der Ruhr, Stadt",
   "einwohner": 173050,
   "stadtstaat": false,
+  "lat": 51.4281,
+  "lon": 6.885,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

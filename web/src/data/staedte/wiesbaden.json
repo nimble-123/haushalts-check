@@ -6,6 +6,8 @@
   "amtlich": "Wiesbaden, Landeshauptstadt",
   "einwohner": 288850,
   "stadtstaat": false,
+  "lat": 50.0817,
+  "lon": 8.2391,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

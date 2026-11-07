@@ -6,6 +6,8 @@
   "amtlich": "Kaufbeuren",
   "einwohner": 46193,
   "stadtstaat": false,
+  "lat": 47.8797,
+  "lon": 10.6206,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

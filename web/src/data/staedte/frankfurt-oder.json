@@ -6,6 +6,8 @@
   "amtlich": "Frankfurt (Oder), Stadt",
   "einwohner": 57107,
   "stadtstaat": false,
+  "lat": 52.3447,
+  "lon": 14.5512,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

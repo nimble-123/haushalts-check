@@ -6,6 +6,8 @@
   "amtlich": "Ingolstadt",
   "einwohner": 141185,
   "stadtstaat": false,
+  "lat": 48.7654,
+  "lon": 11.4234,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

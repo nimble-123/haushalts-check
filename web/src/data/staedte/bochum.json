@@ -6,6 +6,8 @@
   "amtlich": "Bochum, Stadt",
   "einwohner": 358676,
   "stadtstaat": false,
+  "lat": 51.4827,
+  "lon": 7.2172,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

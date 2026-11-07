@@ -6,6 +6,8 @@
   "amtlich": "Würzburg",
   "einwohner": 133258,
   "stadtstaat": false,
+  "lat": 49.7939,
+  "lon": 9.9373,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

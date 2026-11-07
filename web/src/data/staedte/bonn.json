@@ -6,6 +6,8 @@
   "amtlich": "Bonn, Stadt",
   "einwohner": 323336,
   "stadtstaat": false,
+  "lat": 50.7342,
+  "lon": 7.0992,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

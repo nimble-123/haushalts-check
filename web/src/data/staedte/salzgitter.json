@@ -6,6 +6,8 @@
   "amtlich": "Salzgitter, Stadt",
   "einwohner": 104970,
   "stadtstaat": false,
+  "lat": 52.1536,
+  "lon": 10.3292,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

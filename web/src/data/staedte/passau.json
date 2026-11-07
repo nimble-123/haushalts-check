@@ -6,6 +6,8 @@
   "amtlich": "Passau",
   "einwohner": 53039,
   "stadtstaat": false,
+  "lat": 48.5729,
+  "lon": 13.4584,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

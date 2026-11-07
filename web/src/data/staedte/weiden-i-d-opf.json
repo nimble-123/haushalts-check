@@ -6,6 +6,8 @@
   "amtlich": "Weiden i.d.OPf.",
   "einwohner": 42444,
   "stadtstaat": false,
+  "lat": 49.6761,
+  "lon": 12.1602,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

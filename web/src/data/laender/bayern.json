@@ -9,97 +9,97 @@
   "posten": [
     {
       "name": "Schulen",
-      "v": 10329.0,
+      "v": 10329,
       "g": "for"
     },
     {
       "name": "Pensionen und Beihilfen",
-      "v": 8575.0,
+      "v": 8575,
       "g": "verw"
     },
     {
       "name": "Soziales, Familie, Jugend",
-      "v": 7561.0,
+      "v": 7561,
       "g": "soz"
     },
     {
       "name": "Finanzausgleich an Kommunen",
-      "v": 7220.0,
+      "v": 7220,
       "g": "verw"
     },
     {
       "name": "Hochschulen",
-      "v": 6563.0,
+      "v": 6563,
       "g": "for"
     },
     {
       "name": "Verkehr",
-      "v": 4880.0,
+      "v": 4880,
       "g": "inf"
     },
     {
       "name": "Gesundheit und Sport",
-      "v": 4249.0,
+      "v": 4249,
       "g": "soz"
     },
     {
       "name": "Energie, Wasser, Wirtschaft",
-      "v": 4124.0,
+      "v": 4124,
       "g": "inf"
     },
     {
       "name": "Kindertagesbetreuung",
-      "v": 3270.0,
+      "v": 3270,
       "g": "soz"
     },
     {
       "name": "Übriges, nicht einzeln ausgewiesen",
-      "v": 3157.0,
+      "v": 3157,
       "g": "verw"
     },
     {
       "name": "Polizei, Sicherheit und Justiz",
-      "v": 3135.0,
+      "v": 3135,
       "g": "sich"
     },
     {
       "name": "Forschung und sonstige Bildung",
-      "v": 2335.0,
+      "v": 2335,
       "g": "for"
     },
     {
       "name": "Politische Führung und Verwaltung",
-      "v": 2034.0,
+      "v": 2034,
       "g": "verw"
     },
     {
       "name": "Vermögen und Sondervermögen",
-      "v": 1949.0,
+      "v": 1949,
       "g": "verw"
     },
     {
       "name": "Landwirtschaft und Forsten",
-      "v": 1311.0,
+      "v": 1311,
       "g": "inf"
     },
     {
       "name": "Wohnen, Städtebau, kommunale Dienste",
-      "v": 1275.0,
+      "v": 1275,
       "g": "inf"
     },
     {
       "name": "Kultur und Religion",
-      "v": 1023.0,
+      "v": 1023,
       "g": "for"
     },
     {
       "name": "Umwelt- und Naturschutz",
-      "v": 422.0,
+      "v": 422,
       "g": "inf"
     },
     {
       "name": "Zinsen",
-      "v": 409.0,
+      "v": 409,
       "g": "zins"
     }
   ],

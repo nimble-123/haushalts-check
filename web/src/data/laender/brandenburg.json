@@ -9,92 +9,92 @@
   "posten": [
     {
       "name": "Finanzausgleich an Kommunen",
-      "v": 2983.0,
+      "v": 2983,
       "g": "verw"
     },
     {
       "name": "Soziales, Familie, Jugend",
-      "v": 2535.0,
+      "v": 2535,
       "g": "soz"
     },
     {
       "name": "Schulen",
-      "v": 1722.0,
+      "v": 1722,
       "g": "for"
     },
     {
       "name": "Verkehr",
-      "v": 1495.0,
+      "v": 1495,
       "g": "inf"
     },
     {
       "name": "Politische Führung und Verwaltung",
-      "v": 927.0,
+      "v": 927,
       "g": "verw"
     },
     {
       "name": "Energie, Wasser, Wirtschaft",
-      "v": 697.0,
+      "v": 697,
       "g": "inf"
     },
     {
       "name": "Hochschulen",
-      "v": 668.0,
+      "v": 668,
       "g": "for"
     },
     {
       "name": "Kindertagesbetreuung",
-      "v": 653.0,
+      "v": 653,
       "g": "soz"
     },
     {
       "name": "Polizei, Sicherheit und Justiz",
-      "v": 636.0,
+      "v": 636,
       "g": "sich"
     },
     {
       "name": "Gesundheit und Sport",
-      "v": 631.0,
+      "v": 631,
       "g": "soz"
     },
     {
       "name": "Übriges, nicht einzeln ausgewiesen",
-      "v": 625.0,
+      "v": 625,
       "g": "verw"
     },
     {
       "name": "Pensionen und Beihilfen",
-      "v": 618.0,
+      "v": 618,
       "g": "verw"
     },
     {
       "name": "Landwirtschaft und Forsten",
-      "v": 579.0,
+      "v": 579,
       "g": "inf"
     },
     {
       "name": "Forschung und sonstige Bildung",
-      "v": 507.0,
+      "v": 507,
       "g": "for"
     },
     {
       "name": "Kultur und Religion",
-      "v": 216.0,
+      "v": 216,
       "g": "for"
     },
     {
       "name": "Vermögen und Sondervermögen",
-      "v": 208.0,
+      "v": 208,
       "g": "verw"
     },
     {
       "name": "Wohnen, Städtebau, kommunale Dienste",
-      "v": 183.0,
+      "v": 183,
       "g": "inf"
     },
     {
       "name": "Umwelt- und Naturschutz",
-      "v": 114.0,
+      "v": 114,
       "g": "inf"
     }
   ],

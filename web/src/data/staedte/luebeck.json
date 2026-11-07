@@ -6,6 +6,8 @@
   "amtlich": "Lübeck, Hansestadt",
   "einwohner": 216889,
   "stadtstaat": false,
+  "lat": 53.8663,
+  "lon": 10.6839,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -6,6 +6,8 @@
   "amtlich": "Oberhausen, Stadt",
   "einwohner": 213646,
   "stadtstaat": false,
+  "lat": 51.4703,
+  "lon": 6.8523,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

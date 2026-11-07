@@ -6,6 +6,8 @@
   "amtlich": "Kempten (Allgäu)",
   "einwohner": 67645,
   "stadtstaat": false,
+  "lat": 47.724,
+  "lon": 10.3178,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

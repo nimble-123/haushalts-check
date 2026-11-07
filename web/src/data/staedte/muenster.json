@@ -6,6 +6,8 @@
   "amtlich": "Münster, Stadt",
   "einwohner": 308258,
   "stadtstaat": false,
+  "lat": 51.9619,
+  "lon": 7.6268,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

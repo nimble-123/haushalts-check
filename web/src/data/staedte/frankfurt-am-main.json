@@ -6,6 +6,8 @@
   "amtlich": "Frankfurt am Main, Stadt",
   "einwohner": 756021,
   "stadtstaat": false,
+  "lat": 50.1109,
+  "lon": 8.6824,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

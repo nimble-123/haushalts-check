@@ -6,6 +6,8 @@
   "amtlich": "Mönchengladbach, Stadt",
   "einwohner": 267213,
   "stadtstaat": false,
+  "lat": 51.1945,
+  "lon": 6.4316,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

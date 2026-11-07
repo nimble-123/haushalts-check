@@ -6,6 +6,8 @@
   "amtlich": "Rosenheim",
   "einwohner": 65274,
   "stadtstaat": false,
+  "lat": 47.8564,
+  "lon": 12.1289,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

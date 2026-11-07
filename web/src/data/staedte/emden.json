@@ -6,6 +6,8 @@
   "amtlich": "Emden, Stadt",
   "einwohner": 49202,
   "stadtstaat": false,
+  "lat": 53.3706,
+  "lon": 7.2059,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -6,6 +6,8 @@
   "amtlich": "Karlsruhe, Stadtkreis",
   "einwohner": 309050,
   "stadtstaat": false,
+  "lat": 49.0096,
+  "lon": 8.4053,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -6,6 +6,8 @@
   "amtlich": "Herne, Stadt",
   "einwohner": 155851,
   "stadtstaat": false,
+  "lat": 51.5404,
+  "lon": 7.2228,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

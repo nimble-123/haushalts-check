@@ -6,6 +6,8 @@
   "amtlich": "Darmstadt, Wissenschaftsstadt",
   "einwohner": 167029,
   "stadtstaat": false,
+  "lat": 49.8722,
+  "lon": 8.6538,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

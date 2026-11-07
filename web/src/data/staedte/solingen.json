@@ -6,6 +6,8 @@
   "amtlich": "Solingen, Klingenstadt",
   "einwohner": 165626,
   "stadtstaat": false,
+  "lat": 51.1717,
+  "lon": 7.0857,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -2,7 +2,7 @@
 // Rechnungsergebnisse der kommunalen Kernhaushalte) → Schlüssel „ausgabearten“ in src/data/staedte/*.json.
 // Braucht ein kostenloses Konto bei regionalstatistik.de; Zugangsdaten in web/.env.local:
 //   REGIO_USER=…   REGIO_PASS=…      (oder REGIO_USER=<API-Token> und REGIO_PASS leer)
-// Aufruf (aus web/):  npm run daten:ausgabearten
+// Aufruf:  npm run daten:ausgabearten
 //
 // Schritt 1: Rohdaten nach pipeline/quellen/71717-Z-05.csv laden (nur, wenn noch nicht vorhanden).
 // Schritt 2: Je Stadt das neueste Jahr wählen, das für die meisten Städte vollständig ist, und € je Einwohner schreiben.
@@ -12,15 +12,11 @@
 // neuen Flatfile-Format (eine Zeile je Wert: time, <n>_variable_attribute_code, value, value_unit,
 // value_variable_label, value_q). quality=on liefert value_q; „p“ = vorläufige Zahl.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { inflateRawSync } from 'node:zlib';
-
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const QUELLEN = join(ROOT, 'pipeline', 'quellen');
+import { QUELLEN, ROOT } from './xlsx.ts';
 const ROH = join(QUELLEN, '71717-Z-05.csv');
 const STAEDTE = join(ROOT, 'src', 'data', 'staedte');
-const API = 'https://www.regionalstatistik.de/genesisws/rest/2020/data/tablefile';
 // Die Tabelle hat Gemeinde-Tiefe und ist für den direkten Abruf zu groß (Code 98), auch mit Regionalfilter.
 // Deshalb als Hintergrund-Auftrag (job=true): Auftrag anlegen, auf das Ergebnis warten, per resultfile abholen.
 const AB_JAHR = '2022';
@@ -34,7 +30,7 @@ const QUELLE = {
 // ── Schritt 1: Abruf ────────────────────────────────────────────────────────────────────────────
 
 /** Erste Datei aus einem ZIP-Archiv (GENESIS liefert genau eine je Archiv). */
-function entpacke(buf) {
+function entpacke(buf: Buffer): Buffer {
   let eocd = buf.length - 22;
   while (eocd >= 0 && buf.readUInt32LE(eocd) !== 0x06054b50) eocd--;
   if (eocd < 0) throw new Error('ZIP ohne Inhaltsverzeichnis');
@@ -49,10 +45,10 @@ function entpacke(buf) {
   throw new Error(`ZIP-Kompression ${methode} nicht unterstützt`);
 }
 
-const alsText = (buf) =>
+const alsText = (buf: Buffer) =>
   (buf.length >= 4 && buf.readUInt32LE(0) === 0x04034b50 ? entpacke(buf) : buf).toString('utf8').replace(/^﻿/, '');
 
-async function post(pfad, params, user, pass) {
+async function post(pfad: string, params: Record<string, string>, user: string, pass: string) {
   const res = await fetch(`${REST}/${pfad}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', username: user, password: pass },
@@ -60,7 +56,8 @@ async function post(pfad, params, user, pass) {
   });
   return { res, buf: Buffer.from(await res.arrayBuffer()) };
 }
-const statusVon = (text) => { try { return JSON.parse(text).Status ?? {}; } catch { return {}; } };
+interface Status { Code?: string | number; Content?: string }
+const statusVon = (text: string): Status => { try { return JSON.parse(text).Status ?? {}; } catch { return {}; } };
 
 async function lade() {
   const { REGIO_USER: user, REGIO_PASS: pass = '' } = process.env;
@@ -105,9 +102,9 @@ if (!existsSync(ROH)) await lade();
 
 // ── Schritt 2: Einlesen ─────────────────────────────────────────────────────────────────────────
 
-function felder(zeile) {
+function felder(zeile: string): string[] {
   if (!zeile.includes('"')) return zeile.split(';');
-  const out = [];
+  const out: string[] = [];
   let f = '', q = false;
   for (let i = 0; i < zeile.length; i++) {
     const c = zeile[i];
@@ -121,23 +118,25 @@ function felder(zeile) {
 }
 
 /** Deutsche Zahl; „-“ = nichts vorhanden (0); „.“, „...“, „/“, „x“ = kein Wert. */
-function zahl(s) {
+function zahl(s: string): number | null {
   s = s.trim();
   if (s === '-') return 0;
   if (/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) s = s.replaceAll('.', '');
   return /^-?\d+(,\d+)?$/.test(s) ? Number(s.replace(',', '.')) : null;
 }
 
-const faktor = (einheit) => (/mill|mio/i.test(einheit) ? 1e6 : /tsd|tausend|1000/i.test(einheit) ? 1e3 : 1);
+const faktor = (einheit: string) => (/mill|mio/i.test(einheit) ? 1e6 : /tsd|tausend|1000/i.test(einheit) ? 1e3 : 1);
 
+interface Ausgabearten { jahr: number; vorlaeufig: boolean; posten: { name: string; proKopf: number }[]; quellen: typeof QUELLE[] }
+interface StadtJson { ags: string; name: string; stadtstaat: boolean; ausgabearten?: Ausgabearten; [k: string]: unknown }
 const staedte = readdirSync(STAEDTE).filter((f) => f.endsWith('.json')).map((f) => {
   const datei = join(STAEDTE, f);
-  return { datei, s: JSON.parse(readFileSync(datei, 'utf8')) };
+  return { datei, s: JSON.parse(readFileSync(datei, 'utf8')) as StadtJson };
 });
 const nachAgs = new Map(staedte.map((x) => [x.s.ags, x]));
 
 // Regionalschlüssel der Tabelle (Gemeinde-Tiefe): „F“ + 5-stelliger Kreisschlüssel + 9 Nullen = kreisfreie Stadt
-const zuAgs = (code) => /^F(\d{5})0{9}$/.exec(code ?? '')?.[1] ?? code;
+const zuAgs = (code: string | undefined) => /^F(\d{5})0{9}$/.exec(code ?? '')?.[1] ?? code ?? '';
 
 let text = alsText(readFileSync(ROH));
 if (text.trimStart().startsWith('{')) {
@@ -157,7 +156,7 @@ if (text.trimStart().startsWith('{')) {
   }
 }
 const [kopf, ...zeilen] = text.split(/\r?\n/).filter((z) => z.trim()).map(felder);
-const sp = Object.fromEntries(kopf.map((k, i) => [k.trim(), i]));
+const sp: Record<string, number> = Object.fromEntries(kopf.map((k, i) => [k.trim(), i]));
 for (const k of ['time', 'value', 'value_unit', 'value_variable_label']) {
   if (!(k in sp)) throw new Error(`Spalte „${k}“ fehlt – kein ffcsv im neuen Format? Kopf: ${kopf.join(';')}`);
 }
@@ -167,15 +166,16 @@ const hatQ = 'value_q' in sp;
 const VORLAEUFIG_AB = 2025;
 
 // Regionale Dimension = die <n>_variable, deren Ausprägungscodes am häufigsten Stadt-AGS sind.
-const dims = kopf.map((k) => k.match(/^(\d+)_variable_attribute_code$/)?.[1]).filter(Boolean);
-const treffer = (n) => zeilen.filter((z) => nachAgs.has(zuAgs(z[sp[`${n}_variable_attribute_code`]]?.trim()))).length;
+const dims = kopf.map((k) => k.match(/^(\d+)_variable_attribute_code$/)?.[1]).filter((x): x is string => !!x);
+const treffer = (n: string) => zeilen.filter((z) => nachAgs.has(zuAgs(z[sp[`${n}_variable_attribute_code`]]?.trim()))).length;
 const region = dims.reduce((a, b) => (treffer(b) > treffer(a) ? b : a), dims[0]);
 if (!region || !treffer(region)) throw new Error('Keine Spalte mit Regionalschlüsseln der Städte gefunden.');
 const andere = dims.filter((n) => n !== region);
 
 // daten: ags → jahr → Merkmal (Ausprägungen der übrigen Dimensionen + Wertmerkmal) → { wert, einheit, q }
-const daten = new Map();
-const merkmale = new Map(); // Merkmal → Einheiten (für Fehlermeldungen)
+interface Wert { wert: number | null; einheit: string; q: string }
+const daten = new Map<string, Map<number, Map<string, Wert>>>();
+const merkmale = new Map<string, Set<string>>(); // Merkmal → Einheiten (für Fehlermeldungen)
 for (const z of zeilen) {
   const ags = zuAgs(z[sp[`${region}_variable_attribute_code`]]?.trim());
   if (!nachAgs.has(ags)) continue;
@@ -184,16 +184,17 @@ for (const z of zeilen) {
     .map((s) => s?.trim()).filter(Boolean).join(' | ');
   const einheit = z[sp.value_unit]?.trim() ?? '';
   if (!merkmale.has(merkmal)) merkmale.set(merkmal, new Set());
-  merkmale.get(merkmal).add(einheit);
+  merkmale.get(merkmal)!.add(einheit);
   if (!daten.has(ags)) daten.set(ags, new Map());
-  if (!daten.get(ags).has(jahr)) daten.get(ags).set(jahr, new Map());
-  daten.get(ags).get(jahr).set(merkmal, { wert: zahl(z[sp.value]), einheit, q: hatQ ? z[sp.value_q].trim() : '' });
+  const proJahr = daten.get(ags)!;
+  if (!proJahr.has(jahr)) proJahr.set(jahr, new Map());
+  proJahr.get(jahr)!.set(merkmal, { wert: zahl(z[sp.value]), einheit, q: hatQ ? z[sp.value_q].trim() : '' });
 }
 
 // ── Zuordnung der Merkmale ──────────────────────────────────────────────────────────────────────
 
 const JE_EW = /je (einw|ew)/i;
-const REGELN = {
+const REGELN: Record<string, (m: string) => boolean> = {
   bev: (m) => /bevölkerung|einwohner/i.test(m),
   gesamt: (m) => /auszahl/i.test(m) && /insgesamt/i.test(m) && !/verwaltungst|investition/i.test(m),
   lfd: (m) => /(laufende[nr]?|lfd\.?)\s*verwaltungst/i.test(m) && !/personal|versorg|sach|sozial/i.test(m),
@@ -203,7 +204,7 @@ const REGELN = {
   invest: (m) => /investitionst/i.test(m) && !m.includes(' | '), // Summe, nicht der Unterposten „Sachinvestitionen“
 };
 const alle = [...merkmale.keys()].filter((m) => !JE_EW.test(m));
-const zuordnung = {};
+const zuordnung: Record<string, string[]> = {};
 for (const [k, regel] of Object.entries(REGELN)) {
   let m = alle.filter(regel);
   // Personal und Versorgung: ein gemeinsames Merkmal oder zwei getrennte
@@ -217,14 +218,14 @@ for (const [k, regel] of Object.entries(REGELN)) {
   zuordnung[k] = m;
 }
 console.log('Zuordnung:');
-for (const [k, m] of Object.entries(zuordnung)) console.log(`  ${k.padEnd(8)} ← ${m.map((x) => `${x} [${[...merkmale.get(x)].join(', ')}]`).join(' + ')}`);
+for (const [k, m] of Object.entries(zuordnung)) console.log(`  ${k.padEnd(8)} ← ${m.map((x) => `${x} [${[...merkmale.get(x)!].join(', ')}]`).join(' + ')}`);
 
 // ── Berechnung je Stadt und Jahr ────────────────────────────────────────────────────────────────
 
-const fehler = [];
-function rechne(name, jahr, werte) {
+const fehler: string[] = [];
+function rechne(name: string, jahr: number, werte: Map<string, Wert>) {
   let vorlaeufig = !hatQ && jahr >= VORLAEUFIG_AB;
-  const summe = (ms) => {
+  const summe = (ms: string[]): number | null => {
     let s = 0;
     for (const m of ms) {
       const w = werte.get(m);
@@ -234,12 +235,13 @@ function rechne(name, jahr, werte) {
     }
     return s;
   };
-  const v = Object.fromEntries(Object.entries(zuordnung).map(([k, ms]) => [k, summe(ms)]));
-  if (Object.values(v).some((x) => x === null) || !(v.bev > 0)) return null;
-  const pk = (x) => x / v.bev;
+  const roh = Object.fromEntries(Object.entries(zuordnung).map(([k, ms]) => [k, summe(ms)]));
+  if (Object.values(roh).some((x) => x === null) || !((roh.bev ?? 0) > 0)) return null;
+  const v = roh as Record<string, number>;
+  const pk = (x: number) => x / v.bev;
   const uebrige = pk(v.lfd - v.personal - v.sach - v.sozial);
   if (uebrige < -0.5) fehler.push(`${name} ${jahr}: Übrige laufende Auszahlungen negativ (${uebrige.toFixed(2)} €/EW)`);
-  const posten = [
+  const posten: [string, number][] = [
     ['Personal und Versorgung', pk(v.personal)],
     ['Sach- und Dienstleistungen', pk(v.sach)],
     ['Soziale Leistungen', pk(v.sozial)],
@@ -260,10 +262,11 @@ function rechne(name, jahr, werte) {
 }
 
 const kandidaten = staedte.filter((x) => !x.s.stadtstaat && daten.has(x.s.ags));
-const ergebnisse = new Map(); // ags → Map(jahr → Ergebnis)
+type Ergebnis = NonNullable<ReturnType<typeof rechne>>;
+const ergebnisse = new Map<string, Map<number, Ergebnis>>(); // ags → Map(jahr → Ergebnis)
 for (const { s } of kandidaten) {
-  const m = new Map();
-  for (const [jahr, werte] of daten.get(s.ags)) {
+  const m = new Map<number, Ergebnis>();
+  for (const [jahr, werte] of daten.get(s.ags)!) {
     const e = rechne(s.name, jahr, werte);
     if (e) m.set(jahr, e);
   }
@@ -277,19 +280,19 @@ if (fehler.length) {
 
 // Neuestes Jahr, das für mindestens 90 % der Städte im Abruf vollständig ist
 const jahre = [...new Set([...ergebnisse.values()].flatMap((m) => [...m.keys()]))].sort((a, b) => b - a);
-const vollstaendig = (j) => [...ergebnisse.values()].filter((m) => m.has(j)).length;
+const vollstaendig = (j: number) => [...ergebnisse.values()].filter((m) => m.has(j)).length;
 const jahr = jahre.find((j) => vollstaendig(j) >= 0.9 * kandidaten.length);
 if (!jahr) throw new Error(`Kein Jahr für die meisten Städte vollständig: ${jahre.map((j) => `${j}: ${vollstaendig(j)}`).join(', ')}`);
 
 // ── Schreiben ───────────────────────────────────────────────────────────────────────────────────
 
-const geschrieben = [], rueckfall = [], ohne = [];
+const geschrieben: { s: StadtJson; gesamt: number }[] = [], rueckfall: string[] = [], ohne: string[] = [];
 for (const { datei, s } of staedte) {
   if (s.stadtstaat) continue;
   const m = ergebnisse.get(s.ags);
-  const j = m && [...m.keys()].filter((x) => x <= jahr).sort((a, b) => b - a)[0];
+  const j: number | undefined = m && [...m.keys()].filter((x) => x <= jahr).sort((a, b) => b - a)[0];
   if (!j) { ohne.push(s.name); continue; }
-  const { gesamt, ...e } = m.get(j);
+  const { gesamt, ...e } = m!.get(j)!;
   s.ausgabearten = e; // bestehender Schlüssel behält seine Position, neuer kommt ans Ende
   writeFileSync(datei, JSON.stringify(s, null, 2) + '\n');
   geschrieben.push({ s, gesamt });
@@ -298,12 +301,12 @@ for (const { datei, s } of staedte) {
 
 const n = staedte.filter((x) => !x.s.stadtstaat).length;
 console.log(`\nJahre im Abruf: ${jahre.map((j) => `${j} (${vollstaendig(j)} Städte vollständig)`).join(', ')}`);
-console.log(`Gewähltes Jahr: ${jahr}${geschrieben.some((g) => g.s.ausgabearten.jahr === jahr && g.s.ausgabearten.vorlaeufig) ? ' – vorläufig' : ''}`);
-console.log(`Geschrieben: ${geschrieben.length} von ${n} Städten (ohne Stadtstaaten); davon vorläufig: ${geschrieben.filter((g) => g.s.ausgabearten.vorlaeufig).length}`);
+console.log(`Gewähltes Jahr: ${jahr}${geschrieben.some((g) => g.s.ausgabearten?.jahr === jahr && g.s.ausgabearten?.vorlaeufig) ? ' – vorläufig' : ''}`);
+console.log(`Geschrieben: ${geschrieben.length} von ${n} Städten (ohne Stadtstaaten); davon vorläufig: ${geschrieben.filter((g) => g.s.ausgabearten?.vorlaeufig).length}`);
 if (rueckfall.length) console.log(`Älteres Jahr: ${rueckfall.join(', ')}`);
 if (ohne.length) console.log(`Ohne Daten: ${ohne.join(', ')}`);
 console.log('Beispiele (€ je Einwohner):');
 for (const { s, gesamt } of [0, 0.5, 0.99].map((f) => geschrieben[Math.floor(f * (geschrieben.length - 1))]).filter(Boolean)) {
-  const a = s.ausgabearten;
+  const a = s.ausgabearten!;
   console.log(`  ${s.name} ${a.jahr}${a.vorlaeufig ? ' (vorl.)' : ''}: ${a.posten.map((p) => `${p.name} ${p.proKopf}`).join(', ')} | insgesamt ${Math.round(gesamt)}`);
 }

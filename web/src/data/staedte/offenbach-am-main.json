@@ -6,6 +6,8 @@
   "amtlich": "Offenbach am Main, Stadt",
   "einwohner": 132746,
   "stadtstaat": false,
+  "lat": 50.1056,
+  "lon": 8.7644,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

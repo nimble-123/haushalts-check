@@ -6,6 +6,8 @@
   "amtlich": "Kaiserslautern, kreisfreie Stadt",
   "einwohner": 100426,
   "stadtstaat": false,
+  "lat": 49.4455,
+  "lon": 7.7689,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

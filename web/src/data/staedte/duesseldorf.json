@@ -6,6 +6,8 @@
   "amtlich": "Düsseldorf, Stadt",
   "einwohner": 618685,
   "stadtstaat": false,
+  "lat": 51.2242,
+  "lon": 6.7801,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -6,6 +6,8 @@
   "amtlich": "Kassel, documenta-Stadt",
   "einwohner": 197230,
   "stadtstaat": false,
+  "lat": 51.3147,
+  "lon": 9.4952,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

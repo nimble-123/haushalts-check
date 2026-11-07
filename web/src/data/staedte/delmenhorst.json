@@ -6,6 +6,8 @@
   "amtlich": "Delmenhorst, Stadt",
   "einwohner": 81406,
   "stadtstaat": false,
+  "lat": 53.0499,
+  "lon": 8.6301,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,

@@ -6,6 +6,8 @@
   "amtlich": "Leipzig, Stadt",
   "einwohner": 611850,
   "stadtstaat": false,
+  "lat": 51.3383,
+  "lon": 12.3779,
   "ausgabearten": {
     "jahr": 2025,
     "vorlaeufig": true,
