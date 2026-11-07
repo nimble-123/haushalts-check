@@ -560,8 +560,7 @@
 
 /* ---------- Kontext: Einordnung aus einer Studie ---------- */
 .rs-kontext {
-  max-width: var(--measure);
-  margin: var(--space-4) 0 0;
+  margin: var(--space-4) 0 var(--space-6);
   padding-left: var(--space-4);
   border-left: 2px solid var(--line);
   color: var(--ink-2);
