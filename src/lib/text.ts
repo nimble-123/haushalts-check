@@ -8,7 +8,7 @@ export const esc = (s: string | number) =>
   );
 
 /** Satz in Prozent ohne überflüssige Nachkommastellen: 0.425 → „42,5 %“, 0.15 → „15 %“ */
-export const satzText = (v: number) => `${(v * 100).toLocaleString('de-DE', { maximumFractionDigits: 2 })} %`;
+export const satzText = (v: number) => `${(v * 100).toLocaleString('de-DE', { maximumFractionDigits: 2 })}\u00a0%`;
 
 /** Betrag ganzzahlig mit Tausenderpunkt: 101400 → „101.400 €“ */
-export const fmtEur = (v: number) => `${Math.round(v).toLocaleString('de-DE')} €`;
+export const fmtEur = (v: number) => `${Math.round(v).toLocaleString('de-DE')}\u00a0€`;

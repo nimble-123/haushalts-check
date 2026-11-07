@@ -13,7 +13,7 @@ const satz = (slug: string, brutto: number) => {
 describe('ergebnisSatz', () => {
   it('nennt Bund, Land und Stadt mit markierten Beträgen und kennzeichnet die Schätzung', () => {
     const t = satz('oldenburg', 85_000);
-    expect(t).toContain('Von <b class="rs-mark">85.000 €</b> Brutto');
+    expect(t).toContain('Von <b class="rs-mark">85.000\u00a0€</b> Brutto');
     expect(t).toContain('an Niedersachsen und');
     expect(t).toContain('an Oldenburg (Oldenburg), davon geschätzt');
   });

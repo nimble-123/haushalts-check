@@ -49,7 +49,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
             {g.staedte.map((s) => <option value={s.slug} selected={s.slug === stadt.slug}>{s.name}</option>)}
           </optgroup>
         ))}
-      </select>.
+      </select><span class="punkt">.</span>
     </p>
     <div class="satz-zeile">
       <button type="button" class="rs-textknopf" id="naehe"><i class="ort" aria-hidden="true"></i>In meiner Nähe</button>
@@ -245,6 +245,11 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
     .hero { grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr); }
   }
   .eingabe { display: grid; gap: var(--space-6); min-width: 0; }
+  /* Schmal: Stadtauswahl immer in eigener Zeile, damit der Umbruch nicht von wenigen Pixeln Schriftbreite abhängt */
+  @media (max-width: 600px) {
+    .rs-satz .rs-auswahl { display: block; width: 100%; margin-top: var(--space-2); }
+    .rs-satz .punkt { display: none; }
+  }
   @media (max-width: 600px) { .t-title { font-size: 38px; } .rs-satz { font-size: 19px; } }
   .mehr { max-width: 36em; }
   .mehr .rs-felder { align-items: end; }

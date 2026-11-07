@@ -22,13 +22,13 @@ const med = VORLAGEN.med;
         <label class="rs-feld lifeonly"><span>Einstiegsgehalt (€/Jahr)</span><input id="c_s0" type="number" inputmode="numeric" value={med.einstiegsgehalt} min="0" step="1000" /></label>
         <label class="rs-feld lifeonly"><span>Gehalt auf dem Höhepunkt (€/Jahr)</span><input id="c_s1" type="number" inputmode="numeric" value={med.hoehepunktGehalt} min="0" step="1000" /></label>
         <label class="rs-feld lifeonly"><span>Höhepunkt erreicht mit</span><input id="c_ap" type="number" inputmode="numeric" value={med.hoehepunktAlter} min="18" max="66" step="1" /></label>
-        <label class="rs-feld lifeonly"><span>Gehaltsdynamik nach dem Höhepunkt</span><select id="c_g"><option value="-0.01">−1 % p. a. real</option><option value="0">0 % real (+2 % nominal)</option><option value="0.005" selected>+0,5 % real (+2,5 % nominal)</option><option value="0.01">+1 % real (+3 % nominal)</option><option value="0.02">+2 % real (+4 % nominal)</option></select></label>
-        <label class="rs-feld"><span>ETF-Rendite (nominal, vor Kosten)</span><select id="etfr"><option value="0.05">5 %, vorsichtig</option><option value="0.06">6 %</option><option value="0.07" selected>7 %, MSCI World langfristig</option><option value="0.08">8 %</option></select></label>
-        <label class="rs-feld"><span>Rentenniveau bei Rentenbeginn</span><select id="niveau"><option value="48">48 %, heutige Haltelinie</option><option value="46.3">46,3 %, Prognose 2039</option><option value="45" selected>45 %, Fortschreibung</option><option value="43">43 %, gesetzliche Untergrenze</option></select></label>
+        <label class="rs-feld lifeonly"><span>Gehaltsdynamik nach dem Höhepunkt</span><select id="c_g"><option value="-0.01">−1 % p. a. real</option><option value="0">0 % real (+2 % nominal)</option><option value="0.005" selected>+0,5 % real (+2,5 % nominal)</option><option value="0.01">+1 % real (+3 % nominal)</option><option value="0.02">+2 % real (+4 % nominal)</option></select></label>
+        <label class="rs-feld"><span>ETF-Rendite (nominal, vor Kosten)</span><select id="etfr"><option value="0.05">5 %, vorsichtig</option><option value="0.06">6 %</option><option value="0.07" selected>7 %, MSCI World langfristig</option><option value="0.08">8 %</option></select></label>
+        <label class="rs-feld"><span>Rentenniveau bei Rentenbeginn</span><select id="niveau"><option value="48">48 %, heutige Haltelinie</option><option value="46.3">46,3 %, Prognose 2039</option><option value="45" selected>45 %, Fortschreibung</option><option value="43">43 %, gesetzliche Untergrenze</option></select></label>
         <label class="rs-feld"><span>ETF-Depot soll reichen bis</span><select id="until"><option value="90">90</option><option value="95">95</option><option value="100">100</option></select></label>
         <label class="rs-feld"><span>Krankenversicherung</span><select id="kv"><option value="gkv">gesetzlich</option><option value="pkv">privat</option></select></label>
         <label class="rs-feld" id="pkvwrap" hidden><span>PKV-Beitrag €/Monat</span><input id="pkv" type="number" inputmode="numeric" value="550" min="0" step="10" /></label>
-        <label class="rs-feld"><span>Kirchensteuer</span><select id="kist"><option value="0">keine</option><option value="0.09">9 %</option><option value="0.08">8 % (BW, Bayern)</option></select></label>
+        <label class="rs-feld"><span>Kirchensteuer</span><select id="kist"><option value="0">keine</option><option value="0.09">9 %</option><option value="0.08">8 % (BW, Bayern)</option></select></label>
         <label class="rs-schalter"><input id="kinderlos" type="checkbox" checked /> kinderlos</label>
         <label class="rs-schalter lifeonly"><input id="c_usenow" type="checkbox" checked /> Alter und Brutto von heute einbeziehen</label>
       </div>
@@ -55,11 +55,11 @@ const med = VORLAGEN.med;
       </div>
     </div>
 
-    <div class="prose note">
+    <div class="note">
       <h2>Annahmen</h2>
-      <p>Im Lebensmodus folgt das Gehalt der Gehaltskurve (Dynamik nach dem Höhepunkt real); „ab heute“ bleibt das Brutto real konstant (Inflation 2 %). Der Rentenbeitrag steigt laut Rentenversicherungsbericht von 18,6 % auf 21,2 %. ETF: TER 0,2 %, ab Rentenbeginn vorsichtiger angelegt (Rendite minus 2 Punkte), Abgeltungsteuer und Soli mit 30 % Teilfreistellung, Vorabpauschale (Basiszins 2,5 %), Sparerpauschbetrag 1.000 €.</p>
-      <p>Rente: Entgeltpunkte × Rentenwert {RENTENWERT.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € × Rentenniveau/48 %, Besteuerungsanteil nach Rentenbeginn (100 % ab 2058), Kranken- und Pflegebeitrag der Rentner, Tarif 2026, keine weiteren Einkünfte. Ein Entgeltpunkt je {DURCHSCHNITTSENTGELT.toLocaleString('de-DE')} € Brutto bis zur Beitragsbemessungsgrenze. Bei PKV ist der Zuschuss zur PKV im Alter nicht berücksichtigt.</p>
-      <p>Verglichen wird nur der Rentenbeitrag. Investiert wird, was ohne Rentenbeitrag (Arbeitnehmer- plus Arbeitgeberanteil als Lohn) nach Lohnsteuer und Soli übrig bliebe. Nicht enthalten: Erwerbsminderungs-, Hinterbliebenen- und Reha-Schutz der Rentenversicherung, Kursrisiko, Gesetzesänderungen. Vorlagen: Akademiker:in (Einstieg 48.000 €, Median laut GEHALT.de), Median-Verdiener:in (54.066 € Vollzeit 2025, Destatis). Rechenbeispiel, keine Anlageberatung.</p>
+      <p>Im Lebensmodus folgt das Gehalt der Gehaltskurve (Dynamik nach dem Höhepunkt real); „ab heute“ bleibt das Brutto real konstant (Inflation 2 %). Der Rentenbeitrag steigt laut Rentenversicherungsbericht von 18,6 % auf 21,2 %. ETF: TER 0,2 %, ab Rentenbeginn vorsichtiger angelegt (Rendite minus 2 Punkte), Abgeltungsteuer und Soli mit 30 % Teilfreistellung, Vorabpauschale (Basiszins 2,5 %), Sparerpauschbetrag 1.000 €.</p>
+      <p>Rente: Entgeltpunkte × Rentenwert {RENTENWERT.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € × Rentenniveau/48 %, Besteuerungsanteil nach Rentenbeginn (100 % ab 2058), Kranken- und Pflegebeitrag der Rentner, Tarif 2026, keine weiteren Einkünfte. Ein Entgeltpunkt je {DURCHSCHNITTSENTGELT.toLocaleString('de-DE')} € Brutto bis zur Beitragsbemessungsgrenze. Bei PKV ist der Zuschuss zur PKV im Alter nicht berücksichtigt.</p>
+      <p>Verglichen wird nur der Rentenbeitrag. Investiert wird, was ohne Rentenbeitrag (Arbeitnehmer- plus Arbeitgeberanteil als Lohn) nach Lohnsteuer und Soli übrig bliebe. Nicht enthalten: Erwerbsminderungs-, Hinterbliebenen- und Reha-Schutz der Rentenversicherung, Kursrisiko, Gesetzesänderungen. Vorlagen: Akademiker:in (Einstieg 48.000 €, Median laut GEHALT.de), Median-Verdiener:in (54.066 € Vollzeit 2025, Destatis). Rechenbeispiel, keine Anlageberatung.</p>
     </div>
   </div>
   <script>
@@ -77,6 +77,8 @@ const med = VORLAGEN.med;
   .vorbelegt { color: var(--ink-3); font-size: 15px; margin-top: var(--space-3); }
   .vorbelegt a { color: inherit; }
   .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0 24px; }
-  .note h2 { font: 650 24px/1.2 var(--font-display); margin: 24px 0 12px; }
-  .note { color: var(--ink-2); font-size: 16px; }
+  .note h2 { font: 650 24px/1.2 var(--font-display); margin: 24px 0 12px; column-span: all; }
+  /* Volle Breite in zwei Spalten: jede Zeile bleibt unter ~66 Zeichen */
+  .note { color: var(--ink-2); font-size: 16px; line-height: 1.6; columns: 2 30em; column-gap: var(--space-12); }
+  .note p { margin: 0 0 1em; break-inside: avoid; }
 </style>
