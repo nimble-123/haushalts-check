@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Impressum | Haushalts-Check" description="Impressum des Haushalts-Checks.">
+  <article class="page prose legal">
+    <h1>Impressum</h1>
+    <p><mark>Platzhalter: bitte vor der Veröffentlichung ausfüllen und prüfen.</mark></p>
+    <h2>Angaben gemäß § 5 DDG</h2>
+    <p>[Vorname Nachname]<br />[Straße Hausnummer]<br />[PLZ Ort]</p>
+    <h2>Kontakt</h2>
+    <p>E-Mail: [E-Mail-Adresse]</p>
+    <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+    <p>[Vorname Nachname], Anschrift wie oben</p>
+    <h2>Hinweis</h2>
+    <p>Alle Berechnungen sind vereinfachte Rechenbeispiele auf Basis veröffentlichter amtlicher Daten. Sie ersetzen keine Steuer-, Renten- oder Anlageberatung. Für Richtigkeit und Vollständigkeit wird keine Gewähr übernommen.</p>
+  </article>
+</Base>
+<style>
+  .legal { padding-top: 40px; }
+  .legal h1 { font-size: 44px; margin-bottom: 20px; }
+  .legal h2 { font-size: 21px; margin: 28px 0 8px; }
+  mark { background: var(--form); color: var(--form-label); padding: 2px 6px; border-radius: 3px; }
+</style>

@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import { BUND_QUELLEN, ABSTIMMUNG_2027 } from '../data/bund';
+import schaetzung from '../data/gemeinden-schaetzung.json';
+
+const weitere = [
+  { label: 'Rechengrößen der Sozialversicherung 2026', url: 'https://www.krankenkassen.de/gesetzliche-krankenkassen/system-gesetzliche-krankenversicherung/sozialversicherung-rechengroessen-beitragsbemessungsgrenze-versicherungspflichtgrenze/rechengroessen-2026/' },
+  { label: '§ 32a EStG', url: 'https://gesetze.legal/bund/estg/32a' },
+  schaetzung.quelle,
+  { label: 'Destatis: Gemeindeverzeichnis, kreisfreie Städte und Landkreise', url: 'https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/_inhalt.html' },
+  { label: 'Regionaldatenbank: Rechnungsergebnisse der kommunalen Kernhaushalte (71717)', url: 'https://www.regionalstatistik.de/' },
+  { label: 'DRV: Rentenwert 2026', url: 'https://www.deutsche-rentenversicherung.de/SharedDocs/FAQ/Gesetzesaenderungen/Rentenanpassung/FAQ-Rentenanpassung-2026/Rentenanpassung-2026.html' },
+  { label: 'Rentenversicherungsbericht 2025', url: 'https://www.haufe.de/sozialwesen/versicherungen-beitraege/rentenversicherungsbeitrag_240_429148.html' },
+  { label: 'Destatis: Medianverdienst 2025', url: 'https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/04/PD26_113_621.html' },
+];
+---
+<Base title="So ist gerechnet | Haushalts-Check" description="Wie der Haushalts-Check Lohnsteuer, Sozialabgaben und die Aufteilung auf Bund, Land und Stadt berechnet, mit allen Quellen.">
+  <article class="page">
+    <h1>So ist gerechnet</h1>
+    <div class="prose">
+      <h2>Steuern und Abgaben</h2>
+      <p><strong>Lohnsteuer</strong>, Näherung für Steuerklasse I: zu versteuerndes Einkommen = Brutto − 1.230 € Werbungskostenpauschale − 36 € Sonderausgabenpauschale − Vorsorgepauschale (Arbeitnehmeranteile Rente, Kranken mit ermäßigtem Satz, Pflege, Arbeitslosen). Tarif nach § 32a EStG 2026 (Grundfreibetrag 12.348 €), Soli mit Freigrenze 20.350 € und Milderungszone. Abweichungen von 1–3 % zur echten Abrechnung sind normal.</p>
+      <p><strong>Sozialversicherung 2026:</strong> Rente 18,6 %, Arbeitslosen 2,6 % (Bemessungsgrenze 101.400 €), Kranken 14,6 % plus Ø 2,9 % Zusatzbeitrag, Pflege 3,6 % plus 0,6 % für Kinderlose (Bemessungsgrenze 69.750 €), jeweils hälftig Arbeitgeber und Arbeitnehmer.</p>
+
+      <h2>Wer bekommt was</h2>
+      <p>Die Lohnsteuer ist eine Gemeinschaftsteuer: 42,5 % Bund, 42,5 % Land, 15 % Gemeinde (Art. 106 GG). Der Soli geht ganz an den Bund, die Kirchensteuer an die Kirche. Sozialabgaben fließen nicht in einen Haushalt, sondern direkt an Renten-, Kranken-, Pflege- und Arbeitslosenversicherung. Der Gemeindeanteil wird in Wirklichkeit über einen Schlüssel nach Wohnort verteilt; 15 % ist der bundesweite Anteil.</p>
+      <p>Jede Ebene verteilt deinen Anteil so, wie sie ihren ganzen Haushalt verteilt. Steuern sind nicht zweckgebunden, es ist also eine anteilige Rechnung, keine echte Zuordnung. Weil ein Teil der Ausgaben über Kredite läuft, finanzieren deine Steuern rechnerisch nur einen Teil jedes Topfs.</p>
+
+      <h2>Bund</h2>
+      <p>Soll-Zahlen des Haushaltsgesetzes 2026 nach Einzelplänen. Nicht enthalten sind Sondervermögen (Infrastruktur, Bundeswehr, Klima- und Transformationsfonds) mit eigenen Wirtschaftsplänen. Der Entwurf 2027 zeigt nur Einzelpläne mit veröffentlichten Zahlen; über ihn stimmt der Bundestag am {ABSTIMMUNG_2027} ab.</p>
+
+      <h2>Länder</h2>
+      <p>Für alle 16 Länder dieselbe Quelle: Rechnungsergebnisse 2022 von Destatis, bereinigte Ausgaben nach Aufgabenbereichen (Tabelle 71711-12), Kern- und Extrahaushalte. Das sind tatsächlich ausgegebene Beträge, keine Planzahlen, dafür einige Jahre alt. Posten, die durch Verrechnungen unterm Strich negativ sind (etwa Zinsen in Brandenburg 2022), sind nicht gezeigt und beim jeweiligen Land genannt.</p>
+
+      <h2>Städte</h2>
+      <p>Für einzelne Städte gibt es keine amtliche Aufteilung der Ausgaben nach Zweck. Die Zweck-Aufteilung einer Stadt ist deshalb eine <strong>Schätzung</strong> (mit ≈ gekennzeichnet): der Durchschnitt aller Gemeinden und Kreise ihres Landes aus derselben Tabelle 71711-12. Das passt für kreisfreie Städte recht gut, weil sie Gemeinde- und Kreisaufgaben zugleich erfüllen. Städte eines Landes haben so dieselbe Aufteilung.</p>
+      <p>Berlin, Hamburg, Bremen und Bremerhaven gehören zu Stadtstaaten mit einem gemeinsamen Haushalt von Land und Stadt; dort gilt die Aufteilung des Landes auch für den Gemeindeanteil.</p>
+
+      <h2>Kalender</h2>
+      <p>Die Abgaben sind in Kalendertage umgerechnet (Anteil am Brutto × 365), in der Reihenfolge der Liste, ähnlich dem „Steuerzahlergedenktag“.</p>
+
+      <h2>Nicht enthalten</h2>
+      <p>Mehrwertsteuer und andere Verbrauchsteuern, die du zusätzlich zahlst, sowie Sondervermögen.</p>
+
+      <h2>Quellen</h2>
+      <ul class="quellen">
+        {[...BUND_QUELLEN, ...weitere].map((q) => <li><a href={q.url}>{q.label}</a></li>)}
+      </ul>
+    </div>
+  </article>
+</Base>
+<style>
+  article { padding-top: 40px; }
+  h1 { font-size: clamp(34px, 6vw, 56px); margin-bottom: 24px; }
+  h2 { font-size: 23px; margin: 36px 0 10px; font-family: var(--cond); }
+  .quellen { padding-left: 1.1em; }
+  .quellen li { margin-bottom: 6px; }
+</style>

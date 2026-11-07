@@ -1,0 +1,108 @@
+{
+  "code": "04",
+  "slug": "bremen",
+  "name": "Bremen",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.09,
+  "posten": [
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 1670.0,
+      "g": "soz"
+    },
+    {
+      "name": "Schulen",
+      "v": 950.0,
+      "g": "for"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 797.0,
+      "g": "verw"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 596.0,
+      "g": "verw"
+    },
+    {
+      "name": "Zinsen",
+      "v": 590.0,
+      "g": "zins"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 587.0,
+      "g": "for"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 573.0,
+      "g": "inf"
+    },
+    {
+      "name": "Vermögen und Sondervermögen",
+      "v": 515.0,
+      "g": "verw"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 432.0,
+      "g": "soz"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 423.0,
+      "g": "soz"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 410.0,
+      "g": "sich"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 226.0,
+      "g": "for"
+    },
+    {
+      "name": "Verkehr",
+      "v": 219.0,
+      "g": "inf"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 207.0,
+      "g": "verw"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 138.0,
+      "g": "for"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 51.0,
+      "g": "inf"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 41.0,
+      "g": "inf"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 3.0,
+      "g": "inf"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "Stadtstaat: Land und Stadt haben einen gemeinsamen Haushalt. Unterm Strich negativ und daher nicht gezeigt: Finanzausgleich an Kommunen (−4 Mio €)."
+}

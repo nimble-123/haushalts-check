@@ -1,0 +1,113 @@
+{
+  "code": "09",
+  "slug": "bayern",
+  "name": "Bayern",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.08,
+  "posten": [
+    {
+      "name": "Schulen",
+      "v": 10329.0,
+      "g": "for"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 8575.0,
+      "g": "verw"
+    },
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 7561.0,
+      "g": "soz"
+    },
+    {
+      "name": "Finanzausgleich an Kommunen",
+      "v": 7220.0,
+      "g": "verw"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 6563.0,
+      "g": "for"
+    },
+    {
+      "name": "Verkehr",
+      "v": 4880.0,
+      "g": "inf"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 4249.0,
+      "g": "soz"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 4124.0,
+      "g": "inf"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 3270.0,
+      "g": "soz"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 3157.0,
+      "g": "verw"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 3135.0,
+      "g": "sich"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 2335.0,
+      "g": "for"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 2034.0,
+      "g": "verw"
+    },
+    {
+      "name": "Vermögen und Sondervermögen",
+      "v": 1949.0,
+      "g": "verw"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 1311.0,
+      "g": "inf"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 1275.0,
+      "g": "inf"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 1023.0,
+      "g": "for"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 422.0,
+      "g": "inf"
+    },
+    {
+      "name": "Zinsen",
+      "v": 409.0,
+      "g": "zins"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter."
+}

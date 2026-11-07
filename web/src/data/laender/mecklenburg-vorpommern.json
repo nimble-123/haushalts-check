@@ -1,0 +1,108 @@
+{
+  "code": "13",
+  "slug": "mecklenburg-vorpommern",
+  "name": "Mecklenburg-Vorpommern",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.09,
+  "posten": [
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 1758.0,
+      "g": "soz"
+    },
+    {
+      "name": "Finanzausgleich an Kommunen",
+      "v": 1460.0,
+      "g": "verw"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 1215.0,
+      "g": "inf"
+    },
+    {
+      "name": "Schulen",
+      "v": 1137.0,
+      "g": "for"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 673.0,
+      "g": "verw"
+    },
+    {
+      "name": "Verkehr",
+      "v": 519.0,
+      "g": "inf"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 461.0,
+      "g": "soz"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 457.0,
+      "g": "soz"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 426.0,
+      "g": "inf"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 417.0,
+      "g": "verw"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 412.0,
+      "g": "sich"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 393.0,
+      "g": "for"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 343.0,
+      "g": "verw"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 312.0,
+      "g": "for"
+    },
+    {
+      "name": "Zinsen",
+      "v": 200.0,
+      "g": "zins"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 162.0,
+      "g": "inf"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 137.0,
+      "g": "for"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 118.0,
+      "g": "inf"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter. Unterm Strich negativ und daher nicht gezeigt: Vermögen und Sondervermögen (−955 Mio €)."
+}

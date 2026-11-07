@@ -1,0 +1,113 @@
+{
+  "code": "14",
+  "slug": "sachsen",
+  "name": "Sachsen",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.09,
+  "posten": [
+    {
+      "name": "Schulen",
+      "v": 3459.0,
+      "g": "for"
+    },
+    {
+      "name": "Finanzausgleich an Kommunen",
+      "v": 3430.0,
+      "g": "verw"
+    },
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 2797.0,
+      "g": "soz"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 2481.0,
+      "g": "for"
+    },
+    {
+      "name": "Verkehr",
+      "v": 1353.0,
+      "g": "inf"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 1210.0,
+      "g": "inf"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 1194.0,
+      "g": "sich"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 1143.0,
+      "g": "verw"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 1027.0,
+      "g": "for"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 952.0,
+      "g": "verw"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 873.0,
+      "g": "soz"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 870.0,
+      "g": "soz"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 598.0,
+      "g": "for"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 566.0,
+      "g": "inf"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 564.0,
+      "g": "verw"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 340.0,
+      "g": "inf"
+    },
+    {
+      "name": "Vermögen und Sondervermögen",
+      "v": 268.0,
+      "g": "verw"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 107.0,
+      "g": "inf"
+    },
+    {
+      "name": "Zinsen",
+      "v": 51.0,
+      "g": "zins"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter."
+}

@@ -1,0 +1,113 @@
+{
+  "code": "03",
+  "slug": "niedersachsen",
+  "name": "Niedersachsen",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.09,
+  "posten": [
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 6432.0,
+      "g": "soz"
+    },
+    {
+      "name": "Vermögen und Sondervermögen",
+      "v": 6081.0,
+      "g": "verw"
+    },
+    {
+      "name": "Schulen",
+      "v": 5849.0,
+      "g": "for"
+    },
+    {
+      "name": "Finanzausgleich an Kommunen",
+      "v": 5772.0,
+      "g": "verw"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 5258.0,
+      "g": "verw"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 3453.0,
+      "g": "for"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 1945.0,
+      "g": "sich"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 1764.0,
+      "g": "verw"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 1507.0,
+      "g": "soz"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 1479.0,
+      "g": "verw"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 1271.0,
+      "g": "for"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 903.0,
+      "g": "inf"
+    },
+    {
+      "name": "Verkehr",
+      "v": 867.0,
+      "g": "inf"
+    },
+    {
+      "name": "Zinsen",
+      "v": 856.0,
+      "g": "zins"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 667.0,
+      "g": "soz"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 412.0,
+      "g": "inf"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 379.0,
+      "g": "for"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 316.0,
+      "g": "inf"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 138.0,
+      "g": "inf"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter."
+}

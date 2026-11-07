@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Rentenbeitrag: Staat oder ETF? | Haushalts-Check" description="Was du in die gesetzliche Rentenversicherung einzahlst und was du dafür bekommst, verglichen mit einem ETF-Sparplan aus demselben Geld. Netto, in heutiger Kaufkraft.">
+  <div class="page">
+    <header class="intro">
+      <h1>Rentenbeitrag: Staat oder ETF?</h1>
+      <p class="prose">Was du über deinen Lohn in die Rentenversicherung einzahlst und was du dafür bekommst, verglichen mit einem ETF-Sparplan aus genau dem Geld, das dir ohne Rentenbeitrag nach Steuern bliebe. Alle Beträge netto, in heutiger Kaufkraft.</p>
+    </header>
+
+    <div class="panel">
+      <div class="controls">
+        <label>Betrachtung
+          <select id="mode"><option value="life" selected>Ganzes Arbeitsleben (Einstieg 2026)</option><option value="now">Ab heute, mit deinem Brutto</option></select></label>
+        <label>Jahresbrutto heute (€)<input id="brutto" type="number" inputmode="numeric" value="85000" min="0" step="1000" /></label>
+        <label>Dein Alter heute<input id="age" type="number" inputmode="numeric" value="37" min="18" max="66" step="1" /></label>
+        <label class="lifeonly">Einstiegsalter<input id="c_a0" type="number" inputmode="numeric" value="25" min="16" max="60" step="1" /></label>
+        <label class="lifeonly">Einstiegsgehalt (€/Jahr)<input id="c_s0" type="number" inputmode="numeric" value="48000" min="0" step="1000" /></label>
+        <label class="lifeonly">Gehalt auf dem Höhepunkt (€/Jahr)<input id="c_s1" type="number" inputmode="numeric" value="85000" min="0" step="1000" /></label>
+        <label class="lifeonly">Höhepunkt erreicht mit<input id="c_ap" type="number" inputmode="numeric" value="45" min="18" max="66" step="1" /></label>
+        <label class="lifeonly">Gehaltsdynamik nach dem Höhepunkt
+          <select id="c_g"><option value="-0.01">−1 % p. a. real</option><option value="0">0 % real (+2 % nominal)</option><option value="0.005" selected>+0,5 % real (+2,5 % nominal)</option><option value="0.01">+1 % real (+3 % nominal)</option><option value="0.02">+2 % real (+4 % nominal)</option></select></label>
+        <label>ETF-Rendite (nominal, vor Kosten)
+          <select id="etfr"><option value="0.05">5 %, vorsichtig</option><option value="0.06">6 %</option><option value="0.07" selected>7 %, MSCI World langfristig</option><option value="0.08">8 %</option></select></label>
+        <label>Rentenniveau bei Rentenbeginn
+          <select id="niveau"><option value="48">48 %, heutige Haltelinie</option><option value="46.3">46,3 %, Prognose 2039</option><option value="45" selected>45 %, Fortschreibung</option><option value="43">43 %, gesetzliche Untergrenze</option></select></label>
+        <label>ETF-Depot soll reichen bis
+          <select id="until"><option value="90">90</option><option value="95">95</option><option value="100">100</option></select></label>
+        <label>Krankenversicherung
+          <select id="kv"><option value="gkv">gesetzlich</option><option value="pkv">privat</option></select></label>
+        <label id="pkvwrap" hidden>PKV-Beitrag €/Monat<input id="pkv" type="number" inputmode="numeric" value="550" min="0" step="10" /></label>
+        <label>Kirchensteuer
+          <select id="kist"><option value="0">keine</option><option value="0.09">9 %</option><option value="0.08">8 % (BW, Bayern)</option></select></label>
+        <label class="check"><input id="kinderlos" type="checkbox" checked /> kinderlos</label>
+        <label class="check lifeonly"><input id="c_usenow" type="checkbox" checked /> Alter und Brutto von heute einbeziehen</label>
+      </div>
+      <div class="seg" id="preset" role="group" aria-label="Vorlagen">
+        <button type="button" data-p="aka" aria-pressed="false">Vorlage Akademiker:in</button>
+        <button type="button" data-p="med" aria-pressed="false">Vorlage Median-Verdiener:in</button>
+      </div>
+    </div>
+
+    <div class="figures" id="rk"></div>
+
+    <div class="figure lifeonly">
+      <h3>Gehaltskurve bis zur Rente</h3>
+      <div class="panel"><svg id="s11s" role="img" aria-label="Gehaltskurve: Bruttojahresgehalt vom Einstieg über heute und den Höhepunkt bis zum Renteneintritt, real und nominal."></svg><ul class="legend" id="lg11s"></ul></div>
+    </div>
+    <div class="two">
+      <div class="figure">
+        <h3>Ansparphase</h3>
+        <div class="panel"><svg id="s11a" role="img" aria-label="Liniendiagramm: ETF-Depotwert bis zum Renteneintritt im Vergleich zu den Nettokosten der Rentenbeiträge."></svg><ul class="legend" id="lg11a"></ul></div>
+      </div>
+      <div class="figure">
+        <h3>Auszahlphase, aufsummiert</h3>
+        <div class="panel"><svg id="s11b" role="img" aria-label="Liniendiagramm: aufsummierte Netto-Auszahlungen von gesetzlicher Rente und ETF-Entnahmeplan ab 67 bis 100."></svg><ul class="legend" id="lg11b"></ul></div>
+      </div>
+    </div>
+
+    <div class="prose note">
+      <h2>Annahmen</h2>
+      <p>Im Lebensmodus folgt das Gehalt der Gehaltskurve (Dynamik nach dem Höhepunkt real); „ab heute“ bleibt das Brutto real konstant (Inflation 2 %). Der Rentenbeitrag steigt laut Rentenversicherungsbericht von 18,6 % auf 21,2 %. ETF: TER 0,2 %, ab Rentenbeginn vorsichtiger angelegt (Rendite minus 2 Punkte), Abgeltungsteuer und Soli mit 30 % Teilfreistellung, Vorabpauschale (Basiszins 2,5 %), Sparerpauschbetrag 1.000 €.</p>
+      <p>Rente: Entgeltpunkte × Rentenwert 42,52 € × Rentenniveau/48 %, Besteuerungsanteil nach Rentenbeginn (100 % ab 2058), Kranken- und Pflegebeitrag der Rentner, Tarif 2026, keine weiteren Einkünfte. Ein Entgeltpunkt je 51.944 € Brutto bis zur Beitragsbemessungsgrenze. Bei PKV ist der Zuschuss zur PKV im Alter nicht berücksichtigt.</p>
+      <p>Verglichen wird nur der Rentenbeitrag. Investiert wird, was ohne Rentenbeitrag (Arbeitnehmer- plus Arbeitgeberanteil als Lohn) nach Lohnsteuer und Soli übrig bliebe. Nicht enthalten: Erwerbsminderungs-, Hinterbliebenen- und Reha-Schutz der Rentenversicherung, Kursrisiko, Gesetzesänderungen. Vorlagen: Akademiker:in (Einstieg 48.000 €, Median laut GEHALT.de), Median-Verdiener:in (54.066 € Vollzeit 2025, Destatis). Rechenbeispiel, keine Anlageberatung.</p>
+    </div>
+  </div>
+  <script>
+    import { startRente } from '../scripts/rente-seite';
+    startRente();
+  </script>
+</Base>
+
+<style>
+  .intro { padding: 40px 0 28px; }
+  h1 { font-size: clamp(34px, 6vw, 56px); max-width: 18ch; margin-bottom: 16px; }
+  .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px 28px; margin: 40px 0; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0 24px; }
+  .note h2 { font-size: 24px; margin: 24px 0 12px; }
+  .note { color: var(--ink-2); font-size: 16px; }
+</style>
