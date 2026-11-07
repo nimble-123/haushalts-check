@@ -120,7 +120,7 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
       </div>
       <div class="rs-panel">
         <p class="hint">Diagramm seitlich wischen</p>
-        <div class="rs-scroll"><svg id="s2" role="img" aria-label="Sankey-Diagramm deiner Abgaben: von Lohnsteuer, Soli, Kirchensteuer und Sozialversicherung über Bund, Land und Stadt in die Ausgabenbereiche. Alle Beträge stehen in der Tabelle weiter unten."></svg></div>
+        <div class="rs-scroll" tabindex="0" role="region" aria-label="Dein Geld, Ebene für Ebene (seitlich scrollbar)"><svg id="s2" role="img" aria-label="Sankey-Diagramm deiner Abgaben: von Lohnsteuer, Soli, Kirchensteuer und Sozialversicherung über Bund, Land und Stadt in die Ausgabenbereiche. Alle Beträge stehen in der Tabelle weiter unten."></svg></div>
         <ul class="rs-legende" id="lg2"></ul>
       </div>
     </div>
@@ -143,7 +143,7 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
     <details class="rs-aufklapper figure">
       <summary><b>Alle Posten als Tabelle</b><span id="tcount"></span></summary>
       <p class="sub" id="tsub"></p>
-      <div class="rs-panel rs-scroll"><table class="rs-tabelle" id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th class="uy">€ / Monat</th></tr></thead><tbody></tbody></table></div>
+      <div class="rs-panel rs-scroll" tabindex="0" role="region" aria-label="Alle Posten (seitlich scrollbar)"><table class="rs-tabelle" id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th class="uy">€ / Monat</th></tr></thead><tbody></tbody></table></div>
     </details>
   </section>
 
@@ -166,7 +166,7 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
       <div class="rs-panel">
         <div id="ansicht-fluss">
           <p class="hint">Diagramm seitlich wischen</p>
-          <div class="rs-scroll"><svg id="s1" role="img" aria-label="Sankey-Diagramm: Steuern 387,2 Mrd €, Kredite 98,0 Mrd € und Sonstiges 39,4 Mrd € fließen in den Bundeshaushalt von 524,5 Mrd € und weiter in die Einzelpläne; größter Posten Arbeit und Soziales mit 197,3 Mrd €."></svg></div>
+          <div class="rs-scroll" tabindex="0" role="region" aria-label="Bundeshaushalt als Fluss (seitlich scrollbar)"><svg id="s1" role="img" aria-label="Sankey-Diagramm: Steuern 387,2 Mrd €, Kredite 98,0 Mrd € und Sonstiges 39,4 Mrd € fließen in den Bundeshaushalt von 524,5 Mrd € und weiter in die Einzelpläne; größter Posten Arbeit und Soziales mit 197,3 Mrd €."></svg></div>
         </div>
         <div id="ansicht-flaeche" hidden>
           <svg id="s6" role="img" aria-label="Treemap des Bundeshaushalts 2026 nach Einzelplänen; Arbeit und Soziales belegt über ein Drittel der Fläche."></svg>

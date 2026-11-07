@@ -22,3 +22,7 @@ npm-debug.log*
 # Editor und Betriebssystem
 .DS_Store
 .idea/
+
+# Testberichte
+test-results/
+playwright-report/
