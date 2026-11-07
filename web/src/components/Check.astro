@@ -145,11 +145,11 @@ const daten = { stadt, land, gem };
       <div class="panel" id="waffle"></div>
     </div>
 
-    <div class="figure">
-      <h3>Alle Posten als Tabelle</h3>
+    <details class="figure tabelle">
+      <summary><h3>Alle Posten als Tabelle</h3><span class="count" id="tcount"></span></summary>
       <p class="sub" id="tsub"></p>
       <div class="panel scroll"><table id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th class="uy">€ / Jahr</th></tr></thead><tbody></tbody></table></div>
-    </div>
+    </details>
   </section>
 
   <section class="chapter" aria-labelledby="k3">
@@ -271,4 +271,22 @@ const daten = { stadt, land, gem };
 
   .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px 28px; margin: 0 0 40px; }
   .more { font-size: 18px; }
+
+  /* Tabelle: standardmäßig zugeklappt */
+  .tabelle summary {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px;
+    min-height: 44px; padding: 10px 0 10px 30px; position: relative;
+    cursor: pointer; list-style: none; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .tabelle summary::-webkit-details-marker { display: none; }
+  .tabelle summary::before {
+    content: ''; position: absolute; left: 6px; top: 50%; width: 8px; height: 8px; margin-top: -6px;
+    border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    rotate: -45deg; transition: rotate 0.15s ease-out;
+  }
+  .tabelle[open] summary::before { rotate: 45deg; }
+  .tabelle summary h3 { margin: 0; }
+  .tabelle summary:hover h3 { color: var(--pen); }
+  .tabelle .count { color: var(--ink-3); font-size: 15px; }
+  .tabelle[open] summary { margin-bottom: 14px; }
 </style>
