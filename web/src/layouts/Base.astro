@@ -8,18 +8,24 @@ interface Props {
 const { title, description } = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const ogImage = Astro.site ? new URL('/og.png', Astro.site).href : undefined;
+const pfad = Astro.url.pathname;
+const nav = [
+  { href: '/staedte/', label: 'Städte' },
+  { href: '/rente/', label: 'Rente oder ETF' },
+  { href: '/methodik/', label: 'So ist gerechnet' },
+];
 ---
 <!doctype html>
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#f3f4f2" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#131417" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#101318" media="(prefers-color-scheme: dark)" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:title" content={title} />
@@ -30,11 +36,12 @@ const ogImage = Astro.site ? new URL('/og.png', Astro.site).href : undefined;
   </head>
   <body>
     <header class="site page">
-      <a href="/" class="brand">Haushalts-Check</a>
+      <a href="/" class="marke" aria-label="Haushalts-Check, Startseite">
+        <span class="kachel" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        Haushalts-Check
+      </a>
       <nav aria-label="Hauptnavigation">
-        <a href="/staedte/">Städte</a>
-        <a href="/rente/">Rente oder ETF</a>
-        <a href="/methodik/">So ist gerechnet</a>
+        {nav.map((n) => <a href={n.href} aria-current={pfad.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>)}
       </nav>
     </header>
     <main>
@@ -47,26 +54,36 @@ const ogImage = Astro.site ? new URL('/og.png', Astro.site).href : undefined;
         <a href="/datenschutz/">Datenschutz</a>
       </nav>
     </footer>
-    <div class="tip" id="tip" role="presentation"></div>
+    <div class="rs-tip" id="tip" role="presentation"></div>
   </body>
 </html>
 
 <style>
   header.site {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px;
-    padding-top: 18px; padding-bottom: 18px;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-6);
+    padding-block: var(--space-4);
   }
-  .brand { font: 600 20px var(--cond); color: var(--ink); text-decoration: none; }
-  nav { display: flex; flex-wrap: wrap; gap: 4px 4px; }
+  .marke {
+    display: inline-flex; align-items: center; gap: var(--space-3); min-height: var(--hit);
+    font: 700 20px/1 var(--font-display); letter-spacing: -0.01em; color: var(--ink); text-decoration: none;
+  }
+  /* Vier Kästchen: das Raster im Kleinen */
+  .kachel { display: grid; grid-template-columns: repeat(2, 9px); gap: 2px; }
+  .kachel i { width: 9px; height: 9px; border-radius: var(--radius-cell); background: var(--cat-verw); }
+  .kachel i:first-child { background: var(--marker); }
+  .kachel i:nth-child(2) { background: var(--cat-soz); }
+  nav { display: flex; flex-wrap: wrap; gap: 2px; }
   nav a {
-    color: var(--ink-2); text-decoration: none; font-size: 15px;
-    min-height: 40px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 8px;
-    transition: background-color 0.12s ease-out;
+    color: var(--ink-2); text-decoration: none; font-size: 15.5px; font-weight: 550;
+    min-height: 40px; display: inline-flex; align-items: center; padding: 0 var(--space-3); border-radius: var(--radius-control);
+    transition: background-color 0.12s ease-out, color 0.12s ease-out;
   }
   nav a:hover { background: var(--surface); color: var(--ink); }
+  nav a[aria-current='page'] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); border-radius: 0; }
   footer.site {
-    margin-top: 96px; padding-top: 24px; padding-bottom: 40px; border-top: 1px solid var(--rule);
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: var(--ink-3); font-size: 14px;
+    margin-top: var(--space-20); padding-block: var(--space-6) var(--space-12); border-top: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2) var(--space-6);
+    color: var(--ink-3); font-size: 14.5px;
   }
   footer p { margin: 0; max-width: 60ch; }
 </style>

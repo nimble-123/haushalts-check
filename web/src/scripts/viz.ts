@@ -28,7 +28,7 @@ export function hatch(svg: d3.Selection<SVGSVGElement, unknown, any, any>, key: 
   let defs = svg.select<SVGDefsElement>('defs');
   if (defs.empty()) defs = svg.insert('defs', ':first-child');
   defs.select('#' + id).remove();
-  const blue = css('--g-soz');
+  const blue = css('--cat-sv');
   const p = defs.append('pattern').attr('id', id).attr('patternUnits', 'userSpaceOnUse').attr('width', 5).attr('height', 5).attr('patternTransform', 'rotate(45)');
   p.append('rect').attr('width', 5).attr('height', 5).attr('fill', css('--surface'));
   p.append('rect').attr('width', 2).attr('height', 5).attr('fill', blue);

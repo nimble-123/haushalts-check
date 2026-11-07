@@ -1,0 +1,96 @@
+/* Raster — generated from tokens.json */
+/* Nicht von Hand ändern: design-system/tokens.json bearbeiten und `npm run tokens` ausführen. */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --paper: #ffffff;
+  --surface: #f3f4f7;
+  --rule: #e1e4ea;
+  --line: #7f8592;
+  --ink: #14161f;
+  --ink-2: #474c58;
+  --ink-3: #626876;
+  --marker: #ffe14d;
+  --on-marker: #14161f;
+  --focus: var(--ink);
+  --cat-soz: #0072b2;
+  --cat-sich: #d55e00;
+  --cat-for: #009e73;
+  --cat-inf: #a9aeb7;
+  --cat-zins: #2b2f38;
+  --cat-verw: #dfe1e5;
+  --cat-sv: var(--cat-soz);
+  --shadow-pop: 0 0 0 1px rgba(20, 22, 31, 0.08), 0 10px 28px rgba(20, 22, 31, 0.16);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #101318;
+    --surface: #181c23;
+    --rule: #2a2f38;
+    --line: #6a707d;
+    --ink: #eef0f4;
+    --ink-2: #b9bec8;
+    --ink-3: #959baa;
+    --marker: #f5d63d;
+    --on-marker: #14161f;
+    --focus: var(--ink);
+    --cat-soz: #4ba3e3;
+    --cat-sich: #e8743a;
+    --cat-for: #30b890;
+    --cat-inf: #6a707b;
+    --cat-zins: #e4e7ec;
+    --cat-verw: #3a3f47;
+    --cat-sv: var(--cat-soz);
+    --shadow-pop: 0 0 0 1px rgba(238, 240, 244, 0.10), 0 10px 28px rgba(0, 0, 0, 0.5);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #101318;
+  --surface: #181c23;
+  --rule: #2a2f38;
+  --line: #6a707d;
+  --ink: #eef0f4;
+  --ink-2: #b9bec8;
+  --ink-3: #959baa;
+  --marker: #f5d63d;
+  --on-marker: #14161f;
+  --focus: var(--ink);
+  --cat-soz: #4ba3e3;
+  --cat-sich: #e8743a;
+  --cat-for: #30b890;
+  --cat-inf: #6a707b;
+  --cat-zins: #e4e7ec;
+  --cat-verw: #3a3f47;
+  --cat-sv: var(--cat-soz);
+  --shadow-pop: 0 0 0 1px rgba(238, 240, 244, 0.10), 0 10px 28px rgba(0, 0, 0, 0.5);
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-20: 80px;
+  --radius-cell: 2px;
+  --radius-control: 8px;
+  --radius-panel: 16px;
+  --radius-pill: 999px;
+  --measure: 66ch;
+  --page: 1120px;
+  --hit: 44px;
+  --font-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --font-text: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.t-figure-xl { font-family: var(--font-display); font-size: 64px; line-height: 1; font-weight: 650; letter-spacing: -0.02em; }
+.t-title { font-family: var(--font-display); font-size: 52px; line-height: 1.02; font-weight: 700; letter-spacing: -0.025em; }
+.t-heading { font-family: var(--font-display); font-size: 32px; line-height: 1.1; font-weight: 650; letter-spacing: -0.015em; }
+.t-figure { font-family: var(--font-display); font-size: 30px; line-height: 1.1; font-weight: 600; }
+.t-lead { font-family: var(--font-text); font-size: 21px; line-height: 1.45; font-weight: 400; }
+.t-subheading { font-family: var(--font-text); font-size: 19px; line-height: 1.35; font-weight: 650; }
+.t-body { font-family: var(--font-text); font-size: 17px; line-height: 1.6; font-weight: 400; }
+.t-small { font-family: var(--font-text); font-size: 15px; line-height: 1.45; font-weight: 400; }
+.t-label { font-family: var(--font-text); font-size: 13.5px; line-height: 1.35; font-weight: 550; }
+.t-data { font-family: var(--font-text); font-size: 12.5px; line-height: 1.25; font-weight: 500; }

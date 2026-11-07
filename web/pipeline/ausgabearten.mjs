@@ -1,36 +1,70 @@
-// Auszahlungen nach Art je kreisfreier Stadt aus der Regionaldatenbank (Tabelle 71717-Z-05).
+// Auszahlungen nach Art je kreisfreier Stadt aus der Regionaldatenbank (Tabelle 71717-Z-05,
+// Rechnungsergebnisse der kommunalen Kernhaushalte) → Schlüssel „ausgabearten“ in src/data/staedte/*.json.
 // Braucht ein kostenloses Konto bei regionalstatistik.de; Zugangsdaten in web/.env.local:
-//   REGIO_USER=…   REGIO_PASS=…
+//   REGIO_USER=…   REGIO_PASS=…      (oder REGIO_USER=<API-Token> und REGIO_PASS leer)
 // Aufruf (aus web/):  npm run daten:ausgabearten
 //
 // Schritt 1: Rohdaten nach pipeline/quellen/71717-Z-05.csv laden (nur, wenn noch nicht vorhanden).
-// Schritt 2: Spalten anzeigen – die Zuordnung zu den Stadt-JSONs folgt, sobald das Format bekannt ist.
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+// Schritt 2: Je Stadt das neueste Jahr wählen, das für die meisten Städte vollständig ist, und € je Einwohner schreiben.
+//
+// API laut GENESIS-Webservices-Doku (Destatis) und POST-Beispielen von 05/2025: nur POST, Zugangsdaten im
+// HTTP-Header, Parameter als application/x-www-form-urlencoded. ffcsv kommt als ZIP mit genau einer CSV im
+// neuen Flatfile-Format (eine Zeile je Wert: time, <n>_variable_attribute_code, value, value_unit,
+// value_variable_label, value_q). quality=on liefert value_q; „p“ = vorläufige Zahl.
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { inflateRawSync } from 'node:zlib';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const QUELLEN = join(ROOT, 'pipeline', 'quellen');
 const ROH = join(QUELLEN, '71717-Z-05.csv');
+const STAEDTE = join(ROOT, 'src', 'data', 'staedte');
 const API = 'https://www.regionalstatistik.de/genesisws/rest/2020/data/tablefile';
+// Ab 2022 reicht für Rückfalljahre und bleibt weit unter dem Limit von 40.000 Werten je Abruf.
+const AB_JAHR = '2022';
+const QUELLE = {
+  label: 'Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05',
+  url: 'https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05',
+};
+
+// ── Schritt 1: Abruf ────────────────────────────────────────────────────────────────────────────
+
+/** Erste Datei aus einem ZIP-Archiv (GENESIS liefert genau eine je Archiv). */
+function entpacke(buf) {
+  let eocd = buf.length - 22;
+  while (eocd >= 0 && buf.readUInt32LE(eocd) !== 0x06054b50) eocd--;
+  if (eocd < 0) throw new Error('ZIP ohne Inhaltsverzeichnis');
+  const cd = buf.readUInt32LE(eocd + 16);
+  const methode = buf.readUInt16LE(cd + 10);
+  const groesse = buf.readUInt32LE(cd + 20);
+  const lokal = buf.readUInt32LE(cd + 42);
+  const start = lokal + 30 + buf.readUInt16LE(lokal + 26) + buf.readUInt16LE(lokal + 28);
+  const daten = buf.subarray(start, start + groesse);
+  if (methode === 0) return daten;
+  if (methode === 8) return inflateRawSync(daten);
+  throw new Error(`ZIP-Kompression ${methode} nicht unterstützt`);
+}
+
+const alsText = (buf) =>
+  (buf.length >= 4 && buf.readUInt32LE(0) === 0x04034b50 ? entpacke(buf) : buf).toString('utf8').replace(/^﻿/, '');
 
 async function lade() {
-  const { REGIO_USER: user, REGIO_PASS: pass } = process.env;
-  if (!user || !pass) {
-    console.error('REGIO_USER und REGIO_PASS fehlen. Lege web/.env.local an (siehe Kopf dieser Datei).');
+  const { REGIO_USER: user, REGIO_PASS: pass = '' } = process.env;
+  if (!user) {
+    console.error('REGIO_USER (und REGIO_PASS) fehlen. Lege web/.env.local an (siehe Kopf dieser Datei).');
     process.exit(1);
   }
   const body = new URLSearchParams({
-    name: '71717-Z-05', area: 'all', compress: 'false', transpose: 'false',
-    startyear: '2023', endyear: '2025', format: 'ffcsv', language: 'de',
+    name: '71717-Z-05', area: 'all', startyear: AB_JAHR, format: 'ffcsv', quality: 'on', language: 'de',
   });
   const res = await fetch(API, {
     method: 'POST',
-    headers: { username: user, password: pass, 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', username: user, password: pass },
     body,
   });
-  const text = await res.text();
-  // Fehlerantworten der GENESIS-API kommen als JSON mit Code/Content
+  const text = alsText(Buffer.from(await res.arrayBuffer()));
+  // Fehlerantworten der GENESIS-API kommen als JSON mit Status.Code/Content (z. B. 98 = zu groß, 104 = nichts gefunden)
   if (!res.ok || text.trimStart().startsWith('{')) {
     let info = text.slice(0, 400);
     try { const j = JSON.parse(text); info = `Code ${j.Status?.Code ?? j.Code}: ${j.Status?.Content ?? j.Content}`; } catch {}
@@ -43,8 +77,191 @@ async function lade() {
 }
 
 if (!existsSync(ROH)) await lade();
-const zeilen = readFileSync(ROH, 'utf8').split(/\r?\n/).filter(Boolean);
-console.log('Spalten:', zeilen[0]);
-console.log('Beispielzeilen:');
-zeilen.slice(1, 6).forEach((z) => console.log(' ', z));
-console.log(`${zeilen.length - 1} Datenzeilen.`);
+
+// ── Schritt 2: Einlesen ─────────────────────────────────────────────────────────────────────────
+
+function felder(zeile) {
+  if (!zeile.includes('"')) return zeile.split(';');
+  const out = [];
+  let f = '', q = false;
+  for (let i = 0; i < zeile.length; i++) {
+    const c = zeile[i];
+    if (q && c === '"' && zeile[i + 1] === '"') { f += '"'; i++; }
+    else if (c === '"') q = !q;
+    else if (c === ';' && !q) { out.push(f); f = ''; }
+    else f += c;
+  }
+  out.push(f);
+  return out;
+}
+
+/** Deutsche Zahl; „-“ = nichts vorhanden (0); „.“, „...“, „/“, „x“ = kein Wert. */
+function zahl(s) {
+  s = s.trim();
+  if (s === '-') return 0;
+  if (/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) s = s.replaceAll('.', '');
+  return /^-?\d+(,\d+)?$/.test(s) ? Number(s.replace(',', '.')) : null;
+}
+
+const faktor = (einheit) => (/mill|mio/i.test(einheit) ? 1e6 : /tsd|tausend|1000/i.test(einheit) ? 1e3 : 1);
+
+const text = alsText(readFileSync(ROH));
+if (text.trimStart().startsWith('{')) {
+  console.error(`${ROH} enthält eine Fehlerantwort statt Daten – Datei löschen und neu abrufen.`);
+  process.exit(1);
+}
+const [kopf, ...zeilen] = text.split(/\r?\n/).filter((z) => z.trim()).map(felder);
+const sp = Object.fromEntries(kopf.map((k, i) => [k.trim(), i]));
+for (const k of ['time', 'value', 'value_unit', 'value_variable_label']) {
+  if (!(k in sp)) throw new Error(`Spalte „${k}“ fehlt – kein ffcsv im neuen Format? Kopf: ${kopf.join(';')}`);
+}
+const hatQ = 'value_q' in sp;
+if (!hatQ) console.warn('Warnung: keine Spalte value_q – „vorläufig“ lässt sich nicht erkennen.');
+
+const staedte = readdirSync(STAEDTE).filter((f) => f.endsWith('.json')).map((f) => {
+  const datei = join(STAEDTE, f);
+  return { datei, s: JSON.parse(readFileSync(datei, 'utf8')) };
+});
+const nachAgs = new Map(staedte.map((x) => [x.s.ags, x]));
+
+// Regionale Dimension = die <n>_variable, deren Ausprägungscodes am häufigsten Stadt-AGS sind.
+const dims = kopf.map((k) => k.match(/^(\d+)_variable_attribute_code$/)?.[1]).filter(Boolean);
+const treffer = (n) => zeilen.filter((z) => nachAgs.has(z[sp[`${n}_variable_attribute_code`]]?.trim())).length;
+const region = dims.reduce((a, b) => (treffer(b) > treffer(a) ? b : a), dims[0]);
+if (!region || !treffer(region)) throw new Error('Keine Spalte mit Regionalschlüsseln der Städte gefunden.');
+const andere = dims.filter((n) => n !== region);
+
+// daten: ags → jahr → Merkmal (Ausprägungen der übrigen Dimensionen + Wertmerkmal) → { wert, einheit, q }
+const daten = new Map();
+const merkmale = new Map(); // Merkmal → Einheiten (für Fehlermeldungen)
+for (const z of zeilen) {
+  const ags = z[sp[`${region}_variable_attribute_code`]]?.trim();
+  if (!nachAgs.has(ags)) continue;
+  const jahr = Number(z[sp.time]);
+  const merkmal = [...andere.map((n) => z[sp[`${n}_variable_attribute_label`]]), z[sp.value_variable_label]]
+    .map((s) => s?.trim()).filter(Boolean).join(' | ');
+  const einheit = z[sp.value_unit]?.trim() ?? '';
+  if (!merkmale.has(merkmal)) merkmale.set(merkmal, new Set());
+  merkmale.get(merkmal).add(einheit);
+  if (!daten.has(ags)) daten.set(ags, new Map());
+  if (!daten.get(ags).has(jahr)) daten.get(ags).set(jahr, new Map());
+  daten.get(ags).get(jahr).set(merkmal, { wert: zahl(z[sp.value]), einheit, q: hatQ ? z[sp.value_q].trim() : '' });
+}
+
+// ── Zuordnung der Merkmale ──────────────────────────────────────────────────────────────────────
+
+const JE_EW = /je (einw|ew)/i;
+const REGELN = {
+  bev: (m) => /bevölkerung|einwohner/i.test(m),
+  gesamt: (m) => /auszahl/i.test(m) && /insgesamt/i.test(m) && !/verwaltungst|investition/i.test(m),
+  lfd: (m) => /(laufende[nr]?|lfd\.?)\s*verwaltungst/i.test(m) && !/personal|versorg|sach|sozial/i.test(m),
+  personal: (m) => /personal|versorg/i.test(m),
+  sach: (m) => /sach.*dienstleist/i.test(m),
+  sozial: (m) => /soziale leistung|sozialleistung/i.test(m),
+  invest: (m) => /investitionst/i.test(m),
+};
+const alle = [...merkmale.keys()].filter((m) => !JE_EW.test(m));
+const zuordnung = {};
+for (const [k, regel] of Object.entries(REGELN)) {
+  let m = alle.filter(regel);
+  // Personal und Versorgung: ein gemeinsames Merkmal oder zwei getrennte
+  if (k === 'personal') m = m.some((x) => /personal/i.test(x) && /versorg/i.test(x)) ? m.filter((x) => /personal/i.test(x) && /versorg/i.test(x)) : m;
+  if (m.length !== 1 && !(k === 'personal' && m.length === 2)) {
+    console.error(`Merkmal „${k}“ nicht eindeutig zuzuordnen (${m.length} Treffer: ${m.join(' / ') || '–'}).`);
+    console.error('Merkmale in der Tabelle:');
+    for (const [x, e] of merkmale) console.error(`  ${x}  [${[...e].join(', ')}]`);
+    process.exit(1);
+  }
+  zuordnung[k] = m;
+}
+console.log('Zuordnung:');
+for (const [k, m] of Object.entries(zuordnung)) console.log(`  ${k.padEnd(8)} ← ${m.map((x) => `${x} [${[...merkmale.get(x)].join(', ')}]`).join(' + ')}`);
+
+// ── Berechnung je Stadt und Jahr ────────────────────────────────────────────────────────────────
+
+const fehler = [];
+function rechne(name, jahr, werte) {
+  let vorlaeufig = false;
+  const summe = (ms) => {
+    let s = 0;
+    for (const m of ms) {
+      const w = werte.get(m);
+      if (!w || w.wert === null) return null;
+      if (w.q === 'p') vorlaeufig = true;
+      s += w.wert * faktor(w.einheit);
+    }
+    return s;
+  };
+  const v = Object.fromEntries(Object.entries(zuordnung).map(([k, ms]) => [k, summe(ms)]));
+  if (Object.values(v).some((x) => x === null) || !(v.bev > 0)) return null;
+  const pk = (x) => x / v.bev;
+  const uebrige = pk(v.lfd - v.personal - v.sach - v.sozial);
+  if (uebrige < -0.5) fehler.push(`${name} ${jahr}: Übrige laufende Auszahlungen negativ (${uebrige.toFixed(2)} €/EW)`);
+  const posten = [
+    ['Personal und Versorgung', pk(v.personal)],
+    ['Sach- und Dienstleistungen', pk(v.sach)],
+    ['Soziale Leistungen', pk(v.sozial)],
+    ['Investitionen', pk(v.invest)],
+    ['Übrige laufende Auszahlungen', Math.max(0, uebrige)],
+  ];
+  const summePosten = posten.reduce((a, [, x]) => a + x, 0);
+  const gesamt = pk(v.gesamt);
+  if (Math.abs(summePosten - gesamt) > 0.01 * gesamt) {
+    fehler.push(`${name} ${jahr}: Summe der Posten ${summePosten.toFixed(0)} €/EW ≠ Auszahlungen insgesamt ${gesamt.toFixed(0)} €/EW`);
+  }
+  return {
+    jahr, vorlaeufig,
+    posten: posten.map(([n, x]) => ({ name: n, proKopf: Math.round(x) })),
+    quellen: [QUELLE],
+    gesamt,
+  };
+}
+
+const kandidaten = staedte.filter((x) => !x.s.stadtstaat && daten.has(x.s.ags));
+const ergebnisse = new Map(); // ags → Map(jahr → Ergebnis)
+for (const { s } of kandidaten) {
+  const m = new Map();
+  for (const [jahr, werte] of daten.get(s.ags)) {
+    const e = rechne(s.name, jahr, werte);
+    if (e) m.set(jahr, e);
+  }
+  ergebnisse.set(s.ags, m);
+}
+if (fehler.length) {
+  console.error(`Plausibilitätsprüfung fehlgeschlagen (${fehler.length}):`);
+  fehler.forEach((f) => console.error('  ' + f));
+  process.exit(1);
+}
+
+// Neuestes Jahr, das für mindestens 90 % der Städte im Abruf vollständig ist
+const jahre = [...new Set([...ergebnisse.values()].flatMap((m) => [...m.keys()]))].sort((a, b) => b - a);
+const vollstaendig = (j) => [...ergebnisse.values()].filter((m) => m.has(j)).length;
+const jahr = jahre.find((j) => vollstaendig(j) >= 0.9 * kandidaten.length);
+if (!jahr) throw new Error(`Kein Jahr für die meisten Städte vollständig: ${jahre.map((j) => `${j}: ${vollstaendig(j)}`).join(', ')}`);
+
+// ── Schreiben ───────────────────────────────────────────────────────────────────────────────────
+
+const geschrieben = [], rueckfall = [], ohne = [];
+for (const { datei, s } of staedte) {
+  if (s.stadtstaat) continue;
+  const m = ergebnisse.get(s.ags);
+  const j = m && [...m.keys()].filter((x) => x <= jahr).sort((a, b) => b - a)[0];
+  if (!j) { ohne.push(s.name); continue; }
+  const { gesamt, ...e } = m.get(j);
+  s.ausgabearten = e; // bestehender Schlüssel behält seine Position, neuer kommt ans Ende
+  writeFileSync(datei, JSON.stringify(s, null, 2) + '\n');
+  geschrieben.push({ s, gesamt });
+  if (j !== jahr) rueckfall.push(`${s.name} (${j})`);
+}
+
+const n = staedte.filter((x) => !x.s.stadtstaat).length;
+console.log(`\nJahre im Abruf: ${jahre.map((j) => `${j} (${vollstaendig(j)} Städte vollständig)`).join(', ')}`);
+console.log(`Gewähltes Jahr: ${jahr}${geschrieben.some((g) => g.s.ausgabearten.jahr === jahr && g.s.ausgabearten.vorlaeufig) ? ' – vorläufig' : ''}`);
+console.log(`Geschrieben: ${geschrieben.length} von ${n} Städten (ohne Stadtstaaten); davon vorläufig: ${geschrieben.filter((g) => g.s.ausgabearten.vorlaeufig).length}`);
+if (rueckfall.length) console.log(`Älteres Jahr: ${rueckfall.join(', ')}`);
+if (ohne.length) console.log(`Ohne Daten: ${ohne.join(', ')}`);
+console.log('Beispiele (€ je Einwohner):');
+for (const { s, gesamt } of [0, 0.5, 0.99].map((f) => geschrieben[Math.floor(f * (geschrieben.length - 1))]).filter(Boolean)) {
+  const a = s.ausgabearten;
+  console.log(`  ${s.name} ${a.jahr}${a.vorlaeufig ? ' (vorl.)' : ''}: ${a.posten.map((p) => `${p.name} ${p.proKopf}`).join(', ')} | insgesamt ${Math.round(gesamt)}`);
+}

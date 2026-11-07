@@ -9,108 +9,96 @@ interface Props {
 }
 const { stadt, land } = Astro.props;
 
-// Städte nach Land gruppiert für die Empfänger-Auswahl
 const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.land === l.code) })).filter((g) => g.staedte.length);
 const gem = gemeindeEbene(stadt);
 const daten = { stadt, land, gem };
 ---
 <section class="hero page" aria-labelledby="hero-h">
-  <h1 id="hero-h">Wohin geht deine Lohnsteuer?</h1>
-  <p class="lead">Trag dein Jahresbrutto ein und wähl deine Stadt. Die Seite rechnet aus, wie viel bei Bund, Land und Stadt ankommt und wofür sie es ausgeben.</p>
-
-  <form class="slip" id="slip" onsubmit="return false" aria-label="Deine Angaben">
-    <p class="slip-title" aria-hidden="true">Überweisung deiner Abgaben 2026</p>
-
-    <label class="field f-empf">
-      <span class="lbl">Empfänger: deine Stadt</span>
-      <select id="stadt" class="box-field">
+  <div class="eingabe">
+    <h1 id="hero-h" class="t-title">Wohin geht dein Geld?</h1>
+    <p class="rs-satz">
+      Ich verdiene
+      <input id="brutto" class="rs-betrag" type="text" inputmode="numeric" autocomplete="off" value="85.000" aria-label="Jahresbrutto in Euro" />
+      € brutto im Jahr und wohne in
+      <select id="stadt" class="rs-auswahl" aria-label="Stadt">
         {gruppen.map((g) => (
           <optgroup label={g.land.name}>
             {g.staedte.map((s) => <option value={s.slug} selected={s.slug === stadt.slug}>{s.name}</option>)}
           </optgroup>
         ))}
-      </select>
-      <span class="also">und Land {land.name}, Bund</span>
-    </label>
+      </select>.
+    </p>
 
-    <label class="field f-betrag">
-      <span class="lbl">Betrag: Jahresbrutto in Euro</span>
-      <span class="digits">
-        <input id="brutto" type="text" inputmode="numeric" autocomplete="off" maxlength="7" value="85000" aria-describedby="brutto-hint" />
-        <span class="cur" aria-hidden="true">€</span>
-      </span>
-      <span id="brutto-hint" class="visually-hidden">Ganze Euro, nur Ziffern</span>
-    </label>
-
-    <fieldset class="field f-zweck">
-      <legend class="lbl">Verwendungszweck: deine Steuermerkmale</legend>
-      <div class="zweck">
-        <label>Steuerklasse
-          <select disabled class="box-field"><option>I</option></select>
+    <details class="rs-aufklapper mehr">
+      <summary><b>Weitere Angaben</b><span id="mehr-sum">Steuerklasse I</span></summary>
+      <div class="rs-felder">
+        <label class="rs-feld"><span>Krankenversicherung</span>
+          <select id="kv"><option value="gkv">gesetzlich</option><option value="pkv">privat</option></select>
         </label>
-        <label>Krankenversicherung
-          <select id="kv" class="box-field">
-            <option value="gkv">gesetzlich</option>
-            <option value="pkv">privat</option>
-          </select>
+        <label class="rs-feld" id="pkvwrap" hidden><span>PKV-Beitrag €/Monat, dein Anteil</span>
+          <input id="pkv" type="number" inputmode="numeric" value="550" min="0" step="10" />
         </label>
-        <label id="pkvwrap" hidden>PKV-Beitrag €/Monat
-          <input id="pkv" class="box-field" type="number" inputmode="numeric" value="550" min="0" step="10" />
+        <label class="rs-feld"><span>Kirchensteuer</span>
+          <select id="kist"><option value="0">keine</option><option value={String(land.kirchensteuer)}>{String(land.kirchensteuer * 100)} %</option></select>
         </label>
-        <label>Kirchensteuer
-          <select id="kist" class="box-field">
-            <option value="0">keine</option>
-            <option value={String(land.kirchensteuer)}>{String(land.kirchensteuer * 100)} % ({land.name})</option>
-          </select>
-        </label>
-        <label class="tick"><input id="kinderlos" type="checkbox" checked /> kinderlos</label>
+        <label class="rs-schalter"><input id="kinderlos" type="checkbox" checked /> kinderlos</label>
       </div>
-    </fieldset>
-  </form>
+      <p class="hinweis">Gerechnet wird mit Steuerklasse I.</p>
+    </details>
 
-  <p class="result" id="result" aria-live="polite"></p>
+    <p class="ergebnis" id="result" aria-live="polite"></p>
+  </div>
+
+  <figure class="hundert">
+    <figcaption>Von 100 € deiner Abgaben</figcaption>
+    <div class="rs-raster" id="raster" role="img" aria-label=""></div>
+    <ul class="zweckliste" id="zweck"></ul>
+  </figure>
 </section>
 
 <div class="page">
   <section class="chapter" aria-labelledby="k1">
-    <header>
-      <span class="step" aria-hidden="true">1</span>
-      <h2 id="k1">Dein Brutto</h2>
+    <header class="rs-kapitel">
+      <h2 id="k1"><span class="nr">1</span>Dein Brutto</h2>
       <p>Was vom Gehalt abgeht, bevor es auf deinem Konto landet.</p>
     </header>
-    <div class="figures" id="pk"></div>
+
+    <div class="figure">
+      <div class="rs-anteil" id="anteil" role="img"></div>
+      <ul class="rs-anteil-legende" id="anteil-lg" style="list-style:none;padding:0"></ul>
+    </div>
+    <div class="rs-kennzahlen figure" id="pk"></div>
 
     <div class="figure">
       <h3>Vom Brutto zum Netto</h3>
       <p class="sub">Arbeitnehmeranteile, in der Reihenfolge der Gehaltsabrechnung.</p>
-      <div class="panel"><svg id="s4" role="img" aria-label="Wasserfalldiagramm: Brutto abzüglich Lohnsteuer, Soli, Kirchensteuer und Sozialversicherungsbeiträgen ergibt das Netto."></svg></div>
+      <div class="rs-panel"><svg id="s4" role="img" aria-label="Wasserfalldiagramm: Brutto abzüglich Lohnsteuer, Soli, Kirchensteuer und Sozialversicherungsbeiträgen ergibt das Netto."></svg></div>
     </div>
 
     <div class="figure">
       <h3>Dein Abgaben-Kalender</h3>
       <p class="sub">Verteilt man das Jahresbrutto der Reihe nach, arbeitest du bis zu diesen Tagen für die jeweilige Kasse.</p>
-      <div class="panel" id="cal"></div>
+      <div class="rs-panel" id="cal"></div>
     </div>
 
     <div class="figure">
       <h3>Abgabenquote nach Einkommen</h3>
-      <p class="sub">Anteil vom Brutto bei gleichen Merkmalen. Gestrichelt: Beitragsbemessungsgrenzen, ab denen die Sozialabgaben nicht mehr steigen.</p>
-      <div class="panel"><svg id="s5" role="img" aria-label="Liniendiagramm: Abgabenquote gesamt, Steuern und Sozialabgaben in Prozent des Bruttos von 15.000 bis 160.000 Euro, mit Markierung deines Einkommens."></svg>
-      <ul class="legend" id="lg5"></ul></div>
+      <p class="sub">Anteil vom Brutto bei gleichen Angaben. Gestrichelt: Beitragsbemessungsgrenzen, ab denen die Sozialabgaben nicht mehr steigen.</p>
+      <div class="rs-panel"><svg id="s5" role="img" aria-label="Liniendiagramm: Abgabenquote gesamt, Steuern und Sozialabgaben in Prozent des Bruttos von 15.000 bis 160.000 Euro, mit Markierung deines Einkommens."></svg>
+      <ul class="rs-legende" id="lg5"></ul></div>
     </div>
   </section>
 
   <section class="chapter" aria-labelledby="k2">
-    <header>
-      <span class="step" aria-hidden="true">2</span>
-      <h2 id="k2">Wohin es fließt</h2>
+    <header class="rs-kapitel">
+      <h2 id="k2"><span class="nr">2</span>Wohin es fließt</h2>
       <p>Lohnsteuer geht zu 42,5 % an den Bund, zu 42,5 % an {land.name} und zu 15 % an {stadt.name}. Jede Ebene verteilt ihren Anteil so wie ihren ganzen Haushalt.</p>
     </header>
 
     <div class="figure">
-      <h3>Dein Geld, Ebene für Ebene</h3>
-      <div class="controls">
-        <label>Aufschlüsseln
+      <h3>Dein Geld, Ebene für Ebene {gem.schaetzung && <span class="rs-schaetzung">≈ Stadt geschätzt</span>}</h3>
+      <div class="steuerung">
+        <label class="rs-feld"><span>Aufschlüsseln</span>
           <select id="split">
             <option value="all">Bund, Land und Stadt</option>
             <option value="bund">nur Bund</option>
@@ -118,77 +106,70 @@ const daten = { stadt, land, gem };
             <option value="gem">nur {stadt.name}</option>
           </select>
         </label>
-        <label class="check"><input id="ag" type="checkbox" /> Arbeitgeberanteil mitzählen</label>
-        <label class="check"><input id="shownetto" type="checkbox" /> Netto im Diagramm zeigen</label>
+        <label class="rs-schalter"><input id="ag" type="checkbox" /> Arbeitgeberanteil mitzählen</label>
+        <label class="rs-schalter"><input id="shownetto" type="checkbox" /> Netto zeigen</label>
+        <div class="rs-segment" id="unit" role="group" aria-label="Zeitraum">
+          <button type="button" data-u="y" aria-pressed="true">pro Jahr</button>
+          <button type="button" data-u="m" aria-pressed="false">pro Monat</button>
+        </div>
       </div>
-      <div class="seg" id="unit" role="group" aria-label="Zeitraum">
-        <button type="button" data-u="y" aria-pressed="true">pro Jahr</button>
-        <button type="button" data-u="m" aria-pressed="false">pro Monat</button>
-      </div>
-      <div class="panel" style="margin-top:14px">
+      <div class="rs-panel">
         <p class="hint">Diagramm seitlich wischen</p>
-        <div class="scroll"><svg id="s2" role="img" aria-label="Sankey-Diagramm deiner Abgaben: von Lohnsteuer, Soli, Kirchensteuer und Sozialversicherung über Bund, Land und Stadt in die Ausgabenbereiche. Alle Beträge stehen in der Tabelle weiter unten."></svg></div>
-        <ul class="legend" id="lg2"></ul>
+        <div class="rs-scroll"><svg id="s2" role="img" aria-label="Sankey-Diagramm deiner Abgaben: von Lohnsteuer, Soli, Kirchensteuer und Sozialversicherung über Bund, Land und Stadt in die Ausgabenbereiche. Alle Beträge stehen in der Tabelle weiter unten."></svg></div>
+        <ul class="rs-legende" id="lg2"></ul>
       </div>
     </div>
 
     <div class="figure">
       <h3>Alle Töpfe, sortiert</h3>
       <p class="sub" id="barsub"></p>
-      <div class="panel"><svg id="s3" role="img" aria-label="Sortiertes Balkendiagramm deiner Abgaben je Topf in Euro. Werte auch in der Tabelle unten."></svg>
-      <ul class="legend" id="lg3"></ul></div>
+      <div class="rs-panel"><svg id="s3" role="img" aria-label="Sortiertes Balkendiagramm deiner Abgaben je Topf in Euro. Werte auch in der Tabelle unten."></svg>
+      <ul class="rs-legende" id="lg3"></ul></div>
     </div>
 
-    <div class="figure">
-      <h3>Von 100 € deiner Abgaben</h3>
-      <p class="sub">Jedes Kästchen ist 1 €, zusammengefasst nach Zweck über Sozialversicherung, Bund, {land.name} und {stadt.name}.</p>
-      <div class="panel" id="waffle"></div>
-    </div>
-
-    <details class="figure tabelle">
-      <summary><h3>Alle Posten als Tabelle</h3><span class="count" id="tcount"></span></summary>
+    <details class="rs-aufklapper figure">
+      <summary><b>Alle Posten als Tabelle</b><span id="tcount"></span></summary>
       <p class="sub" id="tsub"></p>
-      <div class="panel scroll"><table id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th class="uy">€ / Jahr</th></tr></thead><tbody></tbody></table></div>
+      <div class="rs-panel rs-scroll"><table class="rs-tabelle" id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th class="uy">€ / Jahr</th></tr></thead><tbody></tbody></table></div>
     </details>
   </section>
 
   <section class="chapter" aria-labelledby="k3">
-    <header>
-      <span class="step" aria-hidden="true">3</span>
-      <h2 id="k3">Der Bundeshaushalt im Ganzen</h2>
+    <header class="rs-kapitel">
+      <h2 id="k3"><span class="nr">3</span>Der Bundeshaushalt im Ganzen</h2>
       <p>Soll-Zahlen des Haushaltsgesetzes 2026. Über den Haushalt 2027 stimmt der Bundestag am {ABSTIMMUNG_2027} ab.</p>
     </header>
-    <div class="figures" id="bk"></div>
+    <div class="rs-kennzahlen figure" id="bk"></div>
 
     <div class="figure">
       <h3>Woher das Geld kommt, wohin es geht</h3>
       <p class="sub">Einnahmen, Bundeshaushalt, Einzelpläne. Antippen oder Überfahren zeigt Beträge.</p>
-      <div class="panel">
+      <div class="rs-panel">
         <p class="hint">Diagramm seitlich wischen</p>
-        <div class="scroll"><svg id="s1" role="img" aria-label="Sankey-Diagramm: Steuern 387,2 Mrd €, Kredite 98,0 Mrd € und Sonstiges 39,4 Mrd € fließen in den Bundeshaushalt von 524,5 Mrd € und weiter in die Einzelpläne; größter Posten Arbeit und Soziales mit 197,3 Mrd €."></svg></div>
-        <ul class="legend" id="lg1"></ul>
+        <div class="rs-scroll"><svg id="s1" role="img" aria-label="Sankey-Diagramm: Steuern 387,2 Mrd €, Kredite 98,0 Mrd € und Sonstiges 39,4 Mrd € fließen in den Bundeshaushalt von 524,5 Mrd € und weiter in die Einzelpläne; größter Posten Arbeit und Soziales mit 197,3 Mrd €."></svg></div>
+        <ul class="rs-legende" id="lg1"></ul>
       </div>
     </div>
 
     <div class="figure">
       <h3>Der Haushalt als Fläche</h3>
-      <p class="sub">Jedes Rechteck ist ein Einzelplan, Fläche entspricht den Ausgaben 2026.</p>
-      <div class="panel"><svg id="s6" role="img" aria-label="Treemap des Bundeshaushalts 2026 nach Einzelplänen; Arbeit und Soziales belegt über ein Drittel der Fläche."></svg></div>
+      <p class="sub">Jedes Rechteck ist ein Einzelplan, die Fläche entspricht den Ausgaben 2026.</p>
+      <div class="rs-panel"><svg id="s6" role="img" aria-label="Treemap des Bundeshaushalts 2026 nach Einzelplänen; Arbeit und Soziales belegt über ein Drittel der Fläche."></svg></div>
     </div>
 
     <div class="figure">
       <h3>Was sich 2027 ändern soll</h3>
       <p class="sub">Regierungsentwurf 2027 ({ENTWURF_2027_GESAMT.toLocaleString('de-DE')} Mrd €) gegenüber Soll 2026, für die Einzelpläne mit veröffentlichten Entwurfszahlen. Noch nicht beschlossen.</p>
-      <div class="panel"><svg id="s9" role="img" aria-label="Balkendiagramm der Veränderungen 2027 gegenüber 2026: Verteidigung plus 27 Milliarden, Bundesschuld plus 10 Milliarden, Gesundheit minus 7,4 Milliarden."></svg></div>
+      <div class="rs-panel"><svg id="s9" role="img" aria-label="Balkendiagramm der Veränderungen 2027 gegenüber 2026: Verteidigung plus 27 Milliarden, Bundesschuld plus 10 Milliarden, Gesundheit minus 7,4 Milliarden."></svg></div>
     </div>
 
     <div class="figure">
       <h3>Entwicklung der Bundesausgaben</h3>
       <p class="sub">Kernhaushalt in Mrd €: 2025 und 2026 beschlossen, 2027 Entwurf, ab 2028 Finanzplan.</p>
-      <div class="panel"><svg id="s10" role="img" aria-label="Säulendiagramm: Bundesausgaben 2025 502,5, 2026 524,5, 2027 Entwurf 555,4, 2028 588,2, 2029 597,8, 2030 635,4 Milliarden Euro."></svg></div>
+      <div class="rs-panel"><svg id="s10" role="img" aria-label="Säulendiagramm: Bundesausgaben 2025 502,5, 2026 524,5, 2027 Entwurf 555,4, 2028 588,2, 2029 597,8, 2030 635,4 Milliarden Euro."></svg></div>
     </div>
 
-    <p class="more"><a href="/rente/">Rentenbeitrag: Staat oder ETF? Zum Vergleich mit deinen Angaben</a></p>
+    <p class="weiter"><a href="/rente/">Rentenbeitrag: Staat oder ETF? Vergleich mit deinen Angaben</a></p>
   </section>
 </div>
 
@@ -199,94 +180,27 @@ const daten = { stadt, land, gem };
 </script>
 
 <style>
-  .hero { padding-top: 40px; }
-  h1 { font-size: clamp(38px, 7vw, 68px); letter-spacing: -0.01em; max-width: 16ch; }
-  .lead { font-family: var(--serif); font-size: 19px; line-height: 1.6; color: var(--ink-2); max-width: 56ch; margin: 18px 0 32px; }
+  .hero {
+    display: grid; gap: var(--space-12) var(--space-12); align-items: start;
+    padding-block: var(--space-12) 0;
+  }
+  @media (min-width: 960px) {
+    .hero { grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr); }
+  }
+  .eingabe { display: grid; gap: var(--space-6); min-width: 0; }
+  @media (max-width: 600px) { .t-title { font-size: 38px; } .rs-satz { font-size: 19px; } }
+  .mehr { max-width: 36em; }
+  .mehr .rs-felder { align-items: end; }
+  .hinweis { margin: var(--space-3) 0 0; font-size: 14px; color: var(--ink-3); }
+  .ergebnis { margin: 0; font-size: 21px; line-height: 1.7; max-width: 32em; }
 
-  /* Der Überweisungsträger */
-  .slip {
-    position: relative; max-width: 760px;
-    background: var(--form); border-radius: 6px;
-    padding: 34px 22px 22px;
-    display: grid; grid-template-columns: 1fr; gap: 14px;
-    box-shadow: 0 1px 0 rgb(0 0 0 / 0.04), 0 10px 30px -12px rgb(0 0 0 / 0.18);
-  }
-  .slip-title { position: absolute; top: 10px; left: 22px; margin: 0; font: 500 13px var(--cond); color: var(--form-label); }
-  .field { display: flex; flex-direction: column; gap: 4px; border: 0; margin: 0; padding: 0; min-width: 0; }
-  .lbl { font: 500 13px var(--cond); color: var(--form-label); padding: 0; }
-  .box-field {
-    font: 500 18px var(--sans); color: var(--pen); background: var(--form-field);
-    border: 0; border-radius: 3px; min-height: 44px; padding: 0 10px;
-    box-shadow: inset 0 0 0 1px var(--form-rule);
-  }
-  .box-field:disabled { color: var(--ink-3); opacity: 1; }
-  .f-empf select { font-size: 20px; width: 100%; }
-  .also { font-size: 14px; color: var(--ink-2); }
+  .hundert { margin: 0; display: grid; gap: var(--space-4); min-width: 0; }
+  .hundert figcaption { font: 650 19px/1.35 var(--font-text); }
+  .hundert .rs-raster { max-width: 340px; }
 
-  /* Betrag in Kästchen: Ziffern mit fester Breite, Kästchen als Hintergrund */
-  .digits { display: inline-flex; align-items: center; gap: 0; }
-  .digits input {
-    /* Ziffernbreite von Barlow Semi Condensed (Tabellenziffern) gemessen: 0,495 em */
-    --digit: 0.495em;
-    --box: 0.875em;
-    --line: var(--form-rule);
-    font: 500 34px/1 var(--cond); font-variant-numeric: tabular-nums; color: var(--pen);
-    --boxes: calc(7 * var(--box) + 1px);
-    /* breiter als die Kästchen: Platz für den Zeichenabstand nach der 7. Ziffer und den Cursor */
-    width: calc(var(--boxes) + var(--box)); height: 58px; border: 0; border-radius: 0;
-    padding: 0 0 0 calc((var(--box) - var(--digit)) / 2 + 0.06em); /* optisch mittig */
-    letter-spacing: calc(var(--box) - var(--digit));
-    background:
-      repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px var(--box)) 0 0 / var(--boxes) 100% no-repeat,
-      linear-gradient(var(--line), var(--line)) 0 0 / var(--boxes) 1px no-repeat,
-      linear-gradient(var(--line), var(--line)) 0 100% / var(--boxes) 1px no-repeat,
-      linear-gradient(var(--form-field), var(--form-field)) 0 0 / var(--boxes) 100% no-repeat;
-    caret-color: var(--pen);
-  }
-  /* Fokus: Kästchenlinien in Kugelschreiberblau statt Rahmen um das breitere Feld */
-  .digits input:focus-visible { outline: none; --line: var(--focus); }
-  .cur { font: 500 28px var(--cond); color: var(--ink-2); }
-
-  .zweck { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 12px; margin-top: 4px; }
-  .zweck label { display: flex; flex-direction: column; gap: 3px; font-size: 13px; color: var(--ink-2); }
-  .zweck .box-field { font-size: 16px; width: 100%; }
-  .zweck label.tick { flex-direction: row; align-items: center; gap: 10px; font-size: 15px; color: var(--ink); min-height: 44px; align-self: end; }
-  .tick input { width: 20px; height: 20px; accent-color: var(--pen); }
-
-  @media (min-width: 640px) {
-    .slip { grid-template-columns: 1.4fr 1fr; padding: 38px 28px 26px; gap: 18px 24px; }
-    .f-zweck { grid-column: 1 / -1; }
-  }
-
-  .result {
-    font: 400 clamp(21px, 2.6vw, 27px)/1.45 var(--serif); max-width: 40ch; margin: 30px 0 0; text-wrap: pretty;
-  }
-  /* Breit: Eingabe und Ergebnis nebeneinander, damit beides in einem Blick liegt */
-  @media (min-width: 1100px) {
-    .hero { display: grid; grid-template-columns: minmax(0, 760px) minmax(0, 1fr); column-gap: 48px; align-items: start; }
-    .hero h1, .hero .lead { grid-column: 1 / -1; }
-    .result { margin: 8px 0 0; font-size: 24px; }
-  }
-  .result :global(b) { font-family: var(--cond); font-weight: 600; color: var(--pen); font-variant-numeric: tabular-nums; white-space: nowrap; }
-
-  .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px 28px; margin: 0 0 40px; }
-  .more { font-size: 18px; }
-
-  /* Tabelle: standardmäßig zugeklappt */
-  .tabelle summary {
-    display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px;
-    min-height: 44px; padding: 10px 0 10px 30px; position: relative;
-    cursor: pointer; list-style: none; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
-  }
-  .tabelle summary::-webkit-details-marker { display: none; }
-  .tabelle summary::before {
-    content: ''; position: absolute; left: 6px; top: 50%; width: 8px; height: 8px; margin-top: -6px;
-    border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
-    rotate: -45deg; transition: rotate 0.15s ease-out;
-  }
-  .tabelle[open] summary::before { rotate: 45deg; }
-  .tabelle summary h3 { margin: 0; }
-  .tabelle summary:hover h3 { color: var(--pen); }
-  .tabelle .count { color: var(--ink-3); font-size: 15px; }
-  .tabelle[open] summary { margin-bottom: 14px; }
+  .rs-kapitel .nr { color: var(--ink-3); margin-right: 0.45em; }
+  .steuerung { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-3) var(--space-6); margin: var(--space-4) 0; }
+  .steuerung .rs-feld { min-width: 220px; }
+  .figure > h3 { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+  .weiter { font-size: 19px; font-weight: 600; }
 </style>
