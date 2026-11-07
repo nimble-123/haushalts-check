@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import Check from '../components/Check.astro';
+import { STAEDTE, landVon } from '../data';
+
+const START = 'oldenburg';
+const stadt = STAEDTE.find((s) => s.slug === START) ?? STAEDTE[0];
+---
+<Base title="Haushalts-Check: Wohin geht deine Lohnsteuer?" description="Rechne aus, wie viel deiner Lohnsteuer an Bund, Land und deine Stadt geht und wofür sie es ausgeben. Für alle kreisfreien Städte, mit Bundeshaushalt 2026.">
+  <Check stadt={stadt} land={landVon(stadt)} />
+</Base>

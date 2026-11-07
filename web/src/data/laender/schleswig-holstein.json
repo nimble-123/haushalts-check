@@ -1,0 +1,108 @@
+{
+  "code": "01",
+  "slug": "schleswig-holstein",
+  "name": "Schleswig-Holstein",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.09,
+  "posten": [
+    {
+      "name": "Finanzausgleich an Kommunen",
+      "v": 2657.0,
+      "g": "verw"
+    },
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 2404.0,
+      "g": "soz"
+    },
+    {
+      "name": "Schulen",
+      "v": 2004.0,
+      "g": "for"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 1841.0,
+      "g": "verw"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 1398.0,
+      "g": "verw"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 1141.0,
+      "g": "sich"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 1130.0,
+      "g": "for"
+    },
+    {
+      "name": "Verkehr",
+      "v": 766.0,
+      "g": "inf"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 648.0,
+      "g": "soz"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 630.0,
+      "g": "soz"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 615.0,
+      "g": "verw"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 555.0,
+      "g": "inf"
+    },
+    {
+      "name": "Zinsen",
+      "v": 364.0,
+      "g": "zins"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 306.0,
+      "g": "for"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 146.0,
+      "g": "inf"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 126.0,
+      "g": "for"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 126.0,
+      "g": "inf"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 123.0,
+      "g": "inf"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter. Unterm Strich negativ und daher nicht gezeigt: Vermögen und Sondervermögen (−632 Mio €)."
+}

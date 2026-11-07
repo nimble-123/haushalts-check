@@ -1,0 +1,113 @@
+{
+  "code": "05",
+  "slug": "nordrhein-westfalen",
+  "name": "Nordrhein-Westfalen",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.09,
+  "posten": [
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 19366.0,
+      "g": "soz"
+    },
+    {
+      "name": "Schulen",
+      "v": 15175.0,
+      "g": "for"
+    },
+    {
+      "name": "Finanzausgleich an Kommunen",
+      "v": 14779.0,
+      "g": "verw"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 11700.0,
+      "g": "verw"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 9930.0,
+      "g": "for"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 5371.0,
+      "g": "verw"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 4648.0,
+      "g": "soz"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 4437.0,
+      "g": "verw"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 3925.0,
+      "g": "sich"
+    },
+    {
+      "name": "Verkehr",
+      "v": 3798.0,
+      "g": "inf"
+    },
+    {
+      "name": "Vermögen und Sondervermögen",
+      "v": 3443.0,
+      "g": "verw"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 2665.0,
+      "g": "soz"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 2416.0,
+      "g": "inf"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 1991.0,
+      "g": "for"
+    },
+    {
+      "name": "Zinsen",
+      "v": 1947.0,
+      "g": "zins"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 1128.0,
+      "g": "inf"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 667.0,
+      "g": "inf"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 491.0,
+      "g": "for"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 455.0,
+      "g": "inf"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter."
+}

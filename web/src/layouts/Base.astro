@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL('/og.png', Astro.site).href : undefined;
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f3f4f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#131417" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <header class="site page">
+      <a href="/" class="brand">Haushalts-Check</a>
+      <nav aria-label="Hauptnavigation">
+        <a href="/staedte/">Städte</a>
+        <a href="/rente/">Rente oder ETF</a>
+        <a href="/methodik/">So ist gerechnet</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site page">
+      <p>Ein unabhängiges Rechenbeispiel, keine Steuer- oder Anlageberatung. Deine Eingaben bleiben in deinem Browser.</p>
+      <nav aria-label="Rechtliches">
+        <a href="/impressum/">Impressum</a>
+        <a href="/datenschutz/">Datenschutz</a>
+      </nav>
+    </footer>
+    <div class="tip" id="tip" role="presentation"></div>
+  </body>
+</html>
+
+<style>
+  header.site {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px;
+    padding-top: 18px; padding-bottom: 18px;
+  }
+  .brand { font: 600 20px var(--cond); color: var(--ink); text-decoration: none; }
+  nav { display: flex; flex-wrap: wrap; gap: 4px 4px; }
+  nav a {
+    color: var(--ink-2); text-decoration: none; font-size: 15px;
+    min-height: 40px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 8px;
+    transition: background-color 0.12s ease-out;
+  }
+  nav a:hover { background: var(--surface); color: var(--ink); }
+  footer.site {
+    margin-top: 96px; padding-top: 24px; padding-bottom: 40px; border-top: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: var(--ink-3); font-size: 14px;
+  }
+  footer p { margin: 0; max-width: 60ch; }
+</style>

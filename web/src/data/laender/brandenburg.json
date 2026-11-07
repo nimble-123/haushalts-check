@@ -1,0 +1,108 @@
+{
+  "code": "12",
+  "slug": "brandenburg",
+  "name": "Brandenburg",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.09,
+  "posten": [
+    {
+      "name": "Finanzausgleich an Kommunen",
+      "v": 2983.0,
+      "g": "verw"
+    },
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 2535.0,
+      "g": "soz"
+    },
+    {
+      "name": "Schulen",
+      "v": 1722.0,
+      "g": "for"
+    },
+    {
+      "name": "Verkehr",
+      "v": 1495.0,
+      "g": "inf"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 927.0,
+      "g": "verw"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 697.0,
+      "g": "inf"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 668.0,
+      "g": "for"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 653.0,
+      "g": "soz"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 636.0,
+      "g": "sich"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 631.0,
+      "g": "soz"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 625.0,
+      "g": "verw"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 618.0,
+      "g": "verw"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 579.0,
+      "g": "inf"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 507.0,
+      "g": "for"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 216.0,
+      "g": "for"
+    },
+    {
+      "name": "Vermögen und Sondervermögen",
+      "v": 208.0,
+      "g": "verw"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 183.0,
+      "g": "inf"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 114.0,
+      "g": "inf"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter. Unterm Strich negativ und daher nicht gezeigt: Zinsen (−756 Mio €)."
+}

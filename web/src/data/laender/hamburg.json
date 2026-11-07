@@ -1,0 +1,108 @@
+{
+  "code": "02",
+  "slug": "hamburg",
+  "name": "Hamburg",
+  "jahr": 2022,
+  "einheit": "Mio €",
+  "art": "Rechnungsergebnis, bereinigte Ausgaben nach Aufgabenbereichen",
+  "kirchensteuer": 0.09,
+  "posten": [
+    {
+      "name": "Soziales, Familie, Jugend",
+      "v": 4265.0,
+      "g": "soz"
+    },
+    {
+      "name": "Schulen",
+      "v": 3195.0,
+      "g": "for"
+    },
+    {
+      "name": "Verkehr",
+      "v": 2682.0,
+      "g": "inf"
+    },
+    {
+      "name": "Pensionen und Beihilfen",
+      "v": 2051.0,
+      "g": "verw"
+    },
+    {
+      "name": "Energie, Wasser, Wirtschaft",
+      "v": 1655.0,
+      "g": "inf"
+    },
+    {
+      "name": "Kindertagesbetreuung",
+      "v": 1533.0,
+      "g": "soz"
+    },
+    {
+      "name": "Hochschulen",
+      "v": 1508.0,
+      "g": "for"
+    },
+    {
+      "name": "Polizei, Sicherheit und Justiz",
+      "v": 1321.0,
+      "g": "sich"
+    },
+    {
+      "name": "Politische Führung und Verwaltung",
+      "v": 1171.0,
+      "g": "verw"
+    },
+    {
+      "name": "Vermögen und Sondervermögen",
+      "v": 1167.0,
+      "g": "verw"
+    },
+    {
+      "name": "Übriges, nicht einzeln ausgewiesen",
+      "v": 716.0,
+      "g": "verw"
+    },
+    {
+      "name": "Zinsen",
+      "v": 691.0,
+      "g": "zins"
+    },
+    {
+      "name": "Wohnen, Städtebau, kommunale Dienste",
+      "v": 662.0,
+      "g": "inf"
+    },
+    {
+      "name": "Gesundheit und Sport",
+      "v": 633.0,
+      "g": "soz"
+    },
+    {
+      "name": "Kultur und Religion",
+      "v": 592.0,
+      "g": "for"
+    },
+    {
+      "name": "Forschung und sonstige Bildung",
+      "v": 430.0,
+      "g": "for"
+    },
+    {
+      "name": "Umwelt- und Naturschutz",
+      "v": 80.0,
+      "g": "inf"
+    },
+    {
+      "name": "Landwirtschaft und Forsten",
+      "v": 29.0,
+      "g": "inf"
+    }
+  ],
+  "quellen": [
+    {
+      "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12",
+      "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+    }
+  ],
+  "hinweis": "Stadtstaat: Land und Stadt haben einen gemeinsamen Haushalt. Unterm Strich negativ und daher nicht gezeigt: Finanzausgleich an Kommunen (−39 Mio €)."
+}
