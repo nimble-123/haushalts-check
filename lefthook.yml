@@ -1,0 +1,12 @@
+# Git-Hooks (https://lefthook.dev). Einrichtung passiert bei `npm install` über das prepare-Skript.
+commit-msg:
+  commands:
+    conventional-commits:
+      run: npx --no -- commitlint --edit {1}
+
+pre-commit:
+  commands:
+    biome:
+      glob: "*.{ts,js,json,astro,css,md}"
+      run: npx --no -- biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
