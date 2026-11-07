@@ -2,8 +2,9 @@ import * as d3 from 'd3';
 import { type RenteErgebnis, renteVsEtf, VORLAGEN } from '../lib/rente';
 import { leseBetrag, schreibeBetrag } from '../lib/text';
 import { betragsfeld } from './betragsfeld';
+import { mitUebergang, zaehlen } from './bewegung';
 import { ladeEingaben, speichereEingaben } from './speicher';
-import { achseY, css, esc, fadenkreuz, fmtEur, gitterY, holen, rahmen } from './viz';
+import { achseY, css, esc, fadenkreuz, fmtEur, gitterY, holen, rahmen, teilstriche } from './viz';
 
 const tausendEuro = (v: d3.NumberValue) => `${Math.round(+v / 1000)} T€`;
 
@@ -72,7 +73,8 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
         .ticks(W < 420 ? 4 : 6)
         .tickFormat((v) => String(v))
         .tickSizeOuter(0),
-    );
+    )
+    .call(teilstriche, 'ax');
   if (vline) {
     svg
       .append('line')
@@ -89,9 +91,10 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
       .attr('y', m.t + 10)
       .text(W < 420 ? 'Ø Lebenserw.' : vline[1]);
   }
-  series.forEach((s) => {
+  series.forEach((s, i) => {
     svg
       .append('path')
+      .attr('data-k', `s${i}`)
       .datum(s.data)
       .attr('fill', 'none')
       .attr('stroke', s.c)
@@ -146,7 +149,8 @@ function gehaltskurve(m: RenteErgebnis) {
         .axisBottom(x)
         .ticks(W < 420 ? 4 : 8)
         .tickSizeOuter(0),
-    );
+    )
+    .call(teilstriche, 'ax');
   const line = d3
     .line<[number, number | null]>()
     .defined((d) => d[1] != null)
@@ -154,6 +158,7 @@ function gehaltskurve(m: RenteErgebnis) {
     .y((d) => y(d[1]!));
   svg
     .append('path')
+    .attr('data-k', 'nominal')
     .datum(ages.map((a, i) => [a, nom[i]] as [number, number | null]))
     .attr('fill', 'none')
     .attr('stroke', css('--ink-3'))
@@ -162,6 +167,7 @@ function gehaltskurve(m: RenteErgebnis) {
     .attr('d', line);
   svg
     .append('path')
+    .attr('data-k', 'real')
     .datum(ages.map((a, i) => [a, real[i]] as [number, number | null]))
     .attr('fill', 'none')
     .attr('stroke', css('--cat-soz'))
@@ -184,6 +190,7 @@ function gehaltskurve(m: RenteErgebnis) {
     prevBelow = below;
     svg
       .append('circle')
+      .attr('data-k', `p:${l}`)
       .attr('cx', cx)
       .attr('cy', cy)
       .attr('r', 5)
@@ -192,6 +199,7 @@ function gehaltskurve(m: RenteErgebnis) {
       .attr('stroke-width', 2);
     svg
       .append('text')
+      .attr('data-k', `pt:${l}`)
       .attr('x', cx)
       .attr('y', below ? cy + 20 : cy - 11)
       .attr('text-anchor', a === m.startAlter ? 'start' : a >= 66 ? 'end' : 'middle')
@@ -212,31 +220,37 @@ function zeichne() {
   holen('preset').hidden = !life;
   holen('pkvwrap').hidden = holen('kv', HTMLSelectElement).value !== 'pkv';
   const m = modell();
-  const fig = (v: string, l: string, mark = false) =>
-    `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${esc(l)}</span></div>`;
+  const fig = (v: number, l: string, mark = false) =>
+    `<div class="rs-kennzahl"><b data-v="${v}"${mark ? ' class="rs-mark"' : ''}>${fmtEur(v)}</b><span>${esc(l)}</span></div>`;
   const lastMonth = m.jahre ? (m.nettokostenVerlauf[m.jahre] - m.nettokostenVerlauf[m.jahre - 1]) / 12 : 0;
-  holen('rk').innerHTML =
-    fig(
-      fmtEur(m.beitragBrutto),
-      `Rentenbeiträge in ${m.jahre} Jahren, brutto (AN und AG), ${m.entgeltpunkte.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Entgeltpunkte`,
-    ) +
-    fig(
-      fmtEur(m.beitragNetto),
-      m.lebensverlauf
-        ? `kosten dich netto, von ${fmtEur(m.ersteNettokosten)} bis ${fmtEur(lastMonth)} im Monat`
-        : `kosten dich netto, etwa ${fmtEur(m.beitragNetto / m.jahre / 12)} im Monat`,
-    ) +
-    fig(
-      fmtEur(m.renteNetto),
-      `deine gesetzliche Rente ab 67, netto im Monat, lebenslang (${fmtEur(m.renteBrutto)} brutto)`,
-      true,
-    ) +
-    fig(fmtEur(m.depotReal), 'ETF-Depot mit 67, Kaufkraft heute, nach Kosten und Steuern') +
-    fig(
-      fmtEur(m.etfMonat),
-      `deine ETF-Entnahme bis ${m.depotBis}, netto im Monat, ${m.etfMonat > m.renteNetto ? 'mehr' : 'weniger'} als die Rente${m.einholAlter ? `; die Rente holt mit ${m.einholAlter} auf` : ''}`,
-      true,
-    );
+  zaehlen(
+    holen('rk'),
+    () => {
+      holen('rk').innerHTML =
+        fig(
+          m.beitragBrutto,
+          `Rentenbeiträge in ${m.jahre} Jahren, brutto (AN und AG), ${m.entgeltpunkte.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Entgeltpunkte`,
+        ) +
+        fig(
+          m.beitragNetto,
+          m.lebensverlauf
+            ? `kosten dich netto, von ${fmtEur(m.ersteNettokosten)} bis ${fmtEur(lastMonth)} im Monat`
+            : `kosten dich netto, etwa ${fmtEur(m.beitragNetto / m.jahre / 12)} im Monat`,
+        ) +
+        fig(
+          m.renteNetto,
+          `deine gesetzliche Rente ab 67, netto im Monat, lebenslang (${fmtEur(m.renteBrutto)} brutto)`,
+          true,
+        ) +
+        fig(m.depotReal, 'ETF-Depot mit 67, Kaufkraft heute, nach Kosten und Steuern') +
+        fig(
+          m.etfMonat,
+          `deine ETF-Entnahme bis ${m.depotBis}, netto im Monat, ${m.etfMonat > m.renteNetto ? 'mehr' : 'weniger'} als die Rente${m.einholAlter ? `; die Rente holt mit ${m.einholAlter} auf` : ''}`,
+          true,
+        );
+    },
+    fmtEur,
+  );
   gehaltskurve(m);
   linien(
     'ansparen',
@@ -289,7 +303,7 @@ export function startRente() {
       document.querySelectorAll('#preset button').forEach((b) => {
         b.setAttribute('aria-pressed', 'false');
       });
-      zeichne();
+      mitUebergang(zeichne);
     });
   });
   document.querySelectorAll<HTMLButtonElement>('#preset button').forEach((b) => {
@@ -301,7 +315,7 @@ export function startRente() {
       holen('c_ap', HTMLInputElement).value = String(p.hoehepunktAlter);
       holen('c_usenow', HTMLInputElement).checked = false;
       speichereEingaben(ids);
-      zeichne();
+      mitUebergang(zeichne);
       document.querySelectorAll('#preset button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });

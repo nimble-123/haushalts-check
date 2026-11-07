@@ -43,12 +43,17 @@ Raster ist das Design-System des Haushalts-Checks: einer Seite, die zeigt, wohin
 
 ## Bewegung
 
-- Ein orchestrierter Moment: Beim ersten Zeichnen erscheint das Raster als diagonale Welle (je Kästchen 30 ms später, 0,55 s, `cubic-bezier(0.2, 0, 0, 1)`).
-- Bei jeder Eingabe färben sich die Kästchen mit derselben Diagonale um (12 ms je Schritt, 0,35 s `ease-out`), damit sichtbar wird, was sich ändert.
-- Leben, aber leise: Etwa alle 9 s läuft ein Schimmer diagonal durch das Raster (Deckkraft kurz auf 68 %), nur wenn das Raster im Bild, der Tab sichtbar und kein Zweck im Fokus ist.
-- Überfahren eines Zwecks in der Liste stellt dessen Kästchen frei, die übrigen gehen auf 18 % Deckkraft.
-- Sonst nur Rückmeldung auf Handlungen: Hover-Flächen (0,12 s), Druck auf Knöpfe (`scale 0.96`), das Aufklappen, der Themenschalter (Drehung 0,3 s).
-- `prefers-reduced-motion` schaltet alle Übergänge und Animationen ab.
+Bewegung zeigt, was sich ändert. Sie ist nie Schmuck: Wer nichts tut, sieht nach dem Laden fast nichts mehr laufen. Dauern und Kurven stehen als Tokens bereit (`dauer-rueckmeldung`, `dauer-einblenden`, `dauer-wechsel`, `ease-wechsel`, `ease-auftritt`).
+
+- **Wechsel nach einer Eingabe.** Diagramme, Anteilsbalken, Kalender und Kennzahlen gleiten vom alten zum neuen Stand (`dauer-wechsel`, `ease-wechsel`), statt neu aufzuspringen. Sankey-Bänder verformen sich, die sortierten Töpfe wandern an ihren neuen Rang, der Punkt „Du“ rutscht auf der Quote-Kurve, das Datum im Kalender zählt durch die Tage, Kennzahlen zählen zum neuen Betrag. Technik: Elemente mit `data-k` behalten über das Neuzeichnen ihren Namen (`src/scripts/bewegung.ts`, `mitUebergang`). Nur bei Eingaben der Person, nie bei Größenänderung, Thema oder dem ersten Zeichnen.
+- **Neues blendet ein, Wegfallendes geht sofort.** Ein zugeschaltetes Band oder ein neuer Anteil kommt in `dauer-einblenden` dazu bzw. wächst aus null. Beschriftungen stehen immer sofort und voll deckend da.
+- **Ein Auftritt je Kapitel, mit Inhalt.** Kapitel 2: das Raster als diagonale Welle beim ersten Zeichnen (je Kästchen 30 ms später, 0,55 s, `ease-auftritt`). Kapitel 3: der Zeitraffer der Bundesausgaben; die Balken warten, bis das Diagramm im Bild ist, und wachsen dann in Jahresfolge (90 ms Abstand, 0,6 s, `ease-auftritt`), die Summen erscheinen danach. Beide laufen einmal pro Seitenaufruf.
+- **Raster bei Eingaben:** Die Kästchen färben sich mit derselben Diagonale um (12 ms je Schritt, 0,35 s `ease-out`).
+- **Leben, aber leise:** Etwa alle 9 s läuft ein Schimmer diagonal durch das Raster (Deckkraft kurz auf 68 %), nur wenn das Raster im Bild, der Tab sichtbar und kein Zweck im Fokus ist. Überfahren eines Zwecks in der Liste stellt dessen Kästchen frei, die übrigen gehen auf 18 % Deckkraft.
+- **Wechsel der Ansicht und der Seite:** Fluss und Fläche des Bundeshaushalts blenden ineinander, der Wechsel zu einer anderen Stadt blendet die Seite über (`dauer-einblenden`, View Transitions, wo der Browser sie kann).
+- **Rückmeldung auf Handlungen:** Hover-Flächen (`dauer-rueckmeldung`), Druck auf Knöpfe (`scale 0.96`), das Aufklappen, der Themenschalter (Drehung 0,3 s).
+- **Bewusst nicht:** WebGL, 3D, Parallax, Scroll-Kopplung, Einblenden jedes Abschnitts beim Scrollen, Zählen beim Laden. Videowerkzeuge wie Remotion oder Hyperframes gehören nicht auf die Seite; sie taugen höchstens für ein Video über die Seite.
+- `prefers-reduced-motion` schaltet alle Übergänge und Animationen ab: Diagramme springen auf den neuen Stand, der Zeitraffer entfällt, Seiten wechseln ohne Überblenden.
 
 ## Bedienung
 

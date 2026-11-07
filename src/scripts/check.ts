@@ -32,6 +32,7 @@ import {
 } from '../lib/steuer';
 import { fmtMrdDelta, leseBetrag, satzText, zeitraum } from '../lib/text';
 import { betragsfeld } from './betragsfeld';
+import { mitUebergang, wenigBewegung, zaehlen } from './bewegung';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
   achseY,
@@ -103,23 +104,30 @@ function satz(r: Ergebnis) {
 
 function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
   const abg = summeAbgaben(r);
-  const fig = (v: string, l: string, mark = false) =>
-    `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${esc(l)}</span></div>`;
+  const fig = (v: number, l: string, mark = false) =>
+    `<div class="rs-kennzahl"><b data-v="${v}"${mark ? ' class="rs-mark"' : ''}>${fmt(v)}</b><span>${esc(l)}</span></div>`;
   const k = r.konsum;
-  holen('pk').innerHTML =
-    fig(
-      fmt(abg),
-      `deine Abgaben${k ? ' mit Konsumsteuern ≈' : ''}, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`,
-    ) +
-    fig(fmt(r.lohnsteuer + r.soli), 'Lohnsteuer und Soli') +
-    (k
-      ? fig(fmt(k.summe), `Konsumsteuern ≈, ${r.netto ? pct(k.summe / r.netto) : '–'} vom Netto`)
-      : fig(fmt(summeSV(r)), 'Sozialabgaben, dein Anteil')) +
-    fig(
-      fmt(verfuegbar(r)),
-      k ? 'dein Netto nach Konsumsteuern ≈' : r.pkv ? 'dein Netto nach PKV-Beitrag' : 'dein Netto (Näherung)',
-      true,
-    );
+  const pk = holen('pk');
+  zaehlen(
+    pk,
+    () => {
+      pk.innerHTML =
+        fig(
+          abg,
+          `deine Abgaben${k ? ' mit Konsumsteuern ≈' : ''}, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`,
+        ) +
+        fig(r.lohnsteuer + r.soli, 'Lohnsteuer und Soli') +
+        (k
+          ? fig(k.summe, `Konsumsteuern ≈, ${r.netto ? pct(k.summe / r.netto) : '–'} vom Netto`)
+          : fig(summeSV(r), 'Sozialabgaben, dein Anteil')) +
+        fig(
+          verfuegbar(r),
+          k ? 'dein Netto nach Konsumsteuern ≈' : r.pkv ? 'dein Netto nach PKV-Beitrag' : 'dein Netto (Näherung)',
+          true,
+        );
+    },
+    fmt,
+  );
   // Anteilsbalken: Steuern, Sozialversicherung, PKV, Konsumsteuern, Netto
   const teile = (
     [
@@ -132,7 +140,21 @@ function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
   ).filter((t) => t[1] > 0);
   const a = holen('anteil');
   a.setAttribute('aria-label', `${fmtEur(r.brutto)} Brutto: ${teile.map(([n, v]) => `${n} ${fmtEur(v)}`).join(', ')}`);
-  a.innerHTML = teile.map(([, v, st, cl]) => `<i class="${cl}" style="flex:${v};${st}"></i>`).join('');
+  // Teile behalten statt neu anlegen, damit ihre Breiten per CSS gleiten; neue Teile wachsen aus null
+  const erstesMal = !a.children.length;
+  for (const c of [...a.children]) if (!teile.some(([n]) => n === (c as HTMLElement).dataset.n)) c.remove();
+  teile.forEach(([n, v, st, cl], i) => {
+    let el = [...a.children].find((c) => (c as HTMLElement).dataset.n === n) as HTMLElement | undefined;
+    if (!el) {
+      el = document.createElement('i');
+      el.dataset.n = n;
+      if (!erstesMal) el.style.flex = '0';
+      a.insertBefore(el, a.children[i] ?? null);
+      el.getBoundingClientRect();
+    }
+    el.className = cl;
+    el.setAttribute('style', `flex:${v};${st}`);
+  });
   holen('anteil-lg').innerHTML = teile
     .map(
       ([n, v, st, cl]) =>
@@ -283,6 +305,8 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   const mass = balkenMasse(schmal, 280, 5);
   const { by, bh, labW } = mass;
   const { g, beschriften } = balkenZeilen(svg, items, mass, { zeile: zeile(schmal), oben: 4, klasse: 'row' });
+  // Zeilen nach Namen benannt: Ändert sich die Rangfolge, wandern sie an ihren neuen Platz
+  g.attr('data-k', (d) => `r:${d.name}`);
   const x = d3
     .scaleLinear()
     .domain([0, d3.max(items, (d) => d.v) || 1])
@@ -298,6 +322,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
     .on('mouseleave', hideTip);
   beschriften((d) => d.name, true);
   g.append('rect')
+    .attr('data-k', (d) => `b:${d.name}`)
     .attr('x', labW)
     .attr('y', by)
     .attr('height', bh)
@@ -307,6 +332,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
     .style('pointer-events', 'none');
   g.append('text')
     .attr('class', 'val')
+    .attr('data-k', (d) => `w:${d.name}`)
     .attr('x', (d) => labW + Math.max(2, x(d.v)) + 6)
     .attr('y', by + bh / 2)
     .attr('dy', '.35em')
@@ -377,6 +403,7 @@ function chartQuote(r: Ergebnis) {
   series.forEach(([k, l, c, w, strich]) => {
     svg
       .append('path')
+      .attr('data-k', `q:${k}`)
       .datum(data)
       .attr('fill', 'none')
       .attr('stroke', c)
@@ -391,6 +418,7 @@ function chartQuote(r: Ergebnis) {
       );
     svg
       .append('text')
+      .attr('data-k', `ql:${k}`)
       .attr('x', W - m.r + 6)
       .attr('y', y(data[data.length - 1][k] as number))
       .attr('dy', '.35em')
@@ -405,6 +433,7 @@ function chartQuote(r: Ergebnis) {
     const me = summeAbgaben(r) / r.brutto;
     svg
       .append('circle')
+      .attr('data-k', 'du')
       .attr('cx', x(r.brutto))
       .attr('cy', y(me))
       .attr('r', 6)
@@ -413,6 +442,7 @@ function chartQuote(r: Ergebnis) {
       .attr('stroke-width', 2);
     svg
       .append('text')
+      .attr('data-k', 'du-t')
       .attr('x', x(r.brutto))
       .attr('y', y(me) - 13)
       .attr('text-anchor', 'middle')
@@ -485,7 +515,6 @@ function chartRaster(r: Ergebnis, fmt: (v: number) => string) {
 }
 
 // ---------- Bewegung im Raster ----------
-const wenigBewegung = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 let fokus: string | null = null;
 
 /** Einmalige diagonale Welle beim ersten Zeichnen */
@@ -579,18 +608,42 @@ function chartKalender(r: Ergebnis) {
     r.brutto,
     days,
   );
-  const html = rows
-    .map(([n, , c], i) => {
-      const a = abschnitte[i];
-      const ds = new Date(Y.getTime() + a.von * dayMs),
-        de = new Date(Y.getTime() + a.bis * dayMs);
-      return `<div class="cal-row"><span>${esc(n)}</span><span class="cal-bar"><i${c === 'sv' ? ' class="rs-hatch"' : ''} style="left:${a.start * 100}%;width:${Math.max(0.4, (a.ende - a.start) * 100)}%;${bg[c]}"></i></span><span class="cal-d num">${fd(ds)} – ${fd(de)}</span></div>`;
-    })
-    .join('');
-  const frei = new Date(Y.getTime() + freiAbTag(r, days) * dayMs);
-  holen('cal-sum').textContent =
-    `ab dem ${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })} arbeitest du für dich`;
-  box.innerHTML = `<p class="cal-lead">Ab dem <b class="rs-mark">${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</b> arbeitest du rechnerisch für dich selbst.</p>${html}`;
+  const zeilen = rows.map(([n, , c], i) => {
+    const a = abschnitte[i];
+    return {
+      n,
+      cls: c === 'sv' ? 'rs-hatch' : '',
+      style: `left:${a.start * 100}%;width:${Math.max(0.4, (a.ende - a.start) * 100)}%;${bg[c]}`,
+      zeit: `${fd(new Date(Y.getTime() + a.von * dayMs))} – ${fd(new Date(Y.getTime() + a.bis * dayMs))}`,
+    };
+  });
+  const datum = (tag: number) =>
+    new Date(Y.getTime() + tag * dayMs).toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
+  const tag = freiAbTag(r, days);
+  holen('cal-sum').textContent = `ab dem ${datum(tag)} arbeitest du für dich`;
+  const lead = `Ab dem <b class="rs-mark" data-v="${tag}">${datum(tag)}</b> arbeitest du rechnerisch für dich selbst.`;
+  // Gleiche Zeilen: Elemente behalten, damit die Abschnitte gleiten und das Datum durch die Tage zählt
+  const da = box.querySelectorAll<HTMLElement>('.cal-row');
+  const p = box.querySelector<HTMLElement>('.cal-lead');
+  if (p && da.length === zeilen.length) {
+    zeilen.forEach((z, i) => {
+      const [name, bar, zeit] = da[i].children;
+      name.textContent = z.n;
+      bar.firstElementChild!.className = z.cls;
+      bar.firstElementChild!.setAttribute('style', z.style);
+      zeit.textContent = z.zeit;
+    });
+    zaehlen(p, () => (p.innerHTML = lead), datum);
+    return;
+  }
+  box.innerHTML =
+    `<p class="cal-lead">${lead}</p>` +
+    zeilen
+      .map(
+        (z) =>
+          `<div class="cal-row"><span>${esc(z.n)}</span><span class="cal-bar"><i class="${z.cls}" style="${z.style}"></i></span><span class="cal-d num">${z.zeit}</span></div>`,
+      )
+      .join('');
 }
 
 // ---------- Tabelle ----------
@@ -831,6 +884,17 @@ function chartEntwicklung() {
     .range([H - m.b, m.t]);
   const op = { Soll: 1, Entwurf: 0.6, Finanzplan: 0.32 };
   const g = svg.selectAll('g.c').data(ENTWICKLUNG).join('g').attr('class', 'c');
+  // Zeitraffer: Bis das Diagramm ins Bild kommt, warten die Balken; dann wachsen sie in Jahresfolge
+  const wachsen = zeitraffer !== 'fertig' && !wenigBewegung();
+  const imTakt =
+    (klasse: string) =>
+    <E extends d3.BaseType, D, P extends d3.BaseType>(sel: d3.Selection<E, D, P, unknown>) => {
+      if (!wachsen) return;
+      sel
+        .classed(klasse, true)
+        .style('--d', (_, i) => `${i * 90}ms`)
+        .style('transform-origin', `0 ${y(0)}px`);
+    };
   // Übrige Ausgaben oben (blasser für Entwurf und Plan), Zinsen unten immer voll, dazwischen 2px Fläche
   const tip = (ev: MouseEvent, d: (typeof ENTWICKLUNG)[0]) =>
     showTip(
@@ -845,6 +909,7 @@ function chartEntwicklung() {
     .attr('rx', 4)
     .attr('fill', css('--line'))
     .attr('fill-opacity', (d) => op[d.status])
+    .call(imTakt('wachsen'))
     .on('mousemove', tip)
     .on('mouseleave', hideTip);
   g.append('rect')
@@ -853,6 +918,7 @@ function chartEntwicklung() {
     .attr('y', (d) => y(d.zinsen))
     .attr('height', (d) => y(0) - y(d.zinsen))
     .attr('fill', gcol('zins'))
+    .call(imTakt('wachsen'))
     .on('mousemove', tip)
     .on('mouseleave', hideTip);
   const cx = (d: (typeof ENTWICKLUNG)[0]) => x(d.jahr)! + x.bandwidth() / 2;
@@ -861,7 +927,8 @@ function chartEntwicklung() {
     .attr('y', (d) => y(d.v) - 7)
     .attr('text-anchor', 'middle')
     .text((d) => d.v.toLocaleString('de-DE', { minimumFractionDigits: 1 }))
-    .style('font-weight', 600);
+    .style('font-weight', 600)
+    .call(imTakt('nachher'));
   g.append('text')
     .attr('x', cx)
     .attr('y', H - m.b + 17)
@@ -891,6 +958,25 @@ function chartEntwicklung() {
     .attr('y1', y(0))
     .attr('y2', y(0))
     .attr('stroke', css('--rule'));
+}
+
+let zeitraffer: 'wartet' | 'laeuft' | 'fertig' = 'wartet';
+/** Startet den Zeitraffer der Bundesausgaben, sobald das Diagramm zu gut einem Drittel im Bild ist */
+function zeitrafferBeobachten() {
+  const el = document.getElementById('entwicklung');
+  if (!el) return;
+  new IntersectionObserver(
+    ([e], o) => {
+      if (!e.isIntersecting) return;
+      o.disconnect();
+      zeitraffer = 'laeuft';
+      el.classList.add('rs-zeitraffer');
+      setTimeout(() => {
+        zeitraffer = 'fertig';
+      }, 1600);
+    },
+    { threshold: 0.35 },
+  ).observe(el);
 }
 
 /** Zeile im zugeklappten „Weitere Angaben“: was gerade eingestellt ist */
@@ -1017,6 +1103,7 @@ export function start() {
   );
   liste.addEventListener('pointerleave', () => fokusAuf(null));
   schimmern();
+  zeitrafferBeobachten();
   holen('vergessen', HTMLButtonElement).addEventListener('click', () => {
     vergiss();
     location.href = '/';
@@ -1038,7 +1125,7 @@ export function start() {
     holen(id).addEventListener('input', () => {
       syncPkv();
       speichereEingaben(ids);
-      persoenlich();
+      mitUebergang(persoenlich);
     });
   });
   holen('stadt', HTMLSelectElement).addEventListener('change', (ev) => {
@@ -1052,7 +1139,7 @@ export function start() {
       document.querySelectorAll('#unit button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
-      persoenlich();
+      mitUebergang(persoenlich);
     });
   });
   document.querySelectorAll<HTMLButtonElement>('#bundansicht button').forEach((b) => {
@@ -1061,7 +1148,9 @@ export function start() {
       document.querySelectorAll('#bundansicht button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
-      bund();
+      // Fluss und Fläche blenden ineinander, wo der Browser Übergänge zwischen Zuständen kann
+      if (document.startViewTransition && !wenigBewegung()) document.startViewTransition(bund);
+      else bund();
     });
   });
   // Zugeklappte Diagramme haben keine Breite: beim Aufklappen neu zeichnen

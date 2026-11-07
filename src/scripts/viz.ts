@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import { type SankeyLink, type SankeyNode, sankey, sankeyJustify } from 'd3-sankey';
+import { merken } from './bewegung';
 
 /** Ein SVG, unabhängig davon, wie es ausgewählt wurde */
 export type Svg = d3.Selection<SVGSVGElement, unknown, d3.BaseType, unknown>;
@@ -51,8 +52,9 @@ export function width(svg: Svg) {
   return Math.max(280, box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
 }
 
-/** Leert ein SVG, behält aber <defs> (Schraffur) */
+/** Leert ein SVG, behält aber <defs> (Schraffur); merkt sich vorher die Lage für einen Übergang */
 export function clear(svg: Svg) {
+  merken(svg.node()!);
   svg.selectChildren(':not(defs)').remove();
 }
 
@@ -153,6 +155,7 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
     .selectAll('path')
     .data(links_)
     .join('path')
+    .attr('data-k', (d) => `l:${d.source.id}>${d.target.id}`)
     .attr('d', band)
     .attr('fill', (d) => d.color || d.target.color)
     .attr('fill-opacity', deckkraft)
@@ -169,6 +172,7 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
 
   const nd = svg.append('g').selectAll('g').data(knoten_).join('g');
   nd.append('rect')
+    .attr('data-k', (d: Gelegt) => `n:${d.id}`)
     .attr('x', (d: Gelegt) => d.x0)
     .attr('y', (d: Gelegt) => d.y0)
     .attr('width', (d: Gelegt) => d.x1 - d.x0)
@@ -184,6 +188,7 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
     .on('mouseleave', hideTip);
   const tall = (d: Gelegt) => d.y1 - d.y0 >= 18;
   nd.append('text')
+    .attr('data-k', (d: Gelegt) => `t:${d.id}`)
     .attr('x', (d: Gelegt) => d.x1 + 6)
     .attr('y', (d: Gelegt) => (d.y0 + d.y1) / 2 - (tall(d) ? 7 : 0))
     .attr('dy', '.35em')
@@ -196,6 +201,7 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
   nd.filter(tall)
     .append('text')
     .attr('class', 'val')
+    .attr('data-k', (d: Gelegt) => `v:${d.id}`)
     .attr('x', (d: Gelegt) => d.x1 + 6)
     .attr('y', (d: Gelegt) => (d.y0 + d.y1) / 2 + 8)
     .attr('dy', '.35em')
@@ -238,6 +244,7 @@ export function gitterY(svg: Svg, y: d3.ScaleLinear<number, number>, x1: number,
     .selectAll('line')
     .data(y.ticks(anzahl))
     .join('line')
+    .attr('data-k', (d) => `gy:${d}`)
     .attr('x1', x1)
     .attr('x2', x2)
     .attr('y1', (d) => y(d))
@@ -257,8 +264,14 @@ export function achseY(
     .attr('class', 'axis')
     .attr('transform', `translate(${links},0)`)
     .call(d3.axisLeft(y).ticks(anzahl).tickFormat(format).tickSize(0))
+    .call(teilstriche, 'ay')
     .select('.domain')
     .remove();
+}
+
+/** Teilstriche einer d3-Achse benennen, damit sie bei geänderter Skala mitgleiten */
+export function teilstriche(achse: d3.Selection<SVGGElement, unknown, d3.BaseType, unknown>, name: string) {
+  achse.selectAll<SVGGElement, d3.NumberValue>('.tick').attr('data-k', (d) => `${name}:${d}`);
 }
 
 /**

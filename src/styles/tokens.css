@@ -87,6 +87,11 @@
   --measure: 66ch;
   --page: 1120px;
   --hit: 44px;
+  --dauer-rueckmeldung: 120ms;
+  --dauer-einblenden: 200ms;
+  --dauer-wechsel: 350ms;
+  --ease-wechsel: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-auftritt: cubic-bezier(0.2, 0, 0, 1);
   --font-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
   --font-text: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
 }

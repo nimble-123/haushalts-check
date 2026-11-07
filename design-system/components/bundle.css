@@ -322,6 +322,8 @@
 .rs-anteil > i {
   min-width: 2px;
   border-radius: var(--radius-cell);
+  /* Nach einer Eingabe gleiten die Anteile zu ihrer neuen Breite */
+  transition: flex-grow var(--dauer-wechsel) var(--ease-wechsel);
 }
 .rs-anteil-legende {
   display: flex;

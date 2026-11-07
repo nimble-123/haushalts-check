@@ -195,6 +195,39 @@ svg .axis line {
   top: 0;
   bottom: 0;
   border-radius: var(--radius-cell);
+  transition-property: left, width;
+  transition-duration: var(--dauer-wechsel);
+  transition-timing-function: var(--ease-wechsel);
+}
+
+/* Zeitraffer der Bundesausgaben: Balken warten, bis das Diagramm im Bild ist, und wachsen dann in
+   Jahresfolge von der Grundlinie aus; die Summen erscheinen danach. */
+svg .wachsen {
+  transform-box: view-box;
+  animation: rs-wachsen 0.6s var(--ease-auftritt) var(--d, 0ms) both paused;
+}
+svg .nachher {
+  animation: rs-einblenden var(--dauer-einblenden) ease-out calc(var(--d, 0ms) + 0.45s) both paused;
+}
+.rs-zeitraffer .wachsen,
+.rs-zeitraffer .nachher {
+  animation-play-state: running;
+}
+@keyframes rs-wachsen {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes rs-einblenden {
+  from {
+    opacity: 0;
+  }
+}
+@media print {
+  svg .wachsen,
+  svg .nachher {
+    animation: none;
+  }
 }
 .cal-d {
   color: var(--ink-2);
@@ -236,6 +269,17 @@ svg .axis line {
   color: var(--ink-3);
   font-size: 14px;
   margin-left: var(--space-2);
+}
+
+/* Seitenwechsel (etwa zu einer anderen Stadt): kurzes Überblenden statt weißem Aufblitzen */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dauer-einblenden);
 }
 
 @media (prefers-reduced-motion: reduce) {
