@@ -80,7 +80,7 @@ Ein Test schlägt fehl, wenn `tokens.css` nicht zur JSON passt. Diagrammfarben m
 - **Rechnen ohne DOM**: Logik gehört nach `src/lib/` und bekommt Unit-Tests; `src/scripts/` verbindet sie nur mit der Seite.
 - **Texte auf Deutsch**, Du-Form, keine Versalien in Beschriftungen, Beträge deutsch formatiert (`85.000 €`).
 - **Barrierefreiheit**: Jedes Diagramm hat ein `aria-label` und eine Tabelle oder Liste mit denselben Werten; Bedienelemente sind mindestens 44px hoch; die E2E-Tests prüfen WCAG 2 AA mit axe.
-- **Keine Drittanbieter** im Browser: Schriften und Bibliotheken werden mitgebaut, es gibt kein Tracking.
+- **Keine Drittanbieter** im Browser: Schriften und Bibliotheken werden mitgebaut. Einzige Messung ist Vercel Web Analytics (cookielos, nur im Build auf Vercel aktiv, siehe `Base.astro`); weitere Dienste nur mit Eintrag in der Datenschutzerklärung.
 
 ## Fehler melden
 

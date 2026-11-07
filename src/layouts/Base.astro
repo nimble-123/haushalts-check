@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import bricolage from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
+import hanken from '@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url';
+import Analytics from '@vercel/analytics/astro';
 import { THEMA_START } from '../scripts/thema-start';
 
 interface Props {
@@ -10,6 +13,8 @@ const { title, description } = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const ogImage = Astro.site ? new URL('/og.png', Astro.site).href : undefined;
 const pfad = Astro.url.pathname;
+// Reichweitenmessung nur im Build auf Vercel; lokal, in Tests und Lighthouse CI gibt es den Endpunkt nicht
+const analytics = process.env.VERCEL === '1';
 const nav = [
   { href: '/staedte/', label: 'Städte' },
   { href: '/rente/', label: 'Rente oder ETF' },
@@ -25,6 +30,8 @@ const nav = [
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={hanken} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bricolage} as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#101318" media="(prefers-color-scheme: dark)" />
     <meta property="og:type" content="website" />
@@ -63,7 +70,9 @@ const nav = [
       </nav>
     </footer>
     <div class="rs-tip" id="tip" role="presentation"></div>
+    {analytics && <Analytics />}
     <script>
+      import { THEMA_KEY } from '../scripts/thema-start';
       const knopf = document.getElementById('thema') as HTMLButtonElement;
       const dunkel = () => document.documentElement.dataset.theme === 'dark'
         || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
@@ -75,7 +84,7 @@ const nav = [
       knopf.addEventListener('click', () => {
         const neu = dunkel() ? 'light' : 'dark';
         document.documentElement.dataset.theme = neu;
-        try { localStorage.setItem('haushalts-check-thema', neu); } catch {}
+        try { localStorage.setItem(THEMA_KEY, neu); } catch { /* privates Fenster: Wahl gilt nur bis zum Neuladen */ }
         zeige();
       });
       matchMedia('(prefers-color-scheme: dark)').addEventListener('change', zeige);

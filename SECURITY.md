@@ -8,7 +8,7 @@ Umgesetzte Maßnahmen:
 
 - Content-Security-Policy je Seite (Astro, Hashes für alle Inline-Skripte und -Styles), dazu Security-Header über `vercel.json` (frame-ancestors, nosniff, Referrer-, Permissions- und Cross-Origin-Policies).
 - Texte aus den Daten werden vor dem Einfügen als HTML escapt; ein Test prüft, dass die Daten keine HTML-Zeichen enthalten.
-- Keine Drittanbieter im Browser: Schriften und Bibliotheken werden mitgebaut, kein Tracking.
+- Keine Drittanbieter im Browser: Schriften und Bibliotheken werden mitgebaut. Die Reichweitenmessung (Vercel Web Analytics) läuft cookielos über die eigene Domain und ist durch die CSP abgedeckt.
 - Abhängigkeiten mit Lockfile, wöchentliche Updates über Dependabot, CI mit `npm ci`.
 - Zugangsdaten der Daten-Pipeline nur lokal in `.env.local` (von Git ausgeschlossen).
 

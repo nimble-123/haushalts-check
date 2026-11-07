@@ -6,9 +6,50 @@
 @import "../../design-system/components/bundle.css";
 
 /* Fontsource benennt die variablen Familien mit „Variable“; das System erwartet die Grundnamen. */
+/* Ersatzschriften mit den Maßen der Webschriften: kein Umbruch und kein Springen, wenn die Webschrift nachlädt.
+   Werte aus den Schriftdateien bei den genutzten Gewichten berechnet (mittlere Zeichenbreite eines Seitentexts
+   und Höhenmaße relativ zu Arial bzw. Arial Bold). */
+@font-face {
+  font-family: "Hanken Grotesk Fallback";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Helvetica");
+  font-weight: 100 549;
+  size-adjust: 99.43%;
+  ascent-override: 100.57%;
+  descent-override: 30.47%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Hanken Grotesk Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Helvetica Bold");
+  font-weight: 550 900;
+  size-adjust: 94.9%;
+  ascent-override: 105.38%;
+  descent-override: 31.93%;
+  line-gap-override: 0%;
+}
+/* Bricolage: Überschriften (650, optische Größe ~30) und Titel (700, ~48) getrennt angepasst */
+@font-face {
+  font-family: "Bricolage Grotesque Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Helvetica Bold");
+  font-weight: 100 679;
+  size-adjust: 98.39%;
+  ascent-override: 94.53%;
+  descent-override: 27.44%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Bricolage Grotesque Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Helvetica Bold");
+  font-weight: 680 900;
+  size-adjust: 96.76%;
+  ascent-override: 96.11%;
+  descent-override: 27.9%;
+  line-gap-override: 0%;
+}
+
 :root {
-  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
-  --font-text: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque Fallback", "Arial Narrow", system-ui, sans-serif;
+  --font-text: "Hanken Grotesk Variable", "Hanken Grotesk Fallback", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 *,
