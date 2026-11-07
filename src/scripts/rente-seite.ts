@@ -1,7 +1,9 @@
 import * as d3 from 'd3';
 import { type RenteErgebnis, renteVsEtf, VORLAGEN } from '../lib/rente';
 import { ladeEingaben, speichereEingaben } from './speicher';
-import { css, esc, fmtEur, hideTip, holen, showTip, width } from './viz';
+import { achseY, css, esc, fadenkreuz, fmtEur, gitterY, holen, rahmen } from './viz';
+
+const tausendEuro = (v: d3.NumberValue) => `${Math.round(+v / 1000)} T€`;
 
 /** Zahl aus einem Eingabefeld oder einer Auswahl */
 const num = (id: string) => {
@@ -40,12 +42,8 @@ interface Serie {
   dash?: string;
 }
 function linien(id: string, x0: number, x1: number, series: Serie[], legend: string, vline?: [number, string]) {
-  const svg = d3.select<SVGSVGElement, unknown>(`#${id}`);
-  svg.selectAll('*').remove();
-  const W = width(svg),
-    H = W < 420 ? 240 : 280,
-    m = { l: 54, r: 12, t: 14, b: 26 };
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
+  const { svg, W, H } = rahmen(id, (_, schmal) => (schmal ? 240 : 280), 420);
+  const m = { l: 54, r: 12, t: 14, b: 26 };
   const x = d3
     .scaleLinear()
     .domain([x0, x1])
@@ -55,29 +53,8 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
     .domain([0, (d3.max(series, (s) => d3.max(s.data)) ?? 1) * 1.08 || 1])
     .nice()
     .range([H - m.b, m.t]);
-  svg
-    .append('g')
-    .attr('class', 'grid')
-    .selectAll('line')
-    .data(y.ticks(4))
-    .join('line')
-    .attr('x1', m.l)
-    .attr('x2', W - m.r)
-    .attr('y1', (d) => y(d))
-    .attr('y2', (d) => y(d));
-  svg
-    .append('g')
-    .attr('class', 'axis')
-    .attr('transform', `translate(${m.l},0)`)
-    .call(
-      d3
-        .axisLeft(y)
-        .ticks(4)
-        .tickFormat((v) => `${Math.round(+v / 1000)} T€`)
-        .tickSize(0),
-    )
-    .select('.domain')
-    .remove();
+  gitterY(svg, y, m.l, W - m.r, 4);
+  achseY(svg, y, m.l, 4, tausendEuro);
   svg
     .append('g')
     .attr('class', 'axis')
@@ -121,46 +98,21 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
           .y((d) => y(d)),
       );
   });
-  const ch = svg
-    .append('line')
-    .attr('y1', m.t)
-    .attr('y2', H - m.b)
-    .attr('stroke', css('--ink-2'))
-    .style('opacity', 0);
-  svg
-    .append('rect')
-    .attr('x', m.l)
-    .attr('y', m.t)
-    .attr('width', W - m.l - m.r)
-    .attr('height', H - m.t - m.b)
-    .attr('fill', 'transparent')
-    .on('mousemove', (ev) => {
-      const [mx] = d3.pointer(ev);
-      const i = Math.max(0, Math.min(x1 - x0, Math.round(x.invert(mx) - x0)));
-      ch.attr('x1', x(x0 + i))
-        .attr('x2', x(x0 + i))
-        .style('opacity', 1);
-      showTip(
-        ev,
-        `<b>Alter ${x0 + i}</b>${series.map((s) => `${esc(s.name)}: ${fmtEur(s.data[i] ?? 0)}`).join('<br>')}`,
-      );
-    })
-    .on('mouseleave', () => {
-      ch.style('opacity', 0);
-      hideTip();
-    });
+  fadenkreuz(svg, m, W, H, (mx) => {
+    const i = Math.max(0, Math.min(x1 - x0, Math.round(x.invert(mx) - x0)));
+    return {
+      x: x(x0 + i),
+      html: `<b>Alter ${x0 + i}</b>${series.map((s) => `${esc(s.name)}: ${fmtEur(s.data[i] ?? 0)}`).join('<br>')}`,
+    };
+  });
   holen(legend).innerHTML = series
     .map((s) => `<li><span class="rs-farbe" style="background:${s.c}"></span>${esc(s.name)}</li>`)
     .join('');
 }
 
 function gehaltskurve(m: RenteErgebnis) {
-  const svg = d3.select<SVGSVGElement, unknown>('#gehaltskurve');
-  svg.selectAll('*').remove();
-  const W = width(svg),
-    H = W < 420 ? 240 : 260,
-    mg = { l: 54, r: 16, t: 28, b: 26 };
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
+  const { svg, W, H } = rahmen('gehaltskurve', (_, schmal) => (schmal ? 240 : 260), 420);
+  const mg = { l: 54, r: 16, t: 28, b: 26 };
   const ages = m.gehaelter.map((_, i) => m.startAlter + i).concat([67]);
   const real = m.gehaelter.concat([m.gehaelter[m.gehaelter.length - 1]]);
   const nom = ages.map((a, i) => {
@@ -176,29 +128,8 @@ function gehaltskurve(m: RenteErgebnis) {
     .domain([0, (d3.max([...nom, ...real].filter((v): v is number => v != null)) ?? 1) * 1.1])
     .nice()
     .range([H - mg.b, mg.t]);
-  svg
-    .append('g')
-    .attr('class', 'grid')
-    .selectAll('line')
-    .data(y.ticks(4))
-    .join('line')
-    .attr('x1', mg.l)
-    .attr('x2', W - mg.r)
-    .attr('y1', (d) => y(d))
-    .attr('y2', (d) => y(d));
-  svg
-    .append('g')
-    .attr('class', 'axis')
-    .attr('transform', `translate(${mg.l},0)`)
-    .call(
-      d3
-        .axisLeft(y)
-        .ticks(4)
-        .tickFormat((v) => `${Math.round(+v / 1000)} T€`)
-        .tickSize(0),
-    )
-    .select('.domain')
-    .remove();
+  gitterY(svg, y, mg.l, W - mg.r, 4);
+  achseY(svg, y, mg.l, 4, tausendEuro);
   svg
     .append('g')
     .attr('class', 'axis')

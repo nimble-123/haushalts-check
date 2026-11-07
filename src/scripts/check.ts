@@ -32,17 +32,22 @@ import {
 import { fmtMrdDelta, satzText, zeitraum } from '../lib/text';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
-  clear,
+  achseY,
+  balkenMasse,
+  balkenZeilen,
   css,
   drawSankey,
   esc,
+  fadenkreuz,
   fmtEur,
   fmtMrd,
+  gitterY,
   hatch,
   hideTip,
   holen,
   type Knoten,
   pct,
+  rahmen,
   type SKnoten,
   showTip,
   type Verbindung,
@@ -273,42 +278,25 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
     });
   });
   items.sort((a, b) => b.v - a.v);
-  const svg = d3.select<SVGSVGElement, unknown>('#toepfe');
-  clear(svg);
-  const W = width(svg),
-    narrow = W < 560,
-    rowH = narrow ? 36 : 26,
-    labW = narrow ? 0 : 280,
-    H = items.length * rowH + 8;
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
+  const zeile = (schmal: boolean) => (schmal ? 36 : 26);
+  const { svg, W, schmal } = rahmen('toepfe', (_, s) => items.length * zeile(s) + 8);
+  const mass = balkenMasse(schmal, 280, 5);
+  const { by, bh, labW } = mass;
+  const { g, beschriften } = balkenZeilen(svg, items, mass, { zeile: zeile(schmal), oben: 4, klasse: 'row' });
   const x = d3
     .scaleLinear()
     .domain([0, d3.max(items, (d) => d.v) || 1])
     .range([0, W - labW - 86]);
-  const g = svg
-    .selectAll('g.row')
-    .data(items)
-    .join('g')
-    .attr('class', 'row')
-    .attr('transform', (_, i) => `translate(0,${4 + i * rowH})`);
-  const by = narrow ? 17 : 5,
-    bh = narrow ? 13 : 15;
   g.append('rect')
     .attr('x', 0)
     .attr('width', W)
-    .attr('height', rowH)
+    .attr('height', zeile(schmal))
     .attr('fill', 'transparent')
     .on('mousemove', (ev, d) =>
       showTip(ev, `<b>${esc(d.name)}</b>${fmt(d.v)}${r.brutto ? ` · ${pct(d.v / r.brutto)} vom Brutto` : ''}`),
     )
     .on('mouseleave', hideTip);
-  g.append('text')
-    .attr('x', narrow ? 0 : labW - 10)
-    .attr('y', narrow ? 11 : by + bh / 2)
-    .attr('dy', narrow ? 0 : '.35em')
-    .attr('text-anchor', narrow ? 'start' : 'end')
-    .text((d) => d.name)
-    .style('pointer-events', 'none');
+  beschriften((d) => d.name, true);
   g.append('rect')
     .attr('x', labW)
     .attr('y', by)
@@ -334,13 +322,8 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
 function chartQuote(r: Ergebnis) {
   const base = eingabe();
   const data = abgabenquoten(base, !!r.konsum);
-  const svg = d3.select<SVGSVGElement, unknown>('#quote');
-  svg.selectAll('*').remove();
-  const W = width(svg),
-    narrow = W < 560,
-    H = narrow ? 300 : 340,
-    m = { l: 42, r: narrow ? 80 : r.konsum ? 128 : 100, t: 16, b: 28 };
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
+  const { svg, W, H, schmal: narrow } = rahmen('quote', (_, schmal) => (schmal ? 300 : 340));
+  const m = { l: 42, r: narrow ? 80 : r.konsum ? 128 : 100, t: 16, b: 28 };
   const x = d3
     .scaleLinear()
     .domain([15000, 160000])
@@ -349,29 +332,8 @@ function chartQuote(r: Ergebnis) {
     .scaleLinear()
     .domain([0, Math.ceil(((d3.max(data, (d) => d.gesamt) ?? 0.5) + 0.03) * 10) / 10])
     .range([H - m.b, m.t]);
-  svg
-    .append('g')
-    .attr('class', 'grid')
-    .selectAll('line')
-    .data(y.ticks(5))
-    .join('line')
-    .attr('x1', m.l)
-    .attr('x2', W - m.r)
-    .attr('y1', (d) => y(d))
-    .attr('y2', (d) => y(d));
-  svg
-    .append('g')
-    .attr('class', 'axis')
-    .attr('transform', `translate(${m.l},0)`)
-    .call(
-      d3
-        .axisLeft(y)
-        .ticks(5)
-        .tickFormat((d) => `${Math.round(+d * 100)} %`)
-        .tickSize(0),
-    )
-    .select('.domain')
-    .remove();
+  gitterY(svg, y, m.l, W - m.r, 5);
+  achseY(svg, y, m.l, 5, (d) => `${Math.round(+d * 100)} %`);
   svg
     .append('g')
     .attr('class', 'axis')
@@ -457,33 +419,14 @@ function chartQuote(r: Ergebnis) {
       .style('stroke', css('--surface'))
       .style('stroke-width', 4);
   }
-  const ch = svg
-    .append('line')
-    .attr('y1', m.t)
-    .attr('y2', H - m.b)
-    .attr('stroke', css('--ink-2'))
-    .style('opacity', 0);
-  svg
-    .append('rect')
-    .attr('x', m.l)
-    .attr('y', m.t)
-    .attr('width', W - m.l - m.r)
-    .attr('height', H - m.t - m.b)
-    .attr('fill', 'transparent')
-    .on('mousemove', (ev) => {
-      const [mx] = d3.pointer(ev);
-      const B = Math.round(x.invert(mx) / 500) * 500;
-      const d = data.find((q) => q.brutto === B) ?? data[0];
-      ch.attr('x1', x(d.brutto)).attr('x2', x(d.brutto)).style('opacity', 1);
-      showTip(
-        ev,
-        `<b>${fmtEur(d.brutto)} Brutto</b>Gesamt ${pct(d.gesamt)}<br>Steuern ${pct(d.steuern)}${base.pkv ? '' : `<br>Sozialabgaben ${pct(d.sozial)}`}${r.konsum ? `<br>Konsumsteuern ≈ ${pct(d.konsum)}` : ''}`,
-      );
-    })
-    .on('mouseleave', () => {
-      ch.style('opacity', 0);
-      hideTip();
-    });
+  fadenkreuz(svg, m, W, H, (mx) => {
+    const B = Math.round(x.invert(mx) / 500) * 500;
+    const d = data.find((q) => q.brutto === B) ?? data[0];
+    return {
+      x: x(d.brutto),
+      html: `<b>${fmtEur(d.brutto)} Brutto</b>Gesamt ${pct(d.gesamt)}<br>Steuern ${pct(d.steuern)}${base.pkv ? '' : `<br>Sozialabgaben ${pct(d.sozial)}`}${r.konsum ? `<br>Konsumsteuern ≈ ${pct(d.konsum)}` : ''}`,
+    };
+  });
   holen('lg-quote').innerHTML =
     series
       .map(([, l, c, , strich]) =>
@@ -783,15 +726,11 @@ function chartTreemap() {
     .style('fill', (d) => (light(blatt(d).g) ? css('--on-hell') : css('--on-dunkel')));
 }
 function chart2027() {
-  const svg = d3.select<SVGSVGElement, unknown>('#entwurf-2027');
-  svg.selectAll('*').remove();
   const data = veraenderung2027();
-  const W = width(svg),
-    narrow = W < 560,
-    rowH = narrow ? 36 : 28,
-    labW = narrow ? 0 : 240,
-    H = data.length * rowH + 24;
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
+  const zeile = (schmal: boolean) => (schmal ? 36 : 28);
+  const { svg, W, H, schmal: narrow } = rahmen('entwurf-2027', (_, s) => data.length * zeile(s) + 24);
+  const mass = balkenMasse(narrow, 240, 6);
+  const { by, bh, labW } = mass;
   const ext = d3.max(data, (d) => Math.abs(d.d)) ?? 1;
   const x = d3
     .scaleLinear()
@@ -815,14 +754,7 @@ function chart2027() {
         .tickFormat((v) => `${(+v > 0 ? '+' : '') + v} Mrd`)
         .tickSizeOuter(0),
     );
-  const g = svg
-    .selectAll('g.r')
-    .data(data)
-    .join('g')
-    .attr('class', 'r')
-    .attr('transform', (_, i) => `translate(0,${i * rowH})`);
-  const by = narrow ? 17 : 6,
-    bh = narrow ? 13 : 15;
+  const { g, beschriften } = balkenZeilen(svg, data, mass, { zeile: zeile(narrow), oben: 0, klasse: 'r' });
   g.append('rect')
     .attr('x', (d) => x(Math.min(0, d.d)))
     .attr('width', (d) => Math.max(2, Math.abs(x(d.d) - x(0))))
@@ -832,12 +764,7 @@ function chart2027() {
     .attr('fill', (d) => gcol(d.g))
     .on('mousemove', (ev, d) => showTip(ev, `<b>${esc(d.name)}</b>${fmtMrdDelta(d.d)}`))
     .on('mouseleave', hideTip);
-  g.append('text')
-    .attr('x', narrow ? 0 : labW - 10)
-    .attr('text-anchor', narrow ? 'start' : 'end')
-    .attr('y', narrow ? 11 : by + bh / 2)
-    .attr('dy', narrow ? 0 : '.35em')
-    .text((d) => d.name);
+  beschriften((d) => d.name);
   g.append('text')
     .attr('class', 'val')
     .attr('y', by + bh / 2)
@@ -847,12 +774,8 @@ function chart2027() {
     .text((d) => fmtMrdDelta(d.d).replace(/\u00a0€$/, ''));
 }
 function chartEntwicklung() {
-  const svg = d3.select<SVGSVGElement, unknown>('#entwicklung');
-  svg.selectAll('*').remove();
-  const W = width(svg),
-    H = 280,
-    m = { l: 8, r: 8, t: 26, b: 42 };
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
+  const { svg, W, H, schmal } = rahmen('entwicklung', () => 280);
+  const m = { l: 8, r: 8, t: 26, b: 42 };
   const x = d3
     .scaleBand<number>()
     .domain(ENTWICKLUNG.map((d) => d.jahr))
@@ -891,7 +814,7 @@ function chartEntwicklung() {
     .attr('x', cx)
     .attr('y', H - m.b + 32)
     .attr('text-anchor', 'middle')
-    .text((d) => (W < 560 ? { Soll: 'Soll', Entwurf: 'Entw.', Finanzplan: 'Plan' }[d.status] : d.status));
+    .text((d) => (schmal ? { Soll: 'Soll', Entwurf: 'Entw.', Finanzplan: 'Plan' }[d.status] : d.status));
   svg
     .append('line')
     .attr('x1', m.l)
