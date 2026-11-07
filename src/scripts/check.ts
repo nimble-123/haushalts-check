@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import { BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTWURF_2027, ENTWURF_2027_GESAMT } from '../data/bund';
 import { type GemeindeEbene, GRUPPEN, type Gruppe, type Land, type Stadt } from '../data/types';
 import { naechsteStadt, type Ort } from '../lib/naehe';
+import { ergebnisSatz } from '../lib/satz';
 import { aufEbenen, berechne, type Eingabe, type Ergebnis, summeAbgaben, summeSV } from '../lib/steuer';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
@@ -86,22 +87,7 @@ function eingabe(bruttoOverride?: number): Eingabe {
 
 // ---------- Ergebnis-Satz und Kennzahlen ----------
 function satz(r: Ergebnis) {
-  const e = aufEbenen(r);
-  const f = (v: number) => `<b class="rs-mark">${fmtEur(v)}</b>`;
-  const out = $('#result');
-  if (!r.brutto) {
-    out.innerHTML = 'Trag oben dein Jahresbrutto ein.';
-    return;
-  }
-  if (!r.lohnsteuer) {
-    out.innerHTML = `Bei ${f(r.brutto)} Brutto fällt keine Lohnsteuer an. Deine Abgaben gehen nur an die Sozialversicherung: ${f(summeSV(r))} im Jahr.`;
-    return;
-  }
-  const top = [...gem.posten].sort((a, b) => b.v - a.v).find((p) => p.g !== 'verw') ?? gem.posten[0];
-  const davon = `${gem.schaetzung ? 'geschätzt ' : ''}${f((e.gemeinde * top.v) / GEM_T)} für ${esc(top.name)}`;
-  out.innerHTML = stadt.stadtstaat
-    ? `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund und ${f(e.land + e.gemeinde)} an ${esc(stadt.name)} (Land und Stadt), davon ${f(((e.land + e.gemeinde) * top.v) / GEM_T)} für ${esc(top.name)}.`
-    : `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund, ${f(e.land)} an ${esc(land.name)} und ${f(e.gemeinde)} an ${esc(stadt.name)}, davon ${davon}.`;
+  $('#result').innerHTML = ergebnisSatz(r, stadt, land, gem);
 }
 
 function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
@@ -1101,8 +1087,12 @@ export function start() {
       if (d.open) persoenlich();
     });
   });
+  // Nur bei geänderter Breite neu zeichnen (auf dem Handy ändert die Adressleiste ständig die Höhe)
   let t: number;
+  let breite = innerWidth;
   addEventListener('resize', () => {
+    if (innerWidth === breite) return;
+    breite = innerWidth;
     clearTimeout(t);
     t = window.setTimeout(alles, 150);
   });

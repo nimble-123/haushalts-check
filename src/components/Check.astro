@@ -1,14 +1,18 @@
 ---
 import { ausgabeVergleich, gemeindeEbene, LAENDER, STAEDTE } from '../data';
-import { abstimmungSatz, ENTWURF_2027_GESAMT } from '../data/bund';
+import { abstimmungSatz, BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTWURF_2027_GESAMT } from '../data/bund';
 import { MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
 import type { Land, Stadt } from '../data/types';
+import { ergebnisSatz } from '../lib/satz';
+import { berechne } from '../lib/steuer';
 
 interface Props {
   stadt: Stadt;
   land: Land;
+  /** Stadtseiten nennen die Stadt in der Überschrift, die Startseite nicht */
+  stadtImTitel?: boolean;
 }
-const { stadt, land } = Astro.props;
+const { stadt, land, stadtImTitel = false } = Astro.props;
 
 const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.land === l.code) })).filter(
   (g) => g.staedte.length,
@@ -18,10 +22,22 @@ const arten = ausgabeVergleich(stadt);
 // Für „In meiner Nähe“: nur Slug und Koordinaten, die Suche läuft im Browser
 const orte = STAEDTE.filter((s) => s.lat && s.lon).map((s) => [s.slug, s.lat, s.lon] as const);
 const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
+
+// Beim Build vorab: Ergebnissatz für den Median (Suchmaschinen, Seiten ohne JavaScript, erster Eindruck)
+const vorab = ergebnisSatz(
+  berechne({ brutto: MEDIAN_BRUTTO, pkv: false, pkvMonat: 0, kinderlos: true, kirche: 0 }),
+  stadt,
+  land,
+  gem,
+);
+const mrd = (v: number) => `${v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} Mrd €`;
+const groesster = [...EINZELPLAENE].sort((a, b) => b.v - a.v)[0];
+const labelFluss = `Sankey-Diagramm: ${EINNAHMEN.map((e) => `${e.name} ${mrd(e.v)}`).join(', ')} fließen in den Bundeshaushalt von ${mrd(BUND_GESAMT)} und weiter in die Einzelpläne; größter Posten ${groesster.name} mit ${mrd(groesster.v)}. Alle Werte in der Tabelle darunter.`;
+const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map((d) => `${d.jahr} ${mrd(d.v)} (${d.status})`).join(', ')}.`;
 ---
 <section class="hero page" aria-labelledby="hero-h">
   <div class="eingabe">
-    <h1 id="hero-h" class="t-title">Wohin geht dein Geld?</h1>
+    <h1 id="hero-h" class="t-title">Wohin geht dein Geld{stadtImTitel && ` in ${stadt.name}`}?</h1>
     <p class="rs-satz">
       Ich verdiene
       <input id="brutto" class="rs-betrag" type="text" inputmode="numeric" autocomplete="off" value={MEDIAN_BRUTTO.toLocaleString('de-DE')} aria-label="Jahresbrutto in Euro" />
@@ -57,7 +73,8 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
       <p class="hinweis">Gerechnet wird mit Steuerklasse I. Deine Angaben merkt sich nur dieser Browser. <button type="button" class="rs-textknopf" id="vergessen">Eingaben vergessen</button></p>
     </details>
 
-    <p class="ergebnis" id="result" aria-live="polite"></p>
+    <p class="ergebnis" id="result" aria-live="polite" set:html={vorab}></p>
+    <noscript><p class="ohne-js">Die Rechner und Diagramme brauchen JavaScript. Der Satz oben gilt für den mittleren Bruttolohn; alle Quellen stehen unter <a href="/methodik/">So ist gerechnet</a>, alle Städte unter <a href="/staedte/">Städte</a>.</p></noscript>
   </div>
 
   <figure class="hundert">
@@ -166,7 +183,7 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
       <div class="rs-panel">
         <div id="ansicht-fluss">
           <p class="hint">Diagramm seitlich wischen</p>
-          <div class="rs-scroll" tabindex="0" role="region" aria-label="Bundeshaushalt als Fluss (seitlich scrollbar)"><svg id="s1" role="img" aria-label="Sankey-Diagramm: Steuern 387,2 Mrd €, Kredite 98,0 Mrd € und Sonstiges 39,4 Mrd € fließen in den Bundeshaushalt von 524,5 Mrd € und weiter in die Einzelpläne; größter Posten Arbeit und Soziales mit 197,3 Mrd €."></svg></div>
+          <div class="rs-scroll" tabindex="0" role="region" aria-label="Bundeshaushalt als Fluss (seitlich scrollbar)"><svg id="s1" role="img" aria-label={labelFluss}></svg></div>
         </div>
         <div id="ansicht-flaeche" hidden>
           <svg id="s6" role="img" aria-label="Treemap des Bundeshaushalts 2026 nach Einzelplänen; Arbeit und Soziales belegt über ein Drittel der Fläche."></svg>
@@ -184,8 +201,29 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
     <div class="figure">
       <h3>Entwicklung der Bundesausgaben</h3>
       <p class="sub">Kernhaushalt in Mrd €: 2025 und 2026 beschlossen, 2027 Entwurf, ab 2028 Finanzplan.</p>
-      <div class="rs-panel"><svg id="s10" role="img" aria-label="Säulendiagramm: Bundesausgaben 2025 502,5, 2026 524,5, 2027 Entwurf 555,4, 2028 588,2, 2029 597,8, 2030 635,4 Milliarden Euro."></svg></div>
+      <div class="rs-panel"><svg id="s10" role="img" aria-label={labelEntwicklung}></svg></div>
     </div>
+
+    <details class="rs-aufklapper figure">
+      <summary><b>Bundeshaushalt 2026 als Tabelle</b><span>{EINZELPLAENE.length} Einzelpläne und {EINNAHMEN.length} Einnahmearten</span></summary>
+      <div class="rs-panel rs-scroll" tabindex="0" role="region" aria-label="Bundeshaushalt 2026 als Tabelle (seitlich scrollbar)">
+        <table class="rs-tabelle">
+          <thead><tr><th>Einzelplan</th><th>Anteil</th><th>Mrd €</th></tr></thead>
+          <tbody>
+            {[...EINZELPLAENE].sort((a, b) => b.v - a.v).map((e) => (
+              <tr><td>EP {e.n} {e.name}</td><td>{(e.v / BUND_GESAMT * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %</td><td>{e.v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td></tr>
+            ))}
+            <tr><td><b>Ausgaben gesamt</b></td><td>100 %</td><td><b>{BUND_GESAMT.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b></td></tr>
+            <tr><th colspan="3" scope="colgroup" class="zwischen">Finanziert durch</th></tr>
+            {EINNAHMEN.map((e) => (
+              <tr><td>{e.name}</td><td>{(e.v / BUND_GESAMT * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %</td><td>{e.v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <p class="datenstand">Datenstand: Bund Soll 2026; {land.name} Rechnungsergebnis {land.jahr}; {stadt.name} {gem.schaetzung ? `geschätzt aus den Gemeinden des Landes ${gem.jahr}` : `wie das Land ${gem.jahr}`}{arten ? `, Ausgabearten ${arten.jahr}${arten.vorlaeufig ? ' (vorläufig)' : ''}` : ''}. <a href="/methodik/">Quellen und Rechenweg</a></p>
 
     <p class="weiter"><a href="/rente/">Rentenbeitrag: Staat oder ETF? Vergleich mit deinen Angaben</a></p>
   </section>
@@ -224,5 +262,9 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
   .steuerung { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-3) var(--space-6); margin: var(--space-4) 0; }
   .steuerung .rs-feld { min-width: 220px; }
   .figure > h3 { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+  .ohne-js { color: var(--ink-2); font-size: 15px; }
+  .datenstand { color: var(--ink-3); font-size: 14.5px; margin-top: var(--space-12); }
+  .datenstand a { color: inherit; }
+  .zwischen { text-align: left; padding-top: 18px; color: var(--ink); font-size: 15px; font-weight: 600; }
   .weiter { font-size: 19px; font-weight: 600; }
 </style>

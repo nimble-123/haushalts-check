@@ -10,5 +10,5 @@ const { stadt } = Astro.props;
 const land = landVon(stadt);
 ---
 <Base title={`Haushalts-Check ${stadt.name}: Wohin geht deine Lohnsteuer?`} description={`Wie viel deiner Lohnsteuer an ${stadt.name}, das Land ${land.name} und den Bund geht und wofür sie es ausgeben.`}>
-  <Check stadt={stadt} land={land} />
+  <Check stadt={stadt} land={land} stadtImTitel />
 </Base>

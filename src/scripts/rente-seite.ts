@@ -361,8 +361,12 @@ export function startRente() {
       });
     };
   });
+  // Nur bei geänderter Breite neu zeichnen (auf dem Handy ändert die Adressleiste ständig die Höhe)
   let t: number;
+  let breite = innerWidth;
   addEventListener('resize', () => {
+    if (innerWidth === breite) return;
+    breite = innerWidth;
     clearTimeout(t);
     t = window.setTimeout(zeichne, 150);
   });
