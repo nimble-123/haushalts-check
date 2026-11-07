@@ -27,16 +27,12 @@ type Gelegt = SKnoten & { x0: number; x1: number; y0: number; y1: number; value:
 export const $ = (sel: string) => document.querySelector(sel) as HTMLElement;
 export const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
-/** Text für HTML-Kontexte (innerHTML, Tooltips) unschädlich machen */
-export const esc = (s: string | number) =>
-  String(s).replace(
-    /[&<>"']/g,
-    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] ?? c,
-  );
+import { esc, fmtEur } from '../lib/text';
+
+export { esc, fmtEur };
 
 export const fmtMrd = (v: number) =>
   `${v.toLocaleString('de-DE', { maximumFractionDigits: 1, minimumFractionDigits: 1 })} Mrd €`;
-export const fmtEur = (v: number) => `${Math.round(v).toLocaleString('de-DE')} €`;
 export const pct = (v: number) =>
   `${(v * 100).toLocaleString('de-DE', { maximumFractionDigits: 1, minimumFractionDigits: 1 })} %`;
 

@@ -1,5 +1,6 @@
 /* Raster-Design-System: Schriften (lokal, DSGVO), Tokens (generiert), Komponenten */
-@import "@fontsource-variable/bricolage-grotesque/standard.css";
+/* opsz: Gewicht und optische Größe; die Breiten-Achse (standard.css) nutzt die Seite nicht */
+@import "@fontsource-variable/bricolage-grotesque/opsz.css";
 @import "@fontsource-variable/hanken-grotesk/wght.css";
 @import "./tokens.css";
 @import "../../design-system/components/bundle.css";
