@@ -44,21 +44,22 @@ export function clear(svg: Svg) {
 }
 
 /** Schraffur für die Sozialversicherung: Soziales-Blau, 45°, nicht über einen Haushalt */
-export function hatch(svg: Svg, key: string) {
+/** Schraffur als SVG-Muster: Sozialversicherung (cat-sv, 45°), geschätzte Konsumsteuern (ink, −45°) */
+export function hatch(svg: Svg, key: string, farbe = '--cat-sv', winkel = 45) {
   const id = `hatch-${key}`;
   let defs = svg.select<SVGDefsElement>('defs');
   if (defs.empty()) defs = svg.insert('defs', ':first-child');
   defs.select(`#${id}`).remove();
-  const blue = css('--cat-sv');
+  const strich = css(farbe);
   const p = defs
     .append('pattern')
     .attr('id', id)
     .attr('patternUnits', 'userSpaceOnUse')
     .attr('width', 5)
     .attr('height', 5)
-    .attr('patternTransform', 'rotate(45)');
+    .attr('patternTransform', `rotate(${winkel})`);
   p.append('rect').attr('width', 5).attr('height', 5).attr('fill', css('--surface'));
-  p.append('rect').attr('width', 2).attr('height', 5).attr('fill', blue);
+  p.append('rect').attr('width', 2).attr('height', 5).attr('fill', strich);
   return `url(#${id})`;
 }
 

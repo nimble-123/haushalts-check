@@ -62,6 +62,7 @@ Die Daten in `src/data/` entstehen ausschließlich über die Pipeline. Rohdateie
 npm run daten:laender        # Länder und Gemeinde-Schätzbasis (Destatis 71711-12)
 npm run daten:staedte        # Stammliste und Koordinaten der kreisfreien Städte (Gemeindeverzeichnis)
 npm run daten:ausgabearten   # Ausgabearten je Stadt (Regionaldatenbank 71717-Z-05)
+npm run daten:konsum         # Konsumsteuer-Schätzung (EVS 2018, Wirtschaftsrechnungen 2024, Steuersätze)
 ```
 
 `daten:ausgabearten` braucht ein kostenloses Konto bei [regionalstatistik.de](https://www.regionalstatistik.de). Kopiere `.env.example` nach `.env.local` und trage die Zugangsdaten ein; die Datei ist von Git ausgeschlossen. Der Abruf läuft als Hintergrund-Auftrag und dauert einige Minuten.

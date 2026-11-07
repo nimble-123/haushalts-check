@@ -3,9 +3,10 @@ import { ausgabeVergleich, gemeindeEbene, LAENDER, STAEDTE } from '../data';
 import { abstimmungSatz, BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTWURF_2027_GESAMT } from '../data/bund';
 import { MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
 import type { Land, Stadt } from '../data/types';
+import { KONSUM } from '../lib/konsum';
 import { ergebnisSatz } from '../lib/satz';
 import { ANTEIL, berechne } from '../lib/steuer';
-import { satzText } from '../lib/text';
+import { pct, satzText } from '../lib/text';
 
 interface Props {
   stadt: Stadt;
@@ -92,6 +93,11 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
       <p>Was vom Gehalt abgeht, bevor es auf deinem Konto landet.</p>
     </header>
 
+    <div class="figure konsum-wahl">
+      <label class="rs-schalter"><input id="konsum" type="checkbox" /> Konsumsteuern einrechnen</label>
+      <p class="sub">Auch was du ausgibst, ist besteuert: Mehrwert-, Energie-, Strom- und Versicherungsteuer. Geschätzt aus dem typischen Konsum Alleinlebender mit deinem Netto <span class="rs-schaetzung">≈ Schätzung</span></p>
+    </div>
+
     <div class="figure">
       <div class="rs-anteil" id="anteil" role="img"></div>
       <ul class="rs-anteil-legende" id="anteil-lg" style="list-style:none;padding:0"></ul>
@@ -116,6 +122,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
     <header class="rs-kapitel">
       <h2 id="k2"><span class="nr">2</span>Wohin es fließt</h2>
       <p>Lohnsteuer geht zu {satzText(ANTEIL.bund)} an den Bund, zu {satzText(ANTEIL.land)} an {land.name} und zu {satzText(ANTEIL.gemeinde)} an {stadt.name}. Jede Ebene verteilt ihren Anteil so wie ihren ganzen Haushalt.</p>
+      <p id="k2-konsum" hidden>Die geschätzten Konsumsteuern fließen mit: Die Mehrwertsteuer teilen sich Bund ({pct(KONSUM.mwstVerteilung.bund)}), Länder ({pct(KONSUM.mwstVerteilung.land)}) und Gemeinden ({pct(KONSUM.mwstVerteilung.gemeinde)}); Energie-, Strom- und Versicherungsteuer gehen an den Bund.</p>
     </header>
 
     <div class="figure">
@@ -265,6 +272,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
   .hundert .rs-raster { max-width: 340px; }
 
   .rs-kapitel .nr { color: var(--ink-3); margin-right: 0.45em; }
+  .konsum-wahl > .sub { margin-bottom: 0; }
   .steuerung { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-3) var(--space-6); margin: var(--space-4) 0; }
   .steuerung .rs-feld { min-width: 220px; }
   .figure > h3 { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }

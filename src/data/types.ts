@@ -69,3 +69,44 @@ export interface GemeindeEbene extends Ebene {
   /** true: Landesdurchschnitt der Gemeinden, keine stadteigenen Zahlen */
   schaetzung: boolean;
 }
+
+/** Ausgabengruppen der Einkommens- und Verbrauchsstichprobe (EVS 2018) */
+export type KonsumKategorie =
+  | 'nahrung'
+  | 'bekleidung'
+  | 'wohnen'
+  | 'innen'
+  | 'gesundheit'
+  | 'verkehr'
+  | 'post'
+  | 'freizeit'
+  | 'bildung'
+  | 'gast'
+  | 'andere';
+
+/** Grundlage der Konsumsteuer-Schätzung (pipeline/konsum.ts) */
+export interface KonsumDaten {
+  /** Verbraucherpreise heute gegenüber 2018 */
+  preisfaktor: number;
+  /** Alleinlebende nach Haushaltsnettoeinkommen, € je Monat in Preisen von 2018 */
+  klassen: {
+    netto: number;
+    konsum: number;
+    kategorien: Record<KonsumKategorie, number>;
+    /** Versicherungsbeiträge mit Versicherungsteuer */
+    versicherung: number;
+  }[];
+  /** Steueranteil am Bruttopreis je Gruppe: Mehrwertsteuer, Energiesteuer, Stromsteuer */
+  saetze: Record<KonsumKategorie, { mwst: number; energie: number; strom: number }>;
+  versicherungsteuer: number;
+  /** Aufteilung der Umsatzsteuer auf die Ebenen */
+  mwstVerteilung: { bund: number; land: number; gemeinde: number };
+  annahmen: {
+    literpreis: number;
+    benzinAnteil: number;
+    kraftstoffQuote: number;
+    stromAnteil: number;
+    rabattMonate: number;
+  };
+  quellen: { label: string; url: string }[];
+}

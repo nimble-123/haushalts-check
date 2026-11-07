@@ -13,6 +13,7 @@ import {
   veraenderung2027,
   type Zweck,
 } from '../lib/aufteilung';
+import { mitKonsum } from '../lib/konsum';
 import { naechsteStadt, type Ort } from '../lib/naehe';
 import { ergebnisSatz } from '../lib/satz';
 import {
@@ -23,7 +24,9 @@ import {
   type Ergebnis,
   SV_2026,
   summeAbgaben,
+  summeKonsum,
   summeSV,
+  verfuegbar,
 } from '../lib/steuer';
 import { fmtMrdDelta, satzText, zeitraum } from '../lib/text';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
@@ -105,18 +108,29 @@ function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
   const abg = summeAbgaben(r);
   const fig = (v: string, l: string, mark = false) =>
     `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${esc(l)}</span></div>`;
+  const k = r.konsum;
   $('#pk').innerHTML =
-    fig(fmt(abg), `deine Abgaben, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`) +
+    fig(
+      fmt(abg),
+      `deine Abgaben${k ? ' mit Konsumsteuern ≈' : ''}, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`,
+    ) +
     fig(fmt(r.lohnsteuer + r.soli), 'Lohnsteuer und Soli') +
-    fig(fmt(summeSV(r)), 'Sozialabgaben, dein Anteil') +
-    fig(fmt(r.netto), r.pkv ? 'dein Netto nach PKV-Beitrag' : 'dein Netto (Näherung)', true);
-  // Anteilsbalken: Steuern, Sozialversicherung, PKV, Netto
+    (k
+      ? fig(fmt(k.summe), `Konsumsteuern ≈, ${r.netto ? pct(k.summe / r.netto) : '–'} vom Netto`)
+      : fig(fmt(summeSV(r)), 'Sozialabgaben, dein Anteil')) +
+    fig(
+      fmt(verfuegbar(r)),
+      k ? 'dein Netto nach Konsumsteuern ≈' : r.pkv ? 'dein Netto nach PKV-Beitrag' : 'dein Netto (Näherung)',
+      true,
+    );
+  // Anteilsbalken: Steuern, Sozialversicherung, PKV, Konsumsteuern, Netto
   const teile = (
     [
       ['Steuern', r.lohnsteuer + r.soli + r.kirche, `background:${css('--ink')}`, ''],
       ['Sozialversicherung', summeSV(r), '', 'rs-hatch'],
       ['PKV-Beitrag', r.pkvBeitrag, `background:${css('--line')}`, ''],
-      ['Netto', r.netto, `background:${css('--marker')}`, ''],
+      ['Konsumsteuern ≈', summeKonsum(r), '', 'rs-hatch-konsum'],
+      ['Netto', verfuegbar(r), `background:${css('--marker')}`, ''],
     ] as const
   ).filter((t) => t[1] > 0);
   const a = $('#anteil');
@@ -148,12 +162,15 @@ function chartFluss(r: Ergebnis) {
   add('brutto', showN ? 'Dein Brutto' : 'Deine Abgaben', css('--ink'), { bold: true, col: 0 });
   const agSum = withAG ? r.ag.rv + r.ag.alv + r.ag.kv + r.ag.pv : 0;
   if (agSum > 0) add('ag', 'Arbeitgeberanteil', css('--line'), { col: 0 });
-  if (r.lohnsteuer > 0) {
-    add('lst', 'Lohnsteuer', css('--ink'), { col: 1 });
-    links.push({ source: 'brutto', target: 'lst', value: r.lohnsteuer });
+  const k = r.konsum;
+  if (r.lohnsteuer > 0 || k?.summe) {
     add('bund', 'Bund', css('--ink'), { bold: true, col: 2 });
     add('land', `Land ${land.name}`, css('--ink'), { bold: true, col: 2 });
     add('gem', stadt.stadtstaat ? `${stadt.name} (Gemeindeanteil)` : stadt.name, css('--ink'), { bold: true, col: 2 });
+  }
+  if (r.lohnsteuer > 0) {
+    add('lst', 'Lohnsteuer', css('--ink'), { col: 1 });
+    links.push({ source: 'brutto', target: 'lst', value: r.lohnsteuer });
     links.push({ source: 'lst', target: 'bund', value: r.lohnsteuer * ANTEIL.bund });
     links.push({ source: 'lst', target: 'land', value: r.lohnsteuer * ANTEIL.land });
     links.push({ source: 'lst', target: 'gem', value: r.lohnsteuer * ANTEIL.gemeinde });
@@ -165,6 +182,15 @@ function chartFluss(r: Ergebnis) {
   if (r.kirche > 0) {
     add('ki', 'Kirchensteuer', KIRCHE(), { col: 1 });
     links.push({ source: 'brutto', target: 'ki', value: r.kirche });
+  }
+  // Konsumsteuern unter den Steuern, damit ihre Bänder zu den Ebenen nicht kreuzen
+  if (k?.summe) {
+    const tinte = css('--ink');
+    add('konsum', 'Konsumsteuern ≈', hatch(svg, 's2-konsum', '--ink', -45), { col: 1 });
+    links.push({ source: 'brutto', target: 'konsum', value: k.summe, color: tinte });
+    links.push({ source: 'konsum', target: 'bund', value: k.bund, color: tinte });
+    links.push({ source: 'konsum', target: 'land', value: k.land, color: tinte });
+    links.push({ source: 'konsum', target: 'gem', value: k.gemeinde, color: tinte });
   }
   const ebene = (key: string, items: P[], total: number, betrag: number, prefix: string) =>
     items.forEach((p) => {
@@ -202,9 +228,9 @@ function chartFluss(r: Ergebnis) {
       add('pkvb', 'PKV-Beitrag', css('--line'), { col: 1 });
       links.push({ source: 'brutto', target: 'pkvb', value: r.pkvBeitrag });
     }
-    if (r.netto > 0) {
-      add('netto', 'Netto', css('--marker'), { col: 1 });
-      links.push({ source: 'brutto', target: 'netto', value: r.netto });
+    if (verfuegbar(r) > 0) {
+      add('netto', k ? 'Netto nach Konsumsteuern ≈' : 'Netto', css('--marker'), { col: 1 });
+      links.push({ source: 'brutto', target: 'netto', value: verfuegbar(r) });
     }
   }
   if (!links.length) {
@@ -312,13 +338,13 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
 // ---------- Abgabenquote ----------
 function chartQuote(r: Ergebnis) {
   const base = eingabe();
-  const data = abgabenquoten(base);
+  const data = abgabenquoten(base, !!r.konsum);
   const svg = d3.select<SVGSVGElement, unknown>('#s5');
   svg.selectAll('*').remove();
   const W = width(svg),
     narrow = W < 560,
     H = narrow ? 300 : 340,
-    m = { l: 42, r: narrow ? 80 : 100, t: 16, b: 28 };
+    m = { l: 42, r: narrow ? 80 : r.konsum ? 128 : 100, t: 16, b: 28 };
   svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
   const x = d3
     .scaleLinear()
@@ -383,19 +409,22 @@ function chartQuote(r: Ergebnis) {
       .attr('y', H - m.b - 8 - (narrow ? i * 14 : 0))
       .text(narrow ? l.replace('BBG ', '') : l);
   });
-  const series: [keyof (typeof data)[0], string, string, number][] = [
+  const series: [keyof (typeof data)[0], string, string, number, string?][] = [
     ['gesamt', 'Gesamt', css('--ink'), 2.5],
     ['steuern', 'Steuern', css('--ink-3'), 2],
     ['sozial', 'Sozialabgaben', css('--cat-soz'), 2],
   ];
   if (base.pkv) series.splice(2, 1);
-  series.forEach(([k, l, c, w]) => {
+  // Konsumsteuern: gepunktet, weil geschätzt
+  if (r.konsum) series.push(['konsum', narrow ? 'Konsum ≈' : 'Konsumsteuern ≈', css('--ink-2'), 2, '2 3']);
+  series.forEach(([k, l, c, w, strich]) => {
     svg
       .append('path')
       .datum(data)
       .attr('fill', 'none')
       .attr('stroke', c)
       .attr('stroke-width', w)
+      .attr('stroke-dasharray', strich ?? null)
       .attr(
         'd',
         d3
@@ -453,7 +482,7 @@ function chartQuote(r: Ergebnis) {
       ch.attr('x1', x(d.brutto)).attr('x2', x(d.brutto)).style('opacity', 1);
       showTip(
         ev,
-        `<b>${fmtEur(d.brutto)} Brutto</b>Gesamt ${pct(d.gesamt)}<br>Steuern ${pct(d.steuern)}${base.pkv ? '' : `<br>Sozialabgaben ${pct(d.sozial)}`}`,
+        `<b>${fmtEur(d.brutto)} Brutto</b>Gesamt ${pct(d.gesamt)}<br>Steuern ${pct(d.steuern)}${base.pkv ? '' : `<br>Sozialabgaben ${pct(d.sozial)}`}${r.konsum ? `<br>Konsumsteuern ≈ ${pct(d.konsum)}` : ''}`,
       );
     })
     .on('mouseleave', () => {
@@ -461,7 +490,13 @@ function chartQuote(r: Ergebnis) {
       hideTip();
     });
   $('#lg5').innerHTML =
-    series.map(([, l, c]) => `<li><span class="rs-farbe" style="background:${c}"></span>${esc(l)}</li>`).join('') +
+    series
+      .map(([, l, c, , strich]) =>
+        strich
+          ? `<li><span class="rs-farbe" style="height:0;border-top:2px dotted ${c};align-self:center"></span>${esc(l)}</li>`
+          : `<li><span class="rs-farbe" style="background:${c}"></span>${esc(l)}</li>`,
+      )
+      .join('') +
     `<li><span class="rs-farbe" style="background:${css('--marker')};border-radius:50%;box-shadow:inset 0 0 0 1.5px ${css('--ink')}"></span>dein Einkommen</li>`;
 }
 
@@ -578,12 +613,12 @@ function chartKalender(r: Ergebnis) {
       ['Rentenversicherung', r.rv, 'sv'],
       ['Kranken- und Pflegevers.', r.kv + r.pv, 'sv'],
       ['Arbeitslosenvers.', r.alv, 'sv'],
-      ['Bund (Lohnsteuer-Anteil und Soli)', e.bund, 'tax'],
+      [r.konsum ? 'Bund (inkl. Konsumsteuern ≈)' : 'Bund (Lohnsteuer-Anteil und Soli)', e.bund, 'tax'],
       [`Land ${land.name}`, e.land, 'tax'],
       [stadt.name, e.gemeinde, 'tax'],
       ['Kirche', r.kirche, 'kirche'],
       ['PKV-Beitrag', r.pkvBeitrag, 'pkv'],
-      ['Für dich (Netto)', r.netto, 'netto'],
+      [r.konsum ? 'Für dich (nach Konsumsteuern ≈)' : 'Für dich (Netto)', verfuegbar(r), 'netto'],
     ] as const
   ).filter((d) => d[1] > 0);
   const Y = new Date(2026, 0, 1),
@@ -635,20 +670,27 @@ function tabelle(r: Ergebnis) {
           `<tr><td><span class="rs-farbe" style="background:${gcol(p.g)};margin-right:8px"></span>${esc(p.name)}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`,
       )
       .join('')}<tr><td><b>Summe</b></td><td>100 %</td><td><b>${money(amt)}</b></td></tr>`;
-  $('#tsub').textContent = `Lohnsteuer und Soli je Ebene anteilig auf deren Ausgaben umgelegt, ${zeitraum(unit)}.`;
+  $('#tsub').textContent =
+    `Lohnsteuer und Soli${r.konsum ? ' und geschätzte Konsumsteuern' : ''} je Ebene anteilig auf deren Ausgaben umgelegt, ${zeitraum(unit)}.`;
+  const mitK = (anteil: number, lohn: string, konsum = 0) =>
+    konsum ? `${satzText(anteil)} ${lohn}, ${money(konsum)} Konsumsteuern ≈` : `${satzText(anteil)} ${lohn}`;
   $('#tcount').textContent =
     `${EINZELPLAENE.length + land.posten.length + gem.posten.length} Posten von Bund, ${land.name} und ${stadt.name}`;
   $('#tbl th.uy').textContent = unit === 'm' ? '€ / Monat' : '€ / Jahr';
   $('#tbl tbody').innerHTML =
-    head(`Bund: ${money(e.bund)} (${satzText(ANTEIL.bund)} Lohnsteuer und Soli), Haushalt 2026`) +
+    head(`Bund: ${money(e.bund)} (${mitK(ANTEIL.bund, 'Lohnsteuer und Soli', r.konsum?.bund)}), Haushalt 2026`) +
     rows(
       EINZELPLAENE.map((p) => ({ ...p, name: `EP ${p.n} ${p.name}` })),
       BUND_GESAMT,
       e.bund,
     ) +
-    head(`Land ${land.name}: ${money(e.land)} (${satzText(ANTEIL.land)} Lohnsteuer), ${land.art} ${land.jahr}`) +
+    head(
+      `Land ${land.name}: ${money(e.land)} (${mitK(ANTEIL.land, 'Lohnsteuer', r.konsum?.land)}), ${land.art} ${land.jahr}`,
+    ) +
     rows(land.posten, LAND_T, e.land) +
-    head(`${stadt.name}: ${money(e.gemeinde)} (${satzText(ANTEIL.gemeinde)} Lohnsteuer), ${gem.art}, ${gem.jahr}`) +
+    head(
+      `${stadt.name}: ${money(e.gemeinde)} (${mitK(ANTEIL.gemeinde, 'Lohnsteuer', r.konsum?.gemeinde)}), ${gem.art}, ${gem.jahr}`,
+    ) +
     rows(gem.posten, GEM_T, e.gemeinde);
 }
 
@@ -885,8 +927,11 @@ interface Baum extends Partial<Blatt> {
 const blatt = (d: d3.HierarchyRectangularNode<Baum>) => d.data as Blatt;
 
 // ---------- Ablauf ----------
+const konsumAn = () => el('konsum').checked;
 function persoenlich() {
-  const r = berechne(eingabe());
+  const ohne = berechne(eingabe());
+  const r = konsumAn() ? mitKonsum(ohne) : ohne;
+  $('#k2-konsum').hidden = !r.konsum;
   const fmtK2 = (v: number) => fmtEur(v * (unit === 'm' ? 1 / 12 : 1)); // Kapitel 2: Monat/Jahr
   satz(r);
   kennzahlen(r, fmtEur);
@@ -963,7 +1008,7 @@ export function start() {
   LAND_T = summe(land.posten);
   GEM_T = summe(gem.posten);
 
-  const ids = ['brutto', 'kv', 'pkv', 'kist', 'kinderlos', 'ag', 'shownetto', 'split'];
+  const ids = ['brutto', 'kv', 'pkv', 'kist', 'kinderlos', 'konsum', 'ag', 'shownetto', 'split'];
   const orte: Ort[] = daten.orte;
 
   // Startseite: gemerkte Stadt öffnen; sonst den Standort nur nutzen, wenn er schon freigegeben ist

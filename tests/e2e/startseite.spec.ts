@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { ergebnis, fehlerSammeln } from './helfer';
 
@@ -56,4 +57,26 @@ test('Weitere Angaben: private Krankenversicherung blendet das Beitragsfeld ein'
   await page.locator('#kv').selectOption('pkv');
   await expect(page.locator('#pkvwrap')).toBeVisible();
   await expect(page.locator('#mehr-sum')).toContainText('privat versichert');
+});
+
+test('Konsumsteuern: Checkbox senkt das Netto, verteilt auf die Ebenen und wird gemerkt', async ({ page }) => {
+  const f = fehlerSammeln(page);
+  await page.goto('/');
+  const netto = page.locator('#pk .rs-kennzahl').last();
+  const ohne = await netto.locator('b').textContent();
+  await expect(page.locator('#anteil-lg')).not.toContainText('Konsumsteuern');
+
+  await page.locator('#konsum').check();
+  await expect(page.locator('#anteil-lg')).toContainText('Konsumsteuern ≈');
+  await expect(netto).toContainText('nach Konsumsteuern');
+  expect(await netto.locator('b').textContent()).not.toBe(ohne);
+  await expect(ergebnis(page)).toContainText('Konsumsteuern');
+  await expect(page.locator('#k2-konsum')).toBeVisible();
+  const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
+  expect(axe.violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+
+  await page.reload();
+  await expect(page.locator('#konsum')).toBeChecked();
+  await expect(page.locator('#anteil-lg')).toContainText('Konsumsteuern ≈');
+  f.pruefe();
 });

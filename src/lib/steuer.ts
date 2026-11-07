@@ -1,5 +1,6 @@
 // Lohnsteuer- und Sozialversicherungs-Näherung 2026 (Steuerklasse I).
 // Aus dem Prototyp haushalt/index.html übernommen, aber ohne DOM-Zugriff.
+import type { Konsumsteuern } from './konsum';
 
 export const SV_2026 = {
   bbgRv: 101_400, // RV/ALV
@@ -74,6 +75,8 @@ export interface Ergebnis {
   pkvBeitrag: number;
   netto: number;
   ag: { rv: number; alv: number; kv: number; pv: number };
+  /** geschätzte Konsumsteuern aus dem Netto, nur wenn gewählt (`mitKonsum`) */
+  konsum?: Konsumsteuern;
 }
 
 /** Lohnsteuer, Soli, Kirche, Sozialabgaben und Netto; `rvSatz` überschreibt den Rentenbeitragssatz (Rentenmodell). */
@@ -126,13 +129,17 @@ export function berechne(e: Eingabe, opt: { rvSatz?: number } = {}): Ergebnis {
 /** Verteilung der Lohnsteuer nach Art. 106 GG; Soli geht ganz an den Bund. */
 export const ANTEIL = { bund: 0.425, land: 0.425, gemeinde: 0.15 } as const;
 
+/** Was Bund, Land und Gemeinde von dir bekommen; mit Konsumsteuern, wenn sie gewählt sind */
 export function aufEbenen(r: Ergebnis) {
   return {
-    bund: r.lohnsteuer * ANTEIL.bund + r.soli,
-    land: r.lohnsteuer * ANTEIL.land,
-    gemeinde: r.lohnsteuer * ANTEIL.gemeinde,
+    bund: r.lohnsteuer * ANTEIL.bund + r.soli + (r.konsum?.bund ?? 0),
+    land: r.lohnsteuer * ANTEIL.land + (r.konsum?.land ?? 0),
+    gemeinde: r.lohnsteuer * ANTEIL.gemeinde + (r.konsum?.gemeinde ?? 0),
   };
 }
 
 export const summeSV = (r: Ergebnis) => r.rv + r.alv + r.kv + r.pv;
-export const summeAbgaben = (r: Ergebnis) => r.lohnsteuer + r.soli + r.kirche + summeSV(r);
+export const summeKonsum = (r: Ergebnis) => r.konsum?.summe ?? 0;
+export const summeAbgaben = (r: Ergebnis) => r.lohnsteuer + r.soli + r.kirche + summeSV(r) + summeKonsum(r);
+/** Was nach allen Abgaben bleibt: das Netto, mit gewählten Konsumsteuern abzüglich dieser */
+export const verfuegbar = (r: Ergebnis) => r.netto - summeKonsum(r);

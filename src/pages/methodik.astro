@@ -2,8 +2,13 @@
 import { abstimmungSatz, BUND_QUELLEN } from '../data/bund';
 import schaetzung from '../data/gemeinden-schaetzung.json';
 import Base from '../layouts/Base.astro';
+import { KONSUM } from '../lib/konsum';
 import { ANTEIL, GRUNDFREIBETRAG, PAUSCHALEN, SOLI_FREIGRENZE, SV_2026 } from '../lib/steuer';
-import { fmtEur, satzText } from '../lib/text';
+import { fmtEur, pct, satzText } from '../lib/text';
+
+const a = KONSUM.annahmen;
+const preis = (v: number) => `${v.toLocaleString('de-DE', { minimumFractionDigits: 2 })}\u00a0€`;
+const faktor = KONSUM.preisfaktor.toLocaleString('de-DE', { maximumFractionDigits: 2 });
 
 const weitere = [
   {
@@ -57,18 +62,25 @@ const weitere = [
       <p>Echte Zahlen je Stadt gibt es nur nach <strong>Art</strong> der Ausgabe: Personal und Versorgung, Sach- und Dienstleistungen, soziale Leistungen, Investitionen und übrige laufende Auszahlungen (Regionaldatenbank, Tabelle 71717-Z-05, Rechnungsergebnisse der kommunalen Kernhaushalte; das jüngste Jahr ist vorläufig). Sie stehen in der Grafik „Was die Stadt tatsächlich ausgibt“, in Euro je Einwohner und verglichen mit dem nach Einwohnern gewichteten Durchschnitt aller kreisfreien Städte. Dein Gemeindeanteil ist dort nach diesen echten Anteilen verteilt.</p>
       <p>Berlin, Hamburg, Bremen und Bremerhaven gehören zu Stadtstaaten mit einem gemeinsamen Haushalt von Land und Stadt; dort gilt die Aufteilung des Landes auch für den Gemeindeanteil.</p>
 
+      <h2>Konsumsteuern <span class="rs-schaetzung">≈ Schätzung</span></h2>
+      <p>Wenn du sie einrechnest, schätzt die Seite, wie viel Steuer in dem steckt, was du von deinem Netto ausgibst. Grundlage ist, was Alleinlebende mit deinem Netto im Schnitt ausgeben und wofür: Einkommens- und Verbrauchsstichprobe 2018, mit dem Verbraucherpreisindex in heutige Preise umgerechnet (Faktor {faktor}). Wer wenig verdient, gibt fast alles aus; bei hohen Einkommen bleibt mehr gespart und unbesteuert.</p>
+      <p>Für jede Ausgabengruppe steckt ein eigener Steueranteil im Preis. Er stammt aus dem Warenkorb der Einpersonenhaushalte 2024 und den Sätzen 2026: 19 % Mehrwertsteuer als Regelsatz, 7 % unter anderem für Lebensmittel, Bücher, Nahverkehr, Übernachtungen und seit 2026 Speisen im Restaurant. Kaltmiete, Arztbesuche, Bildung, Rundfunkbeitrag und Finanzdienste sind ohne Mehrwertsteuer. So liegt der Steueranteil fürs Wohnen bei {pct(KONSUM.saetze.wohnen.mwst)}, für Lebensmittel bei {pct(KONSUM.saetze.nahrung.mwst)}, für Kleidung bei {pct(KONSUM.saetze.bekleidung.mwst)} des Preises.</p>
+      <p>Dazu kommen die Energiesteuer auf Sprit, mit dem Tankrabatt in {a.rabattMonate} Monaten 2026, angenommen {preis(a.literpreis)} je Liter und {pct(a.benzinAnteil)} Benzin, sowie auf Heizgas; die Stromsteuer, wobei Strom als {pct(a.stromAnteil)} der Energieausgaben angenommen ist; und 19 % Versicherungsteuer auf Haftpflicht, Hausrat, Kfz und Ähnliches.</p>
+      <p>Die Mehrwertsteuer geht 2026 zu {pct(KONSUM.mwstVerteilung.bund)} an den Bund, zu {pct(KONSUM.mwstVerteilung.land)} an die Länder und zu {pct(KONSUM.mwstVerteilung.gemeinde)} an die Gemeinden (Steuerschätzung Oktober 2026). Energie-, Strom- und Versicherungsteuer bekommt der Bund. Die Seite verteilt sie dann wie die Lohnsteuer auf die Ausgaben der jeweiligen Ebene.</p>
+      <p>Grenzen der Schätzung: Die Verbrauchsstatistik nach Einkommen ist von 2018. Ihre Klassen enthalten auch Studierende und Rentner. Angenommen ist, dass die Steuern voll in den Preisen ankommen. Wer zur Miete wohnt, zahlt auf diesen großen Posten keine Mehrwertsteuer.</p>
+
       <h2>Kalender</h2>
       <p>Die Abgaben sind in Kalendertage umgerechnet (Anteil am Brutto × 365), in der Reihenfolge der Liste, ähnlich dem „Steuerzahlergedenktag“.</p>
 
       <h2>Nicht enthalten</h2>
-      <p>Mehrwertsteuer und andere Verbrauchsteuern, die du zusätzlich zahlst, sowie Sondervermögen.</p>
+      <p>Tabak-, Alkohol- und Kaffeesteuer: Sie hängen stark davon ab, ob und wie viel du rauchst oder trinkst; ein Durchschnitt wäre für fast alle falsch. Außerdem der CO₂-Preis auf Sprit und Heizung (keine Steuer, er fließt in den Klima- und Transformationsfonds), die Kfz-Steuer und Sondervermögen. Konsumsteuern sind nur enthalten, wenn du sie einrechnest.</p>
 
       <h2>Lizenz der Daten</h2>
       <p>Die Daten stammen vom Statistischen Bundesamt (Destatis), aus der Regionaldatenbank Deutschland (Statistische Ämter des Bundes und der Länder) und aus dem Haushaltsgesetz 2026. Sie stehen unter der <a href="https://www.govdata.de/dl-de/by-2-0">Datenlizenz Deutschland – Namensnennung – Version 2.0</a>. Alle Aufteilungen, Anteile und Beträge je Person sind eigene Berechnungen auf dieser Grundlage; die Quellen haben sie nicht geprüft.</p>
 
       <h2>Quellen</h2>
       <ul class="quellen">
-        {[...BUND_QUELLEN, ...weitere].map((q) => <li><a href={q.url}>{q.label}</a></li>)}
+        {[...BUND_QUELLEN, ...weitere, ...KONSUM.quellen].map((q) => <li><a href={q.url}>{q.label}</a></li>)}
       </ul>
     </div>
   </article>
