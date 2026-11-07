@@ -1,4 +1,24 @@
+# Abhängigkeiten
+node_modules/
+
+# Build und generierte Dateien
+dist/
+.astro/
+
+# Daten-Pipeline: heruntergeladene Rohdaten (werden bei Bedarf neu geladen)
+pipeline/quellen/
+
+# Zugangsdaten und lokale Umgebung
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
+
+# Logs
+npm-debug.log*
+
+# Editor und Betriebssystem
 .DS_Store
-__pycache__/
-*.pyc
-.env*
+.idea/
