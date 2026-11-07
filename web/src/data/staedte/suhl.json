@@ -5,5 +5,37 @@
   "name": "Suhl",
   "amtlich": "Suhl, Stadt",
   "einwohner": 34685,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1001
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 298
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1143
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 377
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1234
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

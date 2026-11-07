@@ -36,3 +36,16 @@ function stripLand(l: Land): Ebene {
   const { name, jahr, einheit, art, posten, quellen } = l;
   return { name, jahr, einheit, art, posten, quellen };
 }
+
+/** Echte Ausgabearten der Stadt plus Durchschnitt aller kreisfreien Städte desselben Jahres (€ je Einwohner, gewichtet). */
+export function ausgabeVergleich(stadt: Stadt) {
+  const a = stadt.ausgabearten;
+  if (!a) return null;
+  const gleiche = STAEDTE.filter((s) => s.ausgabearten?.jahr === a.jahr);
+  const ew = gleiche.reduce((x, s) => x + s.einwohner, 0);
+  const schnitt = a.posten.map((p) => ({
+    name: p.name,
+    proKopf: Math.round(gleiche.reduce((x, s) => x + (s.ausgabearten!.posten.find((q) => q.name === p.name)?.proKopf ?? 0) * s.einwohner, 0) / ew),
+  }));
+  return { ...a, schnitt, anzahl: gleiche.length };
+}

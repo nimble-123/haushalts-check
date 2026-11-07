@@ -5,5 +5,37 @@
   "name": "Landshut",
   "amtlich": "Landshut",
   "einwohner": 71863,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1245
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 578
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 638
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 739
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1537
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

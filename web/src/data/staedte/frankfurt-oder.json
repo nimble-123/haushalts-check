@@ -5,5 +5,37 @@
   "name": "Frankfurt (Oder)",
   "amtlich": "Frankfurt (Oder), Stadt",
   "einwohner": 57107,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1342
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 520
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1668
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 527
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1909
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

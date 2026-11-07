@@ -5,5 +5,37 @@
   "name": "Coburg",
   "amtlich": "Coburg",
   "einwohner": 41064,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1180
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 410
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 715
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 546
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2388
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

@@ -5,5 +5,37 @@
   "name": "Regensburg",
   "amtlich": "Regensburg",
   "einwohner": 151389,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 2118
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 783
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 741
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1435
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1449
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

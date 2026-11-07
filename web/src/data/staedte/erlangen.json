@@ -5,5 +5,37 @@
   "name": "Erlangen",
   "amtlich": "Erlangen",
   "einwohner": 115928,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1520
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 560
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 425
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 560
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1748
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

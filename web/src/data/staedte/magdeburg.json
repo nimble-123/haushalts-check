@@ -5,5 +5,37 @@
   "name": "Magdeburg",
   "amtlich": "Magdeburg, Landeshauptstadt",
   "einwohner": 244329,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 880
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 222
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 817
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 395
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2002
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

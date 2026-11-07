@@ -5,5 +5,37 @@
   "name": "Schweinfurt",
   "amtlich": "Schweinfurt",
   "einwohner": 54481,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1559
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 830
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1279
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 985
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1534
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }
