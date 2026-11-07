@@ -1,14 +1,19 @@
 import * as d3 from 'd3';
 import { type RenteErgebnis, renteVsEtf, VORLAGEN } from '../lib/rente';
 import { ladeEingaben, speichereEingaben } from './speicher';
-import { $, css, esc, fmtEur, hideTip, showTip, width } from './viz';
+import { css, esc, fmtEur, hideTip, holen, showTip, width } from './viz';
 
-const el = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
-const num = (id: string) => +el(id).value;
+/** Zahl aus einem Eingabefeld oder einer Auswahl */
+const num = (id: string) => {
+  const e = holen(id);
+  if (!(e instanceof HTMLInputElement || e instanceof HTMLSelectElement))
+    throw new Error(`#${id} ist kein Eingabefeld`);
+  return +e.value;
+};
 
 function modell() {
   return renteVsEtf({
-    modus: el<HTMLSelectElement>('mode').value as 'life' | 'now',
+    modus: holen('mode', HTMLSelectElement).value as 'life' | 'now',
     bruttoHeute: num('brutto'),
     alterHeute: num('age'),
     einstiegsalter: num('c_a0'),
@@ -16,13 +21,13 @@ function modell() {
     hoehepunktGehalt: num('c_s1'),
     hoehepunktAlter: num('c_ap'),
     dynamik: num('c_g'),
-    heuteEinbeziehen: el('c_usenow').checked,
+    heuteEinbeziehen: holen('c_usenow', HTMLInputElement).checked,
     etfRendite: num('etfr'),
     niveau: num('niveau'),
     depotBis: num('until'),
-    pkv: el<HTMLSelectElement>('kv').value === 'pkv',
+    pkv: holen('kv', HTMLSelectElement).value === 'pkv',
     pkvMonat: num('pkv'),
-    kinderlos: el('kinderlos').checked,
+    kinderlos: holen('kinderlos', HTMLInputElement).checked,
     kirche: num('kist'),
   });
 }
@@ -144,13 +149,13 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
       ch.style('opacity', 0);
       hideTip();
     });
-  $(`#${legend}`).innerHTML = series
+  holen(legend).innerHTML = series
     .map((s) => `<li><span class="rs-farbe" style="background:${s.c}"></span>${esc(s.name)}</li>`)
     .join('');
 }
 
 function gehaltskurve(m: RenteErgebnis) {
-  const svg = d3.select<SVGSVGElement, unknown>('#s11s');
+  const svg = d3.select<SVGSVGElement, unknown>('#gehaltskurve');
   svg.selectAll('*').remove();
   const W = width(svg),
     H = W < 420 ? 240 : 260,
@@ -255,22 +260,22 @@ function gehaltskurve(m: RenteErgebnis) {
       .style('stroke', css('--surface'))
       .style('stroke-width', 4);
   });
-  $('#lg11s').innerHTML =
+  holen('lg-gehaltskurve').innerHTML =
     `<li><span class="rs-farbe" style="background:${css('--cat-soz')}"></span>Brutto in heutiger Kaufkraft</li><li><span class="rs-farbe" style="background:${css('--ink-3')}"></span>nominal, mit 2 % Inflation ab heute</li>`;
 }
 
 function zeichne() {
-  const life = el<HTMLSelectElement>('mode').value === 'life';
+  const life = holen('mode', HTMLSelectElement).value === 'life';
   document.querySelectorAll<HTMLElement>('.lifeonly').forEach((e) => {
     e.hidden = !life;
   });
-  el('preset').hidden = !life;
-  el('pkvwrap').hidden = el<HTMLSelectElement>('kv').value !== 'pkv';
+  holen('preset').hidden = !life;
+  holen('pkvwrap').hidden = holen('kv', HTMLSelectElement).value !== 'pkv';
   const m = modell();
   const fig = (v: string, l: string, mark = false) =>
     `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${esc(l)}</span></div>`;
   const lastMonth = m.jahre ? (m.nettokostenVerlauf[m.jahre] - m.nettokostenVerlauf[m.jahre - 1]) / 12 : 0;
-  $('#rk').innerHTML =
+  holen('rk').innerHTML =
     fig(
       fmtEur(m.beitragBrutto),
       `Rentenbeiträge in ${m.jahre} Jahren, brutto (AN und AG), ${m.entgeltpunkte.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Entgeltpunkte`,
@@ -294,24 +299,24 @@ function zeichne() {
     );
   if (m.lebensverlauf) gehaltskurve(m);
   linien(
-    's11a',
+    'ansparen',
     m.startAlter,
     67,
     [
       { name: 'ETF-Depot (real)', data: m.depotVerlauf, c: css('--cat-soz'), w: 2.5 },
       { name: 'Nettokosten der Beiträge', data: m.nettokostenVerlauf, c: css('--ink-3'), dash: '5 4' },
     ],
-    'lg11a',
+    'lg-ansparen',
   );
   linien(
-    's11b',
+    'auszahlen',
     67,
     100,
     [
       { name: 'Gesetzliche Rente', data: m.summeRente, c: css('--ink'), w: 2.5 },
       { name: `ETF-Entnahmen bis ${m.depotBis}`, data: m.summeEtf, c: css('--cat-soz'), w: 2.5 },
     ],
-    'lg11b',
+    'lg-auszahlen',
     [84, 'Ø Lebenserwartung ≈ 83 (M) / 86 (F)'],
   );
 }
@@ -338,7 +343,7 @@ export function startRente() {
   // Eigene Angaben vom letzten Besuch (Brutto, Versicherung, Kirche, Kinder teilen sich die Seiten)
   ladeEingaben(ids);
   ids.forEach((id) => {
-    el(id).addEventListener('input', () => {
+    holen(id).addEventListener('input', () => {
       speichereEingaben(ids);
       document.querySelectorAll('#preset button').forEach((b) => {
         b.setAttribute('aria-pressed', 'false');
@@ -349,11 +354,11 @@ export function startRente() {
   document.querySelectorAll<HTMLButtonElement>('#preset button').forEach((b) => {
     b.addEventListener('click', () => {
       const p = VORLAGEN[b.dataset.p as keyof typeof VORLAGEN];
-      el('c_a0').value = String(p.einstiegsalter);
-      el('c_s0').value = String(p.einstiegsgehalt);
-      el('c_s1').value = String(p.hoehepunktGehalt);
-      el('c_ap').value = String(p.hoehepunktAlter);
-      el('c_usenow').checked = false;
+      holen('c_a0', HTMLInputElement).value = String(p.einstiegsalter);
+      holen('c_s0', HTMLInputElement).value = String(p.einstiegsgehalt);
+      holen('c_s1', HTMLInputElement).value = String(p.hoehepunktGehalt);
+      holen('c_ap', HTMLInputElement).value = String(p.hoehepunktAlter);
+      holen('c_usenow', HTMLInputElement).checked = false;
       speichereEingaben(ids);
       zeichne();
       document.querySelectorAll('#preset button').forEach((x) => {

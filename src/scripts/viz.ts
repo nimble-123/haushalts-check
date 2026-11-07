@@ -24,7 +24,20 @@ type SVerbindung = SankeyLink<Knoten, Verbindung> & { source: SKnoten; target: S
 /** Knoten nach dem Layout: Position und Wert sind gesetzt */
 type Gelegt = SKnoten & { x0: number; x1: number; y0: number; y1: number; value: number };
 
-export const $ = (sel: string) => document.querySelector(sel) as HTMLElement;
+/**
+ * Element per ID mit Typprüfung. Fehlt es oder hat es einen anderen Typ, passen Seite und Skript nicht
+ * zusammen; das soll sofort auffallen statt später als „undefined“.
+ */
+export function holen<T extends HTMLElement = HTMLElement>(
+  id: string,
+  typ: abstract new (...args: never[]) => T = HTMLElement as unknown as abstract new (
+    ...args: never[]
+  ) => T,
+): T {
+  const e = document.getElementById(id);
+  if (!(e instanceof typ)) throw new Error(`#${id} fehlt oder ist kein ${typ.name}`);
+  return e;
+}
 export const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 import { esc, fmtEur, fmtMrd, pct } from '../lib/text';

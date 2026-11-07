@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG } from '../data/bund';
-import { type GemeindeEbene, GRUPPEN, type Gruppe, type Land, type Stadt } from '../data/types';
+import { GRUPPEN, type Gruppe } from '../data/types';
 import {
   abgabenquoten,
   aufRaster,
@@ -16,6 +16,7 @@ import {
 import { mitKonsum } from '../lib/konsum';
 import { naechsteStadt, type Ort } from '../lib/naehe';
 import { ergebnisSatz } from '../lib/satz';
+import type { SeitenDaten } from '../lib/seite';
 import {
   ANTEIL,
   aufEbenen,
@@ -31,7 +32,6 @@ import {
 import { fmtMrdDelta, satzText, zeitraum } from '../lib/text';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
-  $,
   clear,
   css,
   drawSankey,
@@ -40,6 +40,7 @@ import {
   fmtMrd,
   hatch,
   hideTip,
+  holen,
   type Knoten,
   pct,
   type SKnoten,
@@ -55,21 +56,10 @@ interface P {
   rest?: boolean;
 }
 
-let stadt: Stadt,
-  land: Land,
-  gem: GemeindeEbene,
-  LAND_T = 0,
-  GEM_T = 0;
-interface Arten {
-  jahr: number;
-  vorlaeufig: boolean;
-  posten: { name: string; proKopf: number }[];
-  schnitt: { name: string; proKopf: number }[];
-  anzahl: number;
-}
-let arten: Arten | null = null;
-let unit: 'y' | 'm' = 'm'; // nur Kapitel 2; Einstieg und Kapitel 1 rechnen jährlich
-let bundAnsicht: 'fluss' | 'flaeche' = 'fluss';
+/** Daten dieser Seite (Stadt, Land, Gemeinde-Ebene), einmal in start() aus der Seite gelesen */
+let seite: SeitenDaten & { landSumme: number; gemSumme: number };
+/** Gewählte Ansicht: Einheit nur in Kapitel 2 (Einstieg und Kapitel 1 rechnen jährlich), Bund als Fluss oder Fläche */
+const ansicht: { einheit: 'y' | 'm'; bund: 'fluss' | 'flaeche' } = { einheit: 'm', bund: 'fluss' };
 
 const gcol = (g: Gruppe) => css(`--cat-${g}`);
 /** Kirchensteuer ist keine Haushaltsebene: neutral in der Linienfarbe */
@@ -84,25 +74,26 @@ const legendGruppen = () =>
     .join('');
 const legendSV = `<li><span class="rs-farbe rs-hatch"></span>Sozialversicherung</li>`;
 const legendSchaetzung = () =>
-  gem.schaetzung ? `<li>≈ Stadt geschätzt aus dem Durchschnitt der Gemeinden in ${esc(land.name)}</li>` : '';
+  seite.gem.schaetzung
+    ? `<li>≈ Stadt geschätzt aus dem Durchschnitt der Gemeinden in ${esc(seite.land.name)}</li>`
+    : '';
 
 // ---------- Eingaben ----------
 const leseBetrag = (s: string) => Math.min(9_999_999, parseInt(s.replace(/\D/g, ''), 10) || 0);
 const schreibeBetrag = (v: number) => (v ? v.toLocaleString('de-DE') : '');
-const el = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
 function eingabe(bruttoOverride?: number): Eingabe {
   return {
-    brutto: bruttoOverride ?? leseBetrag(el('brutto').value),
-    pkv: el<HTMLSelectElement>('kv').value === 'pkv',
-    pkvMonat: +el('pkv').value || 0,
-    kinderlos: el('kinderlos').checked,
-    kirche: +el<HTMLSelectElement>('kist').value,
+    brutto: bruttoOverride ?? leseBetrag(holen('brutto', HTMLInputElement).value),
+    pkv: holen('kv', HTMLSelectElement).value === 'pkv',
+    pkvMonat: +holen('pkv', HTMLInputElement).value || 0,
+    kinderlos: holen('kinderlos', HTMLInputElement).checked,
+    kirche: +holen('kist', HTMLSelectElement).value,
   };
 }
 
 // ---------- Ergebnis-Satz und Kennzahlen ----------
 function satz(r: Ergebnis) {
-  $('#result').innerHTML = ergebnisSatz(r, stadt, land, gem);
+  holen('result').innerHTML = ergebnisSatz(r, seite.stadt, seite.land, seite.gem);
 }
 
 function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
@@ -110,7 +101,7 @@ function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
   const fig = (v: string, l: string, mark = false) =>
     `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${esc(l)}</span></div>`;
   const k = r.konsum;
-  $('#pk').innerHTML =
+  holen('pk').innerHTML =
     fig(
       fmt(abg),
       `deine Abgaben${k ? ' mit Konsumsteuern ≈' : ''}, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`,
@@ -134,10 +125,10 @@ function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
       ['Netto', verfuegbar(r), `background:${css('--marker')}`, ''],
     ] as const
   ).filter((t) => t[1] > 0);
-  const a = $('#anteil');
+  const a = holen('anteil');
   a.setAttribute('aria-label', `${fmtEur(r.brutto)} Brutto: ${teile.map(([n, v]) => `${n} ${fmtEur(v)}`).join(', ')}`);
   a.innerHTML = teile.map(([, v, st, cl]) => `<i class="${cl}" style="flex:${v};${st}"></i>`).join('');
-  $('#anteil-lg').innerHTML = teile
+  holen('anteil-lg').innerHTML = teile
     .map(
       ([n, v, st, cl]) =>
         `<li><span class="rs-farbe ${cl}" style="${st}"></span>${esc(n)} <b${n === 'Netto' ? ' class="rs-mark"' : ''}>${fmt(v)}</b> <span style="color:var(--ink-3)">${r.brutto ? pct(v / r.brutto) : ''}</span></li>`,
@@ -147,14 +138,14 @@ function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
 
 // ---------- Sankey deiner Abgaben ----------
 function chartFluss(r: Ergebnis) {
-  const withAG = el('ag').checked,
-    showN = el('shownetto').checked,
-    show = el<HTMLSelectElement>('split').value;
-  const f = unit === 'm' ? 1 / 12 : 1,
+  const withAG = holen('ag', HTMLInputElement).checked,
+    showN = holen('shownetto', HTMLInputElement).checked,
+    show = holen('split', HTMLSelectElement).value;
+  const f = ansicht.einheit === 'm' ? 1 / 12 : 1,
     fmt = (v: number) => fmtEur(v * f);
   const e = aufEbenen(r);
-  const svg = d3.select<SVGSVGElement, unknown>('#s2');
-  const sv = hatch(svg, 's2');
+  const svg = d3.select<SVGSVGElement, unknown>('#dein-fluss');
+  const sv = hatch(svg, 'dein-fluss');
   const nodes: Knoten[] = [],
     links: Verbindung[] = [];
   const add = (id: string, label: string, color: string, extra: Partial<Knoten> = {}) => {
@@ -166,8 +157,11 @@ function chartFluss(r: Ergebnis) {
   const k = r.konsum;
   if (r.lohnsteuer > 0 || k?.summe) {
     add('bund', 'Bund', css('--ink'), { bold: true, col: 2 });
-    add('land', `Land ${land.name}`, css('--ink'), { bold: true, col: 2 });
-    add('gem', stadt.stadtstaat ? `${stadt.name} (Gemeindeanteil)` : stadt.name, css('--ink'), { bold: true, col: 2 });
+    add('land', `Land ${seite.land.name}`, css('--ink'), { bold: true, col: 2 });
+    add('gem', seite.stadt.stadtstaat ? `${seite.stadt.name} (Gemeindeanteil)` : seite.stadt.name, css('--ink'), {
+      bold: true,
+      col: 2,
+    });
   }
   if (r.lohnsteuer > 0) {
     add('lst', 'Lohnsteuer', css('--ink'), { col: 1 });
@@ -187,7 +181,7 @@ function chartFluss(r: Ergebnis) {
   // Konsumsteuern unter den Steuern, damit ihre Bänder zu den Ebenen nicht kreuzen
   if (k?.summe) {
     const tinte = css('--ink');
-    add('konsum', 'Konsumsteuern ≈', hatch(svg, 's2-konsum', '--ink', -45), { col: 1 });
+    add('konsum', 'Konsumsteuern ≈', hatch(svg, 'dein-fluss-konsum', '--ink', -45), { col: 1 });
     links.push({ source: 'brutto', target: 'konsum', value: k.summe, color: tinte });
     links.push({ source: 'konsum', target: 'bund', value: k.bund, color: tinte });
     links.push({ source: 'konsum', target: 'land', value: k.land, color: tinte });
@@ -202,14 +196,14 @@ function chartFluss(r: Ergebnis) {
   if (e.bund > 0 && (show === 'all' || show === 'bund'))
     ebene('bund', epl(show === 'all' ? 7 : 13), BUND_GESAMT, e.bund, '');
   if (e.land > 0 && (show === 'all' || show === 'land'))
-    ebene('land', groessteN(land.posten, show === 'all' ? 6 : 13), LAND_T, e.land, 'Land · ');
+    ebene('land', groessteN(seite.land.posten, show === 'all' ? 6 : 13), seite.landSumme, e.land, 'Land · ');
   if (e.gemeinde > 0 && (show === 'all' || show === 'gem'))
     ebene(
       'gem',
-      groessteN(gem.posten, show === 'all' ? 5 : 12),
-      GEM_T,
+      groessteN(seite.gem.posten, show === 'all' ? 5 : 12),
+      seite.gemSumme,
       e.gemeinde,
-      gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ',
+      seite.gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ',
     );
   (
     [
@@ -246,13 +240,13 @@ function chartFluss(r: Ergebnis) {
     pad: 9,
     share: (d: SKnoten) => (r.brutto ? `${pct((d.value ?? 0) / r.brutto)} vom Brutto` : ''),
   });
-  $('#lg2').innerHTML = legendSV + legendGruppen() + legendSchaetzung();
+  holen('lg-fluss').innerHTML = legendSV + legendGruppen() + legendSchaetzung();
 }
 
 // ---------- Sortierte Balken ----------
 function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   const e = aufEbenen(r);
-  const sv = hatch(d3.select('#s3'), 's3');
+  const sv = hatch(d3.select('#toepfe'), 'toepfe');
   const items: { name: string; v: number; c: string }[] = [];
   (
     [
@@ -268,18 +262,18 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   epl(10).forEach((p) => {
     items.push({ name: `Bund · ${p.name.replace(/^EP \d+ /, '')}`, v: (e.bund * p.v) / BUND_GESAMT, c: gcol(p.g) });
   });
-  groessteN(land.posten, 7).forEach((p) => {
-    items.push({ name: `Land · ${p.name}`, v: (e.land * p.v) / LAND_T, c: gcol(p.g) });
+  groessteN(seite.land.posten, 7).forEach((p) => {
+    items.push({ name: `Land · ${p.name}`, v: (e.land * p.v) / seite.landSumme, c: gcol(p.g) });
   });
-  groessteN(gem.posten, 5).forEach((p) => {
+  groessteN(seite.gem.posten, 5).forEach((p) => {
     items.push({
-      name: (gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ') + p.name,
-      v: (e.gemeinde * p.v) / GEM_T,
+      name: (seite.gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ') + p.name,
+      v: (e.gemeinde * p.v) / seite.gemSumme,
       c: gcol(p.g),
     });
   });
   items.sort((a, b) => b.v - a.v);
-  const svg = d3.select<SVGSVGElement, unknown>('#s3');
+  const svg = d3.select<SVGSVGElement, unknown>('#toepfe');
   clear(svg);
   const W = width(svg),
     narrow = W < 560,
@@ -330,17 +324,17 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
     .attr('dy', '.35em')
     .text((d) => fmt(d.v))
     .style('pointer-events', 'none');
-  $('#barsub').textContent =
-    `Alle Ziele deiner Abgaben ${zeitraum(unit)}; kleine Posten je Ebene sind zusammengefasst.`;
-  $('#toepfe-sum').textContent = items.length ? `größter Topf: ${items[0].name} mit ${fmt(items[0].v)}` : '';
-  $('#lg3').innerHTML = legendSV + legendGruppen() + legendSchaetzung();
+  holen('barsub').textContent =
+    `Alle Ziele deiner Abgaben ${zeitraum(ansicht.einheit)}; kleine Posten je Ebene sind zusammengefasst.`;
+  holen('toepfe-sum').textContent = items.length ? `größter Topf: ${items[0].name} mit ${fmt(items[0].v)}` : '';
+  holen('lg-toepfe').innerHTML = legendSV + legendGruppen() + legendSchaetzung();
 }
 
 // ---------- Abgabenquote ----------
 function chartQuote(r: Ergebnis) {
   const base = eingabe();
   const data = abgabenquoten(base, !!r.konsum);
-  const svg = d3.select<SVGSVGElement, unknown>('#s5');
+  const svg = d3.select<SVGSVGElement, unknown>('#quote');
   svg.selectAll('*').remove();
   const W = width(svg),
     narrow = W < 560,
@@ -440,7 +434,7 @@ function chartQuote(r: Ergebnis) {
       .attr('dy', '.35em')
       .text(l);
   });
-  $('#quote-sum').textContent = r.brutto ? `bei dir ${pct(summeAbgaben(r) / r.brutto)} vom Brutto` : '';
+  holen('quote-sum').textContent = r.brutto ? `bei dir ${pct(summeAbgaben(r) / r.brutto)} vom Brutto` : '';
   if (r.brutto >= 15000 && r.brutto <= 160000) {
     const me = summeAbgaben(r) / r.brutto;
     svg
@@ -490,7 +484,7 @@ function chartQuote(r: Ergebnis) {
       ch.style('opacity', 0);
       hideTip();
     });
-  $('#lg5').innerHTML =
+  holen('lg-quote').innerHTML =
     series
       .map(([, l, c, , strich]) =>
         strich
@@ -509,11 +503,11 @@ const zweckFarbe = (k: Zweck) =>
       ? { style: '', cls: 'rs-hohl' }
       : { style: `background:${gcol(k)}`, cls: '' };
 function chartRaster(r: Ergebnis, fmt: (v: number) => string) {
-  const zwecke = nachZweck(r, land, gem);
+  const zwecke = nachZweck(r, seite.land, seite.gem);
   const kaestchen = aufRaster(zwecke.map((d) => d.v));
   const cats = zwecke.map((d, i) => ({ ...d, ...zweckFarbe(d.k), n: kaestchen[i] }));
-  const raster = $('#raster'),
-    liste = $('#zweck');
+  const raster = holen('raster'),
+    liste = holen('zweck');
   if (!summe(zwecke)) {
     raster.innerHTML = '<i></i>'.repeat(100);
     liste.innerHTML = '';
@@ -557,14 +551,14 @@ function auftritt(raster: HTMLElement) {
 /** Zweck in der Liste überfahren: dessen Kästchen bleiben, die übrigen treten zurück */
 function fokusAuf(k: string | null) {
   fokus = k;
-  const raster = $('#raster');
+  const raster = holen('raster');
   raster.classList.toggle('rs-fokus', !!k);
   for (const c of raster.children) c.classList.toggle('rs-im-fokus', !!k && (c as HTMLElement).dataset.k === k);
 }
 
 /** Gelegentlicher leiser Schimmer – nur sichtbar, im Bild und ohne Fokus */
 function schimmern() {
-  const raster = $('#raster');
+  const raster = holen('raster');
   let imBild = false;
   new IntersectionObserver(([e]) => {
     imBild = e.isIntersecting;
@@ -579,15 +573,15 @@ function schimmern() {
 // ---------- Echte Ausgabearten der Stadt ----------
 function chartArten(r: Ergebnis, fmt: (v: number) => string) {
   const box = document.getElementById('arten');
-  if (!box || !arten) return;
-  const anteil = stadt.stadtstaat ? 0 : aufEbenen(r).gemeinde;
-  const summe = arten.posten.reduce((s, p) => s + p.proKopf, 0);
-  const max = Math.max(...arten.posten.map((p) => p.proKopf), ...arten.schnitt.map((p) => p.proKopf));
+  if (!box || !seite.arten) return;
+  const anteil = seite.stadt.stadtstaat ? 0 : aufEbenen(r).gemeinde;
+  const summe = seite.arten.posten.reduce((s, p) => s + p.proKopf, 0);
+  const max = Math.max(...seite.arten.posten.map((p) => p.proKopf), ...seite.arten.schnitt.map((p) => p.proKopf));
   const de = (v: number) => v.toLocaleString('de-DE');
   box.innerHTML =
-    arten.posten
+    seite.arten.posten
       .map((p, i) => {
-        const s = arten!.schnitt[i]?.proKopf ?? 0;
+        const s = seite.arten!.schnitt[i]?.proKopf ?? 0;
         return `<div class="arten-row">
       <span class="arten-name">${esc(p.name)}</span>
       <span class="arten-bar" role="img" aria-label="${esc(p.name)}: ${de(p.proKopf)} € je Einwohner, Durchschnitt ${de(s)} €">
@@ -598,12 +592,12 @@ function chartArten(r: Ergebnis, fmt: (v: number) => string) {
     </div>`;
       })
       .join('') +
-    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(stadt.name)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${zeitraum(unit)}</li></ul>`;
+    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(seite.stadt.name)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${seite.arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${zeitraum(ansicht.einheit)}</li></ul>`;
 }
 
 // ---------- Kalender ----------
 function chartKalender(r: Ergebnis) {
-  const box = $('#cal');
+  const box = holen('cal');
   if (!r.brutto) {
     box.innerHTML = '';
     return;
@@ -615,8 +609,8 @@ function chartKalender(r: Ergebnis) {
       ['Kranken- und Pflegevers.', r.kv + r.pv, 'sv'],
       ['Arbeitslosenvers.', r.alv, 'sv'],
       [r.konsum ? 'Bund (inkl. Konsumsteuern ≈)' : 'Bund (Lohnsteuer-Anteil und Soli)', e.bund, 'tax'],
-      [`Land ${land.name}`, e.land, 'tax'],
-      [stadt.name, e.gemeinde, 'tax'],
+      [`Land ${seite.land.name}`, e.land, 'tax'],
+      [seite.stadt.name, e.gemeinde, 'tax'],
       ['Kirche', r.kirche, 'kirche'],
       ['PKV-Beitrag', r.pkvBeitrag, 'pkv'],
       [r.konsum ? 'Für dich (nach Konsumsteuern ≈)' : 'Für dich (Netto)', verfuegbar(r), 'netto'],
@@ -647,7 +641,7 @@ function chartKalender(r: Ergebnis) {
     })
     .join('');
   const frei = new Date(Y.getTime() + freiAbTag(r, days) * dayMs);
-  $('#cal-sum').textContent =
+  holen('cal-sum').textContent =
     `ab dem ${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })} arbeitest du für dich`;
   box.innerHTML = `<p class="cal-lead">Ab dem <b class="rs-mark">${frei.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</b> arbeitest du rechnerisch für dich selbst.</p>${html}`;
 }
@@ -655,11 +649,11 @@ function chartKalender(r: Ergebnis) {
 // ---------- Tabelle ----------
 function tabelle(r: Ergebnis) {
   const e = aufEbenen(r),
-    f = unit === 'm' ? 1 / 12 : 1;
+    f = ansicht.einheit === 'm' ? 1 / 12 : 1;
   const money = (v: number) =>
     `${(v * f).toLocaleString('de-DE', {
-      maximumFractionDigits: unit === 'm' ? 2 : 0,
-      minimumFractionDigits: unit === 'm' ? 2 : 0,
+      maximumFractionDigits: ansicht.einheit === 'm' ? 2 : 0,
+      minimumFractionDigits: ansicht.einheit === 'm' ? 2 : 0,
     })} €`;
   const head = (t: string) =>
     `<tr><th colspan="3" scope="colgroup" style="text-align:left;padding-top:18px;color:var(--ink);font-size:15px;font-weight:600">${esc(t)}</th></tr>`;
@@ -671,14 +665,14 @@ function tabelle(r: Ergebnis) {
           `<tr><td><span class="rs-farbe" style="background:${gcol(p.g)};margin-right:8px"></span>${esc(p.name)}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`,
       )
       .join('')}<tr><td><b>Summe</b></td><td>100 %</td><td><b>${money(amt)}</b></td></tr>`;
-  $('#tsub').textContent =
-    `Lohnsteuer und Soli${r.konsum ? ' und geschätzte Konsumsteuern' : ''} je Ebene anteilig auf deren Ausgaben umgelegt, ${zeitraum(unit)}.`;
+  holen('tsub').textContent =
+    `Lohnsteuer und Soli${r.konsum ? ' und geschätzte Konsumsteuern' : ''} je Ebene anteilig auf deren Ausgaben umgelegt, ${zeitraum(ansicht.einheit)}.`;
   const mitK = (anteil: number, lohn: string, konsum = 0) =>
     konsum ? `${satzText(anteil)} ${lohn}, ${money(konsum)} Konsumsteuern ≈` : `${satzText(anteil)} ${lohn}`;
-  $('#tcount').textContent =
-    `${EINZELPLAENE.length + land.posten.length + gem.posten.length} Posten von Bund, ${land.name} und ${stadt.name}`;
-  $('#tbl th.uy').textContent = unit === 'm' ? '€ / Monat' : '€ / Jahr';
-  $('#tbl tbody').innerHTML =
+  holen('tcount').textContent =
+    `${EINZELPLAENE.length + seite.land.posten.length + seite.gem.posten.length} Posten von Bund, ${seite.land.name} und ${seite.stadt.name}`;
+  holen('tbl-einheit').textContent = ansicht.einheit === 'm' ? '€ / Monat' : '€ / Jahr';
+  holen('tbl', HTMLTableElement).tBodies[0].innerHTML =
     head(`Bund: ${money(e.bund)} (${mitK(ANTEIL.bund, 'Lohnsteuer und Soli', r.konsum?.bund)}), Haushalt 2026`) +
     rows(
       EINZELPLAENE.map((p) => ({ ...p, name: `EP ${p.n} ${p.name}` })),
@@ -686,25 +680,25 @@ function tabelle(r: Ergebnis) {
       e.bund,
     ) +
     head(
-      `Land ${land.name}: ${money(e.land)} (${mitK(ANTEIL.land, 'Lohnsteuer', r.konsum?.land)}), ${land.art} ${land.jahr}`,
+      `Land ${seite.land.name}: ${money(e.land)} (${mitK(ANTEIL.land, 'Lohnsteuer', r.konsum?.land)}), ${seite.land.art} ${seite.land.jahr}`,
     ) +
-    rows(land.posten, LAND_T, e.land) +
+    rows(seite.land.posten, seite.landSumme, e.land) +
     head(
-      `${stadt.name}: ${money(e.gemeinde)} (${mitK(ANTEIL.gemeinde, 'Lohnsteuer', r.konsum?.gemeinde)}), ${gem.art}, ${gem.jahr}`,
+      `${seite.stadt.name}: ${money(e.gemeinde)} (${mitK(ANTEIL.gemeinde, 'Lohnsteuer', r.konsum?.gemeinde)}), ${seite.gem.art}, ${seite.gem.jahr}`,
     ) +
-    rows(gem.posten, GEM_T, e.gemeinde);
+    rows(seite.gem.posten, seite.gemSumme, e.gemeinde);
 }
 
 // ---------- Bundeshaushalt (unabhängig von deinen Eingaben) ----------
 function bundKennzahlen() {
   const fig = (v: string, l: string) => `<div class="rs-kennzahl"><b>${v}</b><span>${esc(l)}</span></div>`;
-  $('#bk').innerHTML =
+  holen('bk').innerHTML =
     fig(fmtMrd(BUND_GESAMT), 'Ausgaben 2026') +
     fig(fmtMrd(EINNAHMEN[0].v), `Steuereinnahmen, ${pct(EINNAHMEN[0].v / BUND_GESAMT)} der Ausgaben`) +
     fig(fmtMrd(EINNAHMEN[1].v), `neue Kredite, ${pct(EINNAHMEN[1].v / BUND_GESAMT)} der Ausgaben`);
 }
 function chartBund() {
-  const svg = d3.select<SVGSVGElement, unknown>('#s1');
+  const svg = d3.select<SVGSVGElement, unknown>('#bund-fluss');
   const nodes: Knoten[] = [],
     links: Verbindung[] = [];
   const shade = { steuer: css('--ink-2'), kredit: css('--ink-3'), sonst: css('--cat-verw') };
@@ -726,10 +720,10 @@ function chartBund() {
     pad: 10,
     share: (d: SKnoten) => `${pct((d.value ?? 0) / BUND_GESAMT)} des Haushalts`,
   });
-  $('#lg1').innerHTML = `<li>Graue Ströme links: Einnahmen</li>${legendGruppen()}`;
+  holen('lg-bund').innerHTML = `<li>Graue Ströme links: Einnahmen</li>${legendGruppen()}`;
 }
 function chartTreemap() {
-  const svg = d3.select<SVGSVGElement, unknown>('#s6');
+  const svg = d3.select<SVGSVGElement, unknown>('#bund-flaeche');
   svg.selectAll('*').remove();
   const W = width(svg),
     H = W < 560 ? 520 : 460;
@@ -789,7 +783,7 @@ function chartTreemap() {
     .style('fill', (d) => (light(blatt(d).g) ? css('--on-hell') : css('--on-dunkel')));
 }
 function chart2027() {
-  const svg = d3.select<SVGSVGElement, unknown>('#s9');
+  const svg = d3.select<SVGSVGElement, unknown>('#entwurf-2027');
   svg.selectAll('*').remove();
   const data = veraenderung2027();
   const W = width(svg),
@@ -853,7 +847,7 @@ function chart2027() {
     .text((d) => fmtMrdDelta(d.d).replace(/\u00a0€$/, ''));
 }
 function chartEntwicklung() {
-  const svg = d3.select<SVGSVGElement, unknown>('#s10');
+  const svg = d3.select<SVGSVGElement, unknown>('#entwicklung');
   svg.selectAll('*').remove();
   const W = width(svg),
     H = 280,
@@ -909,9 +903,10 @@ function chartEntwicklung() {
 
 /** Zeile im zugeklappten „Weitere Angaben“: was gerade eingestellt ist */
 function zusammenfassung() {
-  const kv = el<HTMLSelectElement>('kv').value === 'pkv' ? 'privat versichert' : 'gesetzlich versichert';
-  const ki = +el<HTMLSelectElement>('kist').value ? 'mit Kirchensteuer' : 'keine Kirchensteuer';
-  $('#mehr-sum').textContent = `${kv}, ${ki}, ${el('kinderlos').checked ? 'kinderlos' : 'mit Kindern'}`;
+  const kv = holen('kv', HTMLSelectElement).value === 'pkv' ? 'privat versichert' : 'gesetzlich versichert';
+  const ki = +holen('kist', HTMLSelectElement).value ? 'mit Kirchensteuer' : 'keine Kirchensteuer';
+  holen('mehr-sum').textContent =
+    `${kv}, ${ki}, ${holen('kinderlos', HTMLInputElement).checked ? 'kinderlos' : 'mit Kindern'}`;
 }
 
 /** Knoten der Treemap: Gruppen mit Einzelplänen als Blättern */
@@ -928,12 +923,12 @@ interface Baum extends Partial<Blatt> {
 const blatt = (d: d3.HierarchyRectangularNode<Baum>) => d.data as Blatt;
 
 // ---------- Ablauf ----------
-const konsumAn = () => el('konsum').checked;
+const konsumAn = () => holen('konsum', HTMLInputElement).checked;
 function persoenlich() {
   const ohne = berechne(eingabe());
   const r = konsumAn() ? mitKonsum(ohne) : ohne;
-  $('#k2-konsum').hidden = !r.konsum;
-  const fmtK2 = (v: number) => fmtEur(v * (unit === 'm' ? 1 / 12 : 1)); // Kapitel 2: Monat/Jahr
+  holen('k2-konsum').hidden = !r.konsum;
+  const fmtK2 = (v: number) => fmtEur(v * (ansicht.einheit === 'm' ? 1 / 12 : 1)); // Kapitel 2: Monat/Jahr
   satz(r);
   kennzahlen(r, fmtEur);
   chartKalender(r);
@@ -946,16 +941,16 @@ function persoenlich() {
   zusammenfassung();
 }
 function bund() {
-  $('#ansicht-fluss').hidden = bundAnsicht !== 'fluss';
-  $('#ansicht-flaeche').hidden = bundAnsicht !== 'flaeche';
-  $('#bundsub').textContent =
-    bundAnsicht === 'fluss'
+  holen('ansicht-fluss').hidden = ansicht.bund !== 'fluss';
+  holen('ansicht-flaeche').hidden = ansicht.bund !== 'flaeche';
+  holen('bundsub').textContent =
+    ansicht.bund === 'fluss'
       ? 'Einnahmen, Bundeshaushalt, Einzelpläne. Antippen oder Überfahren zeigt Beträge.'
       : 'Jedes Rechteck ist ein Einzelplan, die Fläche entspricht den Ausgaben 2026.';
-  if (bundAnsicht === 'fluss') chartBund();
+  if (ansicht.bund === 'fluss') chartBund();
   else {
     chartTreemap();
-    $('#lg1').innerHTML = legendGruppen();
+    holen('lg-bund').innerHTML = legendGruppen();
   }
 }
 function alles() {
@@ -967,9 +962,9 @@ function alles() {
 }
 
 // ---------- Stadt in der Nähe ----------
-function orten(orte: Ort[], ids: string[], vonHand: boolean) {
-  const knopf = el<HTMLButtonElement>('naehe'),
-    status = $('#naehe-status');
+function orten(orte: readonly Ort[], ids: string[], vonHand: boolean) {
+  const knopf = holen('naehe', HTMLButtonElement),
+    status = holen('naehe-status');
   if (!('geolocation' in navigator)) {
     if (vonHand) status.textContent = 'Dein Browser kann keinen Standort ermitteln. Wähl deine Stadt in der Liste.';
     return;
@@ -980,9 +975,9 @@ function orten(orte: Ort[], ids: string[], vonHand: boolean) {
     (pos) => {
       const slug = naechsteStadt(orte, pos.coords.latitude, pos.coords.longitude);
       speichereStadt(slug);
-      if (slug === stadt.slug) {
+      if (slug === seite.stadt.slug) {
         knopf.disabled = false;
-        status.textContent = `${stadt.name} ist die nächste kreisfreie Stadt.`;
+        status.textContent = `${seite.stadt.name} ist die nächste kreisfreie Stadt.`;
         return;
       }
       speichereEingaben(ids);
@@ -1001,21 +996,16 @@ function orten(orte: Ort[], ids: string[], vonHand: boolean) {
 }
 
 export function start() {
-  const daten = JSON.parse($('#daten').textContent!);
-  stadt = daten.stadt;
-  land = daten.land;
-  gem = daten.gem;
-  arten = daten.arten;
-  LAND_T = summe(land.posten);
-  GEM_T = summe(gem.posten);
+  const daten = JSON.parse(holen('daten').textContent ?? '{}') as SeitenDaten;
+  seite = { ...daten, landSumme: summe(daten.land.posten), gemSumme: summe(daten.gem.posten) };
 
   const ids = ['brutto', 'kv', 'pkv', 'kist', 'kinderlos', 'konsum', 'ag', 'shownetto', 'split'];
-  const orte: Ort[] = daten.orte;
+  const orte = daten.orte;
 
   // Startseite: gemerkte Stadt öffnen; sonst den Standort nur nutzen, wenn er schon freigegeben ist
   if (location.pathname === '/') {
     const gemerkt = gespeicherteStadt();
-    if (gemerkt && gemerkt !== stadt.slug && orte.some(([s]) => s === gemerkt)) {
+    if (gemerkt && gemerkt !== seite.stadt.slug && orte.some(([s]) => s === gemerkt)) {
       location.replace(`/stadt/${gemerkt}/`);
       return;
     }
@@ -1028,23 +1018,23 @@ export function start() {
         .catch(() => {});
     }
   }
-  el('naehe').addEventListener('click', () => orten(orte, ids, true));
-  const liste = $('#zweck');
+  holen('naehe', HTMLButtonElement).addEventListener('click', () => orten(orte, ids, true));
+  const liste = holen('zweck');
   liste.addEventListener('pointerover', (e) =>
     fokusAuf((e.target as HTMLElement).closest<HTMLElement>('li')?.dataset.k ?? null),
   );
   liste.addEventListener('pointerleave', () => fokusAuf(null));
   schimmern();
-  el('vergessen').addEventListener('click', () => {
+  holen('vergessen', HTMLButtonElement).addEventListener('click', () => {
     vergiss();
     location.href = '/';
   });
 
   ladeEingaben(ids);
-  const syncPkv = () => (el('pkvwrap').hidden = el<HTMLSelectElement>('kv').value !== 'pkv');
+  const syncPkv = () => (holen('pkvwrap').hidden = holen('kv', HTMLSelectElement).value !== 'pkv');
   syncPkv();
 
-  const brutto = el('brutto');
+  const brutto = holen('brutto', HTMLInputElement);
   // Während des Tippens nur Ziffern und Punkte zulassen; beim Verlassen mit Tausenderpunkten formatieren
   brutto.value = schreibeBetrag(leseBetrag(brutto.value));
   brutto.addEventListener('input', () => {
@@ -1058,25 +1048,25 @@ export function start() {
   brutto.addEventListener('focus', () => brutto.select());
   // Hinweis „Vorbelegt mit dem Median“ nur, solange der Median drinsteht
   const syncVorbelegt = () => {
-    el('vorbelegt').hidden = leseBetrag(brutto.value) !== daten.median;
+    holen('vorbelegt').hidden = leseBetrag(brutto.value) !== daten.median;
   };
   syncVorbelegt();
   brutto.addEventListener('input', syncVorbelegt);
   ids.forEach((id) => {
-    el(id).addEventListener('input', () => {
+    holen(id).addEventListener('input', () => {
       syncPkv();
       speichereEingaben(ids);
       persoenlich();
     });
   });
-  el<HTMLSelectElement>('stadt').addEventListener('change', (ev) => {
+  holen('stadt', HTMLSelectElement).addEventListener('change', (ev) => {
     speichereEingaben(ids);
     speichereStadt((ev.target as HTMLSelectElement).value);
     location.href = `/stadt/${(ev.target as HTMLSelectElement).value}/`;
   });
   document.querySelectorAll<HTMLButtonElement>('#unit button').forEach((b) => {
     b.addEventListener('click', () => {
-      unit = b.dataset.u as 'y' | 'm';
+      ansicht.einheit = b.dataset.u as 'y' | 'm';
       document.querySelectorAll('#unit button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
@@ -1085,7 +1075,7 @@ export function start() {
   });
   document.querySelectorAll<HTMLButtonElement>('#bundansicht button').forEach((b) => {
     b.addEventListener('click', () => {
-      bundAnsicht = b.dataset.ansicht as 'fluss' | 'flaeche';
+      ansicht.bund = b.dataset.ansicht as 'fluss' | 'flaeche';
       document.querySelectorAll('#bundansicht button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
       });
