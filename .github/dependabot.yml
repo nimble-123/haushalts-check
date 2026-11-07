@@ -20,6 +20,13 @@ updates:
       laufzeit:
         patterns: ["d3", "d3-sankey", "@fontsource-variable/*"]
         update-types: [minor, patch]
+    ignore:
+      # @astrojs/check unterstützt TypeScript bislang nur bis 6.x; erst mit Astro-Unterstützung anheben
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      # Typen passend zur Laufzeit: Node 24 (.nvmrc, Vercel, CI); Major nur zusammen mit der Node-Version
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
     commit-message:
       prefix: deps
 
