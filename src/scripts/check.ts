@@ -72,7 +72,8 @@ let unit: 'y' | 'm' = 'm'; // nur Kapitel 2; Einstieg und Kapitel 1 rechnen jäh
 let bundAnsicht: 'fluss' | 'flaeche' = 'fluss';
 
 const gcol = (g: Gruppe) => css(`--cat-${g}`);
-const KIRCHE = () => css('--line');
+/** Kirchensteuer ist keine Haushaltsebene: neutral in der Linienfarbe */
+const farbeKirche = () => css('--line');
 const epl = (n: number) => groessteN(einzelplanPosten(), n);
 const legendGruppen = () =>
   Object.entries(GRUPPEN)
@@ -180,7 +181,7 @@ function chartFluss(r: Ergebnis) {
     links.push({ source: 'brutto', target: 'soli', value: r.soli }, { source: 'soli', target: 'bund', value: r.soli });
   }
   if (r.kirche > 0) {
-    add('ki', 'Kirchensteuer', KIRCHE(), { col: 1 });
+    add('ki', 'Kirchensteuer', farbeKirche(), { col: 1 });
     links.push({ source: 'brutto', target: 'ki', value: r.kirche });
   }
   // Konsumsteuern unter den Steuern, damit ihre Bänder zu den Ebenen nicht kreuzen
@@ -263,7 +264,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   ).forEach(([n, v]) => {
     v > 0 && items.push({ name: n, v, c: sv });
   });
-  if (r.kirche > 0) items.push({ name: 'Kirchensteuer', v: r.kirche, c: KIRCHE() });
+  if (r.kirche > 0) items.push({ name: 'Kirchensteuer', v: r.kirche, c: farbeKirche() });
   epl(10).forEach((p) => {
     items.push({ name: `Bund · ${p.name.replace(/^EP \d+ /, '')}`, v: (e.bund * p.v) / BUND_GESAMT, c: gcol(p.g) });
   });

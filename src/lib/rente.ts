@@ -159,9 +159,9 @@ export function renteVsEtf(p: RenteEingabe) {
   const pay = sim(lo);
 
   // gesetzliche Rente
-  const renteB = (EP * RENTENWERT * p.niveau) / 48,
-    startY = yearOf(67);
-  const bAnteil = Math.min(1, (83.5 + 0.5 * (startY - 2025)) / 100);
+  const renteB = (EP * RENTENWERT * p.niveau) / 48;
+  // Besteuerungsanteil der Rente nach Jahr des Rentenbeginns
+  const bAnteil = Math.min(1, (83.5 + 0.5 * (yearOf(67) - 2025)) / 100);
   // Rentner zahlen den halben KV-Satz samt halbem Zusatzbeitrag und die volle Pflegeversicherung
   const kvpv = p.pkv ? 0 : SV_2026.kv / 2 + SV_2026.kvZusatz / 2 + SV_2026.pv + (p.kinderlos ? SV_2026.pvKinderlos : 0);
   const e = est2026(
@@ -187,31 +187,66 @@ export function renteVsEtf(p: RenteEingabe) {
     }
 
   return {
-    N,
-    age,
-    ageNow,
-    ap,
-    useNow,
-    pts,
-    life,
-    EP,
-    salArr,
-    yearOf,
-    firstNet: netCost(rvSatz(2026), sal(age)).net / 12,
-    gross,
-    cumPaid,
+    jahre: N,
+    startAlter: age,
+    alterHeute: ageNow,
+    hoehepunktAlter: ap,
+    mitHeute: useNow,
+    lebensverlauf: life,
+    entgeltpunkte: EP,
+    gehaelter: salArr,
+    jahrBeiAlter: yearOf,
+    ersteNettokosten: netCost(rvSatz(2026), sal(age)).net / 12,
+    beitragBrutto: gross,
+    beitragNetto: cumPaid,
     depotReal: acc[acc.length - 1],
-    acc,
-    paid,
-    renteB,
-    renteN,
-    etfM: (pay.out[0] || 0) / 12,
-    cumR,
-    cumE,
-    cross,
-    until,
-    startY,
-  };
+    depotVerlauf: acc,
+    nettokostenVerlauf: paid,
+    renteBrutto: renteB,
+    renteNetto: renteN,
+    etfMonat: (pay.out[0] || 0) / 12,
+    summeRente: cumR,
+    summeEtf: cumE,
+    einholAlter: cross,
+    depotBis: until,
+  } satisfies RenteErgebnis;
 }
 
-export type RenteErgebnis = ReturnType<typeof renteVsEtf>;
+/** Ergebnis von renteVsEtf; Beträge in heutiger Kaufkraft, wo nicht anders genannt */
+export interface RenteErgebnis {
+  /** Beitragsjahre bis 67 */
+  jahre: number;
+  startAlter: number;
+  alterHeute: number;
+  hoehepunktAlter: number;
+  /** heutiges Gehalt als Stützpunkt im Lebensverlauf */
+  mitHeute: boolean;
+  /** ganzer Lebensverlauf statt „ab heute“ */
+  lebensverlauf: boolean;
+  entgeltpunkte: number;
+  /** Bruttogehalt je Beitragsjahr */
+  gehaelter: number[];
+  jahrBeiAlter: (alter: number) => number;
+  /** Nettokosten der Beiträge im ersten Monat */
+  ersteNettokosten: number;
+  /** Beiträge brutto, Arbeitnehmer und Arbeitgeber, über alle Jahre */
+  beitragBrutto: number;
+  /** was die Beiträge dich netto gekostet haben, über alle Jahre */
+  beitragNetto: number;
+  /** ETF-Depot mit 67, real */
+  depotReal: number;
+  depotVerlauf: number[];
+  nettokostenVerlauf: number[];
+  /** gesetzliche Rente im Monat */
+  renteBrutto: number;
+  renteNetto: number;
+  /** ETF-Entnahme im Monat, netto */
+  etfMonat: number;
+  /** aufsummierte Rente bzw. ETF-Entnahmen ab 67, je Jahr */
+  summeRente: number[];
+  summeEtf: number[];
+  /** Alter, ab dem die Rente die ETF-Entnahmen eingeholt hat */
+  einholAlter: number | null;
+  /** Alter, bis zu dem das Depot reicht */
+  depotBis: number;
+}

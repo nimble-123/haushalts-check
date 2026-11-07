@@ -2,7 +2,7 @@
 // Aufruf: npm run tokens
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 type Wert = string | Record<string, string>;
@@ -81,7 +81,7 @@ export const TOKENS_CSS = join(HERE, '..', 'src', 'styles', 'tokens.css');
 export const ladeTokens = (): Tokens => JSON.parse(readFileSync(TOKENS_JSON, 'utf8'));
 
 // Nur schreiben, wenn als Skript aufgerufen (nicht beim Import in Tests)
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const t = ladeTokens();
   const { css, maße, stile } = tokensCss(t);
   writeFileSync(TOKENS_CSS, css);
