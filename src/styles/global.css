@@ -85,7 +85,7 @@ a:hover {
   margin: 0 0 var(--space-12);
   min-width: 0;
 }
-.figure > h3 {
+.figure > :is(h2, h3) {
   font: 650 19px / 1.35 var(--font-text);
 }
 .figure > .sub {

@@ -29,7 +29,8 @@
     "daten:staedte": "node pipeline/staedte.ts",
     "daten:ausgabearten": "node --env-file=.env.local pipeline/ausgabearten.ts",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "lighthouse": "npm run build && npx -y @lhci/cli@0.16.0 autorun"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
