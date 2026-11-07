@@ -1,14 +1,21 @@
 import * as d3 from 'd3';
 import { type RenteErgebnis, renteVsEtf, VORLAGEN } from '../lib/rente';
 import { ladeEingaben, speichereEingaben } from './speicher';
-import { $, css, esc, fmtEur, hideTip, showTip, width } from './viz';
+import { achseY, css, esc, fadenkreuz, fmtEur, gitterY, holen, rahmen } from './viz';
 
-const el = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
-const num = (id: string) => +el(id).value;
+const tausendEuro = (v: d3.NumberValue) => `${Math.round(+v / 1000)} T€`;
+
+/** Zahl aus einem Eingabefeld oder einer Auswahl */
+const num = (id: string) => {
+  const e = holen(id);
+  if (!(e instanceof HTMLInputElement || e instanceof HTMLSelectElement))
+    throw new Error(`#${id} ist kein Eingabefeld`);
+  return +e.value;
+};
 
 function modell() {
   return renteVsEtf({
-    modus: el<HTMLSelectElement>('mode').value as 'life' | 'now',
+    modus: holen('mode', HTMLSelectElement).value as 'life' | 'now',
     bruttoHeute: num('brutto'),
     alterHeute: num('age'),
     einstiegsalter: num('c_a0'),
@@ -16,13 +23,13 @@ function modell() {
     hoehepunktGehalt: num('c_s1'),
     hoehepunktAlter: num('c_ap'),
     dynamik: num('c_g'),
-    heuteEinbeziehen: el('c_usenow').checked,
+    heuteEinbeziehen: holen('c_usenow', HTMLInputElement).checked,
     etfRendite: num('etfr'),
     niveau: num('niveau'),
     depotBis: num('until'),
-    pkv: el<HTMLSelectElement>('kv').value === 'pkv',
+    pkv: holen('kv', HTMLSelectElement).value === 'pkv',
     pkvMonat: num('pkv'),
-    kinderlos: el('kinderlos').checked,
+    kinderlos: holen('kinderlos', HTMLInputElement).checked,
     kirche: num('kist'),
   });
 }
@@ -35,12 +42,8 @@ interface Serie {
   dash?: string;
 }
 function linien(id: string, x0: number, x1: number, series: Serie[], legend: string, vline?: [number, string]) {
-  const svg = d3.select<SVGSVGElement, unknown>(`#${id}`);
-  svg.selectAll('*').remove();
-  const W = width(svg),
-    H = W < 420 ? 240 : 280,
-    m = { l: 54, r: 12, t: 14, b: 26 };
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
+  const { svg, W, H } = rahmen(id, (_, schmal) => (schmal ? 240 : 280), 420);
+  const m = { l: 54, r: 12, t: 14, b: 26 };
   const x = d3
     .scaleLinear()
     .domain([x0, x1])
@@ -50,29 +53,8 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
     .domain([0, (d3.max(series, (s) => d3.max(s.data)) ?? 1) * 1.08 || 1])
     .nice()
     .range([H - m.b, m.t]);
-  svg
-    .append('g')
-    .attr('class', 'grid')
-    .selectAll('line')
-    .data(y.ticks(4))
-    .join('line')
-    .attr('x1', m.l)
-    .attr('x2', W - m.r)
-    .attr('y1', (d) => y(d))
-    .attr('y2', (d) => y(d));
-  svg
-    .append('g')
-    .attr('class', 'axis')
-    .attr('transform', `translate(${m.l},0)`)
-    .call(
-      d3
-        .axisLeft(y)
-        .ticks(4)
-        .tickFormat((v) => `${Math.round(+v / 1000)} T€`)
-        .tickSize(0),
-    )
-    .select('.domain')
-    .remove();
+  gitterY(svg, y, m.l, W - m.r, 4);
+  achseY(svg, y, m.l, 4, tausendEuro);
   svg
     .append('g')
     .attr('class', 'axis')
@@ -116,46 +98,21 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
           .y((d) => y(d)),
       );
   });
-  const ch = svg
-    .append('line')
-    .attr('y1', m.t)
-    .attr('y2', H - m.b)
-    .attr('stroke', css('--ink-2'))
-    .style('opacity', 0);
-  svg
-    .append('rect')
-    .attr('x', m.l)
-    .attr('y', m.t)
-    .attr('width', W - m.l - m.r)
-    .attr('height', H - m.t - m.b)
-    .attr('fill', 'transparent')
-    .on('mousemove', (ev) => {
-      const [mx] = d3.pointer(ev);
-      const i = Math.max(0, Math.min(x1 - x0, Math.round(x.invert(mx) - x0)));
-      ch.attr('x1', x(x0 + i))
-        .attr('x2', x(x0 + i))
-        .style('opacity', 1);
-      showTip(
-        ev,
-        `<b>Alter ${x0 + i}</b>${series.map((s) => `${esc(s.name)}: ${fmtEur(s.data[i] ?? 0)}`).join('<br>')}`,
-      );
-    })
-    .on('mouseleave', () => {
-      ch.style('opacity', 0);
-      hideTip();
-    });
-  $(`#${legend}`).innerHTML = series
+  fadenkreuz(svg, m, W, H, (mx) => {
+    const i = Math.max(0, Math.min(x1 - x0, Math.round(x.invert(mx) - x0)));
+    return {
+      x: x(x0 + i),
+      html: `<b>Alter ${x0 + i}</b>${series.map((s) => `${esc(s.name)}: ${fmtEur(s.data[i] ?? 0)}`).join('<br>')}`,
+    };
+  });
+  holen(legend).innerHTML = series
     .map((s) => `<li><span class="rs-farbe" style="background:${s.c}"></span>${esc(s.name)}</li>`)
     .join('');
 }
 
 function gehaltskurve(m: RenteErgebnis) {
-  const svg = d3.select<SVGSVGElement, unknown>('#s11s');
-  svg.selectAll('*').remove();
-  const W = width(svg),
-    H = W < 420 ? 240 : 260,
-    mg = { l: 54, r: 16, t: 28, b: 26 };
-  svg.attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`);
+  const { svg, W, H } = rahmen('gehaltskurve', (_, schmal) => (schmal ? 240 : 260), 420);
+  const mg = { l: 54, r: 16, t: 28, b: 26 };
   const ages = m.gehaelter.map((_, i) => m.startAlter + i).concat([67]);
   const real = m.gehaelter.concat([m.gehaelter[m.gehaelter.length - 1]]);
   const nom = ages.map((a, i) => {
@@ -171,29 +128,8 @@ function gehaltskurve(m: RenteErgebnis) {
     .domain([0, (d3.max([...nom, ...real].filter((v): v is number => v != null)) ?? 1) * 1.1])
     .nice()
     .range([H - mg.b, mg.t]);
-  svg
-    .append('g')
-    .attr('class', 'grid')
-    .selectAll('line')
-    .data(y.ticks(4))
-    .join('line')
-    .attr('x1', mg.l)
-    .attr('x2', W - mg.r)
-    .attr('y1', (d) => y(d))
-    .attr('y2', (d) => y(d));
-  svg
-    .append('g')
-    .attr('class', 'axis')
-    .attr('transform', `translate(${mg.l},0)`)
-    .call(
-      d3
-        .axisLeft(y)
-        .ticks(4)
-        .tickFormat((v) => `${Math.round(+v / 1000)} T€`)
-        .tickSize(0),
-    )
-    .select('.domain')
-    .remove();
+  gitterY(svg, y, mg.l, W - mg.r, 4);
+  achseY(svg, y, mg.l, 4, tausendEuro);
   svg
     .append('g')
     .attr('class', 'axis')
@@ -255,22 +191,22 @@ function gehaltskurve(m: RenteErgebnis) {
       .style('stroke', css('--surface'))
       .style('stroke-width', 4);
   });
-  $('#lg11s').innerHTML =
+  holen('lg-gehaltskurve').innerHTML =
     `<li><span class="rs-farbe" style="background:${css('--cat-soz')}"></span>Brutto in heutiger Kaufkraft</li><li><span class="rs-farbe" style="background:${css('--ink-3')}"></span>nominal, mit 2 % Inflation ab heute</li>`;
 }
 
 function zeichne() {
-  const life = el<HTMLSelectElement>('mode').value === 'life';
+  const life = holen('mode', HTMLSelectElement).value === 'life';
   document.querySelectorAll<HTMLElement>('.lifeonly').forEach((e) => {
     e.hidden = !life;
   });
-  el('preset').hidden = !life;
-  el('pkvwrap').hidden = el<HTMLSelectElement>('kv').value !== 'pkv';
+  holen('preset').hidden = !life;
+  holen('pkvwrap').hidden = holen('kv', HTMLSelectElement).value !== 'pkv';
   const m = modell();
   const fig = (v: string, l: string, mark = false) =>
     `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${esc(l)}</span></div>`;
   const lastMonth = m.jahre ? (m.nettokostenVerlauf[m.jahre] - m.nettokostenVerlauf[m.jahre - 1]) / 12 : 0;
-  $('#rk').innerHTML =
+  holen('rk').innerHTML =
     fig(
       fmtEur(m.beitragBrutto),
       `Rentenbeiträge in ${m.jahre} Jahren, brutto (AN und AG), ${m.entgeltpunkte.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Entgeltpunkte`,
@@ -294,24 +230,24 @@ function zeichne() {
     );
   if (m.lebensverlauf) gehaltskurve(m);
   linien(
-    's11a',
+    'ansparen',
     m.startAlter,
     67,
     [
       { name: 'ETF-Depot (real)', data: m.depotVerlauf, c: css('--cat-soz'), w: 2.5 },
       { name: 'Nettokosten der Beiträge', data: m.nettokostenVerlauf, c: css('--ink-3'), dash: '5 4' },
     ],
-    'lg11a',
+    'lg-ansparen',
   );
   linien(
-    's11b',
+    'auszahlen',
     67,
     100,
     [
       { name: 'Gesetzliche Rente', data: m.summeRente, c: css('--ink'), w: 2.5 },
       { name: `ETF-Entnahmen bis ${m.depotBis}`, data: m.summeEtf, c: css('--cat-soz'), w: 2.5 },
     ],
-    'lg11b',
+    'lg-auszahlen',
     [84, 'Ø Lebenserwartung ≈ 83 (M) / 86 (F)'],
   );
 }
@@ -338,7 +274,7 @@ export function startRente() {
   // Eigene Angaben vom letzten Besuch (Brutto, Versicherung, Kirche, Kinder teilen sich die Seiten)
   ladeEingaben(ids);
   ids.forEach((id) => {
-    el(id).addEventListener('input', () => {
+    holen(id).addEventListener('input', () => {
       speichereEingaben(ids);
       document.querySelectorAll('#preset button').forEach((b) => {
         b.setAttribute('aria-pressed', 'false');
@@ -349,11 +285,11 @@ export function startRente() {
   document.querySelectorAll<HTMLButtonElement>('#preset button').forEach((b) => {
     b.addEventListener('click', () => {
       const p = VORLAGEN[b.dataset.p as keyof typeof VORLAGEN];
-      el('c_a0').value = String(p.einstiegsalter);
-      el('c_s0').value = String(p.einstiegsgehalt);
-      el('c_s1').value = String(p.hoehepunktGehalt);
-      el('c_ap').value = String(p.hoehepunktAlter);
-      el('c_usenow').checked = false;
+      holen('c_a0', HTMLInputElement).value = String(p.einstiegsalter);
+      holen('c_s0', HTMLInputElement).value = String(p.einstiegsgehalt);
+      holen('c_s1', HTMLInputElement).value = String(p.hoehepunktGehalt);
+      holen('c_ap', HTMLInputElement).value = String(p.hoehepunktAlter);
+      holen('c_usenow', HTMLInputElement).checked = false;
       speichereEingaben(ids);
       zeichne();
       document.querySelectorAll('#preset button').forEach((x) => {

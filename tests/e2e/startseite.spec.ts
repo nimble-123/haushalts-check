@@ -21,12 +21,12 @@ test('Einstieg: Median vorbelegt, Ergebnis, Raster mit 100 Kästchen', async ({ 
 
 test('Brutto ändern zeichnet Satz, Kennzahlen und Diagramme neu und wird gemerkt', async ({ page }) => {
   await page.goto('/');
-  const sankeyVorher = await page.locator('#s2').innerHTML();
+  const sankeyVorher = await page.locator('#dein-fluss').innerHTML();
   await page.locator('#brutto').click();
   await page.keyboard.type('72000');
   await expect(ergebnis(page)).toContainText('Von 72.000 € Brutto');
   await expect(page.locator('#vorbelegt')).toBeHidden();
-  expect(await page.locator('#s2').innerHTML()).not.toBe(sankeyVorher);
+  expect(await page.locator('#dein-fluss').innerHTML()).not.toBe(sankeyVorher);
   await page.reload();
   await expect(page.locator('#brutto')).toHaveValue('72.000');
 });

@@ -5,6 +5,7 @@ import { MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
 import type { Land, Stadt } from '../data/types';
 import { KONSUM } from '../lib/konsum';
 import { ergebnisSatz } from '../lib/satz';
+import type { SeitenDaten } from '../lib/seite';
 import { ANTEIL, berechne } from '../lib/steuer';
 import { pct, satzText } from '../lib/text';
 
@@ -22,8 +23,8 @@ const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.
 const gem = gemeindeEbene(stadt);
 const arten = ausgabeVergleich(stadt);
 // Für „In meiner Nähe“: nur Slug und Koordinaten, die Suche läuft im Browser
-const orte = STAEDTE.filter((s) => s.lat && s.lon).map((s) => [s.slug, s.lat, s.lon] as const);
-const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
+const orte = STAEDTE.flatMap((s) => (s.lat && s.lon ? [[s.slug, s.lat, s.lon] as const] : []));
+const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO } satisfies SeitenDaten;
 
 // Beim Build vorab: Ergebnissatz für den Median (Suchmaschinen, Seiten ohne JavaScript, erster Eindruck)
 const vorab = ergebnisSatz(
@@ -113,8 +114,8 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
     <details class="rs-aufklapper figure" data-neu-zeichnen>
       <summary><b>Abgabenquote nach Einkommen</b><span id="quote-sum"></span></summary>
       <p class="sub">Anteil vom Brutto bei gleichen Angaben. Gestrichelt: Beitragsbemessungsgrenzen, ab denen die Sozialabgaben nicht mehr steigen.</p>
-      <div class="rs-panel"><svg id="s5" role="img" aria-label="Liniendiagramm: Abgabenquote gesamt, Steuern und Sozialabgaben in Prozent des Bruttos von 15.000 bis 160.000 Euro, mit Markierung deines Einkommens."></svg>
-      <ul class="rs-legende" id="lg5"></ul></div>
+      <div class="rs-panel"><svg id="quote" role="img" aria-label="Liniendiagramm: Abgabenquote gesamt, Steuern und Sozialabgaben in Prozent des Bruttos von 15.000 bis 160.000 Euro, mit Markierung deines Einkommens."></svg>
+      <ul class="rs-legende" id="lg-quote"></ul></div>
     </details>
   </section>
 
@@ -145,8 +146,8 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
       </div>
       <div class="rs-panel">
         <p class="hint">Diagramm seitlich wischen</p>
-        <div class="rs-scroll" tabindex="0" role="region" aria-label="Dein Geld, Ebene für Ebene (seitlich scrollbar)"><svg id="s2" role="img" aria-label="Sankey-Diagramm deiner Abgaben: von Lohnsteuer, Soli, Kirchensteuer und Sozialversicherung über Bund, Land und Stadt in die Ausgabenbereiche. Alle Beträge stehen in der Tabelle weiter unten."></svg></div>
-        <ul class="rs-legende" id="lg2"></ul>
+        <div class="rs-scroll" tabindex="0" role="region" aria-label="Dein Geld, Ebene für Ebene (seitlich scrollbar)"><svg id="dein-fluss" role="img" aria-label="Sankey-Diagramm deiner Abgaben: von Lohnsteuer, Soli, Kirchensteuer und Sozialversicherung über Bund, Land und Stadt in die Ausgabenbereiche. Alle Beträge stehen in der Tabelle weiter unten."></svg></div>
+        <ul class="rs-legende" id="lg-fluss"></ul>
       </div>
     </div>
 
@@ -161,14 +162,14 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
     <details class="rs-aufklapper figure" data-neu-zeichnen>
       <summary><b>Alle Töpfe, sortiert</b><span id="toepfe-sum"></span></summary>
       <p class="sub" id="barsub"></p>
-      <div class="rs-panel"><svg id="s3" role="img" aria-label="Sortiertes Balkendiagramm deiner Abgaben je Topf in Euro. Werte auch in der Tabelle unten."></svg>
-      <ul class="rs-legende" id="lg3"></ul></div>
+      <div class="rs-panel"><svg id="toepfe" role="img" aria-label="Sortiertes Balkendiagramm deiner Abgaben je Topf in Euro. Werte auch in der Tabelle unten."></svg>
+      <ul class="rs-legende" id="lg-toepfe"></ul></div>
     </details>
 
     <details class="rs-aufklapper figure">
       <summary><b>Alle Posten als Tabelle</b><span id="tcount"></span></summary>
       <p class="sub" id="tsub"></p>
-      <div class="rs-panel rs-scroll" tabindex="0" role="region" aria-label="Alle Posten (seitlich scrollbar)"><table class="rs-tabelle" id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th class="uy">€ / Monat</th></tr></thead><tbody></tbody></table></div>
+      <div class="rs-panel rs-scroll" tabindex="0" role="region" aria-label="Alle Posten (seitlich scrollbar)"><table class="rs-tabelle" id="tbl"><thead><tr><th>Posten</th><th>Anteil</th><th id="tbl-einheit">€ / Monat</th></tr></thead><tbody></tbody></table></div>
     </details>
   </section>
 
@@ -191,25 +192,25 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
       <div class="rs-panel">
         <div id="ansicht-fluss">
           <p class="hint">Diagramm seitlich wischen</p>
-          <div class="rs-scroll" tabindex="0" role="region" aria-label="Bundeshaushalt als Fluss (seitlich scrollbar)"><svg id="s1" role="img" aria-label={labelFluss}></svg></div>
+          <div class="rs-scroll" tabindex="0" role="region" aria-label="Bundeshaushalt als Fluss (seitlich scrollbar)"><svg id="bund-fluss" role="img" aria-label={labelFluss}></svg></div>
         </div>
         <div id="ansicht-flaeche" hidden>
-          <svg id="s6" role="img" aria-label="Treemap des Bundeshaushalts 2026 nach Einzelplänen; Arbeit und Soziales belegt über ein Drittel der Fläche."></svg>
+          <svg id="bund-flaeche" role="img" aria-label="Treemap des Bundeshaushalts 2026 nach Einzelplänen; Arbeit und Soziales belegt über ein Drittel der Fläche."></svg>
         </div>
-        <ul class="rs-legende" id="lg1"></ul>
+        <ul class="rs-legende" id="lg-bund"></ul>
       </div>
     </div>
 
     <div class="figure">
       <h3>Was sich 2027 ändern soll</h3>
       <p class="sub">Regierungsentwurf 2027 ({ENTWURF_2027_GESAMT.toLocaleString('de-DE')} Mrd €) gegenüber Soll 2026, für die Einzelpläne mit veröffentlichten Entwurfszahlen. Noch nicht beschlossen.</p>
-      <div class="rs-panel"><svg id="s9" role="img" aria-label="Balkendiagramm der Veränderungen 2027 gegenüber 2026: Verteidigung plus 27 Milliarden, Bundesschuld plus 10 Milliarden, Gesundheit minus 7,4 Milliarden."></svg></div>
+      <div class="rs-panel"><svg id="entwurf-2027" role="img" aria-label="Balkendiagramm der Veränderungen 2027 gegenüber 2026: Verteidigung plus 27 Milliarden, Bundesschuld plus 10 Milliarden, Gesundheit minus 7,4 Milliarden."></svg></div>
     </div>
 
     <div class="figure">
       <h3>Entwicklung der Bundesausgaben</h3>
       <p class="sub">Kernhaushalt in Mrd €: 2025 und 2026 beschlossen, 2027 Entwurf, ab 2028 Finanzplan.</p>
-      <div class="rs-panel"><svg id="s10" role="img" aria-label={labelEntwicklung}></svg></div>
+      <div class="rs-panel"><svg id="entwicklung" role="img" aria-label={labelEntwicklung}></svg></div>
     </div>
 
     <details class="rs-aufklapper figure">
@@ -222,7 +223,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
               <tr><td>EP {e.n} {e.name}</td><td>{(e.v / BUND_GESAMT * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %</td><td>{e.v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td></tr>
             ))}
             <tr><td><b>Ausgaben gesamt</b></td><td>100 %</td><td><b>{BUND_GESAMT.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b></td></tr>
-            <tr><th colspan="3" scope="colgroup" class="zwischen">Finanziert durch</th></tr>
+            <tr><th colspan="3" scope="colgroup" class="rs-zwischen">Finanziert durch</th></tr>
             {EINNAHMEN.map((e) => (
               <tr><td>{e.name}</td><td>{(e.v / BUND_GESAMT * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %</td><td>{e.v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</td></tr>
             ))}
@@ -279,6 +280,5 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben: ${ENTWICKLUNG.map(
   .ohne-js { color: var(--ink-2); font-size: 15px; }
   .datenstand { color: var(--ink-3); font-size: 14.5px; margin-top: var(--space-12); }
   .datenstand a { color: inherit; }
-  .zwischen { text-align: left; padding-top: 18px; color: var(--ink); font-size: 15px; font-weight: 600; }
   .weiter { font-size: 19px; font-weight: 600; }
 </style>

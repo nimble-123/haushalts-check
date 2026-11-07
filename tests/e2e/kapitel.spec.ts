@@ -11,9 +11,9 @@ test.beforeEach(async ({ page }) => {
 test('Kapitel 2 zeigt standardmäßig Monatswerte und schaltet auf Jahr um', async ({ page }) => {
   const f = fehlerSammeln(page);
   await expect(page.locator('#unit [aria-pressed="true"]')).toHaveText('pro Monat');
-  await expect(page.locator('#tbl th.uy')).toHaveText('€ / Monat');
+  await expect(page.locator('#tbl-einheit')).toHaveText('€ / Monat');
   await page.locator('#unit').getByRole('button', { name: 'pro Jahr' }).click();
-  await expect(page.locator('#tbl th.uy')).toHaveText('€ / Jahr');
+  await expect(page.locator('#tbl-einheit')).toHaveText('€ / Jahr');
   f.pruefe();
 });
 
@@ -27,7 +27,7 @@ test('zugeklappte Grafiken haben eine Zusammenfassung und zeichnen beim Aufklapp
   // Neuzeichnen läuft nach dem toggle-Ereignis: warten, bis die Breite stimmt
   await expect
     .poll(() =>
-      page.locator('#s3').evaluate((s) => {
+      page.locator('#toepfe').evaluate((s) => {
         const panel = (s.closest('.rs-panel') as HTMLElement).clientWidth;
         return Number(s.getAttribute('width')) / panel;
       }),
@@ -51,5 +51,5 @@ test('Bundeshaushalt: Umschalten zwischen Fluss und Fläche', async ({ page }) =
   await page.getByRole('button', { name: 'Als Fläche' }).click();
   await expect(page.locator('#ansicht-flaeche')).toBeVisible();
   await expect(page.locator('#ansicht-fluss')).toBeHidden();
-  await expect(page.locator('#s6 rect')).toHaveCount(EINZELPLAENE.length);
+  await expect(page.locator('#bund-flaeche rect')).toHaveCount(EINZELPLAENE.length);
 });
