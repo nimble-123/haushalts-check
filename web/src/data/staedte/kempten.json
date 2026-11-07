@@ -5,5 +5,37 @@
   "name": "Kempten (Allgäu)",
   "amtlich": "Kempten (Allgäu)",
   "einwohner": 67645,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1198
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 505
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 446
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 748
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1474
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

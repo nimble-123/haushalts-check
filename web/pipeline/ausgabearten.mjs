@@ -130,10 +130,31 @@ function zahl(s) {
 
 const faktor = (einheit) => (/mill|mio/i.test(einheit) ? 1e6 : /tsd|tausend|1000/i.test(einheit) ? 1e3 : 1);
 
-const text = alsText(readFileSync(ROH));
+const staedte = readdirSync(STAEDTE).filter((f) => f.endsWith('.json')).map((f) => {
+  const datei = join(STAEDTE, f);
+  return { datei, s: JSON.parse(readFileSync(datei, 'utf8')) };
+});
+const nachAgs = new Map(staedte.map((x) => [x.s.ags, x]));
+
+// Regionalschlüssel der Tabelle (Gemeinde-Tiefe): „F“ + 5-stelliger Kreisschlüssel + 9 Nullen = kreisfreie Stadt
+const zuAgs = (code) => /^F(\d{5})0{9}$/.exec(code ?? '')?.[1] ?? code;
+
+let text = alsText(readFileSync(ROH));
 if (text.trimStart().startsWith('{')) {
   console.error(`${ROH} enthält eine Fehlerantwort statt Daten – Datei löschen und neu abrufen.`);
   process.exit(1);
+}
+// Der Export enthält alle Gemeinden (~200 MB). Einmalig auf die kreisfreien Städte filtern und so speichern.
+{
+  const roh = text.split(/\r?\n/).filter((z) => z.trim());
+  const kopfFelder = felder(roh[0]);
+  const regionSpalten = kopfFelder.map((k, i) => (/^\d+_variable_attribute_code$/.test(k) ? i : -1)).filter((i) => i >= 0);
+  const behalten = [roh[0], ...roh.slice(1).filter((z) => { const f = z.split(';'); return regionSpalten.some((i) => nachAgs.has(zuAgs(f[i]))); })];
+  if (behalten.length < roh.length) {
+    text = behalten.join('\n') + '\n';
+    writeFileSync(ROH, text);
+    console.log(`Rohdatei auf die Städte gefiltert: ${(roh.length - 1).toLocaleString('de-DE')} → ${(behalten.length - 1).toLocaleString('de-DE')} Zeilen`);
+  }
 }
 const [kopf, ...zeilen] = text.split(/\r?\n/).filter((z) => z.trim()).map(felder);
 const sp = Object.fromEntries(kopf.map((k, i) => [k.trim(), i]));
@@ -141,17 +162,13 @@ for (const k of ['time', 'value', 'value_unit', 'value_variable_label']) {
   if (!(k in sp)) throw new Error(`Spalte „${k}“ fehlt – kein ffcsv im neuen Format? Kopf: ${kopf.join(';')}`);
 }
 const hatQ = 'value_q' in sp;
-if (!hatQ) console.warn('Warnung: keine Spalte value_q – „vorläufig“ lässt sich nicht erkennen.');
-
-const staedte = readdirSync(STAEDTE).filter((f) => f.endsWith('.json')).map((f) => {
-  const datei = join(STAEDTE, f);
-  return { datei, s: JSON.parse(readFileSync(datei, 'utf8')) };
-});
-const nachAgs = new Map(staedte.map((x) => [x.s.ags, x]));
+// Der Hintergrund-Export (resultfile) liefert keine Spalte value_q. Laut Tabellenhinweis der Regionaldatenbank
+// sind die Werte des jüngsten Berichtsjahres (2025) vorläufig.
+const VORLAEUFIG_AB = 2025;
 
 // Regionale Dimension = die <n>_variable, deren Ausprägungscodes am häufigsten Stadt-AGS sind.
 const dims = kopf.map((k) => k.match(/^(\d+)_variable_attribute_code$/)?.[1]).filter(Boolean);
-const treffer = (n) => zeilen.filter((z) => nachAgs.has(z[sp[`${n}_variable_attribute_code`]]?.trim())).length;
+const treffer = (n) => zeilen.filter((z) => nachAgs.has(zuAgs(z[sp[`${n}_variable_attribute_code`]]?.trim()))).length;
 const region = dims.reduce((a, b) => (treffer(b) > treffer(a) ? b : a), dims[0]);
 if (!region || !treffer(region)) throw new Error('Keine Spalte mit Regionalschlüsseln der Städte gefunden.');
 const andere = dims.filter((n) => n !== region);
@@ -160,7 +177,7 @@ const andere = dims.filter((n) => n !== region);
 const daten = new Map();
 const merkmale = new Map(); // Merkmal → Einheiten (für Fehlermeldungen)
 for (const z of zeilen) {
-  const ags = z[sp[`${region}_variable_attribute_code`]]?.trim();
+  const ags = zuAgs(z[sp[`${region}_variable_attribute_code`]]?.trim());
   if (!nachAgs.has(ags)) continue;
   const jahr = Number(z[sp.time]);
   const merkmal = [...andere.map((n) => z[sp[`${n}_variable_attribute_label`]]), z[sp.value_variable_label]]
@@ -183,7 +200,7 @@ const REGELN = {
   personal: (m) => /personal|versorg/i.test(m),
   sach: (m) => /sach.*dienstleist/i.test(m),
   sozial: (m) => /soziale leistung|sozialleistung/i.test(m),
-  invest: (m) => /investitionst/i.test(m),
+  invest: (m) => /investitionst/i.test(m) && !m.includes(' | '), // Summe, nicht der Unterposten „Sachinvestitionen“
 };
 const alle = [...merkmale.keys()].filter((m) => !JE_EW.test(m));
 const zuordnung = {};
@@ -206,7 +223,7 @@ for (const [k, m] of Object.entries(zuordnung)) console.log(`  ${k.padEnd(8)} �
 
 const fehler = [];
 function rechne(name, jahr, werte) {
-  let vorlaeufig = false;
+  let vorlaeufig = !hatQ && jahr >= VORLAEUFIG_AB;
   const summe = (ms) => {
     let s = 0;
     for (const m of ms) {

@@ -5,5 +5,37 @@
   "name": "Heidelberg",
   "amtlich": "Heidelberg, Stadtkreis",
   "einwohner": 155756,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1528
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 915
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 868
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 530
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2058
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

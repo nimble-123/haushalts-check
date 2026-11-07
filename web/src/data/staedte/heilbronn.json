@@ -5,5 +5,37 @@
   "name": "Heilbronn",
   "amtlich": "Heilbronn, Stadtkreis",
   "einwohner": 131986,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1458
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 610
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1201
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 688
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1036
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

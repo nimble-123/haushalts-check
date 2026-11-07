@@ -5,5 +5,37 @@
   "name": "Pforzheim",
   "amtlich": "Pforzheim, Stadtkreis",
   "einwohner": 134912,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1348
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 875
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1860
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 382
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1359
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

@@ -5,5 +5,37 @@
   "name": "Halle (Saale)",
   "amtlich": "Halle (Saale), Stadt",
   "einwohner": 226767,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 962
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 459
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1193
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 496
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1847
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

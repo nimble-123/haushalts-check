@@ -5,5 +5,37 @@
   "name": "Mönchengladbach",
   "amtlich": "Mönchengladbach, Stadt",
   "einwohner": 267213,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1046
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 651
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1462
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 300
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1865
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

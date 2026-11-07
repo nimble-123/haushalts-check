@@ -5,5 +5,37 @@
   "name": "Münster",
   "amtlich": "Münster, Stadt",
   "einwohner": 308258,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1321
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 567
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1390
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1165
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1824
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

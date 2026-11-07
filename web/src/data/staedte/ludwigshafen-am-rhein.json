@@ -5,5 +5,37 @@
   "name": "Ludwigshafen am Rhein",
   "amtlich": "Ludwigshafen am Rhein, kreisfreie Stadt",
   "einwohner": 177222,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1362
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 769
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1155
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1018
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1375
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

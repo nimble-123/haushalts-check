@@ -5,5 +5,37 @@
   "name": "Oberhausen",
   "amtlich": "Oberhausen, Stadt",
   "einwohner": 213646,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1197
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 533
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1234
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 458
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1917
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

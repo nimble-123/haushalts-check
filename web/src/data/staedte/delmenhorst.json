@@ -5,5 +5,37 @@
   "name": "Delmenhorst",
   "amtlich": "Delmenhorst, Stadt",
   "einwohner": 81406,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 996
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 597
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1733
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 462
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1088
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

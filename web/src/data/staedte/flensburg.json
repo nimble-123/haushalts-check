@@ -5,5 +5,37 @@
   "name": "Flensburg",
   "amtlich": "Flensburg, Stadt",
   "einwohner": 96326,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1226
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 689
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 2057
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 247
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1975
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

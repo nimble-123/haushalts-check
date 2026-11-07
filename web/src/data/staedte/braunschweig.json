@@ -5,5 +5,37 @@
   "name": "Braunschweig",
   "amtlich": "Braunschweig, Stadt",
   "einwohner": 252962,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1124
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 327
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1259
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1033
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1999
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

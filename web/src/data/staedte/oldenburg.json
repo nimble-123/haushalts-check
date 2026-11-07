@@ -5,5 +5,37 @@
   "name": "Oldenburg (Oldenburg)",
   "amtlich": "Oldenburg (Oldenburg), Stadt",
   "einwohner": 176614,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1060
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 242
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1483
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 364
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1503
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

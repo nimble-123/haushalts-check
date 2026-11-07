@@ -5,5 +5,37 @@
   "name": "Trier",
   "amtlich": "Trier, kreisfreie Stadt",
   "einwohner": 104342,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1368
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 788
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1559
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 692
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1166
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

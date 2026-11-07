@@ -69,3 +69,16 @@ svg .axis path, svg .axis line { stroke: var(--rule); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+
+/* Echte Ausgabearten der Stadt */
+.arten-row { display: grid; grid-template-columns: minmax(150px, 230px) 1fr 110px 90px; gap: var(--space-4); align-items: center; padding: 8px 0; border-bottom: 1px solid var(--rule); font-size: 15px; }
+.arten-bar { position: relative; height: 16px; }
+.arten-bar i { position: absolute; inset: 0 auto 0 0; background: var(--ink); border-radius: var(--radius-cell); }
+.arten-bar b { position: absolute; top: -5px; bottom: -5px; width: 3px; margin-left: -1.5px; background: var(--cat-sich); border-radius: 1px; box-shadow: 0 0 0 2px var(--surface); }
+.arten-wert { display: flex; flex-direction: column; text-align: right; line-height: 1.25; }
+.arten-wert small { color: var(--ink-3); font-size: 13px; }
+.arten-du { text-align: right; }
+@media (max-width: 640px) {
+  .arten-row { grid-template-columns: 1fr auto auto; }
+  .arten-bar { grid-column: 1 / -1; order: 3; }
+}

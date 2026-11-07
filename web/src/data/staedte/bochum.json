@@ -5,5 +5,37 @@
   "name": "Bochum",
   "amtlich": "Bochum, Stadt",
   "einwohner": 358676,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1230
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 662
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1096
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 896
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2030
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

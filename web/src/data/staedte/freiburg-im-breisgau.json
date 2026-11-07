@@ -5,5 +5,37 @@
   "name": "Freiburg im Breisgau",
   "amtlich": "Freiburg im Breisgau, Stadtkreis",
   "einwohner": 237460,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1348
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 739
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1354
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 479
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2083
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

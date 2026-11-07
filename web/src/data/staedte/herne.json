@@ -5,5 +5,37 @@
   "name": "Herne",
   "amtlich": "Herne, Stadt",
   "einwohner": 155851,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1425
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 629
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1334
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 652
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1447
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

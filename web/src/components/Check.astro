@@ -1,6 +1,6 @@
 ---
 import type { Land, Stadt } from '../data/types';
-import { LAENDER, STAEDTE, gemeindeEbene } from '../data';
+import { LAENDER, STAEDTE, ausgabeVergleich, gemeindeEbene } from '../data';
 import { ABSTIMMUNG_2027, ENTWURF_2027_GESAMT } from '../data/bund';
 
 interface Props {
@@ -11,7 +11,8 @@ const { stadt, land } = Astro.props;
 
 const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.land === l.code) })).filter((g) => g.staedte.length);
 const gem = gemeindeEbene(stadt);
-const daten = { stadt, land, gem };
+const arten = ausgabeVergleich(stadt);
+const daten = { stadt, land, gem, arten };
 ---
 <section class="hero page" aria-labelledby="hero-h">
   <div class="eingabe">
@@ -113,6 +114,14 @@ const daten = { stadt, land, gem };
         <ul class="rs-legende" id="lg2"></ul>
       </div>
     </div>
+
+    {arten && (
+      <div class="figure">
+        <h3>Was {stadt.name} tatsächlich ausgibt</h3>
+        <p class="sub">Auszahlungen {arten.jahr}{arten.vorlaeufig ? ' (vorläufig)' : ''} nach Art, in € je Einwohner. Der Strich zeigt den Durchschnitt aller {arten.anzahl} kreisfreien Städte. Rechts dein Gemeindeanteil, nach denselben Anteilen verteilt.</p>
+        <div class="rs-panel" id="arten"></div>
+      </div>
+    )}
 
     <details class="rs-aufklapper figure" data-neu-zeichnen>
       <summary><b>Alle Töpfe, sortiert</b><span id="toepfe-sum"></span></summary>

@@ -5,5 +5,37 @@
   "name": "Schwabach",
   "amtlich": "Schwabach",
   "einwohner": 40835,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1253
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 788
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 540
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 604
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1262
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

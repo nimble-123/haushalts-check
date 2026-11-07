@@ -5,5 +5,37 @@
   "name": "Speyer",
   "amtlich": "Speyer, kreisfreie Stadt",
   "einwohner": 49564,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1518
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 575
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1343
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 338
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1173
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

@@ -5,5 +5,37 @@
   "name": "Straubing",
   "amtlich": "Straubing",
   "einwohner": 49002,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1118
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 498
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 649
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 809
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1481
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

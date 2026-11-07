@@ -5,5 +5,37 @@
   "name": "Brandenburg an der Havel",
   "amtlich": "Brandenburg an der Havel, Stadt",
   "einwohner": 74113,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 997
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 527
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1685
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 134
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2192
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

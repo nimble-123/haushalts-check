@@ -5,5 +5,37 @@
   "name": "Leverkusen",
   "amtlich": "Leverkusen, Stadt",
   "einwohner": 168581,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1464
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 1037
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1105
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 596
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1499
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }

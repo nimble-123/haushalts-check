@@ -8,6 +8,8 @@ import { ladeEingaben, speichereEingaben } from './speicher';
 interface P { name: string; v: number; g: Gruppe; rest?: boolean }
 
 let stadt: Stadt, land: Land, gem: GemeindeEbene, LAND_T = 0, GEM_T = 0;
+interface Arten { jahr: number; vorlaeufig: boolean; posten: { name: string; proKopf: number }[]; schnitt: { name: string; proKopf: number }[]; anzahl: number }
+let arten: Arten | null = null;
 let unit: 'y' | 'm' = 'm'; // nur Kapitel 2; Einstieg und Kapitel 1 rechnen jährlich
 let bundAnsicht: 'fluss' | 'flaeche' = 'fluss';
 
@@ -225,6 +227,27 @@ function chartRaster(r: Ergebnis, fmt: (v: number) => string) {
   liste.innerHTML = cats.map((d) => `<li><span class="rs-farbe ${d.cls}" style="${d.style}"></span><span>${d.name}</span><span><b>${d.n} €</b><small>${fmt(d.v)}</small></span></li>`).join('');
 }
 
+// ---------- Echte Ausgabearten der Stadt ----------
+function chartArten(r: Ergebnis, fmt: (v: number) => string) {
+  const box = document.getElementById('arten');
+  if (!box || !arten) return;
+  const anteil = stadt.stadtstaat ? 0 : aufEbenen(r).gemeinde;
+  const summe = arten.posten.reduce((s, p) => s + p.proKopf, 0);
+  const max = Math.max(...arten.posten.map((p) => p.proKopf), ...arten.schnitt.map((p) => p.proKopf));
+  const de = (v: number) => v.toLocaleString('de-DE');
+  box.innerHTML = arten.posten.map((p, i) => {
+    const s = arten!.schnitt[i]?.proKopf ?? 0;
+    return `<div class="arten-row">
+      <span class="arten-name">${p.name}</span>
+      <span class="arten-bar" role="img" aria-label="${p.name}: ${de(p.proKopf)} € je Einwohner, Durchschnitt ${de(s)} €">
+        <i style="width:${(p.proKopf / max) * 100}%"></i><b style="left:${(s / max) * 100}%"></b>
+      </span>
+      <span class="arten-wert"><strong>${de(p.proKopf)} €</strong><small>Ø ${de(s)} €</small></span>
+      <span class="arten-du"><b class="rs-mark">${fmt((anteil * p.proKopf) / summe)}</b></span>
+    </div>`;
+  }).join('') + `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${stadt.name}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}</li></ul>`;
+}
+
 // ---------- Kalender ----------
 function chartKalender(r: Ergebnis) {
   const box = $('#cal'); if (!r.brutto) { box.innerHTML = ''; return; }
@@ -349,7 +372,7 @@ function persoenlich() {
   const r = berechne(eingabe());
   const fmtK2 = (v: number) => fmtEur(v * (unit === 'm' ? 1 / 12 : 1)); // Kapitel 2: Monat/Jahr
   satz(r); kennzahlen(r, fmtEur); chartKalender(r); chartQuote(r);
-  chartFluss(r); chartToepfe(r, fmtK2); chartRaster(r, fmtEur); tabelle(r); zusammenfassung();
+  chartFluss(r); chartArten(r, fmtK2); chartToepfe(r, fmtK2); chartRaster(r, fmtEur); tabelle(r); zusammenfassung();
 }
 function bund() {
   $('#ansicht-fluss').hidden = bundAnsicht !== 'fluss';
@@ -363,7 +386,7 @@ function alles() { persoenlich(); bundKennzahlen(); bund(); chart2027(); chartEn
 
 export function start() {
   const daten = JSON.parse($('#daten').textContent!);
-  stadt = daten.stadt; land = daten.land; gem = daten.gem;
+  stadt = daten.stadt; land = daten.land; gem = daten.gem; arten = daten.arten;
   LAND_T = sum(land.posten); GEM_T = sum(gem.posten);
 
   const ids = ['brutto', 'kv', 'pkv', 'kist', 'kinderlos', 'ag', 'shownetto', 'split'];

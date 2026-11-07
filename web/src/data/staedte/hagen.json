@@ -5,5 +5,37 @@
   "name": "Hagen",
   "amtlich": "Hagen, Stadt der FernUniversität",
   "einwohner": 190384,
-  "stadtstaat": false
+  "stadtstaat": false,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1366
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 681
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1136
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 385
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1746
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
 }
