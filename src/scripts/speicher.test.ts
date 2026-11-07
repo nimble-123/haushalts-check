@@ -61,6 +61,13 @@ describe('Eingaben merken', () => {
     expect(gespeicherteStadt()).toBeNull();
   });
 
+  it.each(['null', '42', '"text"', '[1,2]', '{kaputt'])('ignoriert beschädigten Speicherinhalt %s', (inhalt) => {
+    localStorage.setItem('haushalts-check-eingaben', inhalt);
+    expect(() => ladeEingaben(['brutto'])).not.toThrow();
+    expect(el('brutto').value).toBe('54.066');
+    expect(gespeicherteStadt()).toBeNull();
+  });
+
   it('funktioniert ohne Speicher (z. B. privates Fenster) ohne Fehler', () => {
     const orig = Storage.prototype.setItem;
     Storage.prototype.setItem = () => {

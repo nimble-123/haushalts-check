@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Seite nicht gefunden | Haushalts-Check" description="Diese Seite gibt es nicht. Wähl deine Stadt aus der Liste aller kreisfreien Städte.">
+  <article class="page nicht-gefunden">
+    <h1>Diese Seite gibt es nicht.</h1>
+    <p>Vielleicht ist die Adresse vertippt, oder die Stadt heißt in der Liste etwas anders. Städte stehen klein und ohne Umlaute in der Adresse, zum Beispiel <code>/stadt/muenchen/</code>.</p>
+    <p class="wege"><a href="/staedte/">Alle kreisfreien Städte</a> <a href="/">Zur Startseite</a></p>
+  </article>
+</Base>
+<style>
+  .nicht-gefunden { padding-block: var(--space-20); max-width: var(--measure); }
+  h1 { font: 700 clamp(34px, 6vw, 48px) / 1.05 var(--font-display); letter-spacing: -0.02em; margin-bottom: var(--space-4); }
+  p { color: var(--ink-2); }
+  code { font-size: 0.95em; background: var(--surface); padding: 1px 6px; border-radius: var(--radius-cell); }
+  .wege { display: flex; flex-wrap: wrap; gap: var(--space-6); font-size: 18px; font-weight: 600; }
+  .wege a { min-height: var(--hit); display: inline-flex; align-items: center; }
+</style>

@@ -7,7 +7,9 @@ type Werte = Record<string, string | boolean>;
 
 function lies(): Werte {
   try {
-    return JSON.parse(localStorage.getItem(KEY) ?? '{}');
+    const d: unknown = JSON.parse(localStorage.getItem(KEY) ?? '{}');
+    // Nur ein einfaches Objekt verwenden; alles andere (beschädigt, fremd geschrieben) ignorieren
+    return d && typeof d === 'object' && !Array.isArray(d) ? (d as Werte) : {};
   } catch {
     return {};
   }

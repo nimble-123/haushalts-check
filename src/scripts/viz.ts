@@ -27,6 +27,13 @@ type Gelegt = SKnoten & { x0: number; x1: number; y0: number; y1: number; value:
 export const $ = (sel: string) => document.querySelector(sel) as HTMLElement;
 export const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
+/** Text für HTML-Kontexte (innerHTML, Tooltips) unschädlich machen */
+export const esc = (s: string | number) =>
+  String(s).replace(
+    /[&<>"']/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] ?? c,
+  );
+
 export const fmtMrd = (v: number) =>
   `${v.toLocaleString('de-DE', { maximumFractionDigits: 1, minimumFractionDigits: 1 })} Mrd €`;
 export const fmtEur = (v: number) => `${Math.round(v).toLocaleString('de-DE')} €`;
@@ -124,7 +131,7 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
     .attr('stroke-opacity', deckkraft)
     .attr('stroke-width', (d) => Math.max(1, d.width ?? 1))
     .on('mousemove', (e: MouseEvent, d) =>
-      showTip(e, `<b>${d.source.label} → ${d.target.label}</b>${opt.fmt(d.value)}`),
+      showTip(e, `<b>${esc(d.source.label)} → ${esc(d.target.label)}</b>${opt.fmt(d.value)}`),
     )
     .on('mouseenter', function () {
       d3.select(this).attr('stroke-opacity', 0.75);
@@ -146,7 +153,7 @@ export function drawSankey(svg: Svg, nodes: Knoten[], links: Verbindung[], opt: 
     .attr('stroke', (d: Gelegt) => (d.color === verw ? linie : null))
     .attr('stroke-width', 1)
     .on('mousemove', (e: MouseEvent, d: Gelegt) =>
-      showTip(e, `<b>${d.label}</b>${opt.fmt(d.value)}${opt.share ? `<br>${opt.share(d)}` : ''}`),
+      showTip(e, `<b>${esc(d.label)}</b>${opt.fmt(d.value)}${opt.share ? `<br>${opt.share(d)}` : ''}`),
     )
     .on('mouseleave', hideTip);
   const tall = (d: Gelegt) => d.y1 - d.y0 >= 18;

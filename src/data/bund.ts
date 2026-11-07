@@ -61,7 +61,18 @@ export const ENTWURF_2027: Record<string, number> = {
   '03': 0.041,
 };
 export const ENTWURF_2027_GESAMT = 555.4;
-export const ABSTIMMUNG_2027 = '27.11.2026';
+/** Schlussabstimmung im Bundestag über den Haushalt 2027 */
+export const ABSTIMMUNG_2027 = new Date('2026-11-27T12:00:00+01:00');
+/** Solange true, sind ENTWURF_2027 und ENTWICKLUNG[2027] Regierungsentwurf; nach Beschluss aktualisieren und auf false setzen */
+export const HAUSHALT_2027_IST_ENTWURF = true;
+
+const datum = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month: 'numeric', year: 'numeric' });
+/** Satz zur Abstimmung, abhängig vom Build-Datum */
+export function abstimmungSatz(heute = new Date()) {
+  return heute < ABSTIMMUNG_2027
+    ? `Über den Haushalt 2027 stimmt der Bundestag am ${datum(ABSTIMMUNG_2027)} ab.`
+    : `Über den Haushalt 2027 hat der Bundestag am ${datum(ABSTIMMUNG_2027)} abgestimmt; die Zahlen für 2027 sind hier noch der Regierungsentwurf.`;
+}
 
 /** Kernhaushalt in Mrd €: beschlossen, Entwurf, Finanzplan */
 export const ENTWICKLUNG: { jahr: number; v: number; status: 'Soll' | 'Entwurf' | 'Finanzplan' }[] = [

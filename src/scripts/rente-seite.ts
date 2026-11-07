@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import { type RenteErgebnis, renteVsEtf, VORLAGEN } from '../lib/rente';
 import { ladeEingaben, speichereEingaben } from './speicher';
-import { $, css, fmtEur, hideTip, showTip, width } from './viz';
+import { $, css, esc, fmtEur, hideTip, showTip, width } from './viz';
 
 const el = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
 const num = (id: string) => +el(id).value;
@@ -135,14 +135,17 @@ function linien(id: string, x0: number, x1: number, series: Serie[], legend: str
       ch.attr('x1', x(x0 + i))
         .attr('x2', x(x0 + i))
         .style('opacity', 1);
-      showTip(ev, `<b>Alter ${x0 + i}</b>${series.map((s) => `${s.name}: ${fmtEur(s.data[i] ?? 0)}`).join('<br>')}`);
+      showTip(
+        ev,
+        `<b>Alter ${x0 + i}</b>${series.map((s) => `${esc(s.name)}: ${fmtEur(s.data[i] ?? 0)}`).join('<br>')}`,
+      );
     })
     .on('mouseleave', () => {
       ch.style('opacity', 0);
       hideTip();
     });
   $(`#${legend}`).innerHTML = series
-    .map((s) => `<li><span class="rs-farbe" style="background:${s.c}"></span>${s.name}</li>`)
+    .map((s) => `<li><span class="rs-farbe" style="background:${s.c}"></span>${esc(s.name)}</li>`)
     .join('');
 }
 
@@ -265,7 +268,7 @@ function zeichne() {
   el('pkvwrap').hidden = el<HTMLSelectElement>('kv').value !== 'pkv';
   const m = modell();
   const fig = (v: string, l: string, mark = false) =>
-    `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${l}</span></div>`;
+    `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${esc(l)}</span></div>`;
   const lastMonth = m.N ? (m.paid[m.N] - m.paid[m.N - 1]) / 12 : 0;
   $('#rk').innerHTML =
     fig(
