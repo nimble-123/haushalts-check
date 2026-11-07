@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://haushalts-check.vercel.app/sitemap-index.xml

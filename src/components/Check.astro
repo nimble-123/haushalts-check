@@ -1,6 +1,6 @@
 ---
 import { ausgabeVergleich, gemeindeEbene, LAENDER, STAEDTE } from '../data';
-import { ABSTIMMUNG_2027, ENTWURF_2027_GESAMT } from '../data/bund';
+import { abstimmungSatz, ENTWURF_2027_GESAMT } from '../data/bund';
 import { MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
 import type { Land, Stadt } from '../data/types';
 
@@ -150,7 +150,7 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
   <section class="chapter" aria-labelledby="k3">
     <header class="rs-kapitel">
       <h2 id="k3"><span class="nr">3</span>Der Bundeshaushalt im Ganzen</h2>
-      <p>Soll-Zahlen des Haushaltsgesetzes 2026. Über den Haushalt 2027 stimmt der Bundestag am {ABSTIMMUNG_2027} ab.</p>
+      <p>Soll-Zahlen des Haushaltsgesetzes 2026. {abstimmungSatz()}</p>
     </header>
     <div class="rs-kennzahlen figure" id="bk"></div>
 
@@ -191,7 +191,7 @@ const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
   </section>
 </div>
 
-<script type="application/json" id="daten" set:html={JSON.stringify(daten)}></script>
+<script type="application/json" id="daten" set:html={JSON.stringify(daten).replace(/</g, '\\u003c')}></script>
 <script>
   import { start } from '../scripts/check';
   start();

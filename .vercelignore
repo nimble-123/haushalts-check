@@ -1,0 +1,11 @@
+# Nur hochladen, was der Build braucht (keine Rohdaten, Tests, Build-Reste)
+/*
+!src
+!public
+!design-system
+!astro.config.ts
+!package.json
+!package-lock.json
+!tsconfig.json
+!vercel.json
+!.nvmrc

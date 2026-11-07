@@ -43,7 +43,8 @@ function entpacke(buf: Buffer): Buffer {
   const start = lokal + 30 + buf.readUInt16LE(lokal + 26) + buf.readUInt16LE(lokal + 28);
   const daten = buf.subarray(start, start + groesse);
   if (methode === 0) return daten;
-  if (methode === 8) return inflateRawSync(daten);
+  // Größe begrenzen: Schutz vor einem fehlerhaften oder manipulierten Archiv (ZIP-Bombe)
+  if (methode === 8) return inflateRawSync(daten, { maxOutputLength: 500_000_000 });
   throw new Error(`ZIP-Kompression ${methode} nicht unterstützt`);
 }
 
@@ -56,6 +57,8 @@ async function post(pfad: string, params: Record<string, string>, user: string, 
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', username: user, password: pass },
     body: new URLSearchParams({ language: 'de', ...params }),
   });
+  // Fehlerseiten (5xx, Proxy) nie als Rohdaten behandeln
+  if (!res.ok) throw new Error(`HTTP ${res.status} bei ${pfad}`);
   return { res, buf: Buffer.from(await res.arrayBuffer()) };
 }
 interface Status {
@@ -111,7 +114,8 @@ async function lade() {
       pass,
     );
     const text = alsText(rb);
-    if (!text.trimStart().startsWith('{')) {
+    // Echte Daten erkennen: CSV im Flatfile-Format beginnt mit der Spalte statistics_code
+    if (text.startsWith('statistics_code;')) {
       mkdirSync(QUELLEN, { recursive: true });
       writeFileSync(ROH, text);
       console.log(

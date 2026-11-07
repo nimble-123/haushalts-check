@@ -1,7 +1,13 @@
 // Konsistenz der veröffentlichten Daten: Bund, 16 Länder, 106 kreisfreie Städte.
 import { describe, expect, it } from 'vitest';
 import { ausgabeVergleich, gemeindeEbene, LAENDER, landVon, STAEDTE, summe } from '../../src/data';
-import { BUND_GESAMT, EINZELPLAENE } from '../../src/data/bund';
+import {
+  ABSTIMMUNG_2027,
+  abstimmungSatz,
+  BUND_GESAMT,
+  EINZELPLAENE,
+  HAUSHALT_2027_IST_ENTWURF,
+} from '../../src/data/bund';
 import { GRUPPEN } from '../../src/data/types';
 
 const gruppen = Object.keys(GRUPPEN);
@@ -89,5 +95,36 @@ describe('Ausgabearten je Stadt (Regionaldatenbank)', () => {
       expect(p.proKopf).toBeGreaterThanOrEqual(Math.min(...werte));
       expect(p.proKopf).toBeLessThanOrEqual(Math.max(...werte));
     });
+  });
+});
+
+describe('Aktualität', () => {
+  it('Satz zur Abstimmung über den Haushalt 2027 passt zum Datum', () => {
+    expect(abstimmungSatz(new Date('2026-11-01'))).toContain('stimmt der Bundestag am 27.11.2026 ab');
+    expect(abstimmungSatz(new Date('2026-12-01'))).toContain('hat der Bundestag am 27.11.2026 abgestimmt');
+  });
+  it('30 Tage nach der Abstimmung stehen keine Entwurfszahlen mehr drin (Erinnerung: Haushalt 2027 eintragen)', () => {
+    const frist = new Date(ABSTIMMUNG_2027.getTime() + 30 * 864e5);
+    if (new Date() > frist)
+      expect(
+        HAUSHALT_2027_IST_ENTWURF,
+        'Haushalt 2027 ist beschlossen: ENTWURF_2027 und ENTWICKLUNG in src/data/bund.ts aktualisieren',
+      ).toBe(false);
+  });
+});
+
+describe('Daten sind HTML-sicher (Schutz vor manipulierten Quelldateien)', () => {
+  const unsicher = /[<>"]/;
+  it('kein Name in Bund, Ländern, Städten und Schätzbasis enthält < > oder "', () => {
+    const namen = [
+      ...EINZELPLAENE.map((e) => e.name),
+      ...LAENDER.flatMap((l) => [l.name, l.art, ...l.posten.map((p) => p.name)]),
+      ...STAEDTE.flatMap((s) => [s.name, s.amtlich, s.slug, ...(s.ausgabearten?.posten.map((p) => p.name) ?? [])]),
+      ...STAEDTE.flatMap((s) => gemeindeEbene(s).posten.map((p) => p.name)),
+    ];
+    expect(namen.filter((n) => unsicher.test(n))).toEqual([]);
+  });
+  it('Slugs bestehen nur aus Kleinbuchstaben, Ziffern und Bindestrich', () => {
+    expect(STAEDTE.filter((s) => !/^[a-z0-9-]+$/.test(s.slug)).map((s) => s.slug)).toEqual([]);
   });
 });

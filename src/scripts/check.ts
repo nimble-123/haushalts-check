@@ -9,6 +9,7 @@ import {
   clear,
   css,
   drawSankey,
+  esc,
   fmtEur,
   fmtMrd,
   hatch,
@@ -62,12 +63,12 @@ const legendGruppen = () =>
   Object.entries(GRUPPEN)
     .map(
       ([k, l]) =>
-        `<li><span class="rs-farbe" style="background:${gcol(k as Gruppe)}${k === 'verw' ? ';box-shadow:inset 0 0 0 1px var(--line)' : ''}"></span>${l}</li>`,
+        `<li><span class="rs-farbe" style="background:${gcol(k as Gruppe)}${k === 'verw' ? ';box-shadow:inset 0 0 0 1px var(--line)' : ''}"></span>${esc(l)}</li>`,
     )
     .join('');
 const legendSV = `<li><span class="rs-farbe rs-hatch"></span>Sozialversicherung</li>`;
 const legendSchaetzung = () =>
-  gem.schaetzung ? `<li>≈ Stadt geschätzt aus dem Durchschnitt der Gemeinden in ${land.name}</li>` : '';
+  gem.schaetzung ? `<li>≈ Stadt geschätzt aus dem Durchschnitt der Gemeinden in ${esc(land.name)}</li>` : '';
 
 // ---------- Eingaben ----------
 const leseBetrag = (s: string) => Math.min(9_999_999, parseInt(s.replace(/\D/g, ''), 10) || 0);
@@ -97,16 +98,16 @@ function satz(r: Ergebnis) {
     return;
   }
   const top = [...gem.posten].sort((a, b) => b.v - a.v).find((p) => p.g !== 'verw') ?? gem.posten[0];
-  const davon = `${gem.schaetzung ? 'geschätzt ' : ''}${f((e.gemeinde * top.v) / GEM_T)} für ${top.name}`;
+  const davon = `${gem.schaetzung ? 'geschätzt ' : ''}${f((e.gemeinde * top.v) / GEM_T)} für ${esc(top.name)}`;
   out.innerHTML = stadt.stadtstaat
-    ? `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund und ${f(e.land + e.gemeinde)} an ${stadt.name} (Land und Stadt), davon ${f(((e.land + e.gemeinde) * top.v) / GEM_T)} für ${top.name}.`
-    : `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund, ${f(e.land)} an ${land.name} und ${f(e.gemeinde)} an ${stadt.name}, davon ${davon}.`;
+    ? `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund und ${f(e.land + e.gemeinde)} an ${esc(stadt.name)} (Land und Stadt), davon ${f(((e.land + e.gemeinde) * top.v) / GEM_T)} für ${esc(top.name)}.`
+    : `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund, ${f(e.land)} an ${esc(land.name)} und ${f(e.gemeinde)} an ${esc(stadt.name)}, davon ${davon}.`;
 }
 
 function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
   const abg = summeAbgaben(r);
   const fig = (v: string, l: string, mark = false) =>
-    `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${l}</span></div>`;
+    `<div class="rs-kennzahl"><b${mark ? ' class="rs-mark"' : ''}>${v}</b><span>${esc(l)}</span></div>`;
   $('#pk').innerHTML =
     fig(fmt(abg), `deine Abgaben, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`) +
     fig(fmt(r.lohnsteuer + r.soli), 'Lohnsteuer und Soli') +
@@ -127,7 +128,7 @@ function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
   $('#anteil-lg').innerHTML = teile
     .map(
       ([n, v, st, cl]) =>
-        `<li><span class="rs-farbe ${cl}" style="${st}"></span>${n} <b${n === 'Netto' ? ' class="rs-mark"' : ''}>${fmt(v)}</b> <span style="color:var(--ink-3)">${r.brutto ? pct(v / r.brutto) : ''}</span></li>`,
+        `<li><span class="rs-farbe ${cl}" style="${st}"></span>${esc(n)} <b${n === 'Netto' ? ' class="rs-mark"' : ''}>${fmt(v)}</b> <span style="color:var(--ink-3)">${r.brutto ? pct(v / r.brutto) : ''}</span></li>`,
     )
     .join('');
 }
@@ -280,7 +281,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
     .attr('height', rowH)
     .attr('fill', 'transparent')
     .on('mousemove', (ev, d) =>
-      showTip(ev, `<b>${d.name}</b>${fmt(d.v)}${r.brutto ? ` · ${pct(d.v / r.brutto)} vom Brutto` : ''}`),
+      showTip(ev, `<b>${esc(d.name)}</b>${fmt(d.v)}${r.brutto ? ` · ${pct(d.v / r.brutto)} vom Brutto` : ''}`),
     )
     .on('mouseleave', hideTip);
   g.append('text')
@@ -468,7 +469,7 @@ function chartQuote(r: Ergebnis) {
       hideTip();
     });
   $('#lg5').innerHTML =
-    series.map(([, l, c]) => `<li><span class="rs-farbe" style="background:${c}"></span>${l}</li>`).join('') +
+    series.map(([, l, c]) => `<li><span class="rs-farbe" style="background:${c}"></span>${esc(l)}</li>`).join('') +
     `<li><span class="rs-farbe" style="background:${css('--marker')};border-radius:50%;box-shadow:inset 0 0 0 1.5px ${css('--ink')}"></span>dein Einkommen</li>`;
 }
 
@@ -539,7 +540,7 @@ function chartRaster(r: Ergebnis, fmt: (v: number) => string) {
   liste.innerHTML = cats
     .map(
       (d) =>
-        `<li data-k="${d.k}"><span class="rs-farbe ${d.cls}" style="${d.style}"></span><span>${d.name}</span><span><b>${d.n} €</b><small>${fmt(d.v)}</small></span></li>`,
+        `<li data-k="${d.k}"><span class="rs-farbe ${d.cls}" style="${d.style}"></span><span>${esc(d.name)}</span><span><b>${d.n} €</b><small>${fmt(d.v)}</small></span></li>`,
     )
     .join('');
 }
@@ -590,8 +591,8 @@ function chartArten(r: Ergebnis, fmt: (v: number) => string) {
       .map((p, i) => {
         const s = arten!.schnitt[i]?.proKopf ?? 0;
         return `<div class="arten-row">
-      <span class="arten-name">${p.name}</span>
-      <span class="arten-bar" role="img" aria-label="${p.name}: ${de(p.proKopf)} € je Einwohner, Durchschnitt ${de(s)} €">
+      <span class="arten-name">${esc(p.name)}</span>
+      <span class="arten-bar" role="img" aria-label="${esc(p.name)}: ${de(p.proKopf)} € je Einwohner, Durchschnitt ${de(s)} €">
         <i style="width:${(p.proKopf / max) * 100}%"></i><b style="left:${(s / max) * 100}%"></b>
       </span>
       <span class="arten-wert"><strong>${de(p.proKopf)} €</strong><small>Ø ${de(s)} €</small></span>
@@ -599,7 +600,7 @@ function chartArten(r: Ergebnis, fmt: (v: number) => string) {
     </div>`;
       })
       .join('') +
-    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${stadt.name}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}</li></ul>`;
+    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(stadt.name)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${unit === 'm' ? 'pro Monat' : 'pro Jahr'}</li></ul>`;
 }
 
 // ---------- Kalender ----------
@@ -642,7 +643,7 @@ function chartKalender(r: Ergebnis) {
       acc += v;
       const ds = new Date(Y.getTime() + Math.floor(s) * dayMs),
         de = new Date(Y.getTime() + Math.max(Math.floor(s), Math.ceil(en) - 1) * dayMs);
-      return `<div class="cal-row"><span>${n}</span><span class="cal-bar"><i${c === 'sv' ? ' class="rs-hatch"' : ''} style="left:${(s / days) * 100}%;width:${Math.max(0.4, ((en - s) / days) * 100)}%;${bg[c]}"></i></span><span class="cal-d num">${fd(ds)} – ${fd(de)}</span></div>`;
+      return `<div class="cal-row"><span>${esc(n)}</span><span class="cal-bar"><i${c === 'sv' ? ' class="rs-hatch"' : ''} style="left:${(s / days) * 100}%;width:${Math.max(0.4, ((en - s) / days) * 100)}%;${bg[c]}"></i></span><span class="cal-d num">${fd(ds)} – ${fd(de)}</span></div>`;
     })
     .join('');
   const frei = new Date(Y.getTime() + Math.floor(((r.brutto - r.netto) / r.brutto) * days) * dayMs);
@@ -661,13 +662,13 @@ function tabelle(r: Ergebnis) {
       minimumFractionDigits: unit === 'm' ? 2 : 0,
     })} €`;
   const head = (t: string) =>
-    `<tr><th colspan="3" scope="colgroup" style="text-align:left;padding-top:18px;color:var(--ink);font-size:15px;font-weight:600">${t}</th></tr>`;
+    `<tr><th colspan="3" scope="colgroup" style="text-align:left;padding-top:18px;color:var(--ink);font-size:15px;font-weight:600">${esc(t)}</th></tr>`;
   const rows = (arr: P[], tot: number, amt: number) =>
     `${[...arr]
       .sort((a, b) => b.v - a.v)
       .map(
         (p) =>
-          `<tr><td><span class="rs-farbe" style="background:${gcol(p.g)};margin-right:8px"></span>${p.name}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`,
+          `<tr><td><span class="rs-farbe" style="background:${gcol(p.g)};margin-right:8px"></span>${esc(p.name)}</td><td>${pct(p.v / tot)}</td><td>${money((amt * p.v) / tot)}</td></tr>`,
       )
       .join('')}<tr><td><b>Summe</b></td><td>100 %</td><td><b>${money(amt)}</b></td></tr>`;
   $('#tsub').textContent =
@@ -690,7 +691,7 @@ function tabelle(r: Ergebnis) {
 
 // ---------- Bundeshaushalt (unabhängig von deinen Eingaben) ----------
 function bundKennzahlen() {
-  const fig = (v: string, l: string) => `<div class="rs-kennzahl"><b>${v}</b><span>${l}</span></div>`;
+  const fig = (v: string, l: string) => `<div class="rs-kennzahl"><b>${v}</b><span>${esc(l)}</span></div>`;
   $('#bk').innerHTML =
     fig(fmtMrd(BUND_GESAMT), 'Ausgaben 2026') +
     fig(fmtMrd(EINNAHMEN[0].v), `Steuereinnahmen, ${pct(EINNAHMEN[0].v / BUND_GESAMT)} der Ausgaben`) +
@@ -746,7 +747,10 @@ function chartTreemap() {
     .attr('rx', 4)
     .attr('fill', (d) => gcol(blatt(d).g))
     .on('mousemove', (ev, d) =>
-      showTip(ev, `<b>EP ${blatt(d).n} ${blatt(d).name}</b>${fmtMrd(blatt(d).v)} · ${pct(blatt(d).v / BUND_GESAMT)}`),
+      showTip(
+        ev,
+        `<b>EP ${blatt(d).n} ${esc(blatt(d).name)}</b>${fmtMrd(blatt(d).v)} · ${pct(blatt(d).v / BUND_GESAMT)}`,
+      ),
     )
     .on('mouseleave', hideTip);
   // Textfarbe je nach Fläche: hell auf dunklen, Tinte auf hellen Gruppen
@@ -833,7 +837,7 @@ function chart2027() {
     .attr('height', bh)
     .attr('rx', 4)
     .attr('fill', (d) => gcol(d.g))
-    .on('mousemove', (ev, d) => showTip(ev, `<b>${d.name}</b>${(d.d > 0 ? '+' : '') + fmtMrd(d.d)}`))
+    .on('mousemove', (ev, d) => showTip(ev, `<b>${esc(d.name)}</b>${(d.d > 0 ? '+' : '') + fmtMrd(d.d)}`))
     .on('mouseleave', hideTip);
   g.append('text')
     .attr('x', narrow ? 0 : labW - 10)

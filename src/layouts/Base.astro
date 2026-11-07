@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { THEMA_START } from '../scripts/thema-start';
 
 interface Props {
   title: string;
@@ -33,10 +34,7 @@ const nav = [
     {canonical && <meta property="og:url" content={canonical} />}
     {ogImage && <meta property="og:image" content={ogImage} />}
     <meta name="twitter:card" content="summary_large_image" />
-    <script is:inline>
-      // Gespeicherte Theme-Wahl vor dem ersten Zeichnen setzen (kein Aufblitzen)
-      try { const t = localStorage.getItem('haushalts-check-thema'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}
-    </script>
+    <script is:inline set:html={THEMA_START}></script>
   </head>
   <body>
     <header class="site page">
@@ -55,7 +53,10 @@ const nav = [
       <slot />
     </main>
     <footer class="site page">
-      <p>Ein unabhängiges Rechenbeispiel, keine Steuer- oder Anlageberatung. Deine Eingaben bleiben in deinem Browser.</p>
+      <div class="fuss-text">
+        <p>Ein unabhängiges Rechenbeispiel, keine Steuer- oder Anlageberatung. Deine Eingaben bleiben in deinem Browser.</p>
+        <p>Datenbasis: Statistisches Bundesamt (Destatis), Regionaldatenbank Deutschland, Bundeshaushalt 2026; <a href="https://www.govdata.de/dl-de/by-2-0">Datenlizenz Deutschland – Namensnennung – Version 2.0</a>; eigene Berechnungen.</p>
+      </div>
       <nav aria-label="Rechtliches">
         <a href="/impressum/">Impressum</a>
         <a href="/datenschutz/">Datenschutz</a>
@@ -111,5 +112,7 @@ const nav = [
     display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2) var(--space-6);
     color: var(--ink-3); font-size: 14.5px;
   }
-  footer p { margin: 0; max-width: 60ch; }
+  .fuss-text { display: grid; gap: var(--space-2); max-width: 66ch; }
+  footer p { margin: 0; }
+  footer a { color: inherit; }
 </style>
