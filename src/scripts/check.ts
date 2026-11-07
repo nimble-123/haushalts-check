@@ -29,7 +29,8 @@ import {
   summeSV,
   verfuegbar,
 } from '../lib/steuer';
-import { fmtMrdDelta, satzText, zeitraum } from '../lib/text';
+import { fmtMrdDelta, leseBetrag, satzText, zeitraum } from '../lib/text';
+import { betragsfeld } from './betragsfeld';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
   achseY,
@@ -84,8 +85,6 @@ const legendSchaetzung = () =>
     : '';
 
 // ---------- Eingaben ----------
-const leseBetrag = (s: string) => Math.min(9_999_999, parseInt(s.replace(/\D/g, ''), 10) || 0);
-const schreibeBetrag = (v: number) => (v ? v.toLocaleString('de-DE') : '');
 function eingabe(bruttoOverride?: number): Eingabe {
   return {
     brutto: bruttoOverride ?? leseBetrag(holen('brutto', HTMLInputElement).value),
@@ -957,17 +956,7 @@ export function start() {
   syncPkv();
 
   const brutto = holen('brutto', HTMLInputElement);
-  // Während des Tippens nur Ziffern und Punkte zulassen; beim Verlassen mit Tausenderpunkten formatieren
-  brutto.value = schreibeBetrag(leseBetrag(brutto.value));
-  brutto.addEventListener('input', () => {
-    const clean = brutto.value.replace(/[^\d.]/g, '');
-    if (clean !== brutto.value) brutto.value = clean;
-  });
-  brutto.addEventListener('change', () => {
-    brutto.value = schreibeBetrag(leseBetrag(brutto.value));
-  });
-  // Beim Hineinklicken alles markieren: Tippen ersetzt den Betrag statt Ziffern einzufügen
-  brutto.addEventListener('focus', () => brutto.select());
+  betragsfeld(brutto);
   // Hinweis „Vorbelegt mit dem Median“ nur, solange der Median drinsteht
   const syncVorbelegt = () => {
     holen('vorbelegt').hidden = leseBetrag(brutto.value) !== daten.median;

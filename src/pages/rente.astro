@@ -15,19 +15,19 @@ const med = VORLAGEN.med;
 
     <div class="rs-panel">
       <div class="rs-felder">
-        <label class="rs-feld"><span>Betrachtung</span><select id="mode"><option value="life" selected>Ganzes Arbeitsleben (Einstieg 2026)</option><option value="now">Ab heute, mit deinem Brutto</option></select></label>
-        <label class="rs-feld"><span>Jahresbrutto heute (€)</span><input id="brutto" type="number" inputmode="numeric" value={MEDIAN_BRUTTO} min="0" step="1000" /></label>
+        <label class="rs-feld"><span>Betrachtung</span><select id="mode"><option value="life" selected>Ganzes Arbeitsleben</option><option value="now">Ab heute</option></select></label>
+        <label class="rs-feld"><span>Jahresbrutto heute (€)</span><input id="brutto" type="text" inputmode="numeric" autocomplete="off" value={MEDIAN_BRUTTO.toLocaleString('de-DE')} /></label>
         <label class="rs-feld"><span>Dein Alter heute</span><input id="age" type="number" inputmode="numeric" value={DURCHSCHNITTSALTER} min="18" max="66" step="1" /></label>
         <label class="rs-feld lifeonly"><span>Einstiegsalter</span><input id="c_a0" type="number" inputmode="numeric" value={med.einstiegsalter} min="16" max="60" step="1" /></label>
-        <label class="rs-feld lifeonly"><span>Einstiegsgehalt (€/Jahr)</span><input id="c_s0" type="number" inputmode="numeric" value={med.einstiegsgehalt} min="0" step="1000" /></label>
-        <label class="rs-feld lifeonly"><span>Gehalt auf dem Höhepunkt (€/Jahr)</span><input id="c_s1" type="number" inputmode="numeric" value={med.hoehepunktGehalt} min="0" step="1000" /></label>
+        <label class="rs-feld lifeonly"><span>Einstiegsgehalt (€/Jahr)</span><input id="c_s0" type="text" inputmode="numeric" autocomplete="off" value={med.einstiegsgehalt.toLocaleString('de-DE')} /></label>
+        <label class="rs-feld lifeonly"><span>Gehalt auf dem Höhepunkt (€/Jahr)</span><input id="c_s1" type="text" inputmode="numeric" autocomplete="off" value={med.hoehepunktGehalt.toLocaleString('de-DE')} /></label>
         <label class="rs-feld lifeonly"><span>Höhepunkt erreicht mit</span><input id="c_ap" type="number" inputmode="numeric" value={med.hoehepunktAlter} min="18" max="66" step="1" /></label>
-        <label class="rs-feld lifeonly"><span>Gehaltsdynamik nach dem Höhepunkt</span><select id="c_g"><option value="-0.01">−1 % p. a. real</option><option value="0">0 % real (+2 % nominal)</option><option value="0.005" selected>+0,5 % real (+2,5 % nominal)</option><option value="0.01">+1 % real (+3 % nominal)</option><option value="0.02">+2 % real (+4 % nominal)</option></select></label>
-        <label class="rs-feld"><span>ETF-Rendite (nominal, vor Kosten)</span><select id="etfr"><option value="0.05">5 %, vorsichtig</option><option value="0.06">6 %</option><option value="0.07" selected>7 %, MSCI World langfristig</option><option value="0.08">8 %</option></select></label>
-        <label class="rs-feld"><span>Rentenniveau bei Rentenbeginn</span><select id="niveau"><option value="48">48 %, heutige Haltelinie</option><option value="46.3">46,3 %, Prognose 2039</option><option value="45" selected>45 %, Fortschreibung</option><option value="43">43 %, gesetzliche Untergrenze</option></select></label>
+        <label class="rs-feld lifeonly"><span>Nach dem Höhepunkt, real p. a.</span><select id="c_g"><option value="-0.01">−1 %</option><option value="0">±0 %</option><option value="0.005" selected>+0,5 %</option><option value="0.01">+1 %</option><option value="0.02">+2 %</option></select></label>
+        <label class="rs-feld"><span>ETF-Rendite nominal</span><select id="etfr"><option value="0.05">5 % (vorsichtig)</option><option value="0.06">6 %</option><option value="0.07" selected>7 % (MSCI World)</option><option value="0.08">8 %</option></select></label>
+        <label class="rs-feld"><span>Rentenniveau bei Rentenbeginn</span><select id="niveau"><option value="48">48 % (Haltelinie)</option><option value="46.3">46,3 % (Prognose 2039)</option><option value="45" selected>45 % (Fortschreibung)</option><option value="43">43 % (Untergrenze)</option></select></label>
         <label class="rs-feld"><span>ETF-Depot soll reichen bis</span><select id="until"><option value="90">90</option><option value="95">95</option><option value="100">100</option></select></label>
         <label class="rs-feld"><span>Krankenversicherung</span><select id="kv"><option value="gkv">gesetzlich</option><option value="pkv">privat</option></select></label>
-        <label class="rs-feld" id="pkvwrap" hidden><span>PKV-Beitrag €/Monat</span><input id="pkv" type="number" inputmode="numeric" value="550" min="0" step="10" /></label>
+        <label class="rs-feld" id="pkvwrap" hidden><span>PKV-Beitrag €/Monat</span><input id="pkv" type="text" inputmode="numeric" autocomplete="off" value="550" /></label>
         <label class="rs-feld"><span>Kirchensteuer</span><select id="kist"><option value="0">keine</option><option value="0.09">9 %</option><option value="0.08">8 % (BW, Bayern)</option></select></label>
         <label class="rs-schalter"><input id="kinderlos" type="checkbox" checked /> kinderlos</label>
         <label class="rs-schalter lifeonly"><input id="c_usenow" type="checkbox" checked /> Alter und Brutto von heute einbeziehen</label>
@@ -40,9 +40,9 @@ const med = VORLAGEN.med;
 
     <div class="rs-kennzahlen" id="rk"></div>
 
-    <div class="figure lifeonly">
+    <div class="figure">
       <h2>Gehaltskurve bis zur Rente</h2>
-      <div class="rs-panel"><svg id="gehaltskurve" role="img" aria-label="Gehaltskurve: Bruttojahresgehalt vom Einstieg über heute und den Höhepunkt bis zum Renteneintritt, real und nominal."></svg><ul class="rs-legende" id="lg-gehaltskurve"></ul></div>
+      <div class="rs-panel"><svg id="gehaltskurve" role="img" aria-label="Gehaltskurve: Bruttojahresgehalt bis zum Renteneintritt, in heutiger Kaufkraft und nominal mit 2 % Inflation."></svg><ul class="rs-legende" id="lg-gehaltskurve"></ul></div>
     </div>
     <div class="two">
       <div class="figure">

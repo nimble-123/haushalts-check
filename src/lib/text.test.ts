@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { esc, fmtEur, fmtMrd, fmtMrdDelta, pct, satzText, zeitraum } from './text';
+import { esc, fmtEur, fmtMrd, fmtMrdDelta, leseBetrag, pct, satzText, schreibeBetrag, zeitraum } from './text';
 
 const nb = (s: string) => s.replace(/ /g, ' ');
 
@@ -21,5 +21,19 @@ describe('Formatierung', () => {
   });
   it('esc entschärft HTML', () => {
     expect(esc(`<a href="x">'&'</a>`)).toBe('&lt;a href=&quot;x&quot;&gt;&#39;&amp;&#39;&lt;/a&gt;');
+  });
+});
+
+describe('Betragsfelder', () => {
+  it('liest nur die Ziffern und kappt bei 9.999.999', () => {
+    expect(leseBetrag('54.066')).toBe(54_066);
+    expect(leseBetrag('54066 €')).toBe(54_066);
+    expect(leseBetrag('')).toBe(0);
+    expect(leseBetrag('123456789')).toBe(9_999_999);
+  });
+  it('schreibt mit Tausenderpunkten, 0 als leeres Feld', () => {
+    expect(schreibeBetrag(120_000)).toBe('120.000');
+    expect(schreibeBetrag(0)).toBe('');
+    expect(leseBetrag(schreibeBetrag(1_234_567))).toBe(1_234_567);
   });
 });
