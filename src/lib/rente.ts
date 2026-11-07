@@ -84,9 +84,7 @@ export function renteVsEtf(p: RenteEingabe) {
   const N = 67 - age;
   const r0 = p.etfRendite,
     until = p.depotBis;
-  const pkvY = p.pkv ? Math.max(0, p.pkvMonat || 0) * 12 : 0;
-  const bR = SV_2026.bbgRv,
-    bK = SV_2026.bbgKv;
+  const bR = SV_2026.bbgRv;
   const infl = 0.02,
     ter = 0.002,
     basis = 0.025,
