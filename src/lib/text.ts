@@ -26,3 +26,9 @@ export const pct = (v: number) => `${zahl1(v * 100)}\u00a0%`;
 
 /** Zeitraum zur gewählten Einheit */
 export const zeitraum = (einheit: 'm' | 'y') => (einheit === 'm' ? 'pro Monat' : 'pro Jahr');
+
+/** Betrag aus einem Eingabefeld: nur Ziffern zählen („54.066 €“ → 54066), höchstens 9.999.999 */
+export const leseBetrag = (s: string) => Math.min(9_999_999, parseInt(s.replace(/\D/g, ''), 10) || 0);
+
+/** Betrag fürs Eingabefeld mit Tausenderpunkten, 0 als leeres Feld */
+export const schreibeBetrag = (v: number) => (v ? v.toLocaleString('de-DE') : '');

@@ -1,9 +1,16 @@
 import * as d3 from 'd3';
 import { type RenteErgebnis, renteVsEtf, VORLAGEN } from '../lib/rente';
+import { leseBetrag, schreibeBetrag } from '../lib/text';
+import { betragsfeld } from './betragsfeld';
 import { ladeEingaben, speichereEingaben } from './speicher';
 import { achseY, css, esc, fadenkreuz, fmtEur, gitterY, holen, rahmen } from './viz';
 
 const tausendEuro = (v: d3.NumberValue) => `${Math.round(+v / 1000)} T€`;
+
+/** Euro-Betrag aus einem Betragsfeld („120.000“) */
+const betrag = (id: string) => leseBetrag(holen(id, HTMLInputElement).value);
+/** Euro-Felder mit Tausenderpunkten */
+const BETRAEGE = ['brutto', 'c_s0', 'c_s1', 'pkv'];
 
 /** Zahl aus einem Eingabefeld oder einer Auswahl */
 const num = (id: string) => {
@@ -16,11 +23,11 @@ const num = (id: string) => {
 function modell() {
   return renteVsEtf({
     modus: holen('mode', HTMLSelectElement).value as 'life' | 'now',
-    bruttoHeute: num('brutto'),
+    bruttoHeute: betrag('brutto'),
     alterHeute: num('age'),
     einstiegsalter: num('c_a0'),
-    einstiegsgehalt: num('c_s0'),
-    hoehepunktGehalt: num('c_s1'),
+    einstiegsgehalt: betrag('c_s0'),
+    hoehepunktGehalt: betrag('c_s1'),
     hoehepunktAlter: num('c_ap'),
     dynamik: num('c_g'),
     heuteEinbeziehen: holen('c_usenow', HTMLInputElement).checked,
@@ -28,7 +35,7 @@ function modell() {
     niveau: num('niveau'),
     depotBis: num('until'),
     pkv: holen('kv', HTMLSelectElement).value === 'pkv',
-    pkvMonat: num('pkv'),
+    pkvMonat: betrag('pkv'),
     kinderlos: holen('kinderlos', HTMLInputElement).checked,
     kirche: num('kist'),
   });
@@ -160,9 +167,11 @@ function gehaltskurve(m: RenteErgebnis) {
     .attr('stroke', css('--cat-soz'))
     .attr('stroke-width', 2.5)
     .attr('d', line);
-  const marks: [string, number][] = [['Einstieg', m.startAlter]];
-  if (m.mitHeute) marks.push(['Heute', m.alterHeute]);
-  marks.push(['Höhepunkt', m.hoehepunktAlter], ['Rente', 66]);
+  // „ab heute“: real gleichbleibend ab heutigem Alter, ohne Einstieg und Höhepunkt
+  const marks: [string, number][] = m.lebensverlauf ? [['Einstieg', m.startAlter]] : [['Heute', m.startAlter]];
+  if (m.lebensverlauf && m.mitHeute) marks.push(['Heute', m.alterHeute]);
+  if (m.lebensverlauf) marks.push(['Höhepunkt', m.hoehepunktAlter]);
+  marks.push(['Rente', 66]);
   let prevX = -1e9,
     prevBelow = true;
   marks.forEach(([l, a]) => {
@@ -228,7 +237,7 @@ function zeichne() {
       `deine ETF-Entnahme bis ${m.depotBis}, netto im Monat, ${m.etfMonat > m.renteNetto ? 'mehr' : 'weniger'} als die Rente${m.einholAlter ? `; die Rente holt mit ${m.einholAlter} auf` : ''}`,
       true,
     );
-  if (m.lebensverlauf) gehaltskurve(m);
+  gehaltskurve(m);
   linien(
     'ansparen',
     m.startAlter,
@@ -273,6 +282,7 @@ export function startRente() {
   ];
   // Eigene Angaben vom letzten Besuch (Brutto, Versicherung, Kirche, Kinder teilen sich die Seiten)
   ladeEingaben(ids);
+  for (const id of BETRAEGE) betragsfeld(holen(id, HTMLInputElement));
   ids.forEach((id) => {
     holen(id).addEventListener('input', () => {
       speichereEingaben(ids);
@@ -286,8 +296,8 @@ export function startRente() {
     b.addEventListener('click', () => {
       const p = VORLAGEN[b.dataset.p as keyof typeof VORLAGEN];
       holen('c_a0', HTMLInputElement).value = String(p.einstiegsalter);
-      holen('c_s0', HTMLInputElement).value = String(p.einstiegsgehalt);
-      holen('c_s1', HTMLInputElement).value = String(p.hoehepunktGehalt);
+      holen('c_s0', HTMLInputElement).value = schreibeBetrag(p.einstiegsgehalt);
+      holen('c_s1', HTMLInputElement).value = schreibeBetrag(p.hoehepunktGehalt);
       holen('c_ap', HTMLInputElement).value = String(p.hoehepunktAlter);
       holen('c_usenow', HTMLInputElement).checked = false;
       speichereEingaben(ids);
