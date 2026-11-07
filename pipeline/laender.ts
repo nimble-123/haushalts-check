@@ -13,7 +13,9 @@
  */
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { blatt, quelle, ROOT, schreibeJson, type Zelle } from './xlsx.ts';
+import type { Gruppe, Posten } from '../src/data/types.ts';
+import { pruefe, quelle, ROOT, STADTSTAATEN, schreibeJson } from './helfer.ts';
+import { blatt, type Zelle } from './xlsx.ts';
 
 const URL =
   'https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/' +
@@ -24,8 +26,6 @@ const QUELLE = {
   label: 'Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-12',
   url: 'https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html',
 };
-
-type Gruppe = 'soz' | 'sich' | 'inf' | 'for' | 'zins' | 'verw';
 
 // Spaltenreihenfolge im Blatt (ab Spalte D) → Länderschlüssel, Name, Slug, Kirchensteuer
 const LAENDER: [string, string, string, number][] = [
@@ -46,7 +46,6 @@ const LAENDER: [string, string, string, number][] = [
   ['04', 'Bremen', 'bremen', 0.09],
   ['02', 'Hamburg', 'hamburg', 0.09],
 ];
-const STADTSTAATEN = new Set(['02', '04', '11']);
 
 // Anzeige-Kategorien: Name, Gruppe, Formel aus Aufgabenbereichen (negativ = abziehen)
 const KATEGORIEN: [string, Gruppe, number[]][] = [
@@ -72,18 +71,9 @@ const KATEGORIEN: [string, Gruppe, number[]][] = [
 const GESAMT = 1001;
 const UEBRIG: [string, Gruppe] = ['Übriges, nicht einzeln ausgewiesen', 'verw'];
 
-interface Posten {
-  name: string;
-  v: number;
-  g: Gruppe;
-}
-
 const zahl = (v: Zelle) => (v === null || ['-', '.', 'x', '–'].includes(String(v)) ? 0 : Number(v));
 const runde1 = (x: number) => Math.round(x * 10) / 10;
 const summe = (ps: Posten[]) => ps.reduce((s, p) => s + p.v, 0);
-function pruefe(bedingung: boolean, ...info: unknown[]): asserts bedingung {
-  if (!bedingung) throw new Error(`Prüfung fehlgeschlagen: ${JSON.stringify(info)}`);
-}
 
 /** Map "bereich.zeile" → 16 Länderwerte, plus Prüfung der Zeilenbeschriftungen. */
 function werte(rows: Zelle[][]) {

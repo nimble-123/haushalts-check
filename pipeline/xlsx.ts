@@ -1,26 +1,7 @@
-// Gemeinsame Helfer der Daten-Pipeline: Quelldateien laden und Excel-Blätter als Zeilen lesen.
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+// Excel-Blätter als Zeilen lesen (exceljs).
 import ExcelJS from 'exceljs';
 
-export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-export const QUELLEN = join(ROOT, 'pipeline', 'quellen');
-
 export type Zelle = string | number | null;
-
-/** Lädt eine Quelldatei nach pipeline/quellen/, falls sie noch nicht da ist. */
-export async function quelle(datei: string, url: string): Promise<string> {
-  const pfad = join(QUELLEN, datei);
-  if (!existsSync(pfad)) {
-    mkdirSync(QUELLEN, { recursive: true });
-    console.log('Lade', url);
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Download fehlgeschlagen (HTTP ${res.status}): ${url}`);
-    writeFileSync(pfad, Buffer.from(await res.arrayBuffer()));
-  }
-  return pfad;
-}
 
 /** Ein Excel-Blatt als Zeilen mit einfachen Werten (Text, Zahl oder null), Spalte A = Index 0. */
 export async function blatt(pfad: string, name: string): Promise<Zelle[][]> {
@@ -48,6 +29,3 @@ function einfach(v: ExcelJS.CellValue): Zelle {
   if ('text' in v) return String(v.text);
   return null;
 }
-
-export const schreibeJson = (pfad: string, daten: unknown) =>
-  writeFileSync(pfad, `${JSON.stringify(daten, null, 2)}\n`);

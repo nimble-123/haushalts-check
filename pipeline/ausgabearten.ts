@@ -13,8 +13,8 @@
 // value_variable_label, value_q). quality=on liefert value_q; „p“ = vorläufige Zahl.
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { inflateRawSync } from 'node:zlib';
-import { QUELLEN, ROOT } from './xlsx.ts';
+import type { Stadt } from '../src/data/types.ts';
+import { alsText, felder, QUELLEN, ROOT, schreibeJson, zahl, zuAgs } from './helfer.ts';
 
 const ROH = join(QUELLEN, '71717-Z-05.csv');
 const STAEDTE = join(ROOT, 'src', 'data', 'staedte');
@@ -30,26 +30,6 @@ const QUELLE = {
 };
 
 // ── Schritt 1: Abruf ────────────────────────────────────────────────────────────────────────────
-
-/** Erste Datei aus einem ZIP-Archiv (GENESIS liefert genau eine je Archiv). */
-function entpacke(buf: Buffer): Buffer {
-  let eocd = buf.length - 22;
-  while (eocd >= 0 && buf.readUInt32LE(eocd) !== 0x06054b50) eocd--;
-  if (eocd < 0) throw new Error('ZIP ohne Inhaltsverzeichnis');
-  const cd = buf.readUInt32LE(eocd + 16);
-  const methode = buf.readUInt16LE(cd + 10);
-  const groesse = buf.readUInt32LE(cd + 20);
-  const lokal = buf.readUInt32LE(cd + 42);
-  const start = lokal + 30 + buf.readUInt16LE(lokal + 26) + buf.readUInt16LE(lokal + 28);
-  const daten = buf.subarray(start, start + groesse);
-  if (methode === 0) return daten;
-  // Größe begrenzen: Schutz vor einem fehlerhaften oder manipulierten Archiv (ZIP-Bombe)
-  if (methode === 8) return inflateRawSync(daten, { maxOutputLength: 500_000_000 });
-  throw new Error(`ZIP-Kompression ${methode} nicht unterstützt`);
-}
-
-const alsText = (buf: Buffer) =>
-  (buf.length >= 4 && buf.readUInt32LE(0) === 0x04034b50 ? entpacke(buf) : buf).toString('utf8').replace(/^﻿/, '');
 
 async function post(pfad: string, params: Record<string, string>, user: string, pass: string) {
   const res = await fetch(`${REST}/${pfad}`, {
@@ -76,10 +56,9 @@ const statusVon = (text: string): Status => {
 async function lade() {
   const { REGIO_USER: user, REGIO_PASS: pass = '' } = process.env;
   if (!user || !pass) {
-    console.error(
+    throw new Error(
       'REGIO_USER und REGIO_PASS fehlen (Aufträge mit job=true gehen nicht mit Token). Siehe Kopf dieser Datei.',
     );
-    process.exit(1);
   }
   // 1. Auftrag anlegen
   const { buf } = await post(
@@ -98,8 +77,7 @@ async function lade() {
   const st = statusVon(alsText(buf));
   const ergebnis = /(71717-Z-05_\d+)/.exec(st.Content ?? '')?.[1];
   if (!ergebnis) {
-    console.error(`Auftrag nicht angelegt: Code ${st.Code}: ${st.Content}`);
-    process.exit(1);
+    throw new Error(`Auftrag nicht angelegt: Code ${st.Code}: ${st.Content}`);
   }
   console.log(`Auftrag angelegt, Ergebnis heißt ${ergebnis}. Warte …`);
 
@@ -129,14 +107,12 @@ async function lade() {
       zustand = JSON.parse(alsText(jb)).List?.[0]?.State ?? '?';
     } catch {}
     if (/fehler|abgebrochen/i.test(zustand)) {
-      console.error(`Auftrag ${ergebnis}: ${zustand}`);
-      process.exit(1);
+      throw new Error(`Auftrag ${ergebnis}: ${zustand}`);
     }
     if (Date.now() - start > MAX_MS) {
-      console.error(
+      throw new Error(
         `Nach 20 Minuten noch kein Ergebnis (Auftrag: ${zustand}). Später erneut starten; das Ergebnis ${ergebnis} bleibt im Konto unter „Meine“.`,
       );
-      process.exit(1);
     }
     console.log(`… Auftrag ${zustand} (${Math.round((Date.now() - start) / 1000)} s)`);
   }
@@ -146,64 +122,19 @@ if (!existsSync(ROH)) await lade();
 
 // ── Schritt 2: Einlesen ─────────────────────────────────────────────────────────────────────────
 
-function felder(zeile: string): string[] {
-  if (!zeile.includes('"')) return zeile.split(';');
-  const out: string[] = [];
-  let f = '',
-    q = false;
-  for (let i = 0; i < zeile.length; i++) {
-    const c = zeile[i];
-    if (q && c === '"' && zeile[i + 1] === '"') {
-      f += '"';
-      i++;
-    } else if (c === '"') q = !q;
-    else if (c === ';' && !q) {
-      out.push(f);
-      f = '';
-    } else f += c;
-  }
-  out.push(f);
-  return out;
-}
-
-/** Deutsche Zahl; „-“ = nichts vorhanden (0); „.“, „...“, „/“, „x“ = kein Wert. */
-function zahl(s: string): number | null {
-  s = s.trim();
-  if (s === '-') return 0;
-  if (/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) s = s.replaceAll('.', '');
-  return /^-?\d+(,\d+)?$/.test(s) ? Number(s.replace(',', '.')) : null;
-}
-
 const faktor = (einheit: string) => (/mill|mio/i.test(einheit) ? 1e6 : /tsd|tausend|1000/i.test(einheit) ? 1e3 : 1);
 
-interface Ausgabearten {
-  jahr: number;
-  vorlaeufig: boolean;
-  posten: { name: string; proKopf: number }[];
-  quellen: (typeof QUELLE)[];
-}
-interface StadtJson {
-  ags: string;
-  name: string;
-  stadtstaat: boolean;
-  ausgabearten?: Ausgabearten;
-  [k: string]: unknown;
-}
 const staedte = readdirSync(STAEDTE)
   .filter((f) => f.endsWith('.json'))
   .map((f) => {
     const datei = join(STAEDTE, f);
-    return { datei, s: JSON.parse(readFileSync(datei, 'utf8')) as StadtJson };
+    return { datei, s: JSON.parse(readFileSync(datei, 'utf8')) as Stadt };
   });
 const nachAgs = new Map(staedte.map((x) => [x.s.ags, x]));
 
-// Regionalschlüssel der Tabelle (Gemeinde-Tiefe): „F“ + 5-stelliger Kreisschlüssel + 9 Nullen = kreisfreie Stadt
-const zuAgs = (code: string | undefined) => /^F(\d{5})0{9}$/.exec(code ?? '')?.[1] ?? code ?? '';
-
 let text = alsText(readFileSync(ROH));
 if (text.trimStart().startsWith('{')) {
-  console.error(`${ROH} enthält eine Fehlerantwort statt Daten – Datei löschen und neu abrufen.`);
-  process.exit(1);
+  throw new Error(`${ROH} enthält eine Fehlerantwort statt Daten – Datei löschen und neu abrufen.`);
 }
 // Der Export enthält alle Gemeinden (~200 MB). Einmalig auf die kreisfreien Städte filtern und so speichern.
 {
@@ -295,10 +226,10 @@ for (const [k, regel] of Object.entries(REGELN)) {
       ? m.filter((x) => /personal/i.test(x) && /versorg/i.test(x))
       : m;
   if (m.length !== 1 && !(k === 'personal' && m.length === 2)) {
-    console.error(`Merkmal „${k}“ nicht eindeutig zuzuordnen (${m.length} Treffer: ${m.join(' / ') || '–'}).`);
-    console.error('Merkmale in der Tabelle:');
-    for (const [x, e] of merkmale) console.error(`  ${x}  [${[...e].join(', ')}]`);
-    process.exit(1);
+    const liste = [...merkmale].map(([x, e]) => `  ${x}  [${[...e].join(', ')}]`).join('\n');
+    throw new Error(
+      `Merkmal „${k}“ nicht eindeutig zuzuordnen (${m.length} Treffer: ${m.join(' / ') || '–'}).\nMerkmale in der Tabelle:\n${liste}`,
+    );
   }
   zuordnung[k] = m;
 }
@@ -362,11 +293,7 @@ for (const { s } of kandidaten) {
   ergebnisse.set(s.ags, m);
 }
 if (fehler.length) {
-  console.error(`Plausibilitätsprüfung fehlgeschlagen (${fehler.length}):`);
-  fehler.forEach((f) => {
-    console.error(`  ${f}`);
-  });
-  process.exit(1);
+  throw new Error(`Plausibilitätsprüfung fehlgeschlagen (${fehler.length}):\n  ${fehler.join('\n  ')}`);
 }
 
 // Neuestes Jahr, das für mindestens 90 % der Städte im Abruf vollständig ist
@@ -380,7 +307,7 @@ if (!jahr)
 
 // ── Schreiben ───────────────────────────────────────────────────────────────────────────────────
 
-const geschrieben: { s: StadtJson; gesamt: number }[] = [],
+const geschrieben: { s: Stadt; gesamt: number }[] = [],
   rueckfall: string[] = [],
   ohne: string[] = [];
 for (const { datei, s } of staedte) {
@@ -393,7 +320,7 @@ for (const { datei, s } of staedte) {
   }
   const { gesamt, ...e } = m!.get(j)!;
   s.ausgabearten = e; // bestehender Schlüssel behält seine Position, neuer kommt ans Ende
-  writeFileSync(datei, `${JSON.stringify(s, null, 2)}\n`);
+  schreibeJson(datei, s);
   geschrieben.push({ s, gesamt });
   if (j !== jahr) rueckfall.push(`${s.name} (${j})`);
 }
