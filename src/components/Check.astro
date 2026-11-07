@@ -1,6 +1,7 @@
 ---
 import { ausgabeVergleich, gemeindeEbene, LAENDER, STAEDTE } from '../data';
 import { ABSTIMMUNG_2027, ENTWURF_2027_GESAMT } from '../data/bund';
+import { MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
 import type { Land, Stadt } from '../data/types';
 
 interface Props {
@@ -14,14 +15,16 @@ const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.
 );
 const gem = gemeindeEbene(stadt);
 const arten = ausgabeVergleich(stadt);
-const daten = { stadt, land, gem, arten };
+// Für „In meiner Nähe“: nur Slug und Koordinaten, die Suche läuft im Browser
+const orte = STAEDTE.filter((s) => s.lat && s.lon).map((s) => [s.slug, s.lat, s.lon] as const);
+const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO };
 ---
 <section class="hero page" aria-labelledby="hero-h">
   <div class="eingabe">
     <h1 id="hero-h" class="t-title">Wohin geht dein Geld?</h1>
     <p class="rs-satz">
       Ich verdiene
-      <input id="brutto" class="rs-betrag" type="text" inputmode="numeric" autocomplete="off" value="85.000" aria-label="Jahresbrutto in Euro" />
+      <input id="brutto" class="rs-betrag" type="text" inputmode="numeric" autocomplete="off" value={MEDIAN_BRUTTO.toLocaleString('de-DE')} aria-label="Jahresbrutto in Euro" />
       € brutto im Jahr und wohne in
       <select id="stadt" class="rs-auswahl" aria-label="Stadt">
         {gruppen.map((g) => (
@@ -31,6 +34,11 @@ const daten = { stadt, land, gem, arten };
         ))}
       </select>.
     </p>
+    <div class="satz-zeile">
+      <button type="button" class="rs-textknopf" id="naehe"><i class="ort" aria-hidden="true"></i>In meiner Nähe</button>
+      <span class="status" id="naehe-status" aria-live="polite"></span>
+      <span class="vorbelegt" id="vorbelegt">Vorbelegt mit dem <a href={MEDIAN_BRUTTO_QUELLE.url}>mittleren Bruttolohn für Vollzeit 2025</a> (Destatis).</span>
+    </div>
 
     <details class="rs-aufklapper mehr">
       <summary><b>Weitere Angaben</b><span id="mehr-sum">Steuerklasse I</span></summary>
@@ -46,7 +54,7 @@ const daten = { stadt, land, gem, arten };
         </label>
         <label class="rs-schalter"><input id="kinderlos" type="checkbox" checked /> kinderlos</label>
       </div>
-      <p class="hinweis">Gerechnet wird mit Steuerklasse I.</p>
+      <p class="hinweis">Gerechnet wird mit Steuerklasse I. Deine Angaben merkt sich nur dieser Browser. <button type="button" class="rs-textknopf" id="vergessen">Eingaben vergessen</button></p>
     </details>
 
     <p class="ergebnis" id="result" aria-live="polite"></p>
@@ -202,6 +210,10 @@ const daten = { stadt, land, gem, arten };
   .mehr { max-width: 36em; }
   .mehr .rs-felder { align-items: end; }
   .hinweis { margin: var(--space-3) 0 0; font-size: 14px; color: var(--ink-3); }
+  .satz-zeile { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin-top: calc(-1 * var(--space-3)); font-size: 14.5px; color: var(--ink-3); }
+  .satz-zeile a { color: inherit; }
+  .status:empty { display: none; }
+  .ort { width: 12px; height: 12px; border-radius: 50% 50% 50% 0; rotate: -45deg; box-shadow: inset 0 0 0 2px currentColor; display: inline-block; margin-right: 6px; }
   .ergebnis { margin: 0; font-size: 21px; line-height: 1.7; max-width: 32em; }
 
   .hundert { margin: 0; display: grid; gap: var(--space-4); min-width: 0; }

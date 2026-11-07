@@ -1,8 +1,9 @@
 import * as d3 from 'd3';
 import { BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTWURF_2027, ENTWURF_2027_GESAMT } from '../data/bund';
 import { type GemeindeEbene, GRUPPEN, type Gruppe, type Land, type Stadt } from '../data/types';
+import { naechsteStadt, type Ort } from '../lib/naehe';
 import { aufEbenen, berechne, type Eingabe, type Ergebnis, summeAbgaben, summeSV } from '../lib/steuer';
-import { ladeEingaben, speichereEingaben } from './speicher';
+import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
   $,
   clear,
@@ -520,21 +521,60 @@ function chartRaster(r: Ergebnis, fmt: (v: number) => string) {
       d.n++;
     });
   raster.setAttribute('aria-label', `Von 100 € deiner Abgaben: ${cats.map((d) => `${d.n} € ${d.name}`).join(', ')}`);
-  // Kästchen behalten, nur umfärben: so blendet der Übergang (0,3 s) bei jeder Eingabe
-  if (raster.children.length !== 100) raster.innerHTML = '<i></i>'.repeat(100);
+  // Kästchen behalten, nur umfärben: so läuft die Umfärbung als Welle über das Raster
+  const neu = raster.children.length !== 100;
+  if (neu) raster.innerHTML = '<i></i>'.repeat(100);
   const zellen = cats.flatMap((d) => Array(d.n).fill(d));
   [...raster.children].forEach((c, i) => {
     const d = zellen[i];
-    (c as HTMLElement).className = d?.cls === 'rs-hohl' ? '' : (d?.cls ?? '');
-    (c as HTMLElement).style.cssText =
-      d?.k === 'kirche' ? `box-shadow:inset 0 0 0 1.5px ${css('--ink-3')};background:transparent` : (d?.style ?? '');
+    const diagonal = Math.floor(i / 10) + (i % 10); // 0 … 18, von links oben nach rechts unten
+    const zelle = c as HTMLElement;
+    zelle.className = `${d?.cls === 'rs-hohl' ? '' : (d?.cls ?? '')}${fokus && d?.k === fokus ? ' rs-im-fokus' : ''}`;
+    zelle.dataset.k = d?.k ?? '';
+    zelle.style.cssText =
+      `--d:${diagonal * 30}ms;--welle:${diagonal * 12}ms;` +
+      (d?.k === 'kirche' ? `box-shadow:inset 0 0 0 1.5px ${css('--ink-3')};background:transparent` : (d?.style ?? ''));
   });
+  if (neu) auftritt(raster);
   liste.innerHTML = cats
     .map(
       (d) =>
-        `<li><span class="rs-farbe ${d.cls}" style="${d.style}"></span><span>${d.name}</span><span><b>${d.n} €</b><small>${fmt(d.v)}</small></span></li>`,
+        `<li data-k="${d.k}"><span class="rs-farbe ${d.cls}" style="${d.style}"></span><span>${d.name}</span><span><b>${d.n} €</b><small>${fmt(d.v)}</small></span></li>`,
     )
     .join('');
+}
+
+// ---------- Bewegung im Raster ----------
+const wenigBewegung = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+let fokus: string | null = null;
+
+/** Einmalige diagonale Welle beim ersten Zeichnen */
+function auftritt(raster: HTMLElement) {
+  if (wenigBewegung()) return;
+  raster.classList.add('rs-auftritt');
+  setTimeout(() => raster.classList.remove('rs-auftritt'), 1200);
+}
+
+/** Zweck in der Liste überfahren: dessen Kästchen bleiben, die übrigen treten zurück */
+function fokusAuf(k: string | null) {
+  fokus = k;
+  const raster = $('#raster');
+  raster.classList.toggle('rs-fokus', !!k);
+  for (const c of raster.children) c.classList.toggle('rs-im-fokus', !!k && (c as HTMLElement).dataset.k === k);
+}
+
+/** Gelegentlicher leiser Schimmer – nur sichtbar, im Bild und ohne Fokus */
+function schimmern() {
+  const raster = $('#raster');
+  let imBild = false;
+  new IntersectionObserver(([e]) => {
+    imBild = e.isIntersecting;
+  }).observe(raster);
+  setInterval(() => {
+    if (!imBild || document.hidden || fokus || wenigBewegung() || raster.classList.contains('rs-auftritt')) return;
+    raster.classList.add('rs-schimmer');
+    setTimeout(() => raster.classList.remove('rs-schimmer'), 2100);
+  }, 9000);
 }
 
 // ---------- Echte Ausgabearten der Stadt ----------
@@ -925,6 +965,40 @@ function alles() {
   chartEntwicklung();
 }
 
+// ---------- Stadt in der Nähe ----------
+function orten(orte: Ort[], ids: string[], vonHand: boolean) {
+  const knopf = el<HTMLButtonElement>('naehe'),
+    status = $('#naehe-status');
+  if (!('geolocation' in navigator)) {
+    if (vonHand) status.textContent = 'Dein Browser kann keinen Standort ermitteln. Wähl deine Stadt in der Liste.';
+    return;
+  }
+  knopf.disabled = true;
+  if (vonHand) status.textContent = 'Suche deinen Standort …';
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const slug = naechsteStadt(orte, pos.coords.latitude, pos.coords.longitude);
+      speichereStadt(slug);
+      if (slug === stadt.slug) {
+        knopf.disabled = false;
+        status.textContent = `${stadt.name} ist die nächste kreisfreie Stadt.`;
+        return;
+      }
+      speichereEingaben(ids);
+      location.href = `/stadt/${slug}/`;
+    },
+    (fehler) => {
+      knopf.disabled = false;
+      if (!vonHand) return;
+      status.textContent =
+        fehler.code === fehler.PERMISSION_DENIED
+          ? 'Standort nicht freigegeben. Wähl deine Stadt in der Liste.'
+          : 'Standort nicht gefunden. Wähl deine Stadt in der Liste.';
+    },
+    { timeout: 10_000, maximumAge: 10 * 60_000 },
+  );
+}
+
 export function start() {
   const daten = JSON.parse($('#daten').textContent!);
   stadt = daten.stadt;
@@ -935,6 +1009,36 @@ export function start() {
   GEM_T = sum(gem.posten);
 
   const ids = ['brutto', 'kv', 'pkv', 'kist', 'kinderlos', 'ag', 'shownetto', 'split'];
+  const orte: Ort[] = daten.orte;
+
+  // Startseite: gemerkte Stadt öffnen; sonst den Standort nur nutzen, wenn er schon freigegeben ist
+  if (location.pathname === '/') {
+    const gemerkt = gespeicherteStadt();
+    if (gemerkt && gemerkt !== stadt.slug && orte.some(([s]) => s === gemerkt)) {
+      location.replace(`/stadt/${gemerkt}/`);
+      return;
+    }
+    if (!gemerkt && navigator.permissions) {
+      navigator.permissions
+        .query({ name: 'geolocation' })
+        .then((p) => {
+          if (p.state === 'granted') orten(orte, ids, false);
+        })
+        .catch(() => {});
+    }
+  }
+  el('naehe').addEventListener('click', () => orten(orte, ids, true));
+  const liste = $('#zweck');
+  liste.addEventListener('pointerover', (e) =>
+    fokusAuf((e.target as HTMLElement).closest<HTMLElement>('li')?.dataset.k ?? null),
+  );
+  liste.addEventListener('pointerleave', () => fokusAuf(null));
+  schimmern();
+  el('vergessen').addEventListener('click', () => {
+    vergiss();
+    location.href = '/';
+  });
+
   ladeEingaben(ids);
   const syncPkv = () => (el('pkvwrap').hidden = el<HTMLSelectElement>('kv').value !== 'pkv');
   syncPkv();
@@ -949,6 +1053,14 @@ export function start() {
   brutto.addEventListener('change', () => {
     brutto.value = schreibeBetrag(leseBetrag(brutto.value));
   });
+  // Beim Hineinklicken alles markieren: Tippen ersetzt den Betrag statt Ziffern einzufügen
+  brutto.addEventListener('focus', () => brutto.select());
+  // Hinweis „Vorbelegt mit dem Median“ nur, solange der Median drinsteht
+  const syncVorbelegt = () => {
+    el('vorbelegt').hidden = leseBetrag(brutto.value) !== daten.median;
+  };
+  syncVorbelegt();
+  brutto.addEventListener('input', syncVorbelegt);
   ids.forEach((id) => {
     el(id).addEventListener('input', () => {
       syncPkv();
@@ -958,6 +1070,7 @@ export function start() {
   });
   el<HTMLSelectElement>('stadt').addEventListener('change', (ev) => {
     speichereEingaben(ids);
+    speichereStadt((ev.target as HTMLSelectElement).value);
     location.href = `/stadt/${(ev.target as HTMLSelectElement).value}/`;
   });
   document.querySelectorAll<HTMLButtonElement>('#unit button').forEach((b) => {

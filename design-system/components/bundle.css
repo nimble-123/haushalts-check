@@ -38,7 +38,41 @@
 .rs-raster > i {
   border-radius: var(--radius-cell);
   background-color: var(--surface);
-  transition: background-color 0.3s ease-out;
+  /* Umfärben als diagonale Welle: --welle wird je Kästchen gesetzt (Zeile + Spalte) */
+  transition:
+    background-color 0.35s ease-out var(--welle, 0ms),
+    opacity 0.25s ease-out;
+}
+/* Einmaliger Auftritt beim Laden */
+.rs-raster.rs-auftritt > i {
+  animation: rs-auftritt 0.55s cubic-bezier(0.2, 0, 0, 1) var(--d, 0ms) both;
+}
+@keyframes rs-auftritt {
+  from {
+    opacity: 0;
+    scale: 0.55;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+/* Leiser Schimmer, der gelegentlich diagonal durchläuft */
+.rs-raster.rs-schimmer > i {
+  animation: rs-schimmer 1.4s ease-in-out var(--d, 0ms) both;
+}
+@keyframes rs-schimmer {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.68;
+  }
+}
+/* Ein Zweck im Fokus: die übrigen Kästchen treten zurück */
+.rs-raster.rs-fokus > i:not(.rs-im-fokus) {
+  opacity: 0.18;
 }
 .rs-raster > i.rs-hatch {
   background-color: var(--paper);
@@ -46,6 +80,8 @@
 @media (prefers-reduced-motion: reduce) {
   .rs-raster > i {
     transition: none;
+    /* biome-ignore lint/complexity/noImportantStyles: „weniger Bewegung“ hat Vorrang vor Auftritt und Schimmer */
+    animation: none !important;
   }
 }
 
@@ -465,4 +501,38 @@
 }
 .rs-thema[aria-pressed="true"] i {
   rotate: 180deg;
+}
+
+/* ---------- Textknopf ---------- */
+.rs-textknopf {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--space-2);
+  margin: 0 calc(-1 * var(--space-2));
+  font: 550 14.5px var(--font-text);
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-control);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--line);
+  cursor: pointer;
+  transition: background-color 0.12s ease-out;
+  position: relative;
+}
+/* Trefferfläche auf 44px erweitern, ohne das Layout zu verändern */
+.rs-textknopf::before {
+  content: "";
+  position: absolute;
+  inset: -6px 0;
+}
+.rs-textknopf:hover {
+  background: var(--surface);
+}
+.rs-textknopf:disabled {
+  color: var(--ink-3);
+  cursor: progress;
 }

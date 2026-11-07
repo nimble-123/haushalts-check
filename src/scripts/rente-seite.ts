@@ -314,8 +314,6 @@ function zeichne() {
 }
 
 export function startRente() {
-  const shared = ['brutto', 'kv', 'pkv', 'kist', 'kinderlos'];
-  ladeEingaben(shared);
   const ids = [
     'mode',
     'brutto',
@@ -334,9 +332,11 @@ export function startRente() {
     'kist',
     'kinderlos',
   ];
+  // Eigene Angaben vom letzten Besuch (Brutto, Versicherung, Kirche, Kinder teilen sich die Seiten)
+  ladeEingaben(ids);
   ids.forEach((id) => {
     el(id).addEventListener('input', () => {
-      if (shared.includes(id)) speichereEingaben(shared);
+      speichereEingaben(ids);
       document.querySelectorAll('#preset button').forEach((b) => {
         b.setAttribute('aria-pressed', 'false');
       });
@@ -351,6 +351,7 @@ export function startRente() {
       el('c_s1').value = String(p.hoehepunktGehalt);
       el('c_ap').value = String(p.hoehepunktAlter);
       el('c_usenow').checked = false;
+      speichereEingaben(ids);
       zeichne();
       document.querySelectorAll('#preset button').forEach((x) => {
         x.setAttribute('aria-pressed', String(x === b));
