@@ -11,6 +11,7 @@
       "!!**/dist",
       "!src/styles/tokens.css",
       "!public/orte.json",
+      "!public/orte-lage.json",
       "!design-system/components/**/*.html"
     ]
   },
