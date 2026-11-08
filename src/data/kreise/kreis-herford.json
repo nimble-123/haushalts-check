@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-herford",
+  "ags": "05758",
+  "land": "05",
+  "name": "Kreis Herford",
+  "amtlich": "Herford, Kreis",
+  "einwohner": 254404,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.1641,
+  "lon": 8.6386,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 865
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 693
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 749
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 874
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1413
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

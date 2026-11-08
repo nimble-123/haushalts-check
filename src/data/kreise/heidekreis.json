@@ -1,0 +1,44 @@
+{
+  "slug": "heidekreis",
+  "ags": "03358",
+  "land": "03",
+  "name": "Heidekreis",
+  "amtlich": "Heidekreis, Landkreis",
+  "einwohner": 141321,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.9221,
+  "lon": 9.7539,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1077
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 722
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1604
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 855
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1108
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

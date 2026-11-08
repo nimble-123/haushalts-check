@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-kaiserslautern",
+  "ags": "07335",
+  "land": "07",
+  "name": "Landkreis Kaiserslautern",
+  "amtlich": "Kaiserslautern, Landkreis",
+  "einwohner": 106343,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.4486,
+  "lon": 7.66,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1209
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 421
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1035
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 513
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1215
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

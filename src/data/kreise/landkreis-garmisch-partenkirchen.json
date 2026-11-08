@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-garmisch-partenkirchen",
+  "ags": "09180",
+  "land": "09",
+  "name": "Landkreis Garmisch-Partenkirchen",
+  "amtlich": "Garmisch-Partenkirchen, Landkreis",
+  "einwohner": 89296,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.5675,
+  "lon": 11.1381,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1133
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 685
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 332
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1257
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1303
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

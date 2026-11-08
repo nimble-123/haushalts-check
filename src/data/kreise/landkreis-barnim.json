@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-barnim",
+  "ags": "12060",
+  "land": "12",
+  "name": "Landkreis Barnim",
+  "amtlich": "Barnim, Landkreis",
+  "einwohner": 194169,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.7421,
+  "lon": 13.6535,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1238
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 586
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1037
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 684
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1409
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

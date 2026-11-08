@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-neustadt-a-d-aisch-bad-windsheim",
+  "ags": "09575",
+  "land": "09",
+  "name": "Landkreis Neustadt a.d.Aisch-Bad Windsheim",
+  "amtlich": "Neustadt a.d.Aisch-Bad Windsheim, Landkreis",
+  "einwohner": 101043,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.5624,
+  "lon": 10.511,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 796
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 639
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 302
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1119
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1462
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

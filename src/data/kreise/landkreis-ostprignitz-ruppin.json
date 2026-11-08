@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ostprignitz-ruppin",
+  "ags": "12068",
+  "land": "12",
+  "name": "Landkreis Ostprignitz-Ruppin",
+  "amtlich": "Ostprignitz-Ruppin, Landkreis",
+  "einwohner": 99152,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.9657,
+  "lon": 12.6568,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1696
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 737
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1747
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 594
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1148
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

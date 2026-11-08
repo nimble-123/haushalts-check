@@ -1,0 +1,44 @@
+{
+  "slug": "schwarzwald-baar-kreis",
+  "ags": "08326",
+  "land": "08",
+  "name": "Schwarzwald-Baar-Kreis",
+  "amtlich": "Schwarzwald-Baar-Kreis, Landkreis",
+  "einwohner": 214065,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.0376,
+  "lon": 8.4413,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1306
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 797
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 708
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 768
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1542
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

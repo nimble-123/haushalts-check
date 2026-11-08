@@ -1,0 +1,44 @@
+{
+  "slug": "werra-meissner-kreis",
+  "ags": "06636",
+  "land": "06",
+  "name": "Werra-Meißner-Kreis",
+  "amtlich": "Werra-Meißner-Kreis, Landkreis",
+  "einwohner": 97695,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.2089,
+  "lon": 9.942,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1159
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 637
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 964
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 559
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1217
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

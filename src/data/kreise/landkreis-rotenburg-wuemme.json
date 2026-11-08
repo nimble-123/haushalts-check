@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-rotenburg-wuemme",
+  "ags": "03357",
+  "land": "03",
+  "name": "Landkreis Rotenburg (Wümme)",
+  "amtlich": "Rotenburg (Wümme), Landkreis",
+  "einwohner": 165904,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.2411,
+  "lon": 9.3161,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1329
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 745
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1342
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1028
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 833
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

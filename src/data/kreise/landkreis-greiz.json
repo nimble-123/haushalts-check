@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-greiz",
+  "ags": "16076",
+  "land": "16",
+  "name": "Landkreis Greiz",
+  "amtlich": "Greiz, Landkreis",
+  "einwohner": 93707,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.7401,
+  "lon": 12.0877,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1141
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 397
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1144
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 504
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 778
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

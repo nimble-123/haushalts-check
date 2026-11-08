@@ -10,13 +10,9 @@
  */
 import { mkdirSync, readdirSync, readFileSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
-import { quelle, ROOT, STADTSTAATEN, schreibeJson, slugify } from './helfer.ts';
+import { GV_GEMEINDEN_URL, GV_KREISE_URL, quelle, ROOT, STADTSTAATEN, schreibeJson, slugify } from './helfer.ts';
 import { blatt } from './xlsx.ts';
 
-const URL_KREISE =
-  'https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/04-kreise.xlsx?__blob=publicationFile';
-const URL_GEMEINDEN =
-  'https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugJ/31122025_Auszug_GV.xlsx?__blob=publicationFile';
 const ZIEL = join(ROOT, 'src', 'data', 'staedte');
 const TYPEN = new Set(['Kreisfreie Stadt', 'Stadtkreis']);
 
@@ -25,7 +21,10 @@ const anzeigename = (amtlich: string) => amtlich.split(',')[0].trim();
 
 // Koordinaten: Gemeinde-Zeilen (Satzart 60) mit Land, RB, Kreis, VB, Gem; kreisfreie Stadt = Kreisschlüssel + Gem „000“
 const koordinaten = new Map<string, { lat: number; lon: number }>();
-for (const r of await blatt(await quelle('gv-gemeinden-2025.xlsx', URL_GEMEINDEN), 'Onlineprodukt_Gemeinden31122025')) {
+for (const r of await blatt(
+  await quelle('gv-gemeinden-2025.xlsx', GV_GEMEINDEN_URL),
+  'Onlineprodukt_Gemeinden31122025',
+)) {
   if (String(r[0]) !== '60') continue;
   const kreis = `${r[2]}${r[3]}${r[4]}`;
   const lon = Number(String(r[14] ?? '').replace(',', '.')),
@@ -44,9 +43,9 @@ interface Roh {
   slug?: string;
 }
 const staedte: Roh[] = [];
-for (const r of (await blatt(await quelle('gv-kreise-2024.xlsx', URL_KREISE), 'Kreisfreie Städte u. Landkreise')).slice(
-  3,
-)) {
+for (const r of (
+  await blatt(await quelle('gv-kreise-2024.xlsx', GV_KREISE_URL), 'Kreisfreie Städte u. Landkreise')
+).slice(3)) {
   const [ags, typ, name, , , ew] = r;
   if (typeof ags !== 'string' || ags.length !== 5 || !TYPEN.has(String(typ))) continue;
   staedte.push({

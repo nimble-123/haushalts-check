@@ -1,0 +1,44 @@
+{
+  "slug": "eifelkreis-bitburg-pruem",
+  "ags": "07232",
+  "land": "07",
+  "name": "Eifelkreis Bitburg-Prüm",
+  "amtlich": "Eifelkreis Bitburg-Prüm, Landkreis",
+  "einwohner": 99788,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.025,
+  "lon": 6.4569,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1092
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 585
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1064
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 789
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1420
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-main-spessart",
+  "ags": "09677",
+  "land": "09",
+  "name": "Landkreis Main-Spessart",
+  "amtlich": "Main-Spessart, Landkreis",
+  "einwohner": 125282,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.9551,
+  "lon": 9.6681,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 983
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 781
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 266
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1007
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1257
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

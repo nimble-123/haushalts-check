@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-erding",
+  "ags": "09177",
+  "land": "09",
+  "name": "Landkreis Erding",
+  "amtlich": "Erding, Landkreis",
+  "einwohner": 140127,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.2969,
+  "lon": 11.9779,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 928
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 620
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 327
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 873
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1456
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

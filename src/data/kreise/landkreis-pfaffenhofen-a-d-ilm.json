@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-pfaffenhofen-a-d-ilm",
+  "ags": "09186",
+  "land": "09",
+  "name": "Landkreis Pfaffenhofen a.d.Ilm",
+  "amtlich": "Pfaffenhofen a.d.Ilm, Landkreis",
+  "einwohner": 130781,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.606,
+  "lon": 11.5271,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 971
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 472
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 309
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1003
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1282
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

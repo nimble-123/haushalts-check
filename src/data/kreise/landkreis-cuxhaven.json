@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-cuxhaven",
+  "ags": "03352",
+  "land": "03",
+  "name": "Landkreis Cuxhaven",
+  "amtlich": "Cuxhaven, Landkreis",
+  "einwohner": 198842,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.6639,
+  "lon": 8.7494,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1236
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 611
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1294
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 824
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1241
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

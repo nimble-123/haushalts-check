@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-tirschenreuth",
+  "ags": "09377",
+  "land": "09",
+  "name": "Landkreis Tirschenreuth",
+  "amtlich": "Tirschenreuth, Landkreis",
+  "einwohner": 72210,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.907,
+  "lon": 12.1622,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1043
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 700
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 327
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 2239
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2345
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

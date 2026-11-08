@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-leer",
+  "ags": "03457",
+  "land": "03",
+  "name": "Landkreis Leer",
+  "amtlich": "Leer, Landkreis",
+  "einwohner": 169103,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.23,
+  "lon": 7.4798,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1181
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 549
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1711
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 749
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 880
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

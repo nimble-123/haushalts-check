@@ -1,0 +1,44 @@
+{
+  "slug": "oberbergischer-kreis",
+  "ags": "05374",
+  "land": "05",
+  "name": "Oberbergischer Kreis",
+  "amtlich": "Oberbergischer Kreis, Kreis",
+  "einwohner": 274057,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.0187,
+  "lon": 7.5173,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1046
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 652
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 686
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 677
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1625
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

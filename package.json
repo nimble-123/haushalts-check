@@ -28,6 +28,7 @@
     "daten:laender": "node pipeline/laender.ts",
     "daten:staedte": "node pipeline/staedte.ts",
     "daten:ausgabearten": "node --env-file=.env.local pipeline/ausgabearten.ts",
+    "daten:kreise": "node --env-file=.env.local pipeline/kreise.ts",
     "daten:konsum": "node pipeline/konsum.ts",
     "test:watch": "vitest",
     "test:e2e": "playwright test",

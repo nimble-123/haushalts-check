@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-euskirchen",
+  "ags": "05366",
+  "land": "05",
+  "name": "Kreis Euskirchen",
+  "amtlich": "Euskirchen, Kreis",
+  "einwohner": 202609,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.6092,
+  "lon": 6.691,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 954
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 897
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 634
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 979
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1664
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

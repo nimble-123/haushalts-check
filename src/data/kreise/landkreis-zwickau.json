@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-zwickau",
+  "ags": "14524",
+  "land": "14",
+  "name": "Landkreis Zwickau",
+  "amtlich": "Zwickau, Landkreis",
+  "einwohner": 306793,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.757,
+  "lon": 12.5371,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1013
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 528
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 693
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 478
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1095
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

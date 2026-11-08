@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-grafschaft-bentheim",
+  "ags": "03456",
+  "land": "03",
+  "name": "Landkreis Grafschaft Bentheim",
+  "amtlich": "Grafschaft Bentheim, Landkreis",
+  "einwohner": 144543,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.4444,
+  "lon": 7.0581,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 860
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 473
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1408
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 687
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 990
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "enzkreis",
+  "ags": "08236",
+  "land": "08",
+  "name": "Enzkreis",
+  "amtlich": "Enzkreis, Landkreis",
+  "einwohner": 199745,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.9149,
+  "lon": 8.7307,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1154
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 682
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 908
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 677
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1277
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

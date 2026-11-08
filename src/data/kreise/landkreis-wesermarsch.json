@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-wesermarsch",
+  "ags": "03461",
+  "land": "03",
+  "name": "Landkreis Wesermarsch",
+  "amtlich": "Wesermarsch, Landkreis",
+  "einwohner": 88936,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.3638,
+  "lon": 8.4556,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1155
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 608
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1416
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 627
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 949
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

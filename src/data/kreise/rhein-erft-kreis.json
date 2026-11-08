@@ -1,0 +1,44 @@
+{
+  "slug": "rhein-erft-kreis",
+  "ags": "05362",
+  "land": "05",
+  "name": "Rhein-Erft-Kreis",
+  "amtlich": "Rhein-Erft-Kreis, Kreis",
+  "einwohner": 477988,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.897,
+  "lon": 6.7766,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1308
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 758
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 794
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 662
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1616
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

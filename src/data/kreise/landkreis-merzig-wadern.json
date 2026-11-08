@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-merzig-wadern",
+  "ags": "10042",
+  "land": "10",
+  "name": "Landkreis Merzig-Wadern",
+  "amtlich": "Merzig-Wadern, Landkreis",
+  "einwohner": 108779,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.4764,
+  "lon": 6.6867,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 989
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 463
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 575
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 603
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 792
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

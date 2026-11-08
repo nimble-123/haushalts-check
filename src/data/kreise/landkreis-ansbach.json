@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ansbach",
+  "ags": "09571",
+  "land": "09",
+  "name": "Landkreis Ansbach",
+  "amtlich": "Ansbach, Landkreis",
+  "einwohner": 187633,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.2375,
+  "lon": 10.4933,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 908
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 607
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 320
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1024
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1447
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

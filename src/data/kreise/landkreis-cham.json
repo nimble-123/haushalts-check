@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-cham",
+  "ags": "09372",
+  "land": "09",
+  "name": "Landkreis Cham",
+  "amtlich": "Cham, Landkreis",
+  "einwohner": 128534,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.2267,
+  "lon": 12.6916,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 882
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 516
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 264
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1119
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1116
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

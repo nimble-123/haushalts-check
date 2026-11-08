@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-guenzburg",
+  "ags": "09774",
+  "land": "09",
+  "name": "Landkreis Günzburg",
+  "amtlich": "Günzburg, Landkreis",
+  "einwohner": 129846,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.3723,
+  "lon": 10.3546,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 908
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 521
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 415
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1019
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1378
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

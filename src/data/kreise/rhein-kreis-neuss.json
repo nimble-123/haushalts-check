@@ -1,0 +1,44 @@
+{
+  "slug": "rhein-kreis-neuss",
+  "ags": "05162",
+  "land": "05",
+  "name": "Rhein-Kreis Neuss",
+  "amtlich": "Rhein-Kreis Neuss, Kreis",
+  "einwohner": 457077,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.1694,
+  "lon": 6.666,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1020
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 641
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 808
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 508
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1987
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

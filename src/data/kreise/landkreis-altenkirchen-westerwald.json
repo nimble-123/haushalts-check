@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-altenkirchen-westerwald",
+  "ags": "07132",
+  "land": "07",
+  "name": "Landkreis Altenkirchen (Westerwald)",
+  "amtlich": "Altenkirchen (Westerwald), Landkreis",
+  "einwohner": 132125,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.7492,
+  "lon": 7.7727,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1078
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 348
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1062
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 555
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1437
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

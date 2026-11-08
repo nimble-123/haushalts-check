@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-lueneburg",
+  "ags": "03355",
+  "land": "03",
+  "name": "Landkreis Lüneburg",
+  "amtlich": "Lüneburg, Landkreis",
+  "einwohner": 179448,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.2546,
+  "lon": 10.4489,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1368
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 649
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1310
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 871
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1769
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

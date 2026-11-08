@@ -1,0 +1,44 @@
+{
+  "slug": "neckar-odenwald-kreis",
+  "ags": "08225",
+  "land": "08",
+  "name": "Neckar-Odenwald-Kreis",
+  "amtlich": "Neckar-Odenwald-Kreis, Landkreis",
+  "einwohner": 145263,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.4353,
+  "lon": 9.2421,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1168
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 762
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 717
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 752
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1392
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

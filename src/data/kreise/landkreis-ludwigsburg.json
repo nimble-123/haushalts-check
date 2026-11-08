@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ludwigsburg",
+  "ags": "08118",
+  "land": "08",
+  "name": "Landkreis Ludwigsburg",
+  "amtlich": "Ludwigsburg, Landkreis",
+  "einwohner": 535374,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.9157,
+  "lon": 9.1489,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1495
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 770
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1082
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 854
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1499
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

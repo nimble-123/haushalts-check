@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-regen",
+  "ags": "09276",
+  "land": "09",
+  "name": "Landkreis Regen",
+  "amtlich": "Regen, Landkreis",
+  "einwohner": 77267,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.0123,
+  "lon": 13.0776,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 910
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 651
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 374
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1280
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1237
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

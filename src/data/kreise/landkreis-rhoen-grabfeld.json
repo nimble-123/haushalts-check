@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-rhoen-grabfeld",
+  "ags": "09673",
+  "land": "09",
+  "name": "Landkreis Rhön-Grabfeld",
+  "amtlich": "Rhön-Grabfeld, Landkreis",
+  "einwohner": 79375,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.3603,
+  "lon": 10.2461,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1067
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 613
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 256
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1226
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1357
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

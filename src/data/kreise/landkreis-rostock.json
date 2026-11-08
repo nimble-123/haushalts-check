@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-rostock",
+  "ags": "13072",
+  "land": "13",
+  "name": "Landkreis Rostock",
+  "amtlich": "Landkreis Rostock, Landkreis",
+  "einwohner": 218721,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.9673,
+  "lon": 12.1371,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 859
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 612
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 986
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 708
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1581
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

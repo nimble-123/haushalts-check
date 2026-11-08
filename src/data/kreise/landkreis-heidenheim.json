@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-heidenheim",
+  "ags": "08135",
+  "land": "08",
+  "name": "Landkreis Heidenheim",
+  "amtlich": "Heidenheim, Landkreis",
+  "einwohner": 135235,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.6539,
+  "lon": 10.1713,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1256
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 676
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 878
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 963
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1283
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

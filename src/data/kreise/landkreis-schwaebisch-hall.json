@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-schwaebisch-hall",
+  "ags": "08127",
+  "land": "08",
+  "name": "Landkreis Schwäbisch Hall",
+  "amtlich": "Schwäbisch Hall, Landkreis",
+  "einwohner": 200902,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.1242,
+  "lon": 9.8903,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1347
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 909
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 966
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 859
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1327
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

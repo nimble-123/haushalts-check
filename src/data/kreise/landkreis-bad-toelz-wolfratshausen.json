@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-bad-toelz-wolfratshausen",
+  "ags": "09173",
+  "land": "09",
+  "name": "Landkreis Bad Tölz-Wolfratshausen",
+  "amtlich": "Bad Tölz-Wolfratshausen, Landkreis",
+  "einwohner": 130248,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.8134,
+  "lon": 11.4914,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 862
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 541
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 345
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 731
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1242
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

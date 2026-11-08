@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-suedwestpfalz",
+  "ags": "07340",
+  "land": "07",
+  "name": "Landkreis Südwestpfalz",
+  "amtlich": "Südwestpfalz, Landkreis",
+  "einwohner": 89974,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.2265,
+  "lon": 7.6288,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1234
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 476
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1130
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 500
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1366
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "donnersbergkreis",
+  "ags": "07333",
+  "land": "07",
+  "name": "Donnersbergkreis",
+  "amtlich": "Donnersbergkreis, Landkreis",
+  "einwohner": 74783,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.6213,
+  "lon": 7.9613,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1289
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 476
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1041
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 648
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1287
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

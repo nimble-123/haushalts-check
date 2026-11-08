@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-goerlitz",
+  "ags": "14626",
+  "land": "14",
+  "name": "Landkreis Görlitz",
+  "amtlich": "Görlitz, Landkreis",
+  "einwohner": 243958,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.136,
+  "lon": 14.7844,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1226
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 663
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1325
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 667
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1370
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

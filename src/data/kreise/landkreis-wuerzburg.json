@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-wuerzburg",
+  "ags": "09679",
+  "land": "09",
+  "name": "Landkreis Würzburg",
+  "amtlich": "Würzburg, Landkreis",
+  "einwohner": 162216,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.7714,
+  "lon": 9.9285,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 861
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 567
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 429
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 981
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1294
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

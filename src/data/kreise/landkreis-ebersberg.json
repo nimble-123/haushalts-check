@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ebersberg",
+  "ags": "09175",
+  "land": "09",
+  "name": "Landkreis Ebersberg",
+  "amtlich": "Ebersberg, Landkreis",
+  "einwohner": 144225,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.1007,
+  "lon": 11.8751,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 793
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 576
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 267
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 902
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1600
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

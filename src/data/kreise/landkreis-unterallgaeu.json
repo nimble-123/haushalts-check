@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-unterallgaeu",
+  "ags": "09778",
+  "land": "09",
+  "name": "Landkreis Unterallgäu",
+  "amtlich": "Unterallgäu, Landkreis",
+  "einwohner": 147255,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.0259,
+  "lon": 10.3946,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 975
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 557
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 237
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1112
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1312
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

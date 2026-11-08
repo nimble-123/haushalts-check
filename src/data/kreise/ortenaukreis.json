@@ -1,0 +1,44 @@
+{
+  "slug": "ortenaukreis",
+  "ags": "08317",
+  "land": "08",
+  "name": "Ortenaukreis",
+  "amtlich": "Ortenaukreis, Landkreis",
+  "einwohner": 444858,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.4456,
+  "lon": 7.9534,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1251
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 613
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1127
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 742
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1374
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

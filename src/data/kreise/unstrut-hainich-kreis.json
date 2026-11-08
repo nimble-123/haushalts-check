@@ -1,0 +1,44 @@
+{
+  "slug": "unstrut-hainich-kreis",
+  "ags": "16064",
+  "land": "16",
+  "name": "Unstrut-Hainich-Kreis",
+  "amtlich": "Unstrut-Hainich-Kreis, Landkreis",
+  "einwohner": 94613,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.1792,
+  "lon": 10.5403,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1047
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 396
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1077
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 538
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 988
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

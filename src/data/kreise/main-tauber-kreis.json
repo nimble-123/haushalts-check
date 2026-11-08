@@ -1,0 +1,44 @@
+{
+  "slug": "main-tauber-kreis",
+  "ags": "08128",
+  "land": "08",
+  "name": "Main-Tauber-Kreis",
+  "amtlich": "Main-Tauber-Kreis, Landkreis",
+  "einwohner": 133169,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.5844,
+  "lon": 9.6909,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1235
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 633
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 840
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 935
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1425
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

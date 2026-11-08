@@ -1,0 +1,44 @@
+{
+  "slug": "wetteraukreis",
+  "ags": "06440",
+  "land": "06",
+  "name": "Wetteraukreis",
+  "amtlich": "Wetteraukreis, Landkreis",
+  "einwohner": 311593,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.3263,
+  "lon": 8.8359,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1295
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 772
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 828
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 846
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 947
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-heilbronn",
+  "ags": "08125",
+  "land": "08",
+  "name": "Landkreis Heilbronn",
+  "amtlich": "Heilbronn, Landkreis",
+  "einwohner": 353877,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.1619,
+  "lon": 9.1834,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1379
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 710
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 727
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 801
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1327
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

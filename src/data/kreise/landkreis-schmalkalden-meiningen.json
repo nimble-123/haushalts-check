@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-schmalkalden-meiningen",
+  "ags": "16066",
+  "land": "16",
+  "name": "Landkreis Schmalkalden-Meiningen",
+  "amtlich": "Schmalkalden-Meiningen, Landkreis",
+  "einwohner": 120214,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.6492,
+  "lon": 10.4388,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1045
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 449
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 943
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 768
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1168
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-schaumburg",
+  "ags": "03257",
+  "land": "03",
+  "name": "Landkreis Schaumburg",
+  "amtlich": "Schaumburg, Landkreis",
+  "einwohner": 156841,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.2907,
+  "lon": 9.1956,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1370
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 666
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1796
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 800
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 965
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

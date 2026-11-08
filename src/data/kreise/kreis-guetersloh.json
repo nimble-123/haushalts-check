@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-guetersloh",
+  "ags": "05754",
+  "land": "05",
+  "name": "Kreis Gütersloh",
+  "amtlich": "Gütersloh, Kreis",
+  "einwohner": 363982,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.9226,
+  "lon": 8.3687,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1062
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 672
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1061
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 922
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1621
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

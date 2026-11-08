@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-olpe",
+  "ags": "05966",
+  "land": "05",
+  "name": "Kreis Olpe",
+  "amtlich": "Olpe, Kreis",
+  "einwohner": 132346,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.0734,
+  "lon": 7.9327,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 925
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 677
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 602
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 627
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1729
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

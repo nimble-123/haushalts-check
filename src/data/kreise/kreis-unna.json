@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-unna",
+  "ags": "05978",
+  "land": "05",
+  "name": "Kreis Unna",
+  "amtlich": "Unna, Kreis",
+  "einwohner": 393784,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.5766,
+  "lon": 7.6156,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1103
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 749
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 958
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 533
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1689
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-kitzingen",
+  "ags": "09675",
+  "land": "09",
+  "name": "Landkreis Kitzingen",
+  "amtlich": "Kitzingen, Landkreis",
+  "einwohner": 91287,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.7567,
+  "lon": 10.2146,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 987
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 653
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 289
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1189
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1530
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

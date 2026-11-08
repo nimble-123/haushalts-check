@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-giessen",
+  "ags": "06531",
+  "land": "06",
+  "name": "Landkreis Gießen",
+  "amtlich": "Gießen, Landkreis",
+  "einwohner": 268418,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.577,
+  "lon": 8.737,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1226
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 526
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1076
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 627
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1145
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

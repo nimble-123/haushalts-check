@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-miltenberg",
+  "ags": "09676",
+  "land": "09",
+  "name": "Landkreis Miltenberg",
+  "amtlich": "Miltenberg, Landkreis",
+  "einwohner": 127547,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.7963,
+  "lon": 9.2075,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1060
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 636
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 369
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 822
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1135
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

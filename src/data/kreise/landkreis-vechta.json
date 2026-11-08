@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-vechta",
+  "ags": "03460",
+  "land": "03",
+  "name": "Landkreis Vechta",
+  "amtlich": "Vechta, Landkreis",
+  "einwohner": 146539,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.6668,
+  "lon": 8.2323,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 746
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 641
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1071
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 979
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1118
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

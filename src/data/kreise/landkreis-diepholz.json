@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-diepholz",
+  "ags": "03251",
+  "land": "03",
+  "name": "Landkreis Diepholz",
+  "amtlich": "Diepholz, Landkreis",
+  "einwohner": 221202,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.8158,
+  "lon": 8.719,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1126
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 622
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1235
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 630
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 809
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

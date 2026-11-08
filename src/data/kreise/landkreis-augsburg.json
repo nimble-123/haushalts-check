@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-augsburg",
+  "ags": "09772",
+  "land": "09",
+  "name": "Landkreis Augsburg",
+  "amtlich": "Augsburg, Landkreis",
+  "einwohner": 262811,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.3507,
+  "lon": 10.7979,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 896
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 512
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 321
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 828
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1310
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

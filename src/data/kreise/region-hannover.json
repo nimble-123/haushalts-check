@@ -1,0 +1,44 @@
+{
+  "slug": "region-hannover",
+  "ags": "03241",
+  "land": "03",
+  "name": "Region Hannover",
+  "amtlich": "Region Hannover, Landkreis",
+  "einwohner": 1140888,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.3838,
+  "lon": 9.7215,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1452
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 662
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1589
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 767
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2070
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

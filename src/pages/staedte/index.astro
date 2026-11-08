@@ -1,21 +1,22 @@
 ---
-import { LAENDER, STAEDTE } from '../../data';
+import { KREISE, LAENDER, STAEDTE } from '../../data';
 import Base from '../../layouts/Base.astro';
 
-const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.land === l.code) })).filter(
-  (g) => g.staedte.length,
-);
+const gruppen = LAENDER.map((l) => ({
+  land: l,
+  orte: [...STAEDTE, ...KREISE].filter((s) => s.land === l.code),
+})).filter((g) => g.orte.length);
 ---
-<Base title="Alle kreisfreien Städte | Haushalts-Check" description={`Haushalts-Check für alle ${STAEDTE.length} kreisfreien Städte in Deutschland: wie viel deiner Lohnsteuer an deine Stadt, dein Land und den Bund geht.`}>
+<Base title="Alle Städte und Landkreise | Haushalts-Check" description={`Haushalts-Check für alle ${STAEDTE.length} kreisfreien Städte und ${KREISE.length} Landkreise in Deutschland.`}>
   <div class="page">
-    <h1>Alle {STAEDTE.length} kreisfreien Städte</h1>
-    <p class="prose intro">Wähl deine Stadt. Für Landkreise und kreisangehörige Gemeinden gibt es noch keine eigene Seite; dort passt die Stadt deines Landes als Näherung.</p>
+    <h1>Alle Städte und Landkreise</h1>
+    <p class="prose intro">Wähl deine kreisfreie Stadt oder deinen Landkreis. Für einzelne Gemeinden im Kreis gibt es keine eigene Seite; dort passt der Landkreis.</p>
     <div class="cols">
       {gruppen.map((g) => (
         <section>
           <h2>{g.land.name}</h2>
           <ul>
-            {g.staedte.map((s) => <li><a href={`/stadt/${s.slug}/`}>{s.name}</a></li>)}
+            {g.orte.map((s) => <li><a href={`/stadt/${s.slug}/`}>{s.name}</a></li>)}
           </ul>
         </section>
       ))}

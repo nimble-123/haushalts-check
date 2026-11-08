@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-holzminden",
+  "ags": "03255",
+  "land": "03",
+  "name": "Landkreis Holzminden",
+  "amtlich": "Holzminden, Landkreis",
+  "einwohner": 65581,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.8752,
+  "lon": 9.5362,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1242
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 553
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 2162
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1019
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 798
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

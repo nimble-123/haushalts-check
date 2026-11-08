@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-aschaffenburg",
+  "ags": "09671",
+  "land": "09",
+  "name": "Landkreis Aschaffenburg",
+  "amtlich": "Aschaffenburg, Landkreis",
+  "einwohner": 170945,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.013,
+  "lon": 9.1555,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 983
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 622
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 303
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 751
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1434
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

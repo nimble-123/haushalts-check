@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-traunstein",
+  "ags": "09189",
+  "land": "09",
+  "name": "Landkreis Traunstein",
+  "amtlich": "Traunstein, Landkreis",
+  "einwohner": 175144,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.9088,
+  "lon": 12.5969,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 965
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 672
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 328
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1095
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1403
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

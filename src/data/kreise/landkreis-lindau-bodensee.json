@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-lindau-bodensee",
+  "ags": "09776",
+  "land": "09",
+  "name": "Landkreis Lindau (Bodensee)",
+  "amtlich": "Lindau (Bodensee), Landkreis",
+  "einwohner": 82411,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.583,
+  "lon": 9.7959,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 990
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 737
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 375
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 826
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1177
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-kelheim",
+  "ags": "09273",
+  "land": "09",
+  "name": "Landkreis Kelheim",
+  "amtlich": "Kelheim, Landkreis",
+  "einwohner": 126037,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.8261,
+  "lon": 11.866,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 898
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 494
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 275
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 919
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1293
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

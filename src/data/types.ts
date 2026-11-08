@@ -59,6 +59,8 @@ export interface Stadt {
   einwohner: number;
   /** Berlin, Hamburg, Bremen, Bremerhaven: in der Finanzstatistik nur gemeinsam mit ihrem Land ausgewiesen */
   stadtstaat: boolean;
+  /** Landkreis: Zahlen gelten für Kreis und kreisangehörige Gemeinden zusammen */
+  kreis?: boolean;
   /** Geografischer Mittelpunkt (Gemeindeverzeichnis) */
   lat?: number;
   lon?: number;

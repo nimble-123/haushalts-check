@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-maerkisch-oderland",
+  "ags": "12064",
+  "land": "12",
+  "name": "Landkreis Märkisch-Oderland",
+  "amtlich": "Märkisch-Oderland, Landkreis",
+  "einwohner": 197817,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.5662,
+  "lon": 13.9304,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1182
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 518
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1012
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 690
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1308
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

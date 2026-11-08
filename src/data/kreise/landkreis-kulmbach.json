@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-kulmbach",
+  "ags": "09477",
+  "land": "09",
+  "name": "Landkreis Kulmbach",
+  "amtlich": "Kulmbach, Landkreis",
+  "einwohner": 71518,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.0996,
+  "lon": 11.4845,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 892
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 636
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 320
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 815
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1398
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

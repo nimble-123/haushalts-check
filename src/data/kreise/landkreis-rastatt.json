@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-rastatt",
+  "ags": "08216",
+  "land": "08",
+  "name": "Landkreis Rastatt",
+  "amtlich": "Rastatt, Landkreis",
+  "einwohner": 230737,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.8039,
+  "lon": 8.218,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1339
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 694
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 810
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 598
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1372
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

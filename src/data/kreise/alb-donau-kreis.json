@@ -1,0 +1,44 @@
+{
+  "slug": "alb-donau-kreis",
+  "ags": "08425",
+  "land": "08",
+  "name": "Alb-Donau-Kreis",
+  "amtlich": "Alb-Donau-Kreis, Landkreis",
+  "einwohner": 202354,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.3859,
+  "lon": 9.8595,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1263
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 701
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 730
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 910
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1342
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

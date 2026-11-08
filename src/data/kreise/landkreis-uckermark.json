@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-uckermark",
+  "ags": "12073",
+  "land": "12",
+  "name": "Landkreis Uckermark",
+  "amtlich": "Uckermark, Landkreis",
+  "einwohner": 117432,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.163,
+  "lon": 13.9597,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1423
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 779
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 2148
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 523
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1610
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

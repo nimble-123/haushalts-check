@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-straubing-bogen",
+  "ags": "09278",
+  "land": "09",
+  "name": "Landkreis Straubing-Bogen",
+  "amtlich": "Straubing-Bogen, Landkreis",
+  "einwohner": 103041,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.9011,
+  "lon": 12.5892,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1101
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 471
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 247
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1210
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1169
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

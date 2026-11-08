@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-hildesheim",
+  "ags": "03254",
+  "land": "03",
+  "name": "Landkreis Hildesheim",
+  "amtlich": "Hildesheim, Landkreis",
+  "einwohner": 267506,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.1269,
+  "lon": 9.9304,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1111
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 600
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1561
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 833
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1653
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-kronach",
+  "ags": "09476",
+  "land": "09",
+  "name": "Landkreis Kronach",
+  "amtlich": "Kronach, Landkreis",
+  "einwohner": 64545,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.2891,
+  "lon": 11.3384,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 756
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 626
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 254
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1275
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1531
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

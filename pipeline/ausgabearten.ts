@@ -6,119 +6,20 @@
 //
 // Schritt 1: Rohdaten nach pipeline/quellen/71717-Z-05.csv laden (nur, wenn noch nicht vorhanden).
 // Schritt 2: Je Stadt das neueste Jahr wählen, das für die meisten Städte vollständig ist, und € je Einwohner schreiben.
-//
-// API laut GENESIS-Webservices-Doku (Destatis) und POST-Beispielen von 05/2025: nur POST, Zugangsdaten im
-// HTTP-Header, Parameter als application/x-www-form-urlencoded. ffcsv kommt als ZIP mit genau einer CSV im
-// neuen Flatfile-Format (eine Zeile je Wert: time, <n>_variable_attribute_code, value, value_unit,
-// value_variable_label, value_q). quality=on liefert value_q; „p“ = vorläufige Zahl.
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Stadt } from '../src/data/types.ts';
 import { alsText, felder, QUELLEN, ROOT, schreibeJson, zahl, zuAgs } from './helfer.ts';
+import { ladeTabelle } from './regio.ts';
 
 const ROH = join(QUELLEN, '71717-Z-05.csv');
 const STAEDTE = join(ROOT, 'src', 'data', 'staedte');
-// Die Tabelle hat Gemeinde-Tiefe und ist für den direkten Abruf zu groß (Code 98), auch mit Regionalfilter.
-// Deshalb als Hintergrund-Auftrag (job=true): Auftrag anlegen, auf das Ergebnis warten, per resultfile abholen.
-const AB_JAHR = '2022';
-const REST = 'https://www.regionalstatistik.de/genesisws/rest/2020';
-const WARTEN_MS = 15_000,
-  MAX_MS = 20 * 60_000;
 const QUELLE = {
   label: 'Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05',
   url: 'https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05',
 };
 
-// ── Schritt 1: Abruf ────────────────────────────────────────────────────────────────────────────
-
-async function post(pfad: string, params: Record<string, string>, user: string, pass: string) {
-  const res = await fetch(`${REST}/${pfad}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded', username: user, password: pass },
-    body: new URLSearchParams({ language: 'de', ...params }),
-  });
-  // Fehlerseiten (5xx, Proxy) nie als Rohdaten behandeln
-  if (!res.ok) throw new Error(`HTTP ${res.status} bei ${pfad}`);
-  return { res, buf: Buffer.from(await res.arrayBuffer()) };
-}
-interface Status {
-  Code?: string | number;
-  Content?: string;
-}
-const statusVon = (text: string): Status => {
-  try {
-    return JSON.parse(text).Status ?? {};
-  } catch {
-    return {};
-  }
-};
-
-async function lade() {
-  const { REGIO_USER: user, REGIO_PASS: pass = '' } = process.env;
-  if (!user || !pass) {
-    throw new Error(
-      'REGIO_USER und REGIO_PASS fehlen (Aufträge mit job=true gehen nicht mit Token). Siehe Kopf dieser Datei.',
-    );
-  }
-  // 1. Auftrag anlegen
-  const { buf } = await post(
-    'data/tablefile',
-    {
-      name: '71717-Z-05',
-      area: 'all',
-      startyear: AB_JAHR,
-      format: 'ffcsv',
-      quality: 'on',
-      job: 'true',
-    },
-    user,
-    pass,
-  );
-  const st = statusVon(alsText(buf));
-  const ergebnis = /(71717-Z-05_\d+)/.exec(st.Content ?? '')?.[1];
-  if (!ergebnis) {
-    throw new Error(`Auftrag nicht angelegt: Code ${st.Code}: ${st.Content}`);
-  }
-  console.log(`Auftrag angelegt, Ergebnis heißt ${ergebnis}. Warte …`);
-
-  // 2. Warten, bis resultfile Daten statt einer Fehlermeldung liefert
-  const start = Date.now();
-  for (;;) {
-    await new Promise((r) => setTimeout(r, WARTEN_MS));
-    const { buf: rb } = await post(
-      'data/resultfile',
-      { name: ergebnis, area: 'Meine', format: 'ffcsv', compress: 'false' },
-      user,
-      pass,
-    );
-    const text = alsText(rb);
-    // Echte Daten erkennen: CSV im Flatfile-Format beginnt mit der Spalte statistics_code
-    if (text.startsWith('statistics_code;')) {
-      mkdirSync(QUELLEN, { recursive: true });
-      writeFileSync(ROH, text);
-      console.log(
-        `Gespeichert: ${ROH} (${text.length.toLocaleString('de-DE')} Zeichen) nach ${Math.round((Date.now() - start) / 1000)} s`,
-      );
-      return;
-    }
-    const { buf: jb } = await post('catalogue/jobs', { selection: ergebnis, pagelength: '5' }, user, pass);
-    let zustand = '?';
-    try {
-      zustand = JSON.parse(alsText(jb)).List?.[0]?.State ?? '?';
-    } catch {}
-    if (/fehler|abgebrochen/i.test(zustand)) {
-      throw new Error(`Auftrag ${ergebnis}: ${zustand}`);
-    }
-    if (Date.now() - start > MAX_MS) {
-      throw new Error(
-        `Nach 20 Minuten noch kein Ergebnis (Auftrag: ${zustand}). Später erneut starten; das Ergebnis ${ergebnis} bleibt im Konto unter „Meine“.`,
-      );
-    }
-    console.log(`… Auftrag ${zustand} (${Math.round((Date.now() - start) / 1000)} s)`);
-  }
-}
-
-if (!existsSync(ROH)) await lade();
+if (!existsSync(ROH)) await ladeTabelle('71717-Z-05', ROH, '2022');
 
 // ── Schritt 2: Einlesen ─────────────────────────────────────────────────────────────────────────
 

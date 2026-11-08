@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-neuwied",
+  "ags": "07138",
+  "land": "07",
+  "name": "Landkreis Neuwied",
+  "amtlich": "Neuwied, Landkreis",
+  "einwohner": 189061,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.523,
+  "lon": 7.439,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 899
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 557
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1174
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 480
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1859
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

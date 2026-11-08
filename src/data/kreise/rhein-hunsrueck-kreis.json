@@ -1,0 +1,44 @@
+{
+  "slug": "rhein-hunsrueck-kreis",
+  "ags": "07140",
+  "land": "07",
+  "name": "Rhein-Hunsrück-Kreis",
+  "amtlich": "Rhein-Hunsrück-Kreis, Landkreis",
+  "einwohner": 106705,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.0619,
+  "lon": 7.5167,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 912
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 501
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 976
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 678
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1276
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

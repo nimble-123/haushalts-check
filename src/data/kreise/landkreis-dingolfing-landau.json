@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-dingolfing-landau",
+  "ags": "09279",
+  "land": "09",
+  "name": "Landkreis Dingolfing-Landau",
+  "amtlich": "Dingolfing-Landau, Landkreis",
+  "einwohner": 101035,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.6418,
+  "lon": 12.5978,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 993
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 668
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 266
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1566
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1322
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

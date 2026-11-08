@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-oberspreewald-lausitz",
+  "ags": "12066",
+  "land": "12",
+  "name": "Landkreis Oberspreewald-Lausitz",
+  "amtlich": "Oberspreewald-Lausitz, Landkreis",
+  "einwohner": 107793,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.5993,
+  "lon": 13.9369,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1351
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 518
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1236
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 710
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1313
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

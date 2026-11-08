@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-lichtenfels",
+  "ags": "09478",
+  "land": "09",
+  "name": "Landkreis Lichtenfels",
+  "amtlich": "Lichtenfels, Landkreis",
+  "einwohner": 67379,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.1298,
+  "lon": 11.1086,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 875
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 544
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 324
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1091
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1324
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

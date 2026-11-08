@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-recklinghausen",
+  "ags": "05562",
+  "land": "05",
+  "name": "Kreis Recklinghausen",
+  "amtlich": "Recklinghausen, Kreis",
+  "einwohner": 621305,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.6234,
+  "lon": 7.1588,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1215
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 591
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1776
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 389
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1803
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

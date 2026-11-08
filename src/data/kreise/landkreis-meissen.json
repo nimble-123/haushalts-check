@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-meissen",
+  "ags": "14627",
+  "land": "14",
+  "name": "Landkreis Meißen",
+  "amtlich": "Meißen, Landkreis",
+  "einwohner": 239221,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.203,
+  "lon": 13.501,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1047
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 526
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1034
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 617
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1146
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

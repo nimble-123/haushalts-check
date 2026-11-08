@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-schwandorf",
+  "ags": "09376",
+  "land": "09",
+  "name": "Landkreis Schwandorf",
+  "amtlich": "Schwandorf, Landkreis",
+  "einwohner": 149312,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.3302,
+  "lon": 12.1889,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 877
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 562
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 375
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 903
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1305
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

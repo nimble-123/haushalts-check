@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-breisgau-hochschwarzwald",
+  "ags": "08315",
+  "land": "08",
+  "name": "Landkreis Breisgau-Hochschwarzwald",
+  "amtlich": "Breisgau-Hochschwarzwald, Landkreis",
+  "einwohner": 272558,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.9375,
+  "lon": 7.8019,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1300
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 807
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 909
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 648
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1223
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

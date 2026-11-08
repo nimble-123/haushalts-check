@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-marburg-biedenkopf",
+  "ags": "06534",
+  "land": "06",
+  "name": "Landkreis Marburg-Biedenkopf",
+  "amtlich": "Marburg-Biedenkopf, Landkreis",
+  "einwohner": 242805,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.8221,
+  "lon": 8.756,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1215
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 691
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1213
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 618
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1313
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

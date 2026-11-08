@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-mecklenburgische-seenplatte",
+  "ags": "13071",
+  "land": "13",
+  "name": "Landkreis Mecklenburgische Seenplatte",
+  "amtlich": "Mecklenburgische Seenplatte, Landkreis",
+  "einwohner": 246318,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.5536,
+  "lon": 13.049,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 887
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 737
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1248
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 548
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1852
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

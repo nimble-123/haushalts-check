@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-vulkaneifel",
+  "ags": "07233",
+  "land": "07",
+  "name": "Landkreis Vulkaneifel",
+  "amtlich": "Vulkaneifel, Landkreis",
+  "einwohner": 59313,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.2396,
+  "lon": 6.7521,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1029
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 680
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1388
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 558
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1397
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

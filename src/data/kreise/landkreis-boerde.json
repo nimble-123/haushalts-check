@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-boerde",
+  "ags": "15083",
+  "land": "15",
+  "name": "Landkreis Börde",
+  "amtlich": "Börde, Landkreis",
+  "einwohner": 167924,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.1945,
+  "lon": 11.3813,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1321
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 570
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 565
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 536
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1038
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

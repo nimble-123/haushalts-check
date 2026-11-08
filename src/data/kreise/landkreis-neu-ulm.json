@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-neu-ulm",
+  "ags": "09775",
+  "land": "09",
+  "name": "Landkreis Neu-Ulm",
+  "amtlich": "Neu-Ulm, Landkreis",
+  "einwohner": 183595,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.3318,
+  "lon": 10.068,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 964
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 586
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 270
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 822
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1301
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

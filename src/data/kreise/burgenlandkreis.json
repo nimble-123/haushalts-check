@@ -1,0 +1,44 @@
+{
+  "slug": "burgenlandkreis",
+  "ags": "15084",
+  "land": "15",
+  "name": "Burgenlandkreis",
+  "amtlich": "Burgenlandkreis, Landkreis",
+  "einwohner": 173684,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.1463,
+  "lon": 11.9439,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1346
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 536
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 675
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 575
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1196
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

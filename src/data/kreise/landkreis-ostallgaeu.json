@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ostallgaeu",
+  "ags": "09777",
+  "land": "09",
+  "name": "Landkreis Ostallgäu",
+  "amtlich": "Ostallgäu, Landkreis",
+  "einwohner": 142047,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.7893,
+  "lon": 10.6382,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1053
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 589
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 269
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1043
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1358
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -61,6 +61,17 @@ test('Stadt außerhalb der Stadtstaaten vergleicht mit den kreisfreien Städten'
   await expect(page.locator('#arten')).toContainText('dein Gemeindeanteil');
 });
 
+test('Landkreis: Kreis und Gemeinden zusammen, Vergleich mit Landkreisen', async ({ page }) => {
+  await page.goto('/stadt/landkreis-wesermarsch/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/im Landkreis Wesermarsch\?/);
+  await expect(page.locator('#result')).toContainText('an die Gemeinden im Landkreis Wesermarsch');
+  await expect(
+    page.getByRole('heading', { name: 'Was der Landkreis Wesermarsch und seine Gemeinden tatsächlich ausgeben' }),
+  ).toBeVisible();
+  await expect(page.locator('.arten-row')).toHaveCount(5);
+  await expect(page.locator('#arten')).toContainText('Landkreise');
+});
+
 test('Bundeshaushalt: Umschalten zwischen Fluss und Fläche', async ({ page }) => {
   await expect(page.locator('#ansicht-fluss')).toBeVisible();
   await page.getByRole('button', { name: 'Als Fläche' }).click();

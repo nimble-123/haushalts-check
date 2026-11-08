@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-aichach-friedberg",
+  "ags": "09771",
+  "land": "09",
+  "name": "Landkreis Aichach-Friedberg",
+  "amtlich": "Aichach-Friedberg, Landkreis",
+  "einwohner": 136803,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.394,
+  "lon": 11.0355,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 878
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 461
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 268
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 927
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1279
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

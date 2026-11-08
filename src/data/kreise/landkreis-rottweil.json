@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-rottweil",
+  "ags": "08325",
+  "land": "08",
+  "name": "Landkreis Rottweil",
+  "amtlich": "Rottweil, Landkreis",
+  "einwohner": 140237,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.2378,
+  "lon": 8.5414,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1356
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 770
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 493
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1154
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1487
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

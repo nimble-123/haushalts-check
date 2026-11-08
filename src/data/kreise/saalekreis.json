@@ -1,0 +1,44 @@
+{
+  "slug": "saalekreis",
+  "ags": "15088",
+  "land": "15",
+  "name": "Saalekreis",
+  "amtlich": "Saalekreis, Landkreis",
+  "einwohner": 182451,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.4102,
+  "lon": 11.9323,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1213
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 627
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1021
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 821
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1363
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

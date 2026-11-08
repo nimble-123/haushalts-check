@@ -1,0 +1,44 @@
+{
+  "slug": "rheingau-taunus-kreis",
+  "ags": "06439",
+  "land": "06",
+  "name": "Rheingau-Taunus-Kreis",
+  "amtlich": "Rheingau-Taunus-Kreis, Landkreis",
+  "einwohner": 185651,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.1262,
+  "lon": 8.1312,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1132
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 826
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1157
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 471
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1096
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

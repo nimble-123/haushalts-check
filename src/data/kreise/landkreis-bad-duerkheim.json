@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-bad-duerkheim",
+  "ags": "07332",
+  "land": "07",
+  "name": "Landkreis Bad Dürkheim",
+  "amtlich": "Bad Dürkheim, Landkreis",
+  "einwohner": 134329,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.4708,
+  "lon": 8.1751,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1205
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 475
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 954
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 480
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1321
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

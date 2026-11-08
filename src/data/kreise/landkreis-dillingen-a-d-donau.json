@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-dillingen-a-d-donau",
+  "ags": "09773",
+  "land": "09",
+  "name": "Landkreis Dillingen a.d.Donau",
+  "amtlich": "Dillingen a.d.Donau, Landkreis",
+  "einwohner": 98899,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.5874,
+  "lon": 10.5103,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 943
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 524
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 268
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 928
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1377
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

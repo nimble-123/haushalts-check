@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-wesel",
+  "ags": "05170",
+  "land": "05",
+  "name": "Kreis Wesel",
+  "amtlich": "Wesel, Kreis",
+  "einwohner": 457918,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.562,
+  "lon": 6.6282,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1073
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 705
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 888
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 627
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1624
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

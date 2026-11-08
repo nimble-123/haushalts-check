@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-nordwestmecklenburg",
+  "ags": "13074",
+  "land": "13",
+  "name": "Landkreis Nordwestmecklenburg",
+  "amtlich": "Nordwestmecklenburg, Landkreis",
+  "einwohner": 156692,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.8449,
+  "lon": 11.3032,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 985
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 713
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1081
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 834
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1495
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

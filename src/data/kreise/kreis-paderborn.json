@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-paderborn",
+  "ags": "05774",
+  "land": "05",
+  "name": "Kreis Paderborn",
+  "amtlich": "Paderborn, Kreis",
+  "einwohner": 315912,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.7056,
+  "lon": 8.7165,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1214
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 424
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 768
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1142
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1766
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}
