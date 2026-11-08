@@ -40,6 +40,52 @@ test('Stadtwahl öffnet die Stadtseite und die Startseite merkt sie sich', async
   await expect(page).toHaveURL(/\/stadt\/muenchen\/$/);
 });
 
+// Ohne Überblendung: Die Tests wechseln die Seite schneller, als der Seitenwechsel dauert
+test.describe('Ortssuche', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('Gemeinde führt zum Landkreis', async ({ page }) => {
+    const f = fehlerSammeln(page);
+    await page.goto('/');
+    const feld = page.locator('#ort-suche');
+    await feld.fill('Nordenham');
+    const treffer = page.locator('#ort-treffer li').first();
+    await expect(treffer).toContainText('Nordenham');
+    await expect(treffer).toContainText('Landkreis Wesermarsch, Niedersachsen');
+    await expect(feld).toHaveAttribute('aria-expanded', 'true');
+    await treffer.click();
+    await expect(page).toHaveURL(/\/stadt\/landkreis-wesermarsch\/$/);
+    await expect(page.locator('#stadt')).toHaveValue('landkreis-wesermarsch');
+    f.pruefe();
+  });
+
+  test('Umschreibung findet den Ort, Auswahl per Tastatur', async ({ page }) => {
+    const f = fehlerSammeln(page);
+    await page.goto('/');
+    await page.locator('#ort-suche').fill('Goettingen');
+    await expect(page.locator('#ort-treffer li').first()).toContainText('Göttingen');
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('#ort-treffer li').first()).toHaveAttribute('aria-selected', 'true');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/stadt\/landkreis-goettingen\/$/);
+    f.pruefe();
+  });
+
+  test('ohne Treffer ein Hinweis, Escape schließt', async ({ page }) => {
+    await page.goto('/');
+    const feld = page.locator('#ort-suche');
+    await feld.fill('Xyzqw');
+    await expect(page.locator('#ort-status')).toContainText('Kein Ort gefunden');
+    await feld.fill('Kiel');
+    await expect(page.locator('#ort-treffer')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#ort-treffer')).toBeHidden();
+    await expect(feld).toHaveAttribute('aria-expanded', 'false');
+    const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
+    expect(axe.violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+  });
+});
+
 test('„Eingaben vergessen“ setzt alles zurück', async ({ page }) => {
   await page.goto('/');
   await page.locator('#stadt').selectOption('koeln');

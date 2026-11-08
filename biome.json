@@ -6,7 +6,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!!**/dist", "!src/styles/tokens.css", "!design-system/components/**/*.html"]
+    "includes": [
+      "**",
+      "!!**/dist",
+      "!src/styles/tokens.css",
+      "!public/orte.json",
+      "!design-system/components/**/*.html"
+    ]
   },
   "formatter": {
     "enabled": true,
