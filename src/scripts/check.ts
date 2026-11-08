@@ -107,6 +107,7 @@ function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
   const fig = (v: number, l: string, mark = false) =>
     `<div class="rs-kennzahl"><b data-v="${v}"${mark ? ' class="rs-mark"' : ''}>${fmt(v)}</b><span>${esc(l)}</span></div>`;
   const k = r.konsum;
+  const nettoAnteil = `${r.brutto ? pct(verfuegbar(r) / r.brutto) : '–'} vom Brutto`;
   const pk = holen('pk');
   zaehlen(
     pk,
@@ -114,15 +115,17 @@ function kennzahlen(r: Ergebnis, fmt: (v: number) => string) {
       pk.innerHTML =
         fig(
           abg,
-          `deine Abgaben${k ? ' mit Konsumsteuern ≈' : ''}, ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`,
+          `deine Abgaben${k ? ' mit Konsumsteuern ≈' : ','} ${r.brutto ? pct(abg / r.brutto) : '–'} vom Brutto`,
         ) +
         fig(r.lohnsteuer + r.soli, 'Lohnsteuer und Soli') +
         (k
-          ? fig(k.summe, `Konsumsteuern ≈, ${r.netto ? pct(k.summe / r.netto) : '–'} vom Netto`)
+          ? fig(k.summe, `Konsumsteuern ≈ ${r.netto ? pct(k.summe / r.netto) : '–'} vom Netto`)
           : fig(summeSV(r), 'Sozialabgaben, dein Anteil')) +
         fig(
           verfuegbar(r),
-          k ? 'dein Netto nach Konsumsteuern ≈' : r.pkv ? 'dein Netto nach PKV-Beitrag' : 'dein Netto (Näherung)',
+          k
+            ? `dein Netto nach Konsumsteuern ≈ ${nettoAnteil}`
+            : `${r.pkv ? 'dein Netto nach PKV-Beitrag' : 'dein Netto (Näherung)'}, ${nettoAnteil}`,
           true,
         );
     },
