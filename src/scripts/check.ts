@@ -550,7 +550,9 @@ function schimmern() {
 function chartArten(r: Ergebnis, fmt: (v: number) => string) {
   const box = document.getElementById('arten');
   if (!box || !seite.arten) return;
-  const anteil = seite.stadt.stadtstaat ? 0 : aufEbenen(r).gemeinde;
+  const ebenen = aufEbenen(r);
+  const stadtstaat = seite.stadt.stadtstaat;
+  const anteil = stadtstaat ? ebenen.land + ebenen.gemeinde : ebenen.gemeinde;
   const summe = seite.arten.posten.reduce((s, p) => s + p.proKopf, 0);
   const max = Math.max(...seite.arten.posten.map((p) => p.proKopf), ...seite.arten.schnitt.map((p) => p.proKopf));
   const de = (v: number) => v.toLocaleString('de-DE');
@@ -568,7 +570,7 @@ function chartArten(r: Ergebnis, fmt: (v: number) => string) {
     </div>`;
       })
       .join('') +
-    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(seite.stadt.name)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt aller ${seite.arten.anzahl} kreisfreien Städte</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>dein Gemeindeanteil ${zeitraum(ansicht.einheit)}</li></ul>`;
+    `<ul class="rs-legende"><li><span class="rs-farbe" style="background:${css('--ink')}"></span>${esc(seite.arten.traeger)}, € je Einwohner</li><li><span class="rs-farbe" style="width:3px;background:${css('--cat-sich')}"></span>Durchschnitt ${esc(seite.arten.vergleich)}</li><li><span class="rs-farbe" style="background:${css('--marker')}"></span>${stadtstaat ? 'dein Anteil an Land und Stadt' : 'dein Gemeindeanteil'} ${zeitraum(ansicht.einheit)}</li></ul>`;
 }
 
 // ---------- Kalender ----------

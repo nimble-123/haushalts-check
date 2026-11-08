@@ -39,6 +39,8 @@ export interface Land extends Ebene {
   slug: string;
   /** Kirchensteuersatz (0,08 in BW und Bayern, sonst 0,09) */
   kirchensteuer: 0.08 | 0.09;
+  /** Nur Stadtstaaten: Ausgaben nach Arten, Land und Stadt zusammen (Destatis 71711-08) */
+  ausgabearten?: { jahr: number; posten: { name: string; mio: number }[]; quellen: Quelle[] };
 }
 
 export interface Ausgabeart {

@@ -15,7 +15,7 @@ Statische Astro-Website (TypeScript, D3): Wohin fließt die Lohnsteuer einer Per
 - Biome sieht in `.astro` nur den Kopfbereich; Variablen aus dem Template gelten ihm als unbenutzt – deshalb dort keine Unused-Fixes.
 - `astro preview` läuft als Einzelinstanz je Projekt; ein zweiter Server braucht `--ignore-lock`.
 - Diagrammfarben sind paarweise auf Farbfehlsichtigkeit geprüft (dataviz-Validator, `--pairs all`, hell und dunkel). Neue oder geänderte Farben erneut prüfen, statt nach Gefühl zu wählen.
-- Stadtstaaten (Berlin, Hamburg, Bremen, Bremerhaven) stehen in der Finanzstatistik nur gemeinsam mit ihrem Land und haben keine Ausgabearten-Daten (Berlin und Hamburg: ein Haushalt; Bremen und Bremerhaven: eigene Haushalte); die Zweck-Aufteilung aller übrigen Städte ist eine gekennzeichnete Schätzung (≈).
+- Stadtstaaten (Berlin, Hamburg, Bremen, Bremerhaven) stehen in der Finanzstatistik nur gemeinsam mit ihrem Land (Berlin und Hamburg: ein Haushalt; Bremen und Bremerhaven: eigene Haushalte); ihre Ausgabearten kommen aus Destatis 71711-08, Land und Stadt zusammen, und sind nicht mit den übrigen Städten vergleichbar; die Zweck-Aufteilung aller übrigen Städte ist eine gekennzeichnete Schätzung (≈).
 - Ein erstes Vercel-Deployment eines neuen Projekts geht direkt in Produktion.
 
 ## Texte

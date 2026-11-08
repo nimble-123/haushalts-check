@@ -67,6 +67,25 @@ describe('Städte', () => {
   });
 });
 
+describe('Ausgabearten der Stadtstaaten (Destatis 71711-08)', () => {
+  const v = (slug: string) => ausgabeVergleich(STAEDTE.find((s) => s.slug === slug)!)!;
+  it('Berlin: Summe der Arten ergibt die bereinigten Ausgaben je Einwohner', () => {
+    const berlin = STAEDTE.find((s) => s.slug === 'berlin')!;
+    const summe = v('berlin').posten.reduce((x, p) => x + p.proKopf, 0);
+    expect(Math.abs(summe - (39_064 * 1e6) / berlin.einwohner)).toBeLessThan(5);
+  });
+  it('Bremen und Bremerhaven zeigen dasselbe Land Bremen', () => {
+    expect(v('bremerhaven').posten).toEqual(v('bremen').posten);
+    expect(v('bremerhaven').traeger).toBe('Land Bremen');
+  });
+  it('Vergleich nur unter den drei Stadtstaaten, der Schnitt liegt zwischen ihnen', () => {
+    const werte = ['berlin', 'hamburg', 'bremen'].map((s) => v(s).posten[0].proKopf);
+    expect(v('berlin').vergleich).toBe('der drei Stadtstaaten');
+    expect(v('berlin').schnitt[0].proKopf).toBeGreaterThanOrEqual(Math.min(...werte));
+    expect(v('berlin').schnitt[0].proKopf).toBeLessThanOrEqual(Math.max(...werte));
+  });
+});
+
 describe('Ausgabearten je Stadt (Regionaldatenbank)', () => {
   const mit = STAEDTE.filter((s) => s.ausgabearten);
   it('alle 102 Städte außerhalb der Stadtstaaten haben Daten, Stadtstaaten keine', () => {
