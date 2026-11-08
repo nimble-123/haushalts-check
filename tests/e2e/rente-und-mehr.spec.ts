@@ -54,13 +54,13 @@ test('Theme-Schalter wechselt das Design und merkt die Wahl', async ({ page }) =
 });
 
 test.describe('In meiner Nähe', () => {
-  test('mit Freigabe: wählt die nächste kreisfreie Stadt', async ({ page, context }) => {
+  test('mit Freigabe: wählt den Landkreis der Gemeinde am Standort', async ({ page, context }) => {
     await context.grantPermissions(['geolocation']);
     await context.setGeolocation({ latitude: 53.486, longitude: 8.484 }); // Nordenham
     await page.goto('/stadt/oldenburg/');
     await page.evaluate(() => localStorage.clear());
     await page.getByRole('button', { name: 'In meiner Nähe' }).click();
-    await expect(page).toHaveURL(/\/stadt\/bremerhaven\/$/);
+    await expect(page).toHaveURL(/\/stadt\/landkreis-wesermarsch\/$/);
   });
 
   test('ohne Freigabe: verständliche Meldung, Seite bleibt', async ({ page }) => {

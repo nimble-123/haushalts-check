@@ -15,7 +15,7 @@ import {
   type Zweck,
 } from '../lib/aufteilung';
 import { mitKonsum } from '../lib/konsum';
-import { naechsteStadt, type Ort } from '../lib/naehe';
+import { type LageDaten, naechsteStadt, type Ort, zielAmStandort } from '../lib/naehe';
 import { ergebnisSatz } from '../lib/satz';
 import type { SeitenDaten } from '../lib/seite';
 import {
@@ -1061,8 +1061,13 @@ function orten(orte: readonly Ort[], ids: string[], vonHand: boolean) {
   knopf.disabled = true;
   if (vonHand) status.textContent = 'Suche deinen Standort …';
   navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      const slug = naechsteStadt(orte, pos.coords.latitude, pos.coords.longitude);
+    async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      // Lieber ungenau als gar nicht: Ohne Gemeindeliste zählt die nächste Stadt oder Kreismitte
+      const slug = await fetch('/orte-lage.json')
+        .then((r) => (r.ok ? (r.json() as Promise<LageDaten>) : Promise.reject(new Error(String(r.status)))))
+        .then((d) => zielAmStandort(d, latitude, longitude))
+        .catch(() => naechsteStadt(orte, latitude, longitude));
       speichereStadt(slug);
       if (slug === seite.stadt.slug) {
         knopf.disabled = false;

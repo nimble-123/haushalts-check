@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { entfernungKm, naechsteStadt, type Ort } from './naehe';
+import { entfernungKm, type LageDaten, naechsteStadt, type Ort, zielAmStandort } from './naehe';
 
 const ordner = join(__dirname, '..', 'data', 'staedte');
 const orte: Ort[] = readdirSync(ordner).map((f) => {
@@ -27,5 +27,28 @@ describe('naechsteStadt (echte Koordinaten aller kreisfreien Städte)', () => {
     ['Berlin-Mitte', 52.52, 13.405, 'berlin'],
   ])('%s → %s', (_, lat, lon, slug) => {
     expect(naechsteStadt(orte, lat, lon)).toBe(slug);
+  });
+});
+
+describe('zielAmStandort (alle Gemeinden)', () => {
+  const lage: LageDaten = JSON.parse(readFileSync('public/orte-lage.json', 'utf8'));
+  it('kennt alle Gemeinden', () => {
+    expect(lage.orte.length).toBeGreaterThan(10_000);
+    expect(lage.orte.every(([lat, lon, r]) => lat > 47 && lat < 55.1 && lon > 5.8 && lon < 15.1 && r > 0)).toBe(true);
+  });
+  it.each([
+    ['Nordenham', 53.486, 8.484, 'landkreis-wesermarsch'],
+    ['Bremerhaven', 53.546, 8.576, 'bremerhaven'],
+    ['Oldenburg, Schlossplatz', 53.139, 8.214, 'oldenburg'],
+    ['Berlin-Mitte', 52.52, 13.405, 'berlin'],
+    ['Berlin-Spandau, am Stadtrand', 52.537, 13.2, 'berlin'],
+    ['Falkensee, gleich hinter Berlin', 52.56, 12.928, 'landkreis-havelland'],
+    ['Hamburg-Bergedorf', 53.488, 10.215, 'hamburg'],
+    ['Garmisch-Partenkirchen', 47.492, 11.095, 'landkreis-garmisch-partenkirchen'],
+    ['Hannover', 52.375, 9.732, 'region-hannover'],
+    ['Aachen', 50.776, 6.084, 'staedteregion-aachen'],
+    ['Schwanewede, neben Bremen', 53.233, 8.597, 'landkreis-osterholz'],
+  ])('%s', (_, lat, lon, slug) => {
+    expect(zielAmStandort(lage, lat, lon)).toBe(slug);
   });
 });

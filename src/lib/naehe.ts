@@ -10,6 +10,29 @@ export function entfernungKm(lat1: number, lon1: number, lat2: number, lon2: num
   return 2 * 6371 * Math.asin(Math.sqrt(a));
 }
 
+/** Inhalt von /orte-lage.json: je Gemeinde Mittelpunkt, Radius in km und Index des Ziels */
+export interface LageDaten {
+  ziele: string[];
+  orte: [lat: number, lon: number, radius: number, ziel: number][];
+}
+
+/**
+ * Stadt oder Landkreis am Standort: das Ziel der Gemeinde mit dem kleinsten Abstand zum Mittelpunkt, gemessen in ihrem
+ * Radius. Sonst gewänne am Stadtrand von Berlin die kleine Nachbargemeinde mit dem näheren Mittelpunkt.
+ */
+export function zielAmStandort(d: LageDaten, lat: number, lon: number) {
+  let best = d.orte[0];
+  let bestAbstand = Number.POSITIVE_INFINITY;
+  for (const o of d.orte) {
+    const abstand = entfernungKm(lat, lon, o[0], o[1]) / o[2];
+    if (abstand < bestAbstand) {
+      best = o;
+      bestAbstand = abstand;
+    }
+  }
+  return d.ziele[best[3]];
+}
+
 /** Slug der nächsten Stadt zu einem Standort */
 export function naechsteStadt(orte: readonly Ort[], lat: number, lon: number) {
   let best = orte[0];
