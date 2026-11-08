@@ -68,7 +68,9 @@ test('Konsumsteuern: Checkbox senkt das Netto, verteilt auf die Ebenen und wird 
 
   await page.locator('#konsum').check();
   await expect(page.locator('#anteil-lg')).toContainText('Konsumsteuern ≈');
-  await expect(netto).toContainText('nach Konsumsteuern');
+  await expect(netto).toContainText('nach Konsumsteuern ≈');
+  await expect(netto).toContainText('vom Brutto');
+  await expect(page.locator('#pk')).not.toContainText('≈,');
   // Die Kennzahl zählt zum neuen Betrag hoch: auf den Endstand warten
   await expect(netto.locator('b')).not.toHaveText(ohne ?? '');
   await expect(ergebnis(page)).toContainText('Konsumsteuern');
