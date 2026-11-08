@@ -104,5 +104,36 @@
       "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
     }
   ],
-  "hinweis": "Zwei-Städte-Staat: Bremen und Bremerhaven haben eigene Haushalte, die Statistik weist sie nur zusammen mit dem Land aus. Unterm Strich negativ und daher nicht gezeigt: Finanzausgleich an Kommunen (−4 Mio €)."
+  "hinweis": "Zwei-Städte-Staat: Bremen und Bremerhaven haben eigene Haushalte, die Statistik weist sie nur zusammen mit dem Land aus. Unterm Strich negativ und daher nicht gezeigt: Finanzausgleich an Kommunen (−4 Mio €).",
+  "ausgabearten": {
+    "jahr": 2022,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "mio": 2789
+      },
+      {
+        "name": "Laufender Sachaufwand",
+        "mio": 1956
+      },
+      {
+        "name": "Renten, Unterstützungen und Ähnliches",
+        "mio": 891
+      },
+      {
+        "name": "Sachinvestitionen",
+        "mio": 413
+      },
+      {
+        "name": "Übrige Ausgaben",
+        "mio": 2375
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-08",
+        "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+      }
+    ]
+  }
 }

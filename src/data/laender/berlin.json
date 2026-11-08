@@ -104,5 +104,36 @@
       "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
     }
   ],
-  "hinweis": "Stadtstaat: Land und Stadt haben einen gemeinsamen Haushalt. Unterm Strich negativ und daher nicht gezeigt: Finanzausgleich an Kommunen (−1 Mio €)."
+  "hinweis": "Stadtstaat: Land und Stadt haben einen gemeinsamen Haushalt. Unterm Strich negativ und daher nicht gezeigt: Finanzausgleich an Kommunen (−1 Mio €).",
+  "ausgabearten": {
+    "jahr": 2022,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "mio": 13764
+      },
+      {
+        "name": "Laufender Sachaufwand",
+        "mio": 13620
+      },
+      {
+        "name": "Renten, Unterstützungen und Ähnliches",
+        "mio": 3318
+      },
+      {
+        "name": "Sachinvestitionen",
+        "mio": 1875
+      },
+      {
+        "name": "Übrige Ausgaben",
+        "mio": 6487
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Destatis: Rechnungsergebnisse des Öffentlichen Gesamthaushalts 2022, Tabelle 71711-08",
+        "url": "https://www.destatis.de/DE/Themen/Staat/Oeffentliche-Finanzen/Ausgaben-Einnahmen/Publikationen/_publikationen-innen-ausgaben-einnahmen.html"
+      }
+    ]
+  }
 }

@@ -48,8 +48,36 @@ function stripLand(l: Land): Ebene {
   return { name, jahr, einheit, art, posten, quellen };
 }
 
-/** Echte Ausgabearten der Stadt plus Durchschnitt aller kreisfreien Städte desselben Jahres (€ je Einwohner, gewichtet). */
+/** Stadtstaaten: Land und Stadt zusammen, verglichen nur untereinander (€ je Einwohner, gewichtet). */
+function stadtstaatVergleich(stadt: Stadt) {
+  const land = landVon(stadt);
+  const a = land.ausgabearten;
+  if (!a) return null;
+  const einwohner = (code: string) => STAEDTE.filter((s) => s.land === code).reduce((x, s) => x + s.einwohner, 0);
+  const staaten = LAENDER.filter((l) => l.ausgabearten);
+  const ewAlle = staaten.reduce((x, l) => x + einwohner(l.code), 0);
+  const proKopf = (mio: number, ew: number) => Math.round((mio * 1e6) / ew);
+  return {
+    jahr: a.jahr,
+    vorlaeufig: false,
+    quellen: a.quellen,
+    posten: a.posten.map((p) => ({ name: p.name, proKopf: proKopf(p.mio, einwohner(land.code)) })),
+    schnitt: a.posten.map((p) => ({
+      name: p.name,
+      proKopf: proKopf(
+        staaten.reduce((x, l) => x + (l.ausgabearten!.posten.find((q) => q.name === p.name)?.mio ?? 0), 0),
+        ewAlle,
+      ),
+    })),
+    anzahl: staaten.length,
+    traeger: land.code === '04' ? 'Land Bremen' : stadt.name,
+    vergleich: 'der drei Stadtstaaten',
+  };
+}
+
+/** Echte Ausgabearten plus Durchschnitt der Vergleichsgruppe desselben Jahres (€ je Einwohner, gewichtet). */
 export function ausgabeVergleich(stadt: Stadt) {
+  if (stadt.stadtstaat) return stadtstaatVergleich(stadt);
   const a = stadt.ausgabearten;
   if (!a) return null;
   const gleiche = STAEDTE.filter((s) => s.ausgabearten?.jahr === a.jahr);
@@ -63,5 +91,11 @@ export function ausgabeVergleich(stadt: Stadt) {
       ) / ew,
     ),
   }));
-  return { ...a, schnitt, anzahl: gleiche.length };
+  return {
+    ...a,
+    schnitt,
+    anzahl: gleiche.length,
+    traeger: stadt.name,
+    vergleich: `aller ${gleiche.length} kreisfreien Städte`,
+  };
 }

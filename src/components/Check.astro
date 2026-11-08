@@ -156,17 +156,16 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben mit dem Anteil der 
       </div>
     </div>
 
-    {arten ? (
+    {arten && (
       <div class="figure">
-        <h3>Was {stadt.name} tatsächlich ausgibt</h3>
-        <p class="sub">Auszahlungen {arten.jahr}{arten.vorlaeufig ? ' (vorläufig)' : ''} nach Art, in € je Einwohner. Der Strich zeigt den Durchschnitt aller {arten.anzahl} kreisfreien Städte. Rechts dein Gemeindeanteil, nach denselben Anteilen verteilt.</p>
+        <h3>Was {stadt.land === '04' ? 'das ' : ''}{arten.traeger} tatsächlich ausgibt</h3>
+        {stadt.stadtstaat ? (
+          <p class="sub">Ausgaben {arten.jahr} nach Art, in € je Einwohner, Land und Stadt zusammen{stadt.land === '04' ? ' (Bremen und Bremerhaven)' : ''}. Der Strich zeigt den Durchschnitt {arten.vergleich}. Mit anderen Städten ist das nicht vergleichbar, weil hier auch Landesaufgaben mitzählen. Rechts dein Anteil an Land und Stadt, nach denselben Anteilen verteilt.</p>
+        ) : (
+          <p class="sub">Auszahlungen {arten.jahr}{arten.vorlaeufig ? ' (vorläufig)' : ''} nach Art, in € je Einwohner. Der Strich zeigt den Durchschnitt {arten.vergleich}. Rechts dein Gemeindeanteil, nach denselben Anteilen verteilt.</p>
+        )}
         <div class="rs-panel" id="arten"></div>
-        <Kontext studie={STUDIEN.kommunen} />
-      </div>
-    ) : (
-      <div class="figure" id="arten-fehlt">
-        <h3>Was {stadt.name} tatsächlich ausgibt</h3>
-        <p class="sub">Dazu gibt es für {stadt.name} keine vergleichbaren Zahlen. Die Statistik der kommunalen Haushalte, aus der diese Grafik bei den anderen kreisfreien Städten stammt, enthält Berlin, Hamburg und das Land Bremen nicht.</p>
+        {!stadt.stadtstaat && <Kontext studie={STUDIEN.kommunen} />}
       </div>
     )}
 

@@ -6,7 +6,7 @@
  * (.44 = Staat/Land, .45 = Gemeinden/Gemeindeverbände), Mio €.
  *
  * Schreibt:
- *   src/data/laender/<slug>.json          – Landesebene
+ *   src/data/laender/<slug>.json          – Landesebene; bei Stadtstaaten auch Ausgaben nach Arten (Tabelle 71711-08)
  *   src/data/gemeinden-schaetzung.json    – Zweck-Anteile der Gemeinden je Land (Schätzbasis für Städte)
  *
  * Aufruf:  npm run daten:laender
@@ -115,8 +115,44 @@ const deZahl = (v: number) => (v < 0 ? '−' : '') + Math.round(Math.abs(v)).toL
 const fmtNeg = (neg: Posten[]) => neg.map((p) => `${p.name} (${deZahl(p.v)} Mio €)`).join(', ');
 const absteigend = (ps: Posten[]) => [...ps].sort((a, b) => b.v - a.v);
 
+/** Stadtstaaten nach Ausgabearten (Tabelle 71711-08, Mio €): Land und Gemeinden sind dort eine Summe. */
+function stadtstaatArten(rows: Zelle[][], i: number, name: string) {
+  const zeile = (nr: number, muster: RegExp) => {
+    const r = rows.find((x) => x[0] === nr);
+    pruefe(r && muster.test(String(r[1])), 'Tabelle 71711-08, Zeile', nr, r?.[1]);
+    return r![3 + i];
+  };
+  const wert = (nr: number, muster: RegExp) => zahl(zeile(nr, muster));
+  const personal = wert(1, /Personalausgaben/);
+  const sach = wert(4, /Laufender Sachaufwand/);
+  const renten = wert(19, /Renten, Unterstützungen/);
+  const invest = wert(31, /Sachinvestitionen/);
+  const gesamt = wert(67, /Bereinigte Ausgaben/);
+  // Abstimmung: laufende Rechnung + Kapitalrechnung = Gesamt; keine eigene Gemeindeebene in der Statistik
+  pruefe(
+    Math.abs(wert(28, /laufenden Rechnung/) + wert(64, /Kapitalrechnung/) - gesamt) <= 2,
+    name,
+    'Abstimmung 71711-08',
+  );
+  pruefe(String(zeile(69, /Gemeinden/)) === '-', name, 'hat eine Gemeindeebene');
+  const uebrig = gesamt - personal - sach - renten - invest;
+  pruefe(uebrig > 0, name, uebrig);
+  return {
+    jahr: JAHR,
+    posten: [
+      { name: 'Personal und Versorgung', mio: personal },
+      { name: 'Laufender Sachaufwand', mio: sach },
+      { name: 'Renten, Unterstützungen und Ähnliches', mio: renten },
+      { name: 'Sachinvestitionen', mio: invest },
+      { name: 'Übrige Ausgaben', mio: uebrig },
+    ],
+    quellen: [{ ...QUELLE, label: QUELLE.label.replace('71711-12', '71711-08') }],
+  };
+}
+
 const pfad = await quelle('rechnungsergebnis-oeh-2022.xlsx', URL);
 const w = werte(await blatt(pfad, '71711-12'));
+const arten = await blatt(pfad, '71711-08');
 const ziel = join(ROOT, 'src', 'data', 'laender');
 mkdirSync(ziel, { recursive: true });
 const schaetzung: Record<string, { jahr: number; gesamt: number; posten: Posten[] }> = {};
@@ -143,6 +179,7 @@ LAENDER.forEach(([code, name, slug, kist], i) => {
     posten: absteigend(posten),
     quellen: [QUELLE],
     hinweis,
+    ...(STADTSTAATEN.has(code) ? { ausgabearten: stadtstaatArten(arten, i, name) } : {}),
   });
   console.log(
     `${name.padEnd(24)} ${gesamt.toFixed(0).padStart(9)} Mio €  ${String(posten.length).padStart(2)} Posten  Abw. ${abw >= 0 ? '+' : ''}${abw.toFixed(1)}  ${fmtNeg(negativ)}`,

@@ -40,17 +40,25 @@ test('echte Ausgabearten der Stadt mit Durchschnitt', async ({ page }) => {
   await expect(page.locator('.arten-row')).toHaveCount(5);
 });
 
-test('Stadtstaat: keine Ausgabearten-Grafik, Land und Stadt zusammen im Satz', async ({ page }) => {
+test('Stadtstaat: Ausgaben von Land und Stadt zusammen, Vergleich nur mit Stadtstaaten', async ({ page }) => {
   await page.goto('/stadt/berlin/');
-  await expect(page.locator('#arten')).toHaveCount(0);
   await expect(page.locator('#result')).toContainText('an Berlin (Land und Stadt)');
-  await expect(page.locator('#arten-fehlt')).toContainText('keine vergleichbaren Zahlen');
+  await expect(page.getByRole('heading', { name: 'Was Berlin tatsächlich ausgibt' })).toBeVisible();
+  await expect(page.locator('.arten-row')).toHaveCount(5);
+  await expect(page.locator('#arten')).toContainText('Durchschnitt der drei Stadtstaaten');
+  await expect(page.locator('#arten')).toContainText('dein Anteil an Land und Stadt');
 });
 
-test('Stadt mit Daten: kein Hinweis auf fehlende Ausgabearten', async ({ page }) => {
+test('Bremerhaven zeigt das Land Bremen', async ({ page }) => {
+  await page.goto('/stadt/bremerhaven/');
+  await expect(page.getByRole('heading', { name: 'Was das Land Bremen tatsächlich ausgibt' })).toBeVisible();
+  await expect(page.locator('#arten')).toContainText('Land Bremen, € je Einwohner');
+});
+
+test('Stadt außerhalb der Stadtstaaten vergleicht mit den kreisfreien Städten', async ({ page }) => {
   await page.goto('/stadt/oldenburg/');
-  await expect(page.locator('#arten')).toBeVisible();
-  await expect(page.locator('#arten-fehlt')).toHaveCount(0);
+  await expect(page.locator('#arten')).toContainText('kreisfreien Städte');
+  await expect(page.locator('#arten')).toContainText('dein Gemeindeanteil');
 });
 
 test('Bundeshaushalt: Umschalten zwischen Fluss und Fläche', async ({ page }) => {
