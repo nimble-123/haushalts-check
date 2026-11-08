@@ -44,6 +44,13 @@ test('Stadtstaat: keine Ausgabearten-Grafik, Land und Stadt zusammen im Satz', a
   await page.goto('/stadt/berlin/');
   await expect(page.locator('#arten')).toHaveCount(0);
   await expect(page.locator('#result')).toContainText('an Berlin (Land und Stadt)');
+  await expect(page.locator('#arten-fehlt')).toContainText('keine vergleichbaren Zahlen');
+});
+
+test('Stadt mit Daten: kein Hinweis auf fehlende Ausgabearten', async ({ page }) => {
+  await page.goto('/stadt/oldenburg/');
+  await expect(page.locator('#arten')).toBeVisible();
+  await expect(page.locator('#arten-fehlt')).toHaveCount(0);
 });
 
 test('Bundeshaushalt: Umschalten zwischen Fluss und Fläche', async ({ page }) => {

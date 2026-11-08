@@ -156,12 +156,17 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben mit dem Anteil der 
       </div>
     </div>
 
-    {arten && (
+    {arten ? (
       <div class="figure">
         <h3>Was {stadt.name} tatsächlich ausgibt</h3>
         <p class="sub">Auszahlungen {arten.jahr}{arten.vorlaeufig ? ' (vorläufig)' : ''} nach Art, in € je Einwohner. Der Strich zeigt den Durchschnitt aller {arten.anzahl} kreisfreien Städte. Rechts dein Gemeindeanteil, nach denselben Anteilen verteilt.</p>
         <div class="rs-panel" id="arten"></div>
         <Kontext studie={STUDIEN.kommunen} />
+      </div>
+    ) : (
+      <div class="figure" id="arten-fehlt">
+        <h3>Was {stadt.name} tatsächlich ausgibt</h3>
+        <p class="sub">Dazu gibt es für {stadt.name} keine vergleichbaren Zahlen. Die Statistik der kommunalen Haushalte, aus der diese Grafik bei den anderen kreisfreien Städten stammt, enthält Berlin, Hamburg und das Land Bremen nicht.</p>
       </div>
     )}
 

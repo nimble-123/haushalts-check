@@ -55,7 +55,7 @@ export interface Stadt {
   name: string;
   amtlich: string;
   einwohner: number;
-  /** Berlin, Hamburg, Bremen, Bremerhaven: Land und Kommune in einem Haushalt */
+  /** Berlin, Hamburg, Bremen, Bremerhaven: in der Finanzstatistik nur gemeinsam mit ihrem Land ausgewiesen */
   stadtstaat: boolean;
   /** Geografischer Mittelpunkt (Gemeindeverzeichnis) */
   lat?: number;

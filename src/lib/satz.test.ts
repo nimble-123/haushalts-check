@@ -22,6 +22,9 @@ describe('ergebnisSatz', () => {
     expect(t).toContain('an Berlin (Land und Stadt)');
     expect(t).not.toContain('geschätzt');
   });
+  it('nennt bei Bremerhaven das Land Bremen als eigenen Empfänger', () => {
+    expect(satz('bremerhaven', 85_000)).toContain('an das Land Bremen und Bremerhaven');
+  });
   it('erklärt, wenn keine Lohnsteuer anfällt', () => {
     expect(satz('oldenburg', 10_000)).toContain('fällt keine Lohnsteuer an');
   });

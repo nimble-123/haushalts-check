@@ -7,7 +7,7 @@ import { inflateRawSync } from 'node:zlib';
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const QUELLEN = join(ROOT, 'pipeline', 'quellen');
 
-/** Länderschlüssel der Stadtstaaten (Hamburg, Bremen, Berlin): Land und Stadt haben einen gemeinsamen Haushalt */
+/** Länderschlüssel der Stadtstaaten (Hamburg, Bremen, Berlin): die Finanzstatistik weist Städte nur gemeinsam mit dem Land aus */
 export const STADTSTAATEN: ReadonlySet<string> = new Set(['02', '04', '11']);
 
 /** Lädt eine Quelldatei nach pipeline/quellen/, falls sie noch nicht da ist. */
