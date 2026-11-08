@@ -125,9 +125,12 @@ LAENDER.forEach(([code, name, slug, kist], i) => {
   const { posten, gesamt, abw, negativ } = kategorien(w, '44', i);
   // exakte Abstimmung: Gesamt = positive + negative Posten
   pruefe(Math.abs(abw - summe(negativ)) < 1, name, abw);
-  let hinweis = STADTSTAATEN.has(code)
-    ? 'Stadtstaat: Land und Stadt haben einen gemeinsamen Haushalt.'
-    : '„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter.';
+  let hinweis =
+    code === '04'
+      ? 'Zwei-Städte-Staat: Bremen und Bremerhaven haben eigene Haushalte, die Statistik weist sie nur zusammen mit dem Land aus.'
+      : STADTSTAATEN.has(code)
+        ? 'Stadtstaat: Land und Stadt haben einen gemeinsamen Haushalt.'
+        : '„Finanzausgleich an Kommunen“ fließt an Städte, Gemeinden und Landkreise weiter.';
   if (negativ.length) hinweis += ` Unterm Strich negativ und daher nicht gezeigt: ${fmtNeg(negativ)}.`;
   schreibeJson(join(ziel, `${slug}.json`), {
     code,

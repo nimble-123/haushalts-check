@@ -23,7 +23,10 @@ export function gemeindeEbene(stadt: Stadt): GemeindeEbene {
       ...stripLand(land),
       name: stadt.name,
       schaetzung: false,
-      hinweis: `${land.name} ist ein Stadtstaat: Land und Stadt haben einen gemeinsamen Haushalt, deshalb dieselbe Aufteilung wie beim Land.`,
+      hinweis:
+        stadt.land === '04'
+          ? 'Bremen und Bremerhaven haben eigene Haushalte, die Statistik weist sie aber nur zusammen mit dem Land Bremen aus. Deshalb dieselbe Aufteilung wie beim Land.'
+          : `${land.name} ist ein Stadtstaat: Land und Stadt haben einen gemeinsamen Haushalt, deshalb dieselbe Aufteilung wie beim Land.`,
     };
   }
   const g = (schaetzung.laender as Record<string, { jahr: number; posten: Ebene['posten'] }>)[stadt.land];
