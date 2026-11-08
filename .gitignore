@@ -29,3 +29,6 @@ playwright-report/
 
 # Lighthouse CI
 .lighthouseci/
+
+# Reel-Erzeugung (/brag)
+brag-output*/
