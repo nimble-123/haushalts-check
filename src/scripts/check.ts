@@ -33,6 +33,7 @@ import {
 import { fmtMrdDelta, leseBetrag, satzText, zeitraum } from '../lib/text';
 import { betragsfeld } from './betragsfeld';
 import { mitUebergang, wenigBewegung, zaehlen } from './bewegung';
+import { ortssucheStarten } from './ortssuche';
 import { gespeicherteStadt, ladeEingaben, speichereEingaben, speichereStadt, vergiss } from './speicher';
 import {
   achseY,
@@ -297,7 +298,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   });
   groessteN(seite.gem.posten, 5).forEach((p) => {
     items.push({
-      name: `${stadtWort()} ${seite.gem.schaetzung ? '≈' : '·'} ` + p.name,
+      name: `${stadtWort()} ${seite.gem.schaetzung ? '≈' : '·'} ${p.name}`,
       v: (e.gemeinde * p.v) / seite.gemSumme,
       c: gcol(p.g),
     });
@@ -1107,6 +1108,11 @@ export function start() {
     }
   }
   holen('naehe', HTMLButtonElement).addEventListener('click', () => orten(orte, ids, true));
+  ortssucheStarten((slug) => {
+    speichereEingaben(ids);
+    speichereStadt(slug);
+    location.href = `/stadt/${slug}/`;
+  });
   const liste = holen('zweck');
   liste.addEventListener('pointerover', (e) =>
     fokusAuf((e.target as HTMLElement).closest<HTMLElement>('li')?.dataset.k ?? null),
