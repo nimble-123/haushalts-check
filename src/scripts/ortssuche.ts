@@ -1,4 +1,5 @@
-// Suchfeld „Ort suchen“: lädt die Gemeindeliste beim ersten Fokus und führt zur Seite der Stadt oder des Landkreises.
+// „Ort suchen“: Die Auswahl im Satz wird zum Eingabefeld. Die Gemeindeliste lädt beim ersten Öffnen; ein Treffer führt
+// zur Seite der Stadt oder des Landkreises.
 import { type OrtDaten, ortssuche, type Treffer } from '../lib/ortssuche';
 import { esc } from '../lib/text';
 
@@ -6,8 +7,11 @@ export function ortssucheStarten(beiWahl: (slug: string) => void) {
   const feld = document.getElementById('ort-suche') as HTMLInputElement | null;
   const liste = document.getElementById('ort-treffer');
   const status = document.getElementById('ort-status');
+  const anzahl = document.getElementById('ort-anzahl');
+  const knopf = document.getElementById('ort-suchen');
+  const box = document.getElementById('ort-wahl');
   const auswahl = document.getElementById('stadt') as HTMLSelectElement | null;
-  if (!feld || !liste || !status || !auswahl) return;
+  if (!feld || !liste || !status || !anzahl || !knopf || !box || !auswahl) return;
 
   // Name und Land der Ziele stehen schon in der Auswahl
   const ziele = new Map(
@@ -45,11 +49,13 @@ export function ortssucheStarten(beiWahl: (slug: string) => void) {
     if (!treffer.length) {
       liste.innerHTML = '';
       schliessen();
+      anzahl.textContent = '';
       status.textContent =
         eingabe.length >= 2 ? 'Kein Ort gefunden. Ortsteile kennt die Suche nicht, probier deine Gemeinde.' : '';
       return;
     }
-    status.textContent = `${treffer.length} ${treffer.length === 1 ? 'Ort' : 'Orte'} gefunden`;
+    status.textContent = '';
+    anzahl.textContent = `${treffer.length} ${treffer.length === 1 ? 'Ort' : 'Orte'} gefunden`;
     liste.innerHTML = treffer
       .map((t, i) => {
         const ziel = ziele.get(t.slug);
@@ -80,15 +86,33 @@ export function ortssucheStarten(beiWahl: (slug: string) => void) {
       });
   };
 
-  feld.addEventListener('focus', laden);
-  feld.addEventListener('input', () => {
+  const offen = () => box.hasAttribute('data-suche');
+  const beenden = (fokusZurueck: boolean) => {
+    if (!offen()) return;
+    box.removeAttribute('data-suche');
+    knopf.setAttribute('aria-expanded', 'false');
+    schliessen();
+    status.textContent = '';
+    anzahl.textContent = '';
+    if (fokusZurueck) knopf.focus();
+  };
+  const oeffnen = () => {
+    // Mindestens so breit wie die Auswahl, damit der Satz möglichst nicht springt
+    box.style.setProperty('--breite', `${Math.max(auswahl.offsetWidth, 260)}px`);
+    box.setAttribute('data-suche', '');
+    knopf.setAttribute('aria-expanded', 'true');
+    feld.value = '';
+    feld.focus();
     laden();
-    zeichnen();
-  });
-  feld.addEventListener('blur', schliessen);
+  };
+  // Der Knopf nimmt dem Feld den Fokus nicht, sonst schlösse der Blur die Suche, und der Klick öffnete sie gleich wieder
+  knopf.addEventListener('pointerdown', (e) => e.preventDefault());
+  knopf.addEventListener('click', () => (offen() ? beenden(true) : oeffnen()));
+  feld.addEventListener('input', zeichnen);
+  feld.addEventListener('blur', () => beenden(false));
   feld.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      schliessen();
+      beenden(true);
     } else if (e.key === 'Enter') {
       e.preventDefault();
       const t = treffer[Math.max(aktiv, 0)];

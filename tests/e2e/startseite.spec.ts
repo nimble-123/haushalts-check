@@ -47,7 +47,10 @@ test.describe('Ortssuche', () => {
   test('Gemeinde führt zum Landkreis', async ({ page }) => {
     const f = fehlerSammeln(page);
     await page.goto('/');
+    await page.getByRole('button', { name: 'Ort suchen' }).click();
     const feld = page.locator('#ort-suche');
+    await expect(feld).toBeFocused();
+    await expect(page.locator('#stadt')).toBeHidden();
     await feld.fill('Nordenham');
     const treffer = page.locator('#ort-treffer li').first();
     await expect(treffer).toContainText('Nordenham');
@@ -62,6 +65,7 @@ test.describe('Ortssuche', () => {
   test('Umschreibung findet den Ort, Auswahl per Tastatur', async ({ page }) => {
     const f = fehlerSammeln(page);
     await page.goto('/');
+    await page.getByRole('button', { name: 'Ort suchen' }).click();
     await page.locator('#ort-suche').fill('Goettingen');
     await expect(page.locator('#ort-treffer li').first()).toContainText('Göttingen');
     await page.keyboard.press('ArrowDown');
@@ -73,6 +77,9 @@ test.describe('Ortssuche', () => {
 
   test('ohne Treffer ein Hinweis, Escape schließt', async ({ page }) => {
     await page.goto('/');
+    const knopf = page.getByRole('button', { name: 'Ort suchen' });
+    await knopf.click();
+    await expect(knopf).toHaveAttribute('aria-expanded', 'true');
     const feld = page.locator('#ort-suche');
     await feld.fill('Xyzqw');
     await expect(page.locator('#ort-status')).toContainText('Kein Ort gefunden');
@@ -81,6 +88,9 @@ test.describe('Ortssuche', () => {
     await page.keyboard.press('Escape');
     await expect(page.locator('#ort-treffer')).toBeHidden();
     await expect(feld).toHaveAttribute('aria-expanded', 'false');
+    await expect(feld).toBeHidden();
+    await expect(page.locator('#stadt')).toBeVisible();
+    await expect(knopf).toBeFocused();
     const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
     expect(axe.violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
   });

@@ -58,7 +58,7 @@ Bewegung zeigt, was sich ändert. Sie ist nie Schmuck: Wer nichts tut, sieht nac
 ## Bedienung
 
 - Jedes Bedienelement ist mindestens `hit` (44px) hoch und hat einen sichtbaren Fokusring (`focus`, 2px, Abstand 2px).
-- Die wichtigsten Eingaben (Brutto, Stadt) stehen im Satz (Betragsfeld, Auswahl im Satz); alles Weitere steht in Feldern unter „Weitere Angaben“. Direkt darunter sucht das Feld „Oder such deine Gemeinde“ alle Orte; die Trefferliste schwebt (`surface`, `shadow-pop`).
+- Die wichtigsten Eingaben (Brutto, Stadt) stehen im Satz (Betragsfeld, Auswahl im Satz); alles Weitere steht in Feldern unter „Weitere Angaben“. Der Textknopf „Ort suchen“ macht die Auswahl im Satz zum Eingabefeld, der Satz bleibt stehen; die Trefferliste schwebt (`surface`, `shadow-pop`).
 - Lange Listen und Tabellen sind zugeklappt (Aufklapper) und nennen im Titel, wie viele Einträge sie enthalten.
 
 ## Ikonen
