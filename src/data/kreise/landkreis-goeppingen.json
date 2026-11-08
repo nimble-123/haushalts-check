@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-goeppingen",
+  "ags": "08117",
+  "land": "08",
+  "name": "Landkreis Göppingen",
+  "amtlich": "Göppingen, Landkreis",
+  "einwohner": 258809,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.6796,
+  "lon": 9.6906,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1271
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 658
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 917
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 689
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1270
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

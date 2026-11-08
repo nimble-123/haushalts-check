@@ -230,7 +230,7 @@ function chartFluss(r: Ergebnis) {
       groessteN(seite.gem.posten, show === 'all' ? 5 : 12),
       seite.gemSumme,
       e.gemeinde,
-      seite.gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ',
+      `${stadtWort()} ${seite.gem.schaetzung ? '≈' : '·'} `,
     );
   (
     [
@@ -294,7 +294,7 @@ function chartToepfe(r: Ergebnis, fmt: (v: number) => string) {
   });
   groessteN(seite.gem.posten, 5).forEach((p) => {
     items.push({
-      name: (seite.gem.schaetzung ? 'Stadt ≈ ' : 'Stadt · ') + p.name,
+      name: `${stadtWort()} ${seite.gem.schaetzung ? '≈' : '·'} ` + p.name,
       v: (e.gemeinde * p.v) / seite.gemSumme,
       c: gcol(p.g),
     });
@@ -544,6 +544,11 @@ function schimmern() {
     raster.classList.add('rs-schimmer');
     setTimeout(() => raster.classList.remove('rs-schimmer'), 2100);
   }, 9000);
+}
+
+/** Kurzname der Gemeinde-Ebene in Diagrammen */
+function stadtWort() {
+  return seite.stadt.kreis ? 'Kreis' : 'Stadt';
 }
 
 // ---------- Echte Ausgabearten der Stadt ----------
@@ -1057,7 +1062,7 @@ function orten(orte: readonly Ort[], ids: string[], vonHand: boolean) {
       speichereStadt(slug);
       if (slug === seite.stadt.slug) {
         knopf.disabled = false;
-        status.textContent = `${seite.stadt.name} ist die nächste kreisfreie Stadt.`;
+        status.textContent = `${seite.stadt.name} liegt am nächsten.`;
         return;
       }
       speichereEingaben(ids);

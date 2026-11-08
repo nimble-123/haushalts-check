@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-ostholstein",
+  "ags": "01055",
+  "land": "01",
+  "name": "Kreis Ostholstein",
+  "amtlich": "Ostholstein, Kreis",
+  "einwohner": 201472,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 54.1135,
+  "lon": 10.7826,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 967
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 685
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1079
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 715
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1916
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

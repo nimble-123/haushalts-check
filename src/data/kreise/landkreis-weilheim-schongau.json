@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-weilheim-schongau",
+  "ags": "09190",
+  "land": "09",
+  "name": "Landkreis Weilheim-Schongau",
+  "amtlich": "Weilheim-Schongau, Landkreis",
+  "einwohner": 138957,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.8011,
+  "lon": 11.0923,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 877
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 599
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 295
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 983
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1373
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

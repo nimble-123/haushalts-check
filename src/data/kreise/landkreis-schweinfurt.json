@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-schweinfurt",
+  "ags": "09678",
+  "land": "09",
+  "name": "Landkreis Schweinfurt",
+  "amtlich": "Schweinfurt, Landkreis",
+  "einwohner": 113977,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.0122,
+  "lon": 10.2312,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 828
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 603
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 295
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 903
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1190
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

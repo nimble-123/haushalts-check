@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-wittenberg",
+  "ags": "15091",
+  "land": "15",
+  "name": "Landkreis Wittenberg",
+  "amtlich": "Wittenberg, Landkreis",
+  "einwohner": 121694,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.8141,
+  "lon": 12.669,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1193
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 619
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 614
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 443
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1011
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-anhalt-bitterfeld",
+  "ags": "15082",
+  "land": "15",
+  "name": "Landkreis Anhalt-Bitterfeld",
+  "amtlich": "Anhalt-Bitterfeld, Landkreis",
+  "einwohner": 153035,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.7133,
+  "lon": 12.1673,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1289
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 591
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1086
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 364
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 874
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

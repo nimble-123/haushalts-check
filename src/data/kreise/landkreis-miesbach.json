@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-miesbach",
+  "ags": "09182",
+  "land": "09",
+  "name": "Landkreis Miesbach",
+  "amtlich": "Miesbach, Landkreis",
+  "einwohner": 97152,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.7863,
+  "lon": 11.7802,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 997
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 705
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 371
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1880
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1729
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

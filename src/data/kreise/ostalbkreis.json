@@ -1,0 +1,44 @@
+{
+  "slug": "ostalbkreis",
+  "ags": "08136",
+  "land": "08",
+  "name": "Ostalbkreis",
+  "amtlich": "Ostalbkreis, Landkreis",
+  "einwohner": 317427,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.8488,
+  "lon": 10.0063,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1266
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 688
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1036
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1556
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1612
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

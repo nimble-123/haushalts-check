@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-konstanz",
+  "ags": "08335",
+  "land": "08",
+  "name": "Landkreis Konstanz",
+  "amtlich": "Konstanz, Landkreis",
+  "einwohner": 291841,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.7396,
+  "lon": 8.9758,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1291
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 695
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 924
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 805
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1440
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

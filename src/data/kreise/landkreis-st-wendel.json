@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-st-wendel",
+  "ags": "10046",
+  "land": "10",
+  "name": "Landkreis St. Wendel",
+  "amtlich": "St. Wendel, Landkreis",
+  "einwohner": 87813,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.5102,
+  "lon": 7.1161,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1258
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 748
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 904
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 522
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 809
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

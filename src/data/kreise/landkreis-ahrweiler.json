@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ahrweiler",
+  "ags": "07131",
+  "land": "07",
+  "name": "Landkreis Ahrweiler",
+  "amtlich": "Ahrweiler, Landkreis",
+  "einwohner": 129353,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.5155,
+  "lon": 7.1481,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1047
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 646
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 933
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1515
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1754
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

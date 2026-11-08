@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-donau-ries",
+  "ags": "09779",
+  "land": "09",
+  "name": "Landkreis Donau-Ries",
+  "amtlich": "Donau-Ries, Landkreis",
+  "einwohner": 135098,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.7946,
+  "lon": 10.7007,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1049
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 521
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 246
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1303
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1346
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

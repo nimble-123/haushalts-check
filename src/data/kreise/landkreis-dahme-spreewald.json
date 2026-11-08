@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-dahme-spreewald",
+  "ags": "12061",
+  "land": "12",
+  "name": "Landkreis Dahme-Spreewald",
+  "amtlich": "Dahme-Spreewald, Landkreis",
+  "einwohner": 178793,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.212,
+  "lon": 13.6762,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1569
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 623
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 780
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 899
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1764
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

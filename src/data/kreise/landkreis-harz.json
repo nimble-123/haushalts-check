@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-harz",
+  "ags": "15085",
+  "land": "15",
+  "name": "Landkreis Harz",
+  "amtlich": "Harz, Landkreis",
+  "einwohner": 205484,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.8324,
+  "lon": 10.9718,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1149
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 591
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1002
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 539
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1183
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

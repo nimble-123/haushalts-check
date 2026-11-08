@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-mayen-koblenz",
+  "ags": "07137",
+  "land": "07",
+  "name": "Landkreis Mayen-Koblenz",
+  "amtlich": "Mayen-Koblenz, Landkreis",
+  "einwohner": 217228,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.3673,
+  "lon": 7.4052,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1182
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 456
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1072
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 446
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1463
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

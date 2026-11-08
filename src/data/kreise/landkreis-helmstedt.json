@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-helmstedt",
+  "ags": "03154",
+  "land": "03",
+  "name": "Landkreis Helmstedt",
+  "amtlich": "Helmstedt, Landkreis",
+  "einwohner": 90227,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.2576,
+  "lon": 10.9044,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1462
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 694
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1457
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 682
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 993
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

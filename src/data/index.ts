@@ -3,9 +3,11 @@ import type { Ebene, GemeindeEbene, Land, Stadt } from './types';
 
 const laenderMods = import.meta.glob<Land>('./laender/*.json', { eager: true, import: 'default' });
 const staedteMods = import.meta.glob<Stadt>('./staedte/*.json', { eager: true, import: 'default' });
+const kreiseMods = import.meta.glob<Stadt>('./kreise/*.json', { eager: true, import: 'default' });
 
 export const LAENDER: Land[] = Object.values(laenderMods).sort((a, b) => a.name.localeCompare(b.name, 'de'));
 export const STAEDTE: Stadt[] = Object.values(staedteMods).sort((a, b) => a.name.localeCompare(b.name, 'de'));
+export const KREISE: Stadt[] = Object.values(kreiseMods).sort((a, b) => a.name.localeCompare(b.name, 'de'));
 
 export const landVon = (s: Stadt): Land => {
   const l = LAENDER.find((x) => x.code === s.land);
@@ -39,7 +41,7 @@ export function gemeindeEbene(stadt: Stadt): GemeindeEbene {
     art: `Schätzung: Ausgaben aller Gemeinden und Kreise in ${land.name} nach Aufgabenbereichen`,
     posten: g.posten,
     quellen: [schaetzung.quelle],
-    hinweis: `Für einzelne Städte gibt es keine amtliche Aufteilung nach Zweck. Gezeigt ist der Durchschnitt aller Gemeinden und Kreise in ${land.name}; kreisfreie Städte erfüllen beide Aufgaben.`,
+    hinweis: `Für einzelne Städte gibt es keine amtliche Aufteilung nach Zweck. Gezeigt ist der Durchschnitt aller Gemeinden und Kreise in ${land.name}; ${stadt.kreis ? 'ein Kreis und seine Gemeinden' : 'kreisfreie Städte'} erfüllen beide Aufgaben.`,
   };
 }
 
@@ -80,7 +82,7 @@ export function ausgabeVergleich(stadt: Stadt) {
   if (stadt.stadtstaat) return stadtstaatVergleich(stadt);
   const a = stadt.ausgabearten;
   if (!a) return null;
-  const gleiche = STAEDTE.filter((s) => s.ausgabearten?.jahr === a.jahr);
+  const gleiche = (stadt.kreis ? KREISE : STAEDTE).filter((s) => s.ausgabearten?.jahr === a.jahr);
   const ew = gleiche.reduce((x, s) => x + s.einwohner, 0);
   const schnitt = a.posten.map((p) => ({
     name: p.name,
@@ -96,6 +98,6 @@ export function ausgabeVergleich(stadt: Stadt) {
     schnitt,
     anzahl: gleiche.length,
     traeger: stadt.name,
-    vergleich: `aller ${gleiche.length} kreisfreien Städte`,
+    vergleich: `aller ${gleiche.length} ${stadt.kreis ? 'Landkreise' : 'kreisfreien Städte'}`,
   };
 }

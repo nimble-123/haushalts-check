@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-hof",
+  "ags": "09475",
+  "land": "09",
+  "name": "Landkreis Hof",
+  "amtlich": "Hof, Landkreis",
+  "einwohner": 92191,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.2705,
+  "lon": 11.8223,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 878
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 606
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 361
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 853
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1426
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

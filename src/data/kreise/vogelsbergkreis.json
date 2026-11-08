@@ -1,0 +1,44 @@
+{
+  "slug": "vogelsbergkreis",
+  "ags": "06535",
+  "land": "06",
+  "name": "Vogelsbergkreis",
+  "amtlich": "Vogelsbergkreis, Landkreis",
+  "einwohner": 101163,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.645,
+  "lon": 9.2633,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1400
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 685
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1055
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 591
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1009
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

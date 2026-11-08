@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-wittmund",
+  "ags": "03462",
+  "land": "03",
+  "name": "Landkreis Wittmund",
+  "amtlich": "Wittmund, Landkreis",
+  "einwohner": 55969,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.5776,
+  "lon": 7.6936,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1254
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 782
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1518
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 993
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1412
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

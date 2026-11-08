@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-erlangen-hoechstadt",
+  "ags": "09572",
+  "land": "09",
+  "name": "Landkreis Erlangen-Höchstadt",
+  "amtlich": "Erlangen-Höchstadt, Landkreis",
+  "einwohner": 138325,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.6258,
+  "lon": 10.9528,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 976
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 508
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 310
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 900
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1543
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

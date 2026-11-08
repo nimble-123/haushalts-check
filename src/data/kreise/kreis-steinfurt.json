@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-steinfurt",
+  "ags": "05566",
+  "land": "05",
+  "name": "Kreis Steinfurt",
+  "amtlich": "Steinfurt, Kreis",
+  "einwohner": 451712,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.2133,
+  "lon": 7.5643,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 873
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 691
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 823
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 873
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1718
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

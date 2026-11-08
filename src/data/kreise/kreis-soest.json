@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-soest",
+  "ags": "05974",
+  "land": "05",
+  "name": "Kreis Soest",
+  "amtlich": "Soest, Kreis",
+  "einwohner": 300297,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.5842,
+  "lon": 8.2062,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1019
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 570
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 779
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 913
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1708
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

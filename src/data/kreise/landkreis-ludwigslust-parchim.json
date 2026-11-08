@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ludwigslust-parchim",
+  "ags": "13076",
+  "land": "13",
+  "name": "Landkreis Ludwigslust-Parchim",
+  "amtlich": "Ludwigslust-Parchim, Landkreis",
+  "einwohner": 208092,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.4534,
+  "lon": 11.4787,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1096
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 562
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 915
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 845
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1711
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

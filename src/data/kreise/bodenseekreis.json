@@ -1,0 +1,44 @@
+{
+  "slug": "bodenseekreis",
+  "ags": "08435",
+  "land": "08",
+  "name": "Bodenseekreis",
+  "amtlich": "Bodenseekreis, Landkreis",
+  "einwohner": 220804,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.695,
+  "lon": 9.4176,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1415
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 773
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1139
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 808
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1275
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

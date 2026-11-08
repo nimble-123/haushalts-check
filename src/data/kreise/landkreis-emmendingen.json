@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-emmendingen",
+  "ags": "08316",
+  "land": "08",
+  "name": "Landkreis Emmendingen",
+  "amtlich": "Emmendingen, Landkreis",
+  "einwohner": 169787,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.1355,
+  "lon": 7.8457,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1168
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 621
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 878
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 553
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1272
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-tuttlingen",
+  "ags": "08327",
+  "land": "08",
+  "name": "Landkreis Tuttlingen",
+  "amtlich": "Tuttlingen, Landkreis",
+  "einwohner": 145208,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.0315,
+  "lon": 8.7691,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1443
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 1042
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1206
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1221
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1231
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

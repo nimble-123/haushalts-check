@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-oder-spree",
+  "ags": "12067",
+  "land": "12",
+  "name": "Landkreis Oder-Spree",
+  "amtlich": "Oder-Spree, Landkreis",
+  "einwohner": 179817,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.297,
+  "lon": 14.1411,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1316
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 714
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1532
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 589
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1188
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

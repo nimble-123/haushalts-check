@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-germersheim",
+  "ags": "07334",
+  "land": "07",
+  "name": "Landkreis Germersheim",
+  "amtlich": "Germersheim, Landkreis",
+  "einwohner": 131383,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.1408,
+  "lon": 8.2824,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1218
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 540
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 987
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 666
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1334
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

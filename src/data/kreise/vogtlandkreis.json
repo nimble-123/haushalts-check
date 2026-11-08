@@ -1,0 +1,44 @@
+{
+  "slug": "vogtlandkreis",
+  "ags": "14523",
+  "land": "14",
+  "name": "Vogtlandkreis",
+  "amtlich": "Vogtlandkreis, Landkreis",
+  "einwohner": 219100,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.4935,
+  "lon": 12.2473,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1134
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 624
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 695
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 536
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 915
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

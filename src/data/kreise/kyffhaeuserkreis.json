@@ -1,0 +1,44 @@
+{
+  "slug": "kyffhaeuserkreis",
+  "ags": "16065",
+  "land": "16",
+  "name": "Kyffhäuserkreis",
+  "amtlich": "Kyffhäuserkreis, Landkreis",
+  "einwohner": 71738,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.331,
+  "lon": 11.0444,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1144
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 475
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1035
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 745
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 862
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

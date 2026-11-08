@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-neustadt-a-d-waldnaab",
+  "ags": "09374",
+  "land": "09",
+  "name": "Landkreis Neustadt a.d.Waldnaab",
+  "amtlich": "Neustadt a.d.Waldnaab, Landkreis",
+  "einwohner": 96049,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.6942,
+  "lon": 12.1347,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 825
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 621
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 282
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1207
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1355
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

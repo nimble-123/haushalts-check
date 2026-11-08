@@ -1,6 +1,6 @@
 # Haushalts-Check
 
-Statische Astro-Website (TypeScript, D3): Wohin fließt die Lohnsteuer einer Person – Bund, Land, Stadt – für alle 106 kreisfreien Städte. Live: https://haushalts-check.vercel.app. Befehle stehen in `package.json`, Aufbau und Arbeitsablauf in `CONTRIBUTING.md`.
+Statische Astro-Website (TypeScript, D3): Wohin fließt die Lohnsteuer einer Person – Bund, Land, Stadt – für alle 106 kreisfreien Städte und 294 Landkreise. Live: https://haushalts-check.vercel.app. Befehle stehen in `package.json`, Aufbau und Arbeitsablauf in `CONTRIBUTING.md`.
 
 ## Quellen der Wahrheit
 

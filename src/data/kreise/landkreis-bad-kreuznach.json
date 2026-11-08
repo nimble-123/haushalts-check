@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-bad-kreuznach",
+  "ags": "07133",
+  "land": "07",
+  "name": "Landkreis Bad Kreuznach",
+  "amtlich": "Bad Kreuznach, Landkreis",
+  "einwohner": 164748,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.8349,
+  "lon": 7.7662,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1126
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 446
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1199
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 299
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1466
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

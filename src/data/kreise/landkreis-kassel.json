@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-kassel",
+  "ags": "06633",
+  "land": "06",
+  "name": "Landkreis Kassel",
+  "amtlich": "Kassel, Landkreis",
+  "einwohner": 231073,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.3475,
+  "lon": 9.4381,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1418
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 770
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 733
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 609
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1002
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

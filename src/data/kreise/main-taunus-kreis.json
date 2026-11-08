@@ -1,0 +1,44 @@
+{
+  "slug": "main-taunus-kreis",
+  "ags": "06436",
+  "land": "06",
+  "name": "Main-Taunus-Kreis",
+  "amtlich": "Main-Taunus-Kreis, Landkreis",
+  "einwohner": 238775,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.099,
+  "lon": 8.4692,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1287
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 905
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1165
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 735
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1972
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

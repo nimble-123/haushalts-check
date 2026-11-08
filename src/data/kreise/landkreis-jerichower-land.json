@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-jerichower-land",
+  "ags": "15086",
+  "land": "15",
+  "name": "Landkreis Jerichower Land",
+  "amtlich": "Jerichower Land, Landkreis",
+  "einwohner": 88509,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.2589,
+  "lon": 11.9131,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1223
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 596
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 544
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 366
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 994
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

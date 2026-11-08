@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-kleve",
+  "ags": "05154",
+  "land": "05",
+  "name": "Kreis Kleve",
+  "amtlich": "Kleve, Kreis",
+  "einwohner": 322018,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.6607,
+  "lon": 6.247,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 858
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 655
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1182
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 563
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1567
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-goslar",
+  "ags": "03153",
+  "land": "03",
+  "name": "Landkreis Goslar",
+  "amtlich": "Goslar, Landkreis",
+  "einwohner": 126775,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.8931,
+  "lon": 10.3982,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1280
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 778
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1569
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 478
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 863
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -3,7 +3,7 @@ import type { ausgabeVergleich } from '../data';
 import type { GemeindeEbene, Land, Stadt } from '../data/types';
 import type { Ort } from './naehe';
 
-/** Ausgabearten der Stadt im Vergleich zum Schnitt aller kreisfreien Städte */
+/** Ausgabearten der Stadt oder des Kreises im Vergleich zum Schnitt der Vergleichsgruppe */
 export type Ausgabevergleich = NonNullable<ReturnType<typeof ausgabeVergleich>>;
 
 export interface SeitenDaten {

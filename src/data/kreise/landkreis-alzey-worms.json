@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-alzey-worms",
+  "ags": "07331",
+  "land": "07",
+  "name": "Landkreis Alzey-Worms",
+  "amtlich": "Alzey-Worms, Landkreis",
+  "einwohner": 131238,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.7628,
+  "lon": 8.1643,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1084
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 471
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1079
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 770
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1222
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

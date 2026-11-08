@@ -1,0 +1,44 @@
+{
+  "slug": "lahn-dill-kreis",
+  "ags": "06532",
+  "land": "06",
+  "name": "Lahn-Dill-Kreis",
+  "amtlich": "Lahn-Dill-Kreis, Landkreis",
+  "einwohner": 254074,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.6242,
+  "lon": 8.3937,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1204
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 762
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 546
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 670
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1348
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

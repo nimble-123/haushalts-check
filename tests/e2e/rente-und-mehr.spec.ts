@@ -87,7 +87,7 @@ test('alle Seiten laden ohne Fehler, auch jede 20. Stadt', async ({ page }) => {
   const links = await page
     .locator('main a[href^="/stadt/"]')
     .evaluateAll((as) => as.map((a) => a.getAttribute('href')!));
-  expect(links).toHaveLength(106);
+  expect(links).toHaveLength(400);
   for (const href of links.filter((_, i) => i % 20 === 0)) {
     const antwort = await page.goto(href);
     expect(antwort?.status()).toBe(200);

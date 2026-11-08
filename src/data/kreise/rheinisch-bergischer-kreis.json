@@ -1,0 +1,44 @@
+{
+  "slug": "rheinisch-bergischer-kreis",
+  "ags": "05378",
+  "land": "05",
+  "name": "Rheinisch-Bergischer Kreis",
+  "amtlich": "Rheinisch-Bergischer Kreis, Kreis",
+  "einwohner": 284273,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.0187,
+  "lon": 7.1564,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1131
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 529
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 781
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 670
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1542
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

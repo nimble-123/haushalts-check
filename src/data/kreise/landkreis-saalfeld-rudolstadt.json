@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-saalfeld-rudolstadt",
+  "ags": "16073",
+  "land": "16",
+  "name": "Landkreis Saalfeld-Rudolstadt",
+  "amtlich": "Saalfeld-Rudolstadt, Landkreis",
+  "einwohner": 100105,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.66,
+  "lon": 11.3329,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 982
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 584
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 912
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 521
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1026
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

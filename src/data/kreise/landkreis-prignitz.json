@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-prignitz",
+  "ags": "12070",
+  "land": "12",
+  "name": "Landkreis Prignitz",
+  "amtlich": "Prignitz, Landkreis",
+  "einwohner": 75595,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.0807,
+  "lon": 11.9226,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1568
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 602
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1323
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 749
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1314
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

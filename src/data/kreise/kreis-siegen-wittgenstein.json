@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-siegen-wittgenstein",
+  "ags": "05970",
+  "land": "05",
+  "name": "Kreis Siegen-Wittgenstein",
+  "amtlich": "Siegen-Wittgenstein, Kreis",
+  "einwohner": 274074,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.8976,
+  "lon": 8.0782,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1112
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 689
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 875
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 718
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1570
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

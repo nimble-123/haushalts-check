@@ -1,6 +1,6 @@
 // Konsistenz der veröffentlichten Daten: Bund, 16 Länder, 106 kreisfreie Städte.
 import { describe, expect, it } from 'vitest';
-import { ausgabeVergleich, gemeindeEbene, LAENDER, landVon, STAEDTE, summe } from '../../src/data';
+import { ausgabeVergleich, gemeindeEbene, KREISE, LAENDER, landVon, STAEDTE, summe } from '../../src/data';
 import {
   ABSTIMMUNG_2027,
   abstimmungSatz,
@@ -64,6 +64,28 @@ describe('Städte', () => {
         .map((s) => s.slug)
         .sort(),
     ).toEqual(['berlin', 'bremen', 'bremerhaven', 'hamburg']);
+  });
+});
+
+describe('Landkreise', () => {
+  it('294 Kreise mit eindeutigen Slugs, ohne Überschneidung mit den Städten', () => {
+    expect(KREISE).toHaveLength(294);
+    const slugs = new Set([...STAEDTE, ...KREISE].map((s) => s.slug));
+    expect(slugs.size).toBe(400);
+    expect(KREISE.filter((s) => !/^[a-z0-9-]+$/.test(s.slug)).map((s) => s.slug)).toEqual([]);
+  });
+  it.each(KREISE.map((s) => [s.name, s] as const))('%s: Land, Lage, fünf Arten', (_, s) => {
+    expect(landVon(s).code).toBe(s.land);
+    expect(s.lat! > 47 && s.lat! < 55.1 && s.lon! > 5.8 && s.lon! < 15.1).toBe(true);
+    expect(s.ausgabearten!.posten).toHaveLength(5);
+    const gesamt = s.ausgabearten!.posten.reduce((x, p) => x + p.proKopf, 0);
+    expect(gesamt).toBeGreaterThan(2000);
+    expect(gesamt).toBeLessThan(9000);
+  });
+  it('Vergleich nur unter Landkreisen', () => {
+    const v = ausgabeVergleich(KREISE.find((s) => s.slug === 'landkreis-wesermarsch')!)!;
+    expect(v.vergleich).toMatch(/Landkreise$/);
+    expect(v.schnitt).toHaveLength(5);
   });
 });
 

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-fuerstenfeldbruck",
+  "ags": "09179",
+  "land": "09",
+  "name": "Landkreis Fürstenfeldbruck",
+  "amtlich": "Fürstenfeldbruck, Landkreis",
+  "einwohner": 218227,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.1747,
+  "lon": 11.2888,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 909
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 485
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 359
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 588
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1205
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

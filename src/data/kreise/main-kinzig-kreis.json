@@ -1,0 +1,44 @@
+{
+  "slug": "main-kinzig-kreis",
+  "ags": "06435",
+  "land": "06",
+  "name": "Main-Kinzig-Kreis",
+  "amtlich": "Main-Kinzig-Kreis, Landkreis",
+  "einwohner": 420914,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.1901,
+  "lon": 9.068,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1127
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 821
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 690
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 666
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1904
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

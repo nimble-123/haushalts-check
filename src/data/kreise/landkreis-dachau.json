@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-dachau",
+  "ags": "09174",
+  "land": "09",
+  "name": "Landkreis Dachau",
+  "amtlich": "Dachau, Landkreis",
+  "einwohner": 153595,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.2986,
+  "lon": 11.4061,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 910
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 499
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 320
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1135
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1444
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

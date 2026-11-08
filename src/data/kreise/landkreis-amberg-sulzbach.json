@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-amberg-sulzbach",
+  "ags": "09371",
+  "land": "09",
+  "name": "Landkreis Amberg-Sulzbach",
+  "amtlich": "Amberg-Sulzbach, Landkreis",
+  "einwohner": 103982,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.4986,
+  "lon": 11.7958,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 912
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 558
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 322
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1022
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1201
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

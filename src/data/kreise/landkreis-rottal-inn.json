@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-rottal-inn",
+  "ags": "09277",
+  "land": "09",
+  "name": "Landkreis Rottal-Inn",
+  "amtlich": "Rottal-Inn, Landkreis",
+  "einwohner": 120497,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.4004,
+  "lon": 12.8757,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 959
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 560
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 285
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1060
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1180
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-gifhorn",
+  "ags": "03151",
+  "land": "03",
+  "name": "Landkreis Gifhorn",
+  "amtlich": "Gifhorn, Landkreis",
+  "einwohner": 175943,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.507,
+  "lon": 10.5825,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 948
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 571
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1038
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 804
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 974
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

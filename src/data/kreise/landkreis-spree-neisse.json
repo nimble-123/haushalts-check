@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-spree-neisse",
+  "ags": "12071",
+  "land": "12",
+  "name": "Landkreis Spree-Neiße",
+  "amtlich": "Spree-Neiße, Landkreis",
+  "einwohner": 109635,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.7434,
+  "lon": 14.4604,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1532
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 753
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1281
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 616
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2307
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

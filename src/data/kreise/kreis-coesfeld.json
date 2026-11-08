@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-coesfeld",
+  "ags": "05558",
+  "land": "05",
+  "name": "Kreis Coesfeld",
+  "amtlich": "Coesfeld, Kreis",
+  "einwohner": 227859,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.8649,
+  "lon": 7.3498,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1026
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 801
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 947
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 774
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1631
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

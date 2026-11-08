@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-bergstrasse",
+  "ags": "06431",
+  "land": "06",
+  "name": "Landkreis Bergstraße",
+  "amtlich": "Bergstraße, Landkreis",
+  "einwohner": 274169,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.6215,
+  "lon": 8.6202,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 950
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 587
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 598
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 462
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1939
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

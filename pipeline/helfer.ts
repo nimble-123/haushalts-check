@@ -10,6 +10,12 @@ export const QUELLEN = join(ROOT, 'pipeline', 'quellen');
 /** Länderschlüssel der Stadtstaaten (Hamburg, Bremen, Berlin): die Finanzstatistik weist Städte nur gemeinsam mit dem Land aus */
 export const STADTSTAATEN: ReadonlySet<string> = new Set(['02', '04', '11']);
 
+/** Gemeindeverzeichnis von Destatis: Kreise (Stand 31.12.2024) und Gemeinden (Stand 31.12.2025) */
+export const GV_KREISE_URL =
+  'https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/04-kreise.xlsx?__blob=publicationFile';
+export const GV_GEMEINDEN_URL =
+  'https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/Archiv/GVAuszugJ/31122025_Auszug_GV.xlsx?__blob=publicationFile';
+
 /** Lädt eine Quelldatei nach pipeline/quellen/, falls sie noch nicht da ist. */
 export async function quelle(datei: string, url: string): Promise<string> {
   const pfad = join(QUELLEN, datei);

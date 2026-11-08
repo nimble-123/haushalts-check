@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-biberach",
+  "ags": "08426",
+  "land": "08",
+  "name": "Landkreis Biberach",
+  "amtlich": "Biberach, Landkreis",
+  "einwohner": 207415,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.1198,
+  "lon": 9.8032,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1381
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 742
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 951
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1271
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1439
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

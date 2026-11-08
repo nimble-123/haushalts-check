@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-wolfenbuettel",
+  "ags": "03158",
+  "land": "03",
+  "name": "Landkreis Wolfenbüttel",
+  "amtlich": "Wolfenbüttel, Landkreis",
+  "einwohner": 118290,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.1501,
+  "lon": 10.5615,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1392
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 537
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1391
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 859
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 991
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

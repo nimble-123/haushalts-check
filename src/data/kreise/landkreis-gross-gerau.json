@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-gross-gerau",
+  "ags": "06433",
+  "land": "06",
+  "name": "Landkreis Groß-Gerau",
+  "amtlich": "Groß-Gerau, Landkreis",
+  "einwohner": 268310,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.9459,
+  "lon": 8.4594,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1517
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 682
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 882
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 565
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1452
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

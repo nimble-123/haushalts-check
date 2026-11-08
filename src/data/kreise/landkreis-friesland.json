@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-friesland",
+  "ags": "03455",
+  "land": "03",
+  "name": "Landkreis Friesland",
+  "amtlich": "Friesland, Landkreis",
+  "einwohner": 100411,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.4921,
+  "lon": 7.9984,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1298
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 691
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1387
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 527
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1154
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

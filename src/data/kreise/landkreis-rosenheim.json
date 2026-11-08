@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-rosenheim",
+  "ags": "09187",
+  "land": "09",
+  "name": "Landkreis Rosenheim",
+  "amtlich": "Rosenheim, Landkreis",
+  "einwohner": 258637,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.8763,
+  "lon": 12.1419,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 915
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 639
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 296
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1009
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1322
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

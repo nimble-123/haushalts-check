@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-hameln-pyrmont",
+  "ags": "03252",
+  "land": "03",
+  "name": "Landkreis Hameln-Pyrmont",
+  "amtlich": "Hameln-Pyrmont, Landkreis",
+  "einwohner": 150203,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.0981,
+  "lon": 9.3618,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1099
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 580
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1614
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 617
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1151
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

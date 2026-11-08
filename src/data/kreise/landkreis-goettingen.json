@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-goettingen",
+  "ags": "03159",
+  "land": "03",
+  "name": "Landkreis Göttingen",
+  "amtlich": "Göttingen, Landkreis",
+  "einwohner": 328028,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.5501,
+  "lon": 10.0194,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1223
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 585
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1855
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 494
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1448
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

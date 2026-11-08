@@ -1,0 +1,44 @@
+{
+  "slug": "erzgebirgskreis",
+  "ags": "14521",
+  "land": "14",
+  "name": "Erzgebirgskreis",
+  "amtlich": "Erzgebirgskreis, Landkreis",
+  "einwohner": 318394,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.6285,
+  "lon": 12.8884,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1028
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 513
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 865
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 598
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1014
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

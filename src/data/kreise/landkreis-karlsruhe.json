@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-karlsruhe",
+  "ags": "08215",
+  "land": "08",
+  "name": "Landkreis Karlsruhe",
+  "amtlich": "Karlsruhe, Landkreis",
+  "einwohner": 456264,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.0778,
+  "lon": 8.5365,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1103
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 641
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 815
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 732
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1495
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

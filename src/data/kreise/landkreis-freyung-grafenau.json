@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-freyung-grafenau",
+  "ags": "09272",
+  "land": "09",
+  "name": "Landkreis Freyung-Grafenau",
+  "amtlich": "Freyung-Grafenau, Landkreis",
+  "einwohner": 78710,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.8069,
+  "lon": 13.5006,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 889
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 503
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 330
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1166
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1258
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

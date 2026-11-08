@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-oberhavel",
+  "ags": "12065",
+  "land": "12",
+  "name": "Landkreis Oberhavel",
+  "amtlich": "Oberhavel, Landkreis",
+  "einwohner": 217690,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.7504,
+  "lon": 13.2345,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1456
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 654
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1144
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 755
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1354
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-tuebingen",
+  "ags": "08416",
+  "land": "08",
+  "name": "Landkreis Tübingen",
+  "amtlich": "Tübingen, Landkreis",
+  "einwohner": 233546,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.4906,
+  "lon": 9.0232,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1308
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 639
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 891
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 772
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1397
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

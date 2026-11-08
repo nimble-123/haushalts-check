@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-weissenburg-gunzenhausen",
+  "ags": "09577",
+  "land": "09",
+  "name": "Landkreis Weißenburg-Gunzenhausen",
+  "amtlich": "Weißenburg-Gunzenhausen, Landkreis",
+  "einwohner": 94695,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.0426,
+  "lon": 10.8923,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 958
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 605
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 325
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1183
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1271
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

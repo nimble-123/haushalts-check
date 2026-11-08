@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-mainz-bingen",
+  "ags": "07339",
+  "land": "07",
+  "name": "Landkreis Mainz-Bingen",
+  "amtlich": "Mainz-Bingen, Landkreis",
+  "einwohner": 206454,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.9259,
+  "lon": 8.1105,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1343
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 737
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1451
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 653
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1866
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

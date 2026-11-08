@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ravensburg",
+  "ags": "08436",
+  "land": "08",
+  "name": "Landkreis Ravensburg",
+  "amtlich": "Ravensburg, Landkreis",
+  "einwohner": 291102,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.8082,
+  "lon": 9.7495,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1197
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 802
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1128
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1046
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1319
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-esslingen",
+  "ags": "08116",
+  "land": "08",
+  "name": "Landkreis Esslingen",
+  "amtlich": "Esslingen, Landkreis",
+  "einwohner": 536601,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.6765,
+  "lon": 9.3323,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1369
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 772
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 848
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 656
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1402
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

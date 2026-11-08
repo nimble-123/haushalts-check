@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-vorpommern-ruegen",
+  "ags": "13073",
+  "land": "13",
+  "name": "Landkreis Vorpommern-Rügen",
+  "amtlich": "Vorpommern-Rügen, Landkreis",
+  "einwohner": 215203,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 54.315,
+  "lon": 13.0585,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 978
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 769
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1783
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 790
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1496
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

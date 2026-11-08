@@ -1,0 +1,44 @@
+{
+  "slug": "altmarkkreis-salzwedel",
+  "ags": "15081",
+  "land": "15",
+  "name": "Altmarkkreis Salzwedel",
+  "amtlich": "Altmarkkreis Salzwedel, Landkreis",
+  "einwohner": 79980,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.7028,
+  "lon": 11.2464,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1272
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 686
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 541
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 386
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1013
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

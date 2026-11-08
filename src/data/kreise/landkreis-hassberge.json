@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-hassberge",
+  "ags": "09674",
+  "land": "09",
+  "name": "Landkreis Haßberge",
+  "amtlich": "Haßberge, Landkreis",
+  "einwohner": 83869,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.0417,
+  "lon": 10.5987,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 909
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 532
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 309
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 806
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1355
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

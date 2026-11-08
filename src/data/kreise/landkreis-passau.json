@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-passau",
+  "ags": "09275",
+  "land": "09",
+  "name": "Landkreis Passau",
+  "amtlich": "Passau, Landkreis",
+  "einwohner": 194699,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.5588,
+  "lon": 13.3581,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 812
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 471
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 332
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 853
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1211
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

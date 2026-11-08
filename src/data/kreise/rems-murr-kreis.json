@@ -1,0 +1,44 @@
+{
+  "slug": "rems-murr-kreis",
+  "ags": "08119",
+  "land": "08",
+  "name": "Rems-Murr-Kreis",
+  "amtlich": "Rems-Murr-Kreis, Landkreis",
+  "einwohner": 440696,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.8613,
+  "lon": 9.4249,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1274
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 667
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 922
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 667
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1366
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

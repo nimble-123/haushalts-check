@@ -1,0 +1,44 @@
+{
+  "slug": "salzlandkreis",
+  "ags": "15089",
+  "land": "15",
+  "name": "Salzlandkreis",
+  "amtlich": "Salzlandkreis, Landkreis",
+  "einwohner": 180771,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.8603,
+  "lon": 11.6387,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1030
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 643
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1308
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 399
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1426
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

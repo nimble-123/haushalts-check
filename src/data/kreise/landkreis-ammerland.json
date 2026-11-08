@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-ammerland",
+  "ags": "03451",
+  "land": "03",
+  "name": "Landkreis Ammerland",
+  "amtlich": "Ammerland, Landkreis",
+  "einwohner": 127751,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.2111,
+  "lon": 8.017,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 933
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 680
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1445
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 701
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 744
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

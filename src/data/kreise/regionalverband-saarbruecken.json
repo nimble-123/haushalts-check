@@ -1,0 +1,44 @@
+{
+  "slug": "regionalverband-saarbruecken",
+  "ags": "10041",
+  "land": "10",
+  "name": "Regionalverband Saarbrücken",
+  "amtlich": "Regionalverband Saarbrücken, Regionalverband",
+  "einwohner": 333149,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.2553,
+  "lon": 6.9725,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1119
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 617
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1090
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 330
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 885
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

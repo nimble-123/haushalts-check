@@ -1,0 +1,44 @@
+{
+  "slug": "schwalm-eder-kreis",
+  "ags": "06634",
+  "land": "06",
+  "name": "Schwalm-Eder-Kreis",
+  "amtlich": "Schwalm-Eder-Kreis, Landkreis",
+  "einwohner": 180071,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.0544,
+  "lon": 9.3606,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1269
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 570
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 893
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 648
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 951
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

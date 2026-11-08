@@ -1,14 +1,15 @@
 ---
 import Check from '../../components/Check.astro';
-import { landVon, STAEDTE } from '../../data';
+import { KREISE, landVon, STAEDTE } from '../../data';
 import Base from '../../layouts/Base.astro';
+import { gemeindenVon } from '../../lib/kreis';
 
 export function getStaticPaths() {
-  return STAEDTE.map((stadt) => ({ params: { slug: stadt.slug }, props: { stadt } }));
+  return [...STAEDTE, ...KREISE].map((stadt) => ({ params: { slug: stadt.slug }, props: { stadt } }));
 }
 const { stadt } = Astro.props;
 const land = landVon(stadt);
 ---
-<Base title={`Haushalts-Check ${stadt.name}: Wohin geht deine Lohnsteuer?`} description={`Wie viel deiner Lohnsteuer an ${stadt.name}, das Land ${land.name} und den Bund geht und wofür sie es ausgeben.`}>
+<Base title={`Haushalts-Check ${stadt.name}: Wohin geht deine Lohnsteuer?`} description={`Wie viel deiner Lohnsteuer an ${gemeindenVon(stadt)}, das Land ${land.name} und den Bund geht und wofür sie es ausgeben.`}>
   <Check stadt={stadt} land={land} stadtImTitel />
 </Base>

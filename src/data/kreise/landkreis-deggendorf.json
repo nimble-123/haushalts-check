@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-deggendorf",
+  "ags": "09271",
+  "land": "09",
+  "name": "Landkreis Deggendorf",
+  "amtlich": "Deggendorf, Landkreis",
+  "einwohner": 121844,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.7942,
+  "lon": 12.9787,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 871
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 422
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 349
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1134
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1107
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

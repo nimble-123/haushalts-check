@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-osnabrueck",
+  "ags": "03459",
+  "land": "03",
+  "name": "Landkreis Osnabrück",
+  "amtlich": "Osnabrück, Landkreis",
+  "einwohner": 354821,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.3191,
+  "lon": 8.0786,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 769
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 608
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1300
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 634
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1186
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

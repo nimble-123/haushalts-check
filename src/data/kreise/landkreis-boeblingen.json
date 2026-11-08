@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-boeblingen",
+  "ags": "08115",
+  "land": "08",
+  "name": "Landkreis Böblingen",
+  "amtlich": "Böblingen, Landkreis",
+  "einwohner": 395167,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.692,
+  "lon": 8.9622,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1506
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 761
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 806
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 828
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1765
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

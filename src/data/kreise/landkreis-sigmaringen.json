@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-sigmaringen",
+  "ags": "08437",
+  "land": "08",
+  "name": "Landkreis Sigmaringen",
+  "amtlich": "Sigmaringen, Landkreis",
+  "einwohner": 132167,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.0368,
+  "lon": 9.2715,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1297
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 730
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 887
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1347
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1179
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

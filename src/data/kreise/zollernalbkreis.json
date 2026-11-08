@@ -1,0 +1,44 @@
+{
+  "slug": "zollernalbkreis",
+  "ags": "08417",
+  "land": "08",
+  "name": "Zollernalbkreis",
+  "amtlich": "Zollernalbkreis, Landkreis",
+  "einwohner": 193326,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.2648,
+  "lon": 8.9385,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1248
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 868
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 755
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 622
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1245
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

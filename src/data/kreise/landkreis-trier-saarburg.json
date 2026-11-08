@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-trier-saarburg",
+  "ags": "07235",
+  "land": "07",
+  "name": "Landkreis Trier-Saarburg",
+  "amtlich": "Trier-Saarburg, Landkreis",
+  "einwohner": 148953,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.7114,
+  "lon": 6.6736,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 915
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 535
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 846
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 722
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1381
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

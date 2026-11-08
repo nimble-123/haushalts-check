@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-altoetting",
+  "ags": "09171",
+  "land": "09",
+  "name": "Landkreis Altötting",
+  "amtlich": "Altötting, Landkreis",
+  "einwohner": 113938,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.201,
+  "lon": 12.7049,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 840
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 675
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 366
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1050
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1742
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-oldenburg",
+  "ags": "03458",
+  "land": "03",
+  "name": "Landkreis Oldenburg",
+  "amtlich": "Oldenburg, Landkreis",
+  "einwohner": 132008,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.9973,
+  "lon": 8.4148,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1089
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 689
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1204
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 643
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 883
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

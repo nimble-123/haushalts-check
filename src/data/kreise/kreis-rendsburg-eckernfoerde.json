@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-rendsburg-eckernfoerde",
+  "ags": "01058",
+  "land": "01",
+  "name": "Kreis Rendsburg-Eckernförde",
+  "amtlich": "Rendsburg-Eckernförde, Kreis",
+  "einwohner": 278058,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 54.312,
+  "lon": 9.825,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 922
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 537
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 954
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 548
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2050
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

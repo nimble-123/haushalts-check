@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-offenbach",
+  "ags": "06438",
+  "land": "06",
+  "name": "Landkreis Offenbach",
+  "amtlich": "Offenbach, Landkreis",
+  "einwohner": 358022,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.0327,
+  "lon": 8.7983,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1138
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 558
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 825
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 459
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 2046
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

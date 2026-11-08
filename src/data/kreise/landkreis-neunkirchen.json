@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-neunkirchen",
+  "ags": "10043",
+  "land": "10",
+  "name": "Landkreis Neunkirchen",
+  "amtlich": "Neunkirchen, Landkreis",
+  "einwohner": 133179,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.3642,
+  "lon": 7.1173,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1202
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 411
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1026
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 443
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 818
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

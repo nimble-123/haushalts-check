@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-limburg-weilburg",
+  "ags": "06533",
+  "land": "06",
+  "name": "Landkreis Limburg-Weilburg",
+  "amtlich": "Limburg-Weilburg, Landkreis",
+  "einwohner": 173830,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.4153,
+  "lon": 8.1524,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1026
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 751
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 784
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 638
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1089
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

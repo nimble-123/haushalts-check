@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-oberallgaeu",
+  "ags": "09780",
+  "land": "09",
+  "name": "Landkreis Oberallgäu",
+  "amtlich": "Oberallgäu, Landkreis",
+  "einwohner": 155413,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.6171,
+  "lon": 10.2688,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1020
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 590
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 366
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1311
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1286
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

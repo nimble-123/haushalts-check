@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-celle",
+  "ags": "03351",
+  "land": "03",
+  "name": "Landkreis Celle",
+  "amtlich": "Celle, Landkreis",
+  "einwohner": 172449,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.6611,
+  "lon": 10.0769,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1308
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 576
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1455
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1028
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1018
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 import type { GemeindeEbene, Land, Stadt } from '../data/types';
+import { gemeindenVon } from './kreis';
 import { aufEbenen, type Ergebnis, summeSV } from './steuer';
 import { esc, fmtEur } from './text';
 
@@ -24,5 +25,5 @@ export function ergebnisSatz(r: Ergebnis, stadt: Stadt, land: Land, gem: Gemeind
     return `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund und ${f(beide)} an ${an}, davon ${f((beide * top.v) / gesamt)} für ${esc(top.name)}.${mitKonsum(r)}`;
   }
   const davon = `${gem.schaetzung ? 'geschätzt ' : ''}${f((e.gemeinde * top.v) / gesamt)} für ${esc(top.name)}`;
-  return `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund, ${f(e.land)} an ${esc(land.name)} und ${f(e.gemeinde)} an ${esc(stadt.name)}, davon ${davon}.${mitKonsum(r)}`;
+  return `Von ${f(r.brutto)} Brutto gehen ${f(e.bund)} an den Bund, ${f(e.land)} an ${esc(land.name)} und ${f(e.gemeinde)} an ${esc(gemeindenVon(stadt))}, davon ${davon}.${mitKonsum(r)}`;
 }

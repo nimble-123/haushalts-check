@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-berchtesgadener-land",
+  "ags": "09172",
+  "land": "09",
+  "name": "Landkreis Berchtesgadener Land",
+  "amtlich": "Berchtesgadener Land, Landkreis",
+  "einwohner": 105292,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 47.7713,
+  "lon": 12.9262,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1137
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 655
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 379
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1224
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1189
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

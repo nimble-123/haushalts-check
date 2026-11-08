@@ -1,0 +1,44 @@
+{
+  "slug": "hohenlohekreis",
+  "ags": "08126",
+  "land": "08",
+  "name": "Hohenlohekreis",
+  "amtlich": "Hohenlohekreis, Landkreis",
+  "einwohner": 115644,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.2458,
+  "lon": 9.5768,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1401
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 742
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 795
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1320
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1515
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

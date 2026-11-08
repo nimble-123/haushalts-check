@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-gotha",
+  "ags": "16067",
+  "land": "16",
+  "name": "Landkreis Gotha",
+  "amtlich": "Gotha, Landkreis",
+  "einwohner": 135838,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.9203,
+  "lon": 10.6933,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1069
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 614
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 852
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 492
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 619
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

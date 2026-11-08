@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-coburg",
+  "ags": "09473",
+  "land": "09",
+  "name": "Landkreis Coburg",
+  "amtlich": "Coburg, Landkreis",
+  "einwohner": 84468,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.2648,
+  "lon": 11.0004,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 931
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 500
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 319
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 792
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1235
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

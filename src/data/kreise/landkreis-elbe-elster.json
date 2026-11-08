@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-elbe-elster",
+  "ags": "12062",
+  "land": "12",
+  "name": "Landkreis Elbe-Elster",
+  "amtlich": "Elbe-Elster, Landkreis",
+  "einwohner": 97967,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.5873,
+  "lon": 13.4883,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1565
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 585
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1209
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 569
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1392
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

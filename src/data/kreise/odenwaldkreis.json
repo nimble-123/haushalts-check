@@ -1,0 +1,44 @@
+{
+  "slug": "odenwaldkreis",
+  "ags": "06437",
+  "land": "06",
+  "name": "Odenwaldkreis",
+  "amtlich": "Odenwaldkreis, Landkreis",
+  "einwohner": 93846,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.7135,
+  "lon": 8.9756,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1276
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 739
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1005
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 375
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1188
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

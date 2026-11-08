@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-teltow-flaeming",
+  "ags": "12072",
+  "land": "12",
+  "name": "Landkreis Teltow-Fläming",
+  "amtlich": "Teltow-Fläming, Landkreis",
+  "einwohner": 177688,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.1966,
+  "lon": 13.2985,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1273
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 584
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 945
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 535
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1314
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-harburg",
+  "ags": "03353",
+  "land": "03",
+  "name": "Landkreis Harburg",
+  "amtlich": "Harburg, Landkreis",
+  "einwohner": 265864,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.3499,
+  "lon": 9.9813,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 772
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 370
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1092
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 656
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1083
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

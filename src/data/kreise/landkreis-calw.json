@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-calw",
+  "ags": "08235",
+  "land": "08",
+  "name": "Landkreis Calw",
+  "amtlich": "Calw, Landkreis",
+  "einwohner": 161251,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 48.6742,
+  "lon": 8.6803,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1442
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 718
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 835
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 872
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1538
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

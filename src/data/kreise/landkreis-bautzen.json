@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-bautzen",
+  "ags": "14625",
+  "land": "14",
+  "name": "Landkreis Bautzen",
+  "amtlich": "Bautzen, Landkreis",
+  "einwohner": 292608,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.2282,
+  "lon": 14.2122,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1050
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 493
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 920
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 751
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1261
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

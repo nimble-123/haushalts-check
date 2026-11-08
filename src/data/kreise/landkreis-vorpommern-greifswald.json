@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-vorpommern-greifswald",
+  "ags": "13075",
+  "land": "13",
+  "name": "Landkreis Vorpommern-Greifswald",
+  "amtlich": "Vorpommern-Greifswald, Landkreis",
+  "einwohner": 224956,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 53.8986,
+  "lon": 13.6979,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1017
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 713
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1307
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1048
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1633
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

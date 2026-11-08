@@ -1,0 +1,44 @@
+{
+  "slug": "hochsauerlandkreis",
+  "ags": "05958",
+  "land": "05",
+  "name": "Hochsauerlandkreis",
+  "amtlich": "Hochsauerlandkreis, Kreis",
+  "einwohner": 260843,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.3357,
+  "lon": 8.3053,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1019
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 720
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1012
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 741
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1538
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

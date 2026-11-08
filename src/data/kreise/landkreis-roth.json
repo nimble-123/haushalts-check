@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-roth",
+  "ags": "09576",
+  "land": "09",
+  "name": "Landkreis Roth",
+  "amtlich": "Roth, Landkreis",
+  "einwohner": 128632,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.2347,
+  "lon": 11.1119,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 799
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 609
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 240
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1166
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1460
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

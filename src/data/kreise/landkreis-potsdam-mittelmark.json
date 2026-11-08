@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-potsdam-mittelmark",
+  "ags": "12069",
+  "land": "12",
+  "name": "Landkreis Potsdam-Mittelmark",
+  "amtlich": "Potsdam-Mittelmark, Landkreis",
+  "einwohner": 221268,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 52.3221,
+  "lon": 12.938,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1247
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 624
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 1069
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 517
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1688
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

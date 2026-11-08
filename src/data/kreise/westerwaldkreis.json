@@ -1,0 +1,44 @@
+{
+  "slug": "westerwaldkreis",
+  "ags": "07143",
+  "land": "07",
+  "name": "Westerwaldkreis",
+  "amtlich": "Westerwaldkreis, Landkreis",
+  "einwohner": 207803,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.5297,
+  "lon": 7.8486,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 941
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 464
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 842
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 698
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1292
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

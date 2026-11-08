@@ -1,0 +1,44 @@
+{
+  "slug": "kreis-viersen",
+  "ags": "05166",
+  "land": "05",
+  "name": "Kreis Viersen",
+  "amtlich": "Viersen, Kreis",
+  "einwohner": 297857,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 51.2817,
+  "lon": 6.3837,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1276
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 766
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 752
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 490
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1415
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

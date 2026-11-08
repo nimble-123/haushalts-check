@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-bamberg",
+  "ags": "09471",
+  "land": "09",
+  "name": "Landkreis Bamberg",
+  "amtlich": "Bamberg, Landkreis",
+  "einwohner": 147777,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 49.8936,
+  "lon": 10.8885,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 798
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 535
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 251
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1304
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1371
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

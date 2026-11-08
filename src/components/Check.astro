@@ -1,10 +1,11 @@
 ---
-import { ausgabeVergleich, gemeindeEbene, LAENDER, STAEDTE } from '../data';
+import { ausgabeVergleich, gemeindeEbene, KREISE, LAENDER, STAEDTE } from '../data';
 import { abstimmungSatz, BUND_GESAMT, EINNAHMEN, EINZELPLAENE, ENTWICKLUNG, ENTWURF_2027_GESAMT } from '../data/bund';
 import { MEDIAN_BRUTTO, MEDIAN_BRUTTO_QUELLE } from '../data/eckwerte';
 import { STUDIEN } from '../data/studien';
 import type { Land, Stadt } from '../data/types';
 import { KONSUM } from '../lib/konsum';
+import { gemeindenVon, imOrt, kreisFormen } from '../lib/kreis';
 import { ergebnisSatz } from '../lib/satz';
 import type { SeitenDaten } from '../lib/seite';
 import { ANTEIL, berechne } from '../lib/steuer';
@@ -19,13 +20,15 @@ interface Props {
 }
 const { stadt, land, stadtImTitel = false } = Astro.props;
 
-const gruppen = LAENDER.map((l) => ({ land: l, staedte: STAEDTE.filter((s) => s.land === l.code) })).filter(
-  (g) => g.staedte.length,
-);
+const gruppen = LAENDER.map((l) => ({
+  land: l,
+  staedte: STAEDTE.filter((s) => s.land === l.code),
+  kreise: KREISE.filter((s) => s.land === l.code),
+})).filter((g) => g.staedte.length || g.kreise.length);
 const gem = gemeindeEbene(stadt);
 const arten = ausgabeVergleich(stadt);
 // Für „In meiner Nähe“: nur Slug und Koordinaten, die Suche läuft im Browser
-const orte = STAEDTE.flatMap((s) => (s.lat && s.lon ? [[s.slug, s.lat, s.lon] as const] : []));
+const orte = [...STAEDTE, ...KREISE].flatMap((s) => (s.lat && s.lon ? [[s.slug, s.lat, s.lon] as const] : []));
 const daten = { stadt, land, gem, arten, orte, median: MEDIAN_BRUTTO } satisfies SeitenDaten;
 
 // Beim Build vorab: Ergebnissatz für den Median (Suchmaschinen, Seiten ohne JavaScript, erster Eindruck)
@@ -42,16 +45,25 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben mit dem Anteil der 
 ---
 <section class="hero page" aria-labelledby="hero-h">
   <div class="eingabe">
-    <h1 id="hero-h" class="t-title">Wohin geht dein Geld{stadtImTitel && ` in ${stadt.name}`}?</h1>
+    <h1 id="hero-h" class="t-title">Wohin geht dein Geld{stadtImTitel && ` ${imOrt(stadt)}`}?</h1>
     <p class="rs-satz">
       Ich verdiene
       <input id="brutto" class="rs-betrag" type="text" inputmode="numeric" autocomplete="off" value={MEDIAN_BRUTTO.toLocaleString('de-DE')} aria-label="Jahresbrutto in Euro" />
       € brutto im Jahr und wohne in
-      <select id="stadt" class="rs-auswahl" aria-label="Stadt">
+      <select id="stadt" class="rs-auswahl" aria-label="Stadt oder Landkreis">
         {gruppen.map((g) => (
-          <optgroup label={g.land.name}>
-            {g.staedte.map((s) => <option value={s.slug} selected={s.slug === stadt.slug}>{s.name}</option>)}
-          </optgroup>
+          <>
+            {g.staedte.length > 0 && (
+              <optgroup label={g.land.name}>
+                {g.staedte.map((s) => <option value={s.slug} selected={s.slug === stadt.slug}>{s.name}</option>)}
+              </optgroup>
+            )}
+            {g.kreise.length > 0 && (
+              <optgroup label={`${g.land.name}: Landkreise`}>
+                {g.kreise.map((s) => <option value={s.slug} selected={s.slug === stadt.slug}>{s.name}</option>)}
+              </optgroup>
+            )}
+          </>
         ))}
       </select><span class="punkt">.</span>
     </p>
@@ -127,7 +139,7 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben mit dem Anteil der 
   <section class="chapter" aria-labelledby="k2">
     <header class="rs-kapitel">
       <h2 id="k2"><span class="nr">2</span>Wohin es fließt</h2>
-      <p>Lohnsteuer geht zu {satzText(ANTEIL.bund)} an den Bund, zu {satzText(ANTEIL.land)} an {land.name} und zu {satzText(ANTEIL.gemeinde)} an {stadt.name}. Jede Ebene verteilt ihren Anteil so wie ihren ganzen Haushalt.</p>
+      <p>Lohnsteuer geht zu {satzText(ANTEIL.bund)} an den Bund, zu {satzText(ANTEIL.land)} an {land.name} und zu {satzText(ANTEIL.gemeinde)} an {gemeindenVon(stadt)}. Jede Ebene verteilt ihren Anteil so wie ihren ganzen Haushalt.</p>
       <p id="k2-konsum" hidden>Die geschätzten Konsumsteuern fließen mit: Die Mehrwertsteuer teilen sich Bund ({pct(KONSUM.mwstVerteilung.bund)}), Länder ({pct(KONSUM.mwstVerteilung.land)}) und Gemeinden ({pct(KONSUM.mwstVerteilung.gemeinde)}); Energie-, Strom- und Versicherungsteuer gehen an den Bund.</p>
     </header>
 
@@ -158,8 +170,10 @@ const labelEntwicklung = `Säulendiagramm der Bundesausgaben mit dem Anteil der 
 
     {arten && (
       <div class="figure">
-        <h3>Was {stadt.land === '04' ? 'das ' : ''}{arten.traeger} tatsächlich ausgibt</h3>
-        {stadt.stadtstaat ? (
+        <h3>{stadt.kreis ? `Was ${kreisFormen(stadt.name).nom} und ${kreisFormen(stadt.name).sein} Gemeinden tatsächlich ausgeben` : `Was ${stadt.land === '04' ? 'das ' : ''}${arten.traeger} tatsächlich ausgibt`}</h3>
+        {stadt.kreis ? (
+          <p class="sub">Auszahlungen {arten.jahr}{arten.vorlaeufig ? ' (vorläufig)' : ''} von Kreis und Gemeinden zusammen, nach Art, in € je Einwohner. Umlagen zwischen Kreis und Gemeinden sind herausgerechnet. Der Strich zeigt den Durchschnitt {arten.vergleich}. Rechts dein Gemeindeanteil, nach denselben Anteilen verteilt.</p>
+        ) : stadt.stadtstaat ? (
           <p class="sub">Ausgaben {arten.jahr} nach Art, in € je Einwohner, Land und Stadt zusammen{stadt.land === '04' ? ' (Bremen und Bremerhaven)' : ''}. Der Strich zeigt den Durchschnitt {arten.vergleich}. Mit anderen Städten ist das nicht vergleichbar, weil hier auch Landesaufgaben mitzählen. Rechts dein Anteil an Land und Stadt, nach denselben Anteilen verteilt.</p>
         ) : (
           <p class="sub">Auszahlungen {arten.jahr}{arten.vorlaeufig ? ' (vorläufig)' : ''} nach Art, in € je Einwohner. Der Strich zeigt den Durchschnitt {arten.vergleich}. Rechts dein Gemeindeanteil, nach denselben Anteilen verteilt.</p>

@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-wunsiedel-i-fichtelgebirge",
+  "ags": "09479",
+  "land": "09",
+  "name": "Landkreis Wunsiedel i.Fichtelgebirge",
+  "amtlich": "Wunsiedel i.Fichtelgebirge, Landkreis",
+  "einwohner": 70549,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.0794,
+  "lon": 12.0683,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 1085
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 753
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 437
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1134
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1792
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}

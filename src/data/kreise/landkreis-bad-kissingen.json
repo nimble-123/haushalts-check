@@ -1,0 +1,44 @@
+{
+  "slug": "landkreis-bad-kissingen",
+  "ags": "09672",
+  "land": "09",
+  "name": "Landkreis Bad Kissingen",
+  "amtlich": "Bad Kissingen, Landkreis",
+  "einwohner": 103489,
+  "stadtstaat": false,
+  "kreis": true,
+  "lat": 50.2142,
+  "lon": 10.0105,
+  "ausgabearten": {
+    "jahr": 2025,
+    "vorlaeufig": true,
+    "posten": [
+      {
+        "name": "Personal und Versorgung",
+        "proKopf": 967
+      },
+      {
+        "name": "Sach- und Dienstleistungen",
+        "proKopf": 613
+      },
+      {
+        "name": "Soziale Leistungen",
+        "proKopf": 333
+      },
+      {
+        "name": "Investitionen",
+        "proKopf": 1102
+      },
+      {
+        "name": "Übrige laufende Auszahlungen",
+        "proKopf": 1102
+      }
+    ],
+    "quellen": [
+      {
+        "label": "Regionaldatenbank Deutschland: Rechnungsergebnisse der kommunalen Kernhaushalte, Tabelle 71717-Z-05",
+        "url": "https://www.regionalstatistik.de/genesis/online?operation=table&code=71717-Z-05"
+      }
+    ]
+  }
+}
