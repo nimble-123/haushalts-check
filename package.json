@@ -38,11 +38,11 @@
     "prepare": "git rev-parse --git-dir > /dev/null 2>&1 || exit 0; lefthook install"
   },
   "dependencies": {
-    "@astrojs/sitemap": "3.7.4",
+    "@astrojs/sitemap": "3.7.6",
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource-variable/hanken-grotesk": "^5.3.0",
     "@vercel/analytics": "2.0.1",
-    "astro": "^7.4.7",
+    "astro": "^7.4.13",
     "d3": "^7.9.2",
     "d3-sankey": "^0.12.3"
   },
